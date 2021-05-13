@@ -19,21 +19,28 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private long stuNumber;
+    @Column(name="stuNumber")
+    private String stuNumber;
 
     private String name;
 
     private String major;
 
+    @Column(name="class")
     private String class_;
 
+    @Column(name="phoneNumber")
     private String phoneNumber;
 
+    @Column(name="regTime")
     private Date regTime;
 
+    @Column(name="loginNumber")
     private int loginNumber;
 
+    @Column(name="lastLoginTime")
     private Date lastLoginTime;
 
+    @Column(name="studyTime")
     private Time studyTime;
 }
