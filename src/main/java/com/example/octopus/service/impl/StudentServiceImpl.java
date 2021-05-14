@@ -6,6 +6,7 @@ import com.example.octopus.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,23 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student findStudentById(long id) {
-        return studentRepository.findById(id);
+    public Student findStudentByStuNumber(String stuNumber) {
+        return studentRepository.findStudentByStuNumber(stuNumber);
+    }
+
+    @Override
+    public Student login(String stuNumber, String password) {
+        return studentRepository.findStudentByStuNumberAndPassword(stuNumber, password);
+    }
+
+//    @Override
+//    public Student Register(String name, String stuNumber, String password) {
+//        return null;
+//    }
+
+    @Override
+    @Transactional
+    public void updateLoginInfo(String stuNumber) {
+        studentRepository.updateLoginInfo(stuNumber);
     }
 }

@@ -15,7 +15,7 @@ public class studentController {
 
     @RequestMapping("/student")
     public Student showStudent() {
-        return studentService.findStudentById(1L);
+        return studentService.findStudentByStuNumber("6201924124");
     }
 
 }

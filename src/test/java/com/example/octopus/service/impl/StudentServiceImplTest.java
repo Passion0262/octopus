@@ -32,7 +32,25 @@ class StudentServiceImplTest {
 
     @Test
     void findStudentById() {
-        Student stu = studentService.findStudentById(1L);
+        Student stu = studentService.findStudentByStuNumber("6201924124");
         assertEquals("小明", stu.getName());
+    }
+
+    @Test
+    void login() {
+        String stuNumber = "6201924124";
+        String password = "xiaoming";
+        Student stu = studentService.login(stuNumber, password);
+        assertEquals("13888888888",stu.getPhoneNumber());
+    }
+
+//    @Test
+//    void register() {
+//    }
+
+    @Test
+    void updateLoginInfo() {
+        String stuNumber = "6201924124";
+        studentService.updateLoginInfo(stuNumber);
     }
 }

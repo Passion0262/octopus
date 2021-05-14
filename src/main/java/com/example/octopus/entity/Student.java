@@ -24,6 +24,8 @@ public class Student {
 
     private String name;
 
+    private String password;
+
     private String major;
 
     @Column(name="class")
@@ -31,9 +33,6 @@ public class Student {
 
     @Column(name="phoneNumber")
     private String phoneNumber;
-
-    @Column(name="regTime")
-    private Date regTime;
 
     @Column(name="loginNumber")
     private int loginNumber;
