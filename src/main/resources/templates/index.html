@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Dashboard | Nazox - Responsive Bootstrap 4 Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="Themesdesign" name="author" /><!-- App favicon -->
+    <link rel="shortcut icon" href="assets/images/favicon.ico"><!-- jquery.vectormap css -->
+    <link href="/libs/admin-resources/jquery.vectormap/static" rel="stylesheet" type="text/css" /><!-- DataTables -->
+    <link href="/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" /><!-- Responsive datatable examples -->
+    <link href="/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" /><!-- Bootstrap Css -->
+    <link href="/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" /><!-- Icons Css -->
+    <link href="/css/icons.min.css" rel="stylesheet" type="text/css" /><!-- App Css-->
+    <link href="/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+</head>
+
+<body data-sidebar="light">
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+        <header id="page-topbar">
+            <div class="navbar-header">
+                <div class="d-flex">
+                    <!-- LOGO -->
+                    <div class="navbar-brand-box">
+                    	<a href="index.html" class="logo logo-dark"><span class="logo-sm"><img src="assets/images/logo-sm-dark.png" alt="" height="22"></span><span class="logo-lg"><img src="assets/images/logo-dark.png" alt="" height="20"></span></a>
+                    </div>
+                    <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn"><i class="ri-menu-2-line align-middle"></i></button>         
+                </div>
+
+
+                <div class="d-flex">
+                    
+                    <div class="dropdown d-none d-lg-inline-block ml-1"><button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen"><i class="ri-fullscreen-line"></i></button></div>
+
+<!-- 个人信息展示 退出登录操作 -->
+                    <div class="dropdown d-inline-block user-dropdown"><button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="rounded-circle header-profile-user" src="/images/users/avatar-2.jpg" alt="Header Avatar"><span class="d-none d-xl-inline-block ml-1">张三</span><i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i></button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <!-- item-->
+                            <a class="dropdown-item" href="#"><i class="ri-user-line align-middle mr-1"></i>江南大学</a>
+                            <a class="dropdown-item" href="#"><i class="ri-wallet-2-line align-middle mr-1"></i>什么什么</a>
+                            <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#"><i class="ri-shut-down-line align-middle mr-1 text-danger"></i>Logout</a>
+                        </div>
+                    </div>
+ <!-- 个人信息展示 退出登录操作 -->             
+
+
+                </div>
+            </div>
+        </header>
+
+        <!-- ========== Left Sidebar Start ========== -->
+        <div class="vertical-menu">
+            <div data-simplebar class="h-100">
+                <!--- Sidemenu -->
+                <div id="sidebar-menu">
+                    <!-- Left Menu Start -->
+                    <ul class="metismenu list-unstyled" id="side-menu">
+                   
+
+                        <li><a href="index.html" class="waves-effect"><i class="ri-dashboard-line"></i><span>首页</span></a></li>
+                        <li><a href="applycourse.html" class=" waves-effect"><i class="ri-leaf-line"></i><span>申请学习</span></a></li>
+                        <li><a href="mycourse.html" class=" waves-effect"><i class="ri-plant-line"></i><span>我的课程</span></a></li>
+                        <li><a href="experiment_task.html" class="waves-effect"><i class="ri-checkbox-multiple-blank-line"></i><span>实验任务</span></a></li>
+                        <li><a href="experiment_train.html" class=" waves-effect"><i class="ri-reserved-line"></i><span>实验训练</span></a></li>
+                        <li><a href="datasets.html" class=" waves-effect"><i class="ri-download-cloud-line"></i><span>数据集</span></a></li>
+               
+
+                      
+                    </ul>
+                </div><!-- Sidebar -->
+            </div>
+        </div><!-- Left Sidebar End -->
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+            <div class="page-content">
+                <div class="container-fluid">
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+      <!-- 修改路径 -->
+                            <div class="page-title-box d-flex align-items-center justify-content-between">
+                                <h4 class="mb-0">首页</h4>
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Nazox</a></li>
+                                        <li class="breadcrumb-item active">首页</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+                    <div class="row">
+                        <div class="col-xl-8">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="media">
+                                                <div class="media-body overflow-hidden">
+                                                    <p class="text-truncate font-size-14 mb-2">学习课程数</p>
+                                                    <h4 class="mb-0">
+                                                        <span th:text="${username}"></span>
+                                                    </h4>
+                                                </div>
+                                                <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
+                                            </div>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="media">
+                                                <div class="media-body overflow-hidden">
+                                                    <p class="text-truncate font-size-14 mb-2">实验任务数</p>
+                                                    <h4 class="mb-0">34</h4>
+                                                </div>
+                                                <div class="text-primary"><i class="ri-store-2-line font-size-24"></i></div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="media">
+                                                <div class="media-body overflow-hidden">
+                                                    <p class="text-truncate font-size-14 mb-2">已下载数据集数</p>
+                                                    <h4 class="mb-0">4</h4>
+                                                </div>
+                                                <div class="text-primary"><i class="ri-briefcase-4-line font-size-24"></i></div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+    <!-- 做测试的地方 -->
+                            <div class="card">
+                                <div class="card-body">
+                                   
+                                </div>
+                            </div>
+                              
+                          
+                      
+                  </div>
+                    </div><!-- end row -->
+                    
+                </div><!-- container-fluid -->
+            </div><!-- End Page-content -->
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <!-- <script>document.write(new Date().getFullYear())</script>© 人工智能实验实训平台 -->
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="text-sm-right d-none d-sm-block"><script>document.write(new Date().getFullYear())</script>© 人工智能实验实训平台</div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div><!-- end main content-->
+    </div><!-- END layout-wrapper -->
+  
+   
+ 
+
+    <!-- JAVASCRIPT -->
+    <script src="/libs/jquery/jquery.min.js"></script>
+    <script src="/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/libs/metismenu/metisMenu.min.js"></script>
+    <script src="/libs/simplebar/simplebar.min.js"></script>
+    <script src="/libs/node-waves/waves.min.js"></script><!-- apexcharts -->
+    <script src="/libs/apexcharts/apexcharts.min.js"></script><!-- jquery.vectormap map -->
+    <script src="/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-us-merc-en.js"></script><!-- Required datatable js -->
+    <script src="/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script><!-- Responsive examples -->
+    <script src="/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+    <script src="/js/pages/dashboard.init.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+
+</html>
