@@ -8,21 +8,21 @@
     <!--<meta content="Premium Multipurpose Admin & Dashboard Template" name="description" /> -->
     <!--<meta content="Themesdesign" name="author" /> -->
 
-    <link rel="shortcut icon" href="../static/images/favicon.ico" />
+    <link rel="shortcut icon" href="static/images/favicon.ico" />
     <!-- jquery.vectormap css -->
-    <link href="../static/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
+    <link href="static/js/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
     <!-- DataTables -->
-    <link href="../static/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="static/js/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
     <!-- Responsive datatable examples -->
-    <link href="../static/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="static/js/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
     <!-- Button datatable examples -->
-    <link href="../static/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="static/js/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
     <!-- Bootstrap Css -->
-    <link href="../static/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <link href="static/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <!-- Icons css -->
-    <link href="../static/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/icons.min.css" rel="stylesheet" type="text/css" />
     <!-- App Css-->
-    <link href="../static/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+    <link href="static/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
 </head>
 
 <body data-sidebar="light">
@@ -33,12 +33,12 @@
                 <div class="d-flex">
                     <!-- LOGO -->
                     <div class="navbar-brand-box">
-                    	<a href="index.html" class="logo logo-dark">
+                    	<a href="index" class="logo logo-dark">
                             <span class="logo-sm">
-                                <img src="../static/images/logo-sm-dark.png" alt="" height="22">
+                                <img src="static/images/logo-sm-dark.png" alt="" height="22">
                             </span>
                             <span class="logo-lg">
-                                <img src="../static/images/logo-dark.png" alt="" height="20">
+                                <img src="static/images/logo-dark.png" alt="" height="20">
                             </span>
                         </a>
                     </div>
@@ -59,7 +59,7 @@
                     <!-- 个人信息展示 退出登录操作 -->
                     <div class="dropdown d-inline-block user-dropdown" id="user-info">
                         <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="rounded-circle header-profile-user" src="../static/images/users/avatar-2.jpg" alt="Header Avatar">
+                            <img class="rounded-circle header-profile-user" src="static/images/users/avatar-2.jpg" alt="Header Avatar">
                             <span class="d-none d-xl-inline-block ml-1" th:text="${username}"></span>
                             <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                         </button>
@@ -84,70 +84,70 @@
                     <!-- Left Menu Start -->
                     <ul class="metismenu list-unstyled" id="side-menu">
                         <li>
-                        	<a href="./admin_index.html" class="waves-effect  mm-active cc_pointer">
+                        	<a href="admin_index" class="waves-effect  mm-active cc_pointer">
                         		<i class="ri-home-5-line"></i>
                         		<span>首页</span>
                         	</a>
                         </li>
                         <li>
-                        	<a href="#" class="has-arrow waves-effect " aria-expanded="true">
+                        	<a href="#" class="has-arrow waves-effect " aria-expanded="false">
                         		<i class="ri-shield-user-line"></i>
                         		<span>学生管理</span>
                         	</a>
                         	<ul class="sub-menu mm-collapse" aria-expanded="false">
                         		<li>
-                        			<a href="./admin_major.html">专业管理</a>
+                        			<a href="admin_major">专业管理</a>
                         		</li>
                         		<li>
-                        			<a href="./admin_class.html">班级管理</a>
+                        			<a href="admin_class">班级管理</a>
                         		</li>
                         		<li>
-                        			<a href="./admin_student.html">学生管理</a>
+                        			<a href="admin_student">学生管理</a>
                         		</li>
                         	</ul>
                         </li>
 
                         <li>
-                        	<a href="#" class="has-arrow waves-effect " aria-expanded="true">
+                        	<a href="#" class="has-arrow waves-effect " aria-expanded="false">
                         		<i class="ri-file-text-line"></i>
                         		<span>开课管理</span>
                         	</a>
                         	<ul class="sub-menu mm-collapse" aria-expanded="false">
                         		<li>
-                        			<a href="./admin_course_plan.html">开课计划管理</a>
+                        			<a href="./admin_course_plan">开课计划管理</a>
                         		</li>
                         		<li>
-                        			<a href="./admin_course_student.html">学生开课管理</a>
+                        			<a href="./admin_course_student">学生开课管理</a>
                         		</li>
                         		<li>
-                        			<a href="./admin_course_announce.html">开课公告管理</a>
+                        			<a href="./admin_course_announce">开课公告管理</a>
                         		</li>
                         	</ul>
                         </li>
                         
                         <li>
-                        	<a href="#" class="has-arrow waves-effect " aria-expanded="true">
+                        	<a href="#" class="has-arrow waves-effect " aria-expanded="false">
                         		<i class="ri-briefcase-2-line"></i>
                         		<span>实验管理</span>
                         	</a>
                         </li>
 
                         <li>
-                        	<a href="#" class="has-arrow waves-effect " aria-expanded="true">
+                        	<a href="#" class="has-arrow waves-effect " aria-expanded="false">
                         		<i class="ri-pie-chart-2-line"></i>
                         		<span>图表统计</span>
                         	</a>
                         </li>
 
                         <li>
-                        	<a href="#" class="has-arrow waves-effect " aria-expanded="true">
+                        	<a href="#" class="has-arrow waves-effect " aria-expanded="false">
                         		<i class="ri-apps-line"></i>
                         		<span>系统管理</span>
                         	</a>
                         </li>
 
                         <li>
-                        	<a href="#" class="has-arrow waves-effect " aria-expanded="true">
+                        	<a href="#" class="has-arrow waves-effect " aria-expanded="false">
                         		<i class="ri-mac-line"></i>
                         		<span>机器管理</span>
                         	</a>
@@ -197,48 +197,20 @@
 
     <!-- JAVASCRIPT -->
     <!-- jquery -->
-    <script src="../static/libs/jquery/jquery.min.js"></script>
+    <script src="static/js/libs/jquery/jquery.min.js"></script>
     <!-- bootstrap/js -->
-    <script src="../static/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="static/js/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- metismenu -->
-    <script src="../static/libs/metismenu/metisMenu.min.js"></script>
+    <script src="static/js/libs/metismenu/metisMenu.min.js"></script>
     <!-- simplebar -->
-    <script src="../static/libs/simplebar/simplebar.min.js"></script>
+    <script src="static/js/libs/simplebar/simplebar.min.js"></script>
     <!-- node-waves -->
-    <script src="../static/libs/node-waves/waves.min.js"></script>
+    <script src="static/js/libs/node-waves/waves.min.js"></script>
     <!-- apexcharts -->
-    <script src="../static/libs/apexcharts/apexcharts.min.js"></script>
+    <script src="static/js/libs/apexcharts/apexcharts.min.js"></script>
     <!-- app.js -->
-    <script src="../static/js/app.js"></script>
+    <script src="static/js/app.js"></script>
 
-
-	<!-- vue -->
-    <!--
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script>
-  	var user = new Vue({
-  		el: "#user-info",
-  		data:{
-  			username: "张三",
-
-  		},
-  		methods:{
-  			add: function(){
-
-  			},
-  		}
-  	});
-
-  	var page = new Vue({
-  		el: "#page",
-  		data:{
-  			title: "首页",
-
-  		},
-  	});
-
-  </script>
-  -->
 </body>
 
 </html>
