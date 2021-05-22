@@ -39,5 +39,11 @@ public class studentController {
         return "experiment_task";
     }
 
+    @RequestMapping("/projects")
+    public String projects(Model model) {
+        model.addAttribute("username", "李四");
+        return "projects";
+    }
+
 
 }
