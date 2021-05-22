@@ -18,6 +18,7 @@ public class Class_ {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(columnDefinition = "comment '专业'")
     private String major;
 
     private String className;
