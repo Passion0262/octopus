@@ -17,21 +17,21 @@ public class Student_Class_ {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String ClassName;
+    private String className;
 
-    private String StuNumber;
+    private String stuNumber;
 
-    private String StuName;
+    private String stuName;
 
-    private String StuMajor;
+    private String stuMajor;
 
-    private String StuClass;
+    private String stuClass;
 
-    private String ApplyTime;
+    private String applyTime;
 
-    private String ApplyStatus;
+    private String applyStatus;
 
-    private String Auditor;
+    private String auditor;
 
-    private String AuditTime;
+    private String auditTime;
 }
