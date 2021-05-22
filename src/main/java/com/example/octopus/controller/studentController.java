@@ -45,5 +45,16 @@ public class studentController {
         return "projects";
     }
 
+    @RequestMapping("/studylog")
+    public String studylog(Model model) {
+        model.addAttribute("username", "李四");
+        return "studylog";
+    }
+
+    @RequestMapping("/datasets")
+    public String datasets(Model model) {
+        model.addAttribute("username", "李四");
+        return "datasets";
+    }
 
 }
