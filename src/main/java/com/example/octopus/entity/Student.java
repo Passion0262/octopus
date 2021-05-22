@@ -28,8 +28,8 @@ public class Student {
 
     private String major;
 
-    @Column(name="class")
-    private String class_;
+    @Column(name= "className")
+    private String className;
 
     @Column(name="phoneNumber")
     private String phoneNumber;
