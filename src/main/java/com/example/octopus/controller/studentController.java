@@ -20,4 +20,9 @@ public class studentController {
         return "index";
     }
 
+    @RequestMapping("/auth-login")
+    public String login(Model model) {
+        model.addAttribute("username", "李四");
+        return "auth-login";
+    }
 }
