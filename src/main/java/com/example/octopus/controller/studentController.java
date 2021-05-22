@@ -14,15 +14,30 @@ public class studentController {
     @Autowired
     StudentService studentService;
 
-    @RequestMapping("/")
+    @RequestMapping("/index")
     public String index(Model model) {
         model.addAttribute("username", "李四");
         return "index";
     }
 
-    @RequestMapping("/auth-login")
-    public String login(Model model) {
+
+    @RequestMapping("/applycourse")
+    public String applycourse(Model model) {
         model.addAttribute("username", "李四");
-        return "auth-login";
+        return "applycourse";
     }
+
+    @RequestMapping("/mycourse")
+    public String mycourse(Model model) {
+        model.addAttribute("username", "李四");
+        return "mycourse";
+    }
+
+    @RequestMapping("/experiment_task")
+    public String experiment_task(Model model) {
+        model.addAttribute("username", "李四");
+        return "experiment_task";
+    }
+
+
 }
