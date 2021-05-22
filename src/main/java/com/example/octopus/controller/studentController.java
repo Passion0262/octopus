@@ -57,4 +57,10 @@ public class studentController {
         return "datasets";
     }
 
+    @RequestMapping("/login")
+    public String login(Model model) {
+        model.addAttribute("username", "李四");
+        return "auth-login";
+    }
+
 }
