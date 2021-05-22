@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @Data
 @Table
-public class major {
+public class Major {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
