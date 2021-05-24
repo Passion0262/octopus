@@ -32,11 +32,8 @@
                     <!-- LOGO -->
                     <div class="navbar-brand-box">
                     	<a href="admin_index" class="logo logo-dark">
-                            <span class="logo-sm">
-                                <img src="static/images/logo-sm-dark.png" alt="" height="22">
-                            </span>
                             <span class="logo-lg">
-                                <img src="static/images/logo-dark.png" alt="" height="20">
+                                <img src="static/images/logo-dark.png" alt="" height="30">
                             </span>
                         </a>
                     </div>
@@ -56,15 +53,14 @@
 
                     <!-- 个人信息展示 退出登录操作 -->
                     <div class="dropdown d-inline-block user-dropdown" id="user-info">
-                        <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true">
                             <img class="rounded-circle header-profile-user" src="static/images/users/avatar-2.jpg" alt="Header Avatar">
                             <span class="d-none d-xl-inline-block ml-1" th:text="${username}"></span>
                             <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
                             <!-- item-->
-                            <a class="dropdown-item" href="#"><i class="ri-user-line align-middle mr-1"></i>江南大学</a>
-                            <a class="dropdown-item" href="#"><i class="ri-wallet-2-line align-middle mr-1"></i>xxxx</a>
+                            <a class="dropdown-item" href="admin_userinfo"><i class="ri-user-line align-middle mr-1"></i>个人资料</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item text-danger" href="admin_login"><i class="ri-shut-down-line align-middle mr-1 text-danger"></i>退出</a>
                         </div>
@@ -81,18 +77,18 @@
                 <div id="sidebar-menu">
                     <!-- Left Menu Start -->
                     <ul class="metismenu list-unstyled" id="side-menu">
-                        <li class="mm-active">
+                        <li>
                             <a href="admin_index" class="waves-effect">
                                 <i class="ri-home-5-line"></i>
                                 <span>首页</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="has-arrow waves-effect" aria-expanded="false">
-                                <i class="ri-shield-user-line"></i>
+                            <a href="#" class="has-arrow waves-effect">
+                                <i class="mdi mdi-account-group"></i>
                                 <span>学生管理</span>
                             </a>
-                            <ul class="sub-menu mm-collapse" aria-expanded="false">
+                            <ul class="sub-menu mm-collapse">
                                 <li>
                                     <a href="admin_major">专业管理</a>
                                 </li>
@@ -106,11 +102,11 @@
                         </li>
 
                         <li>
-                            <a href="#" class="has-arrow waves-effect " aria-expanded="false">
-                                <i class="ri-file-text-line"></i>
+                            <a href="#" class="has-arrow waves-effect ">
+                                <i class="mdi mdi-file-compare"></i>
                                 <span>开课管理</span>
                             </a>
-                            <ul class="sub-menu mm-collapse" aria-expanded="false">
+                            <ul class="sub-menu mm-collapse">
                                 <li>
                                     <a href="admin_course">开课计划管理</a>
                                 </li>
@@ -121,11 +117,11 @@
                         </li>
 
                         <li>
-                            <a href="#" class="has-arrow waves-effect " aria-expanded="false">
-                                <i class="ri-briefcase-2-line"></i>
+                            <a href="#" class="has-arrow waves-effect ">
+                                <i class="ri-file-text-line"></i>
                                 <span>学习记录</span>
                             </a>
-                            <ul class="sub-menu mm-collapse" aria-expanded="false">
+                            <ul class="sub-menu mm-collapse">
                                 <li>
                                     <a href="admin_video_log">视频学习汇总</a>
                                 </li>
@@ -142,11 +138,11 @@
                         </li>
 
                         <li>
-                            <a href="#" class="has-arrow waves-effect " aria-expanded="false">
+                            <a href="#" class="has-arrow waves-effect ">
                                 <i class="ri-briefcase-2-line"></i>
                                 <span>实验管理</span>
                             </a>
-                            <ul class="sub-menu mm-collapse" aria-expanded="false">
+                            <ul class="sub-menu mm-collapse">
                                 <li>
                                     <a href="admin_pc_type">实验机类型</a>
                                 </li>
@@ -163,16 +159,16 @@
                         </li>
 
                         <li>
-                            <a href="#" class="has-arrow waves-effect " aria-expanded="false">
-                                <i class="ri-pie-chart-2-line"></i>
+                            <a href="#" class="has-arrow waves-effect ">
+                                <i class="ri-slideshow-3-line"></i>
                                 <span>视频课程</span>
                             </a>
-                            <ul class="sub-menu mm-collapse" aria-expanded="false">
+                            <ul class="sub-menu mm-collapse">
                                 <li>
                                     <a href="admin_video">视频课程管理</a>
                                 </li>
                                 <li>
-                                    <a href="admin_video_class">实验机集群</a>
+                                    <a href="admin_video_class">视频课程分类</a>
                                 </li>
                             </ul>
                         </li>
@@ -197,18 +193,143 @@
                         </div>
                     </div>
                     <!-- end page title -->
-                    
-                </div><!-- container-fluid -->
-            </div><!-- End Page-content -->
+
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="media">
+                                                <div class="media-body overflow-hidden">
+                                                    <p class="text-truncate font-size-14 mb-2"></p>
+                                                    <h4 class="mb-0">在线机器</h4>
+                                                </div>
+                                                <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body border-top py-3">
+                                            <div class="text-truncate">
+                                                <!--
+                                                <span class="badge badge-soft-success font-size-11">
+                                                    <i class="mdi mdi-menu-up"></i>2.4%
+                                                </span>
+                                                -->
+                                                <span class="text-muted ml-2">111</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="media">
+                                                <div class="media-body overflow-hidden">
+                                                    <p class="text-truncate font-size-14 mb-2"></p>
+                                                    <h4 class="mb-0">实战项目</h4>
+                                                </div>
+                                                <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body border-top py-3">
+                                            <div class="text-truncate">
+                                                <!--
+                                                <span class="badge badge-soft-success font-size-11">
+                                                    <i class="mdi mdi-menu-up"></i>2.4%
+                                                </span>
+                                                -->
+                                                <span class="text-muted ml-2">111</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="media">
+                                                <div class="media-body overflow-hidden">
+                                                    <p class="text-truncate font-size-14 mb-2"></p>
+                                                    <h4 class="mb-0">实验任务</h4>
+                                                </div>
+                                                <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body border-top py-3">
+                                            <div class="text-truncate">
+                                                <!--
+                                                <span class="badge badge-soft-success font-size-11">
+                                                    <i class="mdi mdi-menu-up"></i>2.4%
+                                                </span>
+                                                -->
+                                                <span class="text-muted ml-2">111</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="media">
+                                                <div class="media-body overflow-hidden">
+                                                    <p class="text-truncate font-size-14 mb-2"></p>
+                                                    <h4 class="mb-0">视频课程</h4>
+                                                </div>
+                                                <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body border-top py-3">
+                                            <div class="text-truncate">
+                                                <!--
+                                                <span class="badge badge-soft-success font-size-11">
+                                                    <i class="mdi mdi-menu-up"></i>2.4%
+                                                </span>
+                                                -->
+                                                <span class="text-muted ml-2">111</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="media">
+                                                <div class="media-body overflow-hidden">
+                                                    <p class="text-truncate font-size-14 mb-2"></p>
+                                                    <h4 class="mb-0">实验镜像</h4>
+                                                </div>
+                                                <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body border-top py-3">
+                                            <div class="text-truncate">
+                                                <!--
+                                                <span class="badge badge-soft-success font-size-11">
+                                                    <i class="mdi mdi-menu-up"></i>2.4%
+                                                </span>
+                                                -->
+                                                <span class="text-muted ml-2">111</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <!-- container-fluid -->
+            </div>
+
+            <!-- End Page-content -->
+
             <footer class="footer">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-6">
                         </div>
                         <div class="col-sm-6">
-                            <div class="text-sm-right d-none d-sm-block">
-                                <script>document.write(new Date().getFullYear())</script>© 人工智能实验实训平台
-                            </div>
+                            <div class="text-sm-right d-none d-sm-block"><script>document.write(new Date().getFullYear())</script>© 人工智能实验实训平台</div>
                         </div>
                     </div>
                 </div>

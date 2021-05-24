@@ -32,23 +32,20 @@
                 <div class="d-flex">
                     <!-- LOGO -->
                     <div class="navbar-brand-box">
-                        <a href="index" class="logo logo-dark">
-                            <span class="logo-sm">
-                                <img src="static/images/logo-sm-dark.png" alt="" height="22">
-                            </span>
+                        <a href="admin_index" class="logo logo-dark">
                             <span class="logo-lg">
-                                <img src="static/images/logo-dark.png" alt="" height="20">
+                                <img src="static/images/logo-dark.png" alt="" height="30">
                             </span>
                         </a>
                     </div>
                     <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn">
                         <i class="ri-menu-2-line align-middle"></i>
-                    </button>         
+                    </button>
                 </div>
 
 
                 <div class="d-flex">
-                    
+
                     <div class="dropdown d-none d-lg-inline-block ml-1">
                         <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
                             <i class="ri-fullscreen-line"></i>
@@ -57,22 +54,19 @@
 
                     <!-- 个人信息展示 退出登录操作 -->
                     <div class="dropdown d-inline-block user-dropdown" id="user-info">
-                        <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" >
                             <img class="rounded-circle header-profile-user" src="static/images/users/avatar-2.jpg" alt="Header Avatar">
                             <span class="d-none d-xl-inline-block ml-1" th:text="${username}"></span>
                             <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
                             <!-- item-->
-                            <a class="dropdown-item" href="#"><i class="ri-user-line align-middle mr-1"></i>江南大学</a>
-                            <!--<a class="dropdown-item" href="#"><i class="ri-wallet-2-line align-middle mr-1"></i>xxxx</a>-->
+                            <a class="dropdown-item" href="admin_userinfo"><i class="ri-user-line align-middle mr-1"></i>个人资料</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item text-danger" href="admin_login"><i class="ri-shut-down-line align-middle mr-1 text-danger"></i>退出</a>
                         </div>
                     </div>
-                    <!-- 个人信息展示 退出登录操作 -->          
-
-
+                    <!-- 个人信息展示 退出登录操作 -->
                 </div>
             </div>
         </header>
@@ -90,12 +84,12 @@
                                 <span>首页</span>
                             </a>
                         </li>
-                        <li class="mm-active">
-                            <a href="#" class="has-arrow waves-effect" aria-expanded="false">
-                                <i class="ri-shield-user-line"></i>
+                        <li>
+                            <a href="#" class="has-arrow waves-effect" >
+                                <i class="mdi mdi-account-group"></i>
                                 <span>学生管理</span>
                             </a>
-                            <ul class="sub-menu mm-collapse" aria-expanded="false">
+                            <ul class="sub-menu mm-collapse" >
                                 <li>
                                     <a href="admin_major">专业管理</a>
                                 </li>
@@ -109,11 +103,11 @@
                         </li>
 
                         <li>
-                            <a href="#" class="has-arrow waves-effect " aria-expanded="false">
-                                <i class="ri-file-text-line"></i>
+                            <a href="#" class="has-arrow waves-effect " >
+                                <i class="mdi mdi-file-compare"></i>
                                 <span>开课管理</span>
                             </a>
-                            <ul class="sub-menu mm-collapse" aria-expanded="false">
+                            <ul class="sub-menu mm-collapse" >
                                 <li>
                                     <a href="admin_course">开课计划管理</a>
                                 </li>
@@ -124,11 +118,11 @@
                         </li>
 
                         <li>
-                            <a href="#" class="has-arrow waves-effect " aria-expanded="true">
-                                <i class="ri-briefcase-2-line"></i>
+                            <a href="#" class="has-arrow waves-effect " >
+                                <i class="ri-file-text-line"></i>
                                 <span>学习记录</span>
                             </a>
-                            <ul class="sub-menu mm-collapse" aria-expanded="true">
+                            <ul class="sub-menu mm-collapse" >
                                 <li>
                                     <a href="admin_video_log">视频学习汇总</a>
                                 </li>
@@ -145,11 +139,11 @@
                         </li>
 
                         <li>
-                            <a href="#" class="has-arrow waves-effect " aria-expanded="false">
+                            <a href="#" class="has-arrow waves-effect " >
                                 <i class="ri-briefcase-2-line"></i>
                                 <span>实验管理</span>
                             </a>
-                            <ul class="sub-menu mm-collapse" aria-expanded="false">
+                            <ul class="sub-menu mm-collapse" >
                                 <li>
                                     <a href="admin_pc_type">实验机类型</a>
                                 </li>
@@ -166,16 +160,16 @@
                         </li>
 
                         <li>
-                            <a href="#" class="has-arrow waves-effect " aria-expanded="false">
-                                <i class="ri-pie-chart-2-line"></i>
+                            <a href="#" class="has-arrow waves-effect " >
+                                <i class="ri-slideshow-3-line"></i>
                                 <span>视频课程</span>
                             </a>
-                            <ul class="sub-menu mm-collapse" aria-expanded="false">
+                            <ul class="sub-menu mm-collapse" >
                                 <li>
                                     <a href="admin_video">视频课程管理</a>
                                 </li>
                                 <li>
-                                    <a href="admin_video_class">实验机集群</a>
+                                    <a href="admin_video_class">视频课程分类</a>
                                 </li>
                             </ul>
                         </li>
