@@ -22,6 +22,12 @@ public class Student_Course {
     @Column(columnDefinition = "varchar(20) comment '课程名称'")
     private String courseName;
 
+    @Column(name = "teaNumber", columnDefinition = "varchar(20) comment '授课教师号'")
+    private String teaNumber;
+
+    @Column(columnDefinition = "varchar(30) comment '授课老师'")
+    private String teacher;
+
     @Column(columnDefinition = "varchar(20) comment '学生学号'")
     private String stuNumber;
 

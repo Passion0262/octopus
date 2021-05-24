@@ -16,14 +16,13 @@ import java.util.Set;
 @Table
 public class Class_ {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private long id;
+    @Column(columnDefinition = "varchar(50) comment '班级名称'")
+    private String className;
 
     @Column(columnDefinition = "varchar(20) comment '所属专业'")
     private String major;
-
-    @Column(columnDefinition = "varchar(50) comment '班级名称'")
-    private String className;
 
     @Column(columnDefinition = "varchar(20) comment '创建人员'")
     private String creator;

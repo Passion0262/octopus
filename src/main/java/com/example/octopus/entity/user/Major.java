@@ -14,9 +14,8 @@ import javax.persistence.*;
 @Table
 public class Major {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private long id;
     @Column(name="majorCode")
     private String majorCode;
 

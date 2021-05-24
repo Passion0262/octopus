@@ -22,8 +22,20 @@ public class Course {
     @Column(columnDefinition = "varchar(20) comment '课程名称'")
     private String courseName;
 
+    @Column(name = "teaNumber", columnDefinition = "varchar(20) comment '授课教师号'")
+    private String teaNumber;
+
     @Column(columnDefinition = "varchar(30) comment '授课老师'")
     private String teacher;
+
+    @Column(columnDefinition = "varchar(30) comment '分类'")
+    private String classification;
+
+    @Column(columnDefinition = "varchar(255) comment '课程简介'")
+    private String courseBrief;
+
+    @Column(columnDefinition = "varchar(255) comment '课程标图地址'")
+    private String courseImagePath;
 
     @Column(columnDefinition = "date comment '开始时间'")
     private Date startTime;

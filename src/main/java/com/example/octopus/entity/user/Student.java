@@ -16,9 +16,8 @@ import java.sql.Time;
 @Table
 public class Student {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private long id;
     @Column(name="stuNumber")
     private String stuNumber;
 
@@ -28,8 +27,11 @@ public class Student {
 
     private String major;
 
-    @Column(name= "className")
-    private String className;
+    @ManyToOne
+    @JoinColumn(name = "className")
+    private Class_ class_;
+//    @Column(name= "className")
+//    private String className;
 
     @Column(name="phoneNumber")
     private String phoneNumber;
