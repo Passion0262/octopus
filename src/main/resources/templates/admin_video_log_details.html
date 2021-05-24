@@ -5,8 +5,9 @@
     <meta charset="utf-8" />
     <title>人工智能实验实训平台-后台管理</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="shortcut icon" href="static/images/favicon.ico" />
+    <!--<meta content="Premium Multipurpose Admin & Dashboard Template" name="description" /> -->
+    <!--<meta content="Themesdesign" name="author" /> -->
+    <link rel="shortcut icon" href="static/images/favicon.ico">
     <!-- jquery.vectormap css -->
     <link href="static/js/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
     <!-- DataTables -->
@@ -31,7 +32,7 @@
                 <div class="d-flex">
                     <!-- LOGO -->
                     <div class="navbar-brand-box">
-                    	<a href="admin_index" class="logo logo-dark">
+                        <a href="admin_index" class="logo logo-dark">
                             <span class="logo-lg">
                                 <img src="static/images/logo-dark.png" alt="" height="30">
                             </span>
@@ -39,12 +40,12 @@
                     </div>
                     <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn">
                         <i class="ri-menu-2-line align-middle"></i>
-                    </button>         
+                    </button>
                 </div>
 
 
                 <div class="d-flex">
-                    
+
                     <div class="dropdown d-none d-lg-inline-block ml-1">
                         <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
                             <i class="ri-fullscreen-line"></i>
@@ -53,7 +54,7 @@
 
                     <!-- 个人信息展示 退出登录操作 -->
                     <div class="dropdown d-inline-block user-dropdown" id="user-info">
-                        <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true">
+                        <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" >
                             <img class="rounded-circle header-profile-user" src="static/images/users/avatar-2.jpg" alt="Header Avatar">
                             <span class="d-none d-xl-inline-block ml-1" th:text="${username}"></span>
                             <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
@@ -65,7 +66,7 @@
                             <a class="dropdown-item text-danger" href="admin_login"><i class="ri-shut-down-line align-middle mr-1 text-danger"></i>退出</a>
                         </div>
                     </div>
-                    <!-- 个人信息展示 退出登录操作 -->            
+                    <!-- 个人信息展示 退出登录操作 -->
                 </div>
             </div>
         </header>
@@ -84,11 +85,11 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="has-arrow waves-effect">
+                            <a href="#" class="has-arrow waves-effect" >
                                 <i class="mdi mdi-account-group"></i>
                                 <span>学生管理</span>
                             </a>
-                            <ul class="sub-menu mm-collapse">
+                            <ul class="sub-menu mm-collapse" >
                                 <li>
                                     <a href="admin_major">专业管理</a>
                                 </li>
@@ -102,11 +103,11 @@
                         </li>
 
                         <li>
-                            <a href="#" class="has-arrow waves-effect ">
+                            <a href="#" class="has-arrow waves-effect " >
                                 <i class="mdi mdi-file-compare"></i>
                                 <span>开课管理</span>
                             </a>
-                            <ul class="sub-menu mm-collapse">
+                            <ul class="sub-menu mm-collapse" >
                                 <li>
                                     <a href="admin_course">开课计划管理</a>
                                 </li>
@@ -117,11 +118,11 @@
                         </li>
 
                         <li>
-                            <a href="#" class="has-arrow waves-effect ">
+                            <a href="#" class="has-arrow waves-effect " >
                                 <i class="ri-file-text-line"></i>
                                 <span>学习记录</span>
                             </a>
-                            <ul class="sub-menu mm-collapse">
+                            <ul class="sub-menu mm-collapse" >
                                 <li>
                                     <a href="admin_video_log">视频学习汇总</a>
                                 </li>
@@ -138,11 +139,11 @@
                         </li>
 
                         <li>
-                            <a href="#" class="has-arrow waves-effect ">
+                            <a href="#" class="has-arrow waves-effect " >
                                 <i class="ri-briefcase-2-line"></i>
                                 <span>实验管理</span>
                             </a>
-                            <ul class="sub-menu mm-collapse">
+                            <ul class="sub-menu mm-collapse" >
                                 <li>
                                     <a href="admin_pc_type">实验机类型</a>
                                 </li>
@@ -159,11 +160,11 @@
                         </li>
 
                         <li>
-                            <a href="#" class="has-arrow waves-effect ">
+                            <a href="#" class="has-arrow waves-effect " >
                                 <i class="ri-slideshow-3-line"></i>
                                 <span>视频课程</span>
                             </a>
-                            <ul class="sub-menu mm-collapse">
+                            <ul class="sub-menu mm-collapse" >
                                 <li>
                                     <a href="admin_video">视频课程管理</a>
                                 </li>
@@ -179,137 +180,74 @@
         </div>
         <!-- Left Sidebar End -->
         
-
         <!-- Start right Content here -->
         <div class="main-content">
             <div class="page-content">
                 <div class="container-fluid">
-                    <!-- start page title -->
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-flex align-items-center justify-content-between" id="page">
-                                <h4 class="mb-0">首页</h4>
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="#">学习记录</a></li>
+                                        <li class="breadcrumb-item active">视频学习详情</li>
+                                    </ol>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <!-- end page title -->
 
                     <div class="row">
-                        <div class="col-xl-12">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="media">
-                                                <div class="media-body overflow-hidden">
-                                                    <p class="text-truncate font-size-14 mb-2"></p>
-                                                    <h4 class="mb-0">在线机器</h4>
-                                                </div>
-                                                <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
-                                            </div>
-                                        </div>
-                                        <div class="card-body border-top py-3">
-                                            <div class="text-truncate">
-                                                <!--
-                                                <span class="badge badge-soft-success font-size-11">
-                                                    <i class="mdi mdi-menu-up"></i>2.4%
-                                                </span>
-                                                -->
-                                                <span class="text-muted ml-2">111</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="media">
-                                                <div class="media-body overflow-hidden">
-                                                    <p class="text-truncate font-size-14 mb-2"></p>
-                                                    <h4 class="mb-0">实战项目</h4>
-                                                </div>
-                                                <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
-                                            </div>
-                                        </div>
-                                        <div class="card-body border-top py-3">
-                                            <div class="text-truncate">
-                                                <!--
-                                                <span class="badge badge-soft-success font-size-11">
-                                                    <i class="mdi mdi-menu-up"></i>2.4%
-                                                </span>
-                                                -->
-                                                <span class="text-muted ml-2">111</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="media">
-                                                <div class="media-body overflow-hidden">
-                                                    <p class="text-truncate font-size-14 mb-2"></p>
-                                                    <h4 class="mb-0">实验任务</h4>
-                                                </div>
-                                                <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
-                                            </div>
-                                        </div>
-                                        <div class="card-body border-top py-3">
-                                            <div class="text-truncate">
-                                                <!--
-                                                <span class="badge badge-soft-success font-size-11">
-                                                    <i class="mdi mdi-menu-up"></i>2.4%
-                                                </span>
-                                                -->
-                                                <span class="text-muted ml-2">111</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="media">
-                                                <div class="media-body overflow-hidden">
-                                                    <p class="text-truncate font-size-14 mb-2"></p>
-                                                    <h4 class="mb-0">视频课程</h4>
-                                                </div>
-                                                <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
-                                            </div>
-                                        </div>
-                                        <div class="card-body border-top py-3">
-                                            <div class="text-truncate">
-                                                <!--
-                                                <span class="badge badge-soft-success font-size-11">
-                                                    <i class="mdi mdi-menu-up"></i>2.4%
-                                                </span>
-                                                -->
-                                                <span class="text-muted ml-2">111</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="media">
-                                                <div class="media-body overflow-hidden">
-                                                    <p class="text-truncate font-size-14 mb-2"></p>
-                                                    <h4 class="mb-0">实验镜像</h4>
-                                                </div>
-                                                <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
-                                            </div>
-                                        </div>
-                                        <div class="card-body border-top py-3">
-                                            <div class="text-truncate">
-                                                <!--
-                                                <span class="badge badge-soft-success font-size-11">
-                                                    <i class="mdi mdi-menu-up"></i>2.4%
-                                                </span>
-                                                -->
-                                                <span class="text-muted ml-2">111</span>
-                                            </div>
-                                        </div>
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title"></h4>
+                                    <div>
+                                        <table id="datatable-buttons" class="table table-striped table-bordered table-centered" style="white-space:nowrap;">
+                                            <thead style="text-align: center;">
+                                                <tr>
+                                                    <th>学号</th>
+                                                    <th>学生</th>
+                                                    <th>班级</th>
+                                                    <th>专业</th>
+                                                    <th>课程名称</th>
+                                                    <th>学习时长</th>
+                                                    <th>讲座名称</th>
+                                                    <th>学习日期</th>
+                                                    <th>首次学习时间</th>
+                                                    <th>末次学习时间</th>
+                                                    <th>超出学习时长</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody style="text-align: center;">
+                                            <tr>
+                                                <td>10001</td>
+                                                <td>丁一</td>
+                                                <td>大数据技术与应用</td>
+                                                <td>大数据2101</td>
+                                                <td>数据可视化技术</td>
+                                                <td>0小时56分11秒</td>
+                                                <td>1.1简介</td>
+                                                <td>2020-02-10</td>
+                                                <td>2020-02-08 11:20:01</td>
+                                                <td>2020-03-18 14:11:19</td>
+                                                <td>0小时0分0秒</td>
+                                            </tr>
+                                            <tr>
+                                                <td>10002</td>
+                                                <td>王五</td>
+                                                <td>大数据技术与应用</td>
+                                                <td>大数据2101</td>
+                                                <td>数据可视化技术</td>
+                                                <td>3小时56分11秒</td>
+                                                <td>1.1简介</td>
+                                                <td>2020-02-09</td>
+                                                <td>2020-02-08 11:20:01</td>
+                                                <td>2020-03-18 14:11:19</td>
+                                                <td>0小时56分11秒</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -318,10 +256,9 @@
 
 
                 </div>
-                <!-- container-fluid -->
+                    
             </div>
-
-            <!-- End Page-content -->
+            <!-- container-fluid -->
 
             <footer class="footer">
                 <div class="container-fluid">
@@ -336,9 +273,11 @@
             </footer>
         </div>
         <!-- end main content-->
-    </div>
+    
     <!-- END layout-wrapper -->
-
+    </div>
+   
+ 
 
     <!-- JAVASCRIPT -->
     <!-- jquery -->
@@ -353,8 +292,31 @@
     <script src="static/js/libs/node-waves/waves.min.js"></script>
     <!-- apexcharts -->
     <script src="static/js/libs/apexcharts/apexcharts.min.js"></script>
-    <!-- app.js -->
+    <!-- admin-resources/jquery.vectormap -->
+    <script src="static/js/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="static/js/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-us-merc-en.js"></script>
+    <!-- datatables -->
+    <script src="static/js/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="static/js/libs/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="static/js/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="static/js/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="static/js/libs/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="static/js/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="static/js/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="static/js/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+    <script src="static/js/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="static/js/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+    <script src="static/js/libs/datatables.net-select/js/dataTables.select.min.js"></script>   
+    <!-- jszip -->
+    <script src="static/js/libs/jszip/jszip.min.js"></script>
+    <!-- pdfmake/build -->
+    <script src="static/js/libs/pdfmake/build/pdfmake.min.js"></script>
+    <script src="static/js/libs/pdfmake/build/vfs_fonts.js"></script>
+    <!-- js/pages/ -->
+    <script src="static/js/pages/datatables.init.js"></script>
+    <script src="static/js/pages/dashboard.init.js"></script>
     <script src="static/js/app.js"></script>
+
 
 </body>
 

@@ -8,14 +8,14 @@ $(document).ready(function(){
 		select:{
 			style:"multi"
 		},
+		scrollY:"400px",
+		scrollCollapse:!0,
 		lengthChange:!1,
-		pagingType:"full_numbers",
 		drawCallback:function(){
 		 	$(".dataTables_paginate > .pagination").addClass("pagination-rounded")
 		},
-		buttons:["copy","excel","pdf","colvis"]
-	});
-		 
+		buttons:["copy","excel","pdf","csv","colvis"]
+	});	 
 	a.buttons().container().appendTo("#datatable-buttons_wrapper .col-md-6:eq(0)"),
 	$("#selection-datatable").DataTable({
 		select:{
