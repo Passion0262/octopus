@@ -1,14 +1,8 @@
 package com.example.octopus.repository;
 
-import com.example.octopus.entity.Class_;
-import com.example.octopus.entity.Student;
+import com.example.octopus.entity.user.Class_;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-
-import java.util.List;
 
 /**
  * @author ：shadow

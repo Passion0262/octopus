@@ -1,4 +1,4 @@
-package com.example.octopus.entity;
+package com.example.octopus.entity.experiment;
 
 import lombok.Data;
 
@@ -8,6 +8,7 @@ import javax.persistence.*;
  * @author ：shadow
  * @date ：Created in 2021/5/22 1:11 下午
  * @modified By：
+ * 实验任务分类
  */
 @Entity
 @Table

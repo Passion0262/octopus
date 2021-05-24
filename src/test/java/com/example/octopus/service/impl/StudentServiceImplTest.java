@@ -1,6 +1,6 @@
 package com.example.octopus.service.impl;
 
-import com.example.octopus.entity.Student;
+import com.example.octopus.entity.user.Student;
 import com.example.octopus.service.StudentService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;

@@ -1,6 +1,6 @@
 package com.example.octopus.service;
 
-import com.example.octopus.entity.Student;
+import com.example.octopus.entity.user.Student;
 
 import java.util.List;
 
@@ -45,4 +45,6 @@ public interface StudentService {
      * @return
      */
     public void updateLoginInfo(String stuNumber);
+
+    public void resetPassword(String stuNumber);
 }

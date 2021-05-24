@@ -1,0 +1,2 @@
+# insert into student (id, className, lastLoginTime,loginNumber, major, name, password, phoneNumber, stuNumber, studyTime)
+# VALUES (null, "计算机专硕", current_time, 5, "人工智能", "张三", "zhangsan", "13812345678", "6201924001", "25:00:00" );

@@ -1,4 +1,4 @@
-package com.example.octopus.entity;
+package com.example.octopus.entity.experiment;
 
 import lombok.Data;
 
@@ -9,6 +9,7 @@ import java.sql.Date;
  * @author ：shadow
  * @date ：Created in 2021/5/22 12:40 下午
  * @modified By：
+ * 实验组合
  */
 @Entity
 @Data

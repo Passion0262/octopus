@@ -1,8 +1,9 @@
-package com.example.octopus.entity;
+package com.example.octopus.entity.user;
 
 import lombok.Data;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.Set;
 
 /**
@@ -18,14 +19,17 @@ public class Class_ {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(columnDefinition = "comment '专业'")
+    @Column(columnDefinition = "varchar(20) comment '所属专业'")
     private String major;
 
+    @Column(columnDefinition = "varchar(50) comment '班级名称'")
     private String className;
 
+    @Column(columnDefinition = "varchar(20) comment '创建人员'")
     private String creator;
 
-    private String createTime;
+    @Column(columnDefinition = "date comment '创建时间'")
+    private Date createTime;
 
 //    @ManyToMany(fetch = FetchType.LAZY)
 //    @JoinTable(name="teacher_student", joinColumns={@JoinColumn(name="s_id")}, inverseJoinColumns={@JoinColumn(name="t_id")})
