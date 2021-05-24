@@ -19,27 +19,30 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name="stuNumber")
+    @Column(columnDefinition = "varchar(20) comment '学号'")
     private String stuNumber;
 
+    @Column(columnDefinition = "varchar(20) comment '姓名'")
     private String name;
 
+    @Column(columnDefinition = "varchar(30) comment '密码'")
     private String password;
 
+    @Column(columnDefinition = "varchar(20) comment '所属专业'")
     private String major;
 
-    @Column(name= "className")
+    @Column(columnDefinition = "varchar(20) comment '所属班级'")
     private String className;
 
-    @Column(name="phoneNumber")
+    @Column(columnDefinition = "varchar(12) comment '联系手机'")
     private String phoneNumber;
 
-    @Column(name="loginNumber")
+    @Column(columnDefinition = "int comment '登陆次数'")
     private int loginNumber;
 
-    @Column(name="lastLoginTime")
+    @Column(columnDefinition = "date comment '最近登陆时间'")
     private Date lastLoginTime;
 
-    @Column(name="studyTime")
+    @Column(columnDefinition = "time comment '学习总是长'")
     private Time studyTime;
 }

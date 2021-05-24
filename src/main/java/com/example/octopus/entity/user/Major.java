@@ -3,6 +3,7 @@ package com.example.octopus.entity.user;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 /**
  * @author ：shadow
@@ -17,14 +18,15 @@ public class Major {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name="majorCode")
+    @Column(columnDefinition = "varchar(20) comment '专业代码'")
     private String majorCode;
 
-    @Column(name="majorName")
+    @Column(columnDefinition = "varchar(20) comment '专业名称'")
     private String majorName;
 
+    @Column(columnDefinition = "varchar(20) comment '创建人员'")
     private String creator;
 
-    @Column(name="createTime")
-    private String createTime;
+    @Column(columnDefinition = "date comment '创建时间'")
+    private Date createTime;
 }
