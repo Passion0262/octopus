@@ -1,6 +1,6 @@
 package com.example.octopus.repository;
 
-import com.example.octopus.entity.Student;
+import com.example.octopus.entity.user.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -29,4 +29,7 @@ public interface StudentRepository extends JpaRepository<Student, Long>, JpaSpec
     @Query(value = "update student set loginNumber = loginNumber+1, lastLoginTime = CURRENT_TIMESTAMP where stuNumber = :stuNumber", nativeQuery = true)
     void updateLoginInfo(@Param("stuNumber") String stuNumber);
 
+    @Modifying
+    @Query(value = "update student set stuNumber = '000000' where stuNumber = :stuNumber", nativeQuery = true)
+    void resetPassword(@Param("stuNumber") String stuNumber);
 }

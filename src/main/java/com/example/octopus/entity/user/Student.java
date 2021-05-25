@@ -1,4 +1,4 @@
-package com.example.octopus.entity;
+package com.example.octopus.entity.user;
 
 import lombok.Data;
 
@@ -9,32 +9,38 @@ import java.sql.Time;
 /**
  * @author ：shadow
  * @date ：Created in 2021/5/12 2:26 下午
- * @modified By：
+ * @modified By：Hao
+ * 学生表
  */
 @Entity
 @Data
 @Table
 public class Student {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private long id;
     @Column(name="stuNumber")
     private String stuNumber;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
     private String major;
 
-    @Column(name= "className")
-    private String className;
+    @ManyToOne
+    @JoinColumn(name = "className")
+    private Class_ class_;
+//    @Column(name= "className")
+//    private String className;
 
-    @Column(name="phoneNumber")
+    @Column(nullable = false,name="phoneNumber")
     private String phoneNumber;
 
-    @Column(name="loginNumber")
+    @Column(nullable = false,name="loginNumber")
     private int loginNumber;
 
     @Column(name="lastLoginTime")

@@ -1,13 +1,12 @@
 package com.example.octopus.service.impl;
 
-import com.example.octopus.entity.Student;
+import com.example.octopus.entity.user.Student;
 import com.example.octopus.repository.StudentRepository;
 import com.example.octopus.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,5 +44,10 @@ public class StudentServiceImpl implements StudentService {
     @Transactional
     public void updateLoginInfo(String stuNumber) {
         studentRepository.updateLoginInfo(stuNumber);
+    }
+
+    @Override
+    public void resetPassword(String stuNumber) {
+        studentRepository.resetPassword(stuNumber);
     }
 }
