@@ -19,28 +19,29 @@ public class Student_Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(columnDefinition = "varchar(20) comment '课程名称'")
+    @Column(nullable = false, columnDefinition = "varchar(20) comment '课程名称'")
     private String courseName;
 
-    @Column(name = "teaNumber", columnDefinition = "varchar(20) comment '授课教师号'")
+    @Column(nullable = false, name = "teaNumber", columnDefinition = "varchar(20) comment '授课教师号'")
     private String teaNumber;
 
-    @Column(columnDefinition = "varchar(30) comment '授课老师'")
+    @Column(nullable = false, columnDefinition = "varchar(30) comment '授课老师'")
     private String teacher;
 
-    @Column(columnDefinition = "varchar(20) comment '学生学号'")
-    private String stuNumber;
+    @ManyToOne
+    @JoinColumn(name = "stuNumber", columnDefinition = "varchar(20) comment '学生学号'")
+    private Student stuNumber;
 
-    @Column(columnDefinition = "varchar(20) comment '学生姓名'")
+    @Column(nullable = false, columnDefinition = "varchar(20) comment '学生姓名'")
     private String stuName;
 
-    @Column(columnDefinition = "varchar(20) comment '学生专业'")
+    @Column(nullable = false, columnDefinition = "varchar(20) comment '学生专业'")
     private String stuMajor;
 
-    @Column(columnDefinition = "varchar(20) comment '学生班级'")
+    @Column(nullable = false, columnDefinition = "varchar(20) comment '学生班级'")
     private String stuClass;
 
-    @Column(columnDefinition = "date comment '申请时间'")
+    @Column(nullable = false, columnDefinition = "date comment '申请时间'")
     private Date applyTime;
 
     @Column(columnDefinition = "varchar(20) comment '审核人员'")

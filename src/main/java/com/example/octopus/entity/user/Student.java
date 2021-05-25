@@ -9,7 +9,8 @@ import java.sql.Time;
 /**
  * @author ：shadow
  * @date ：Created in 2021/5/12 2:26 下午
- * @modified By：
+ * @modified By：Hao
+ * 学生表
  */
 @Entity
 @Data
@@ -21,10 +22,13 @@ public class Student {
     @Column(name="stuNumber")
     private String stuNumber;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
     private String major;
 
     @ManyToOne
@@ -33,10 +37,10 @@ public class Student {
 //    @Column(name= "className")
 //    private String className;
 
-    @Column(name="phoneNumber")
+    @Column(nullable = false,name="phoneNumber")
     private String phoneNumber;
 
-    @Column(name="loginNumber")
+    @Column(nullable = false,name="loginNumber")
     private int loginNumber;
 
     @Column(name="lastLoginTime")

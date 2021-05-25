@@ -1,4 +1,4 @@
-package com.example.octopus.entity.experiment;
+package com.example.octopus.entity.experimentMission;
 
 import com.example.octopus.entity.user.Course;
 import lombok.Data;
@@ -24,14 +24,19 @@ public class Experiment {
     @JoinColumn(name = "courseName")
     private Course course;  //实验所属课程
 
-    private String experimentName;  //实验任务名称
+    @Column(nullable = false)
+    private String name;  //实验名称
 
-    private String experimentImagePath;  //实验任务简图地址
+    @Column(nullable = false)
+    private String imagePath;  //实验任务简图地址
 
-    private String experimentBrief;  //实验任务简介
+    @Column(nullable = false)
+    private String brief;  //实验任务简介
 
+    @Column(nullable = false)
     private String creator;  //实验创建人
 
+    @Column(nullable = false)
     private Date createTime;  //实验创建时间
 
 

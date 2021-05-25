@@ -21,13 +21,13 @@ public class Class_ {
     @Column(columnDefinition = "varchar(50) comment '班级名称'")
     private String className;
 
-    @Column(columnDefinition = "varchar(20) comment '所属专业'")
+    @Column(nullable = false,columnDefinition = "varchar(20) comment '所属专业'")
     private String major;
 
-    @Column(columnDefinition = "varchar(20) comment '创建人员'")
+    @Column(nullable = false,columnDefinition = "varchar(20) comment '创建人员'")
     private String creator;
 
-    @Column(columnDefinition = "date comment '创建时间'")
+    @Column(nullable = false,columnDefinition = "date comment '创建时间'")
     private Date createTime;
 
 //    @ManyToMany(fetch = FetchType.LAZY)

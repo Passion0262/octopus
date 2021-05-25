@@ -7,7 +7,8 @@ import javax.persistence.*;
 /**
  * @author ：shadow
  * @date ：Created in 2021/5/22 10:27 上午
- * @modified By：
+ * @modified By：Hao
+ * 专业表
  */
 @Entity
 @Data
@@ -16,14 +17,15 @@ public class Major {
     @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    private long id;
-    @Column(name="majorCode")
+    @Column(name = "majorCode")
     private String majorCode;
 
-    @Column(name="majorName")
+    @Column(nullable = false, name = "majorName")
     private String majorName;
 
+    @Column(nullable = false)
     private String creator;
 
-    @Column(name="createTime")
+    @Column(nullable = false, name = "createTime")
     private String createTime;
 }

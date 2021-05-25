@@ -1,4 +1,4 @@
-package com.example.octopus.entity;
+package com.example.octopus.entity.project;
 
 import lombok.Data;
 
@@ -8,29 +8,34 @@ import java.sql.Date;
 /**
  * @author ：shadow
  * @date ：Created in 2021/5/22 1:16 下午
- * @modified By：
+ * @modified By：Hao
+ * 项目表
  */
 @Table
 @Entity
 @Data
-public class ProjectManage {
+public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;    //项目编号
 
+    @Column(nullable = false)
     private String name;    //项目名称
 
-    private String description;     //项目简介
+    @Column(nullable = false)
+    private String brief;     //项目简介
 
+    @Column(nullable = false)
+    private String imagePath;  //项目简图地址
+
+    @Column(nullable = false)
     private String status;  //项目状态
 
-    private String sortValue; //排序值
+//    @Column(nullable = false)
+//    private String sortValue; //排序值
 
     private String creator; //创建人员
 
     private Date createTime;  //创建时间
-
-    private String pictureUrl; //缩略图
-
 
 }

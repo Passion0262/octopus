@@ -19,25 +19,25 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(columnDefinition = "varchar(20) comment '课程名称'")
+    @Column(nullable = false,columnDefinition = "varchar(20) comment '课程名称'")
     private String courseName;
+    @ManyToOne
+    @JoinColumn(nullable = false,name = "teaNumber", columnDefinition = "varchar(20) comment '授课教师号'")
+    private Teacher teaNumber;  //授课教师号
 
-    @Column(name = "teaNumber", columnDefinition = "varchar(20) comment '授课教师号'")
-    private String teaNumber;
-
-    @Column(columnDefinition = "varchar(30) comment '授课老师'")
+    @Column(nullable = false,columnDefinition = "varchar(30) comment '授课老师'")
     private String teacher;
 
-    @Column(columnDefinition = "varchar(30) comment '分类'")
+    @Column(nullable = false,columnDefinition = "varchar(30) comment '分类'")
     private String classification;
 
-    @Column(columnDefinition = "varchar(255) comment '课程简介'")
+    @Column(nullable = false,columnDefinition = "varchar(255) comment '课程简介'")
     private String courseBrief;
 
-    @Column(columnDefinition = "varchar(255) comment '课程标图地址'")
+    @Column(nullable = false,columnDefinition = "varchar(255) comment '课程标图地址'")
     private String courseImagePath;
 
-    @Column(columnDefinition = "date comment '开始时间'")
+    @Column(nullable = false,columnDefinition = "date comment '开始时间'")
     private Date startTime;
 
     @Column(columnDefinition = "date comment '结束时间'")
@@ -46,12 +46,12 @@ public class Course {
     @Column(columnDefinition = "int comment '允许参加人数'")
     private int numAllowed;
 
-    @Column(columnDefinition = "int comment '已参加人数'")
+    @Column(nullable = false,columnDefinition = "int default 0 comment '已参加人数'")
     private int numParticipated;
 
-    @Column(columnDefinition = "varchar(20) comment '课程状态（有效/无效）'")
+    @Column(nullable = false,columnDefinition = "enum('有效','无效') default '有效'")
     private String status;
 
-    @Column(columnDefinition = "date comment '开通申请时间'")
+    @Column(nullable = false,columnDefinition = "date comment '开通申请时间'")
     private Date applyTime;
 }
