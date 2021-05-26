@@ -100,11 +100,11 @@ public class studentController {
 
 
 
-    @RequestMapping("/login/confirmlogin")
+    @RequestMapping("/confirmlogin")
     public String confirmlogin(@RequestParam("username") String username, @RequestParam("userpwd") String userpwd,Model model) {
         System.out.println(username);
         System.out.println(userpwd);
-        model.addAttribute("username", "李四");
+        model.addAttribute("username", username);
         return "index";
     }
 
