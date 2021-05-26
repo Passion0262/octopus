@@ -38,15 +38,14 @@
         <!-- 个人信息展示 退出登录操作 -->
         <div class="dropdown d-inline-block user-dropdown">
           <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <!--                    <img class="rounded-circle header-profile-user" src="/images/users/avatar-2.jpg" alt="Header Avatar">-->
+            <img class="rounded-circle header-profile-user" src="static/images/users/avatar-2.jpg" alt="Header Avatar">
             <span class="d-none d-xl-inline-block ml-1">张三</span>
             <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
           </button>
           <div class="dropdown-menu dropdown-menu-right">
             <!-- item-->
-            <a class="dropdown-item" href="#"><i class="ri-user-line align-middle mr-1"></i>XX大学</a>
-            <a class="dropdown-item" href="#"><i class="ri-wallet-2-line align-middle mr-1"></i>什么什么</a>
-            <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#"><i class="ri-shut-down-line align-middle mr-1 text-danger"></i>Logout</a>
+            <a class="dropdown-item" href="userinfo"><i class="ri-user-line align-middle mr-1"></i>个人资料</a>
+            <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#"><i class="ri-shut-down-line align-middle mr-1 text-danger"></i>注销</a>
           </div>
         </div>
         <!-- 个人信息展示 退出登录操作 -->
@@ -75,7 +74,6 @@
 
 
 
-
         </ul>
       </div><!-- Sidebar -->
     </div>
@@ -91,84 +89,70 @@
           <div class="col-12">
             <!-- 修改路径 -->
             <div class="page-title-box d-flex align-items-center justify-content-between">
-              <h4 class="mb-0">学习记录</h4>
+              <h4 class="mb-0">个人资料</h4>
               <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                   <li class="breadcrumb-item"><a href="index"> 人工智能实验实训平台</a></li>
-                  <li class="breadcrumb-item active">学习记录</li>
+                  <li class="breadcrumb-item active">个人资料</li>
                 </ol>
               </div>
             </div>
           </div>
         </div>
         <div class="row">
+
+
           <div class="col-12">
             <div class="card">
               <div class="card-body">
-                <h4 class="card-title"></h4>
-                <div >
-                  <table id="datatable-buttons" class="table table-striped table-bordered" style="overflow-x: scroll;">
-                    <thead style="text-align: center;">
-                    <tr>
+                <table id="datatable-buttons" class="table  table-bordered text-center" style="overflow-x: scroll;">
 
-                      <th>编号</th>
-                      <th>课程名称</th>
-                      <th>学习时长</th>
-                      <th>开始学习时间</th>
-                      <th>结束学习时间</th>
-                      <th>详细介绍</th>
+                  <tr>
+                    <th>头像</th><td colspan="3"><img class="img-fluid" src="static/images/users/avatar-2.jpg" alt="Header Avatar"></td>
 
-                    </tr>
-                    </thead>
-                    <tbody style="text-align: center">
-                    <tr>
-                      <td>1</td>
-                      <td>hadoop大数据</td>
-                      <td>10分钟</td>
-                      <td>2021-5-19 18：00</td>
-                      <td>2021-5-19 18：10</td>
-                      <td><a href="studylog_detail">查看详情</a></td>
+                  </tr>
+                  <tr>
+                    <th>学号</th><td>35346436</td>
+                    <th>姓名</th><td>张三</td>
+                  </tr>
+                  <tr>
+                    <th>班级</th><td>34423</td>
+                    <th>专业</th><td>45345</td>
+                  </tr>
 
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>hadoop大数据</td>
-                      <td>10分钟</td>
-                      <td>2021-5-18 18：00</td>
-                      <td>2021-5-18 18：10</td>
-                      <td><a href="studylog_detail">查看详情</a></td>
+                </table>
 
-                    </tr>
-
-
-                    </tbody>
-                  </table>
-                </div>
               </div>
+
+              <div class="col-12" style="text-align: center;">
+                <button type="button" class="btn btn-success btn-rounded waves-effect waves-light" id="apply_sure">修改资料</button>
+              </div>
+
             </div>
           </div>
         </div>
 
 
 
-      </div>
-    </div><!-- end row -->
 
-  </div><!-- container-fluid -->
-</div><!-- End Page-content -->
-<footer class="footer">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-sm-6">
-        <!-- <script>document.write(new Date().getFullYear())</script>© 人工智能实验实训平台 -->
+
+        </div><!-- end row -->
+
+      </div><!-- container-fluid -->
+    </div><!-- End Page-content -->
+    <footer class="footer">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-6">
+            <!-- <script>document.write(new Date().getFullYear())</script>© 人工智能实验实训平台 -->
+          </div>
+          <div class="col-sm-6">
+            <div class="text-sm-right d-none d-sm-block"><script>document.write(new Date().getFullYear())</script>© 人工智能实验实训平台</div>
+          </div>
+        </div>
       </div>
-      <div class="col-sm-6">
-        <div class="text-sm-right d-none d-sm-block"><script>document.write(new Date().getFullYear())</script>© 人工智能实验实训平台</div>
-      </div>
-    </div>
-  </div>
-</footer>
-</div><!-- end main content-->
+    </footer>
+  </div><!-- end main content-->
 </div><!-- END layout-wrapper -->
 
 

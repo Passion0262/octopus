@@ -75,6 +75,7 @@
 
 
 
+
                 </ul>
             </div><!-- Sidebar -->
         </div>
@@ -90,80 +91,92 @@
                     <div class="col-12">
                         <!-- 修改路径 -->
                         <div class="page-title-box d-flex align-items-center justify-content-between">
-                            <h4 class="mb-0">实验任务</h4>
+                            <h4 class="mb-0">学习记录详情</h4>
                             <div class="page-title-right">
                                 <ol class="breadcrumb m-0">
                                     <li class="breadcrumb-item"><a href="index"> 人工智能实验实训平台</a></li>
-                                    <li class="breadcrumb-item active">实验任务</li>
+                                    <li class="breadcrumb-item"><a href="studylog"> 学习记录</a></li>
+                                    <li class="breadcrumb-item active">学习记录详情</li>
                                 </ol>
                             </div>
                         </div>
                     </div>
                 </div>
 
-
-
                 <div class="row">
 
-                    <div class="col-md-3">
-                        <a style="text-decoration: none; color: black;" href="experiment_task_detail">
-                        <div class="card">
-                            <img src="static/images/subject/subject.jpg" alt="Python数据分析、挖掘与可视化" class="img-fluid card-img-top"/>
-                            <div class="card-body">
-                                <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;" >Python数据分析与可视化</h4>
-                                <p class="card-text" style="overflow: hidden; height: 100px;">本课程为2020年12月Python数据分析、挖掘与可视化培训班专用课程。以程序设计初学者为教学对象，从程序设计基本概念出发，由浅入深、循序渐进地讲述Python程序设计的基本概念和基本方法。
-                                </p>
-                                <p class="card-text">
-                                    <small class="text-muted">实验任务：44</small>
-                                </p>
+
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <table id="datatable-buttons" class="table  table-bordered text-center" style="overflow-x: scroll;">
+
+                                        <tr>
+                                            <th>课程计划名称</th><td>hadoop大数据</td>
+                                            <th>讲授老师</th><td>李老师</td>
+                                        </tr>
+                                        <tr>
+                                            <th>总共学习时长</th><td>10小时</td>
+                                            <th>总共学习次数</th><td>23</td>
+                                        </tr>
+                                    </table>
+
+                                </div>
                             </div>
                         </div>
-                        </a>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card">
-                            <img src="static/images/subject/28.jpg" alt="《python数据分析基础》" class="img-fluid card-img-top"/>
-                            <div class="card-body">
-                                <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">《python数据分析基础》</h4>
-                                <p class="card-text" style="overflow: hidden;height: 100px;">本书由浅入深，比较适合那些从未接触过计算机语言的读者。每章配有大量的示例代码，希望读者在使用本书的时候，能够尽可能自己敲代码，少用复制粘贴的方法，这样有利于读者尽快进入“角色”，毕竟“拷贝得来终觉浅”。本书的前3章是Python的基础知识；第4章是利用Pandas库对数据进行处理、分析以及实现数据可视化；在第5章还列出了Python对文件的读取、存储方法，对网络爬虫、矩阵运算也做了简单的介绍。
-                                </p>
-                                <p class="card-text">
-                                    <small class="text-muted">实验任务：21</small>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card">
-                            <img src="static/images/subject/29.jpg" alt="《Python网络爬虫》" class="img-fluid card-img-top"/>
-                            <div class="card-body">
-                                <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">《Python网络爬虫》</h4>
-                                <p class="card-text" style="overflow: hidden;height: 100px;">《用Python写网络爬虫》讲解了如何使用Python来编写网络爬虫程序，内容包括网络爬虫简介，从页面中抓取数据的三种方法，提取缓存中的数据，使用多个线程和进程来进行并发抓取，如何抓取动态页面中的内容，与表单进行交互，处理页面中的验证码问题，以及使用Scarpy和Portia来进行数据抓取，使用本书介绍的数据抓取技术对几个真实的网站进行了抓取，旨在帮助读者活学活用书中介绍的技术。　　《用Python写网络爬虫》适合有一定Python编程经验，而且对爬虫技术感兴趣的读者阅读。
-                            </p>
-                                <p class="card-text">
-                                    <small class="text-muted">实验任务：5</small>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card">
-                            <img src="static/images/subject/31.jpg" alt="《python数据挖掘实践》" class="img-fluid card-img-top"/>
-                            <div class="card-body">
-                                <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">《python数据挖掘实践》</h4>
-                                <p class="card-text"  style="overflow: hidden;height: 100px;">《Python数据挖掘入门与实践》一书作为数据挖掘入门读物，介绍了数据挖掘的基础知识、基本工具和实践方法，通过循序渐进地讲解算法，带你轻松踏上数据挖掘之旅。本书采用理论与实践相结合的方式，呈现了如何使用朴素贝叶斯算法、决策树和随机森林算法对实际案例进行分析预测，等等。本书也涉及神经网络、深度学习、大数据处理等内容。
-                            </p>
-                                <p class="card-text">
-                                    <small class="text-muted">实验任务：15</small>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
 
 
-            </div>
+
+                <div class="col-12">
+
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title"></h4>
+                                <div >
+                                    <table id="" class="table table-striped table-bordered" style="overflow-x: scroll;">
+                                        <thead style="text-align: center;">
+                                        <tr>
+
+                                            <th>编号</th>
+                                            <th>课程任务名称</th>
+                                            <th>学习时长</th>
+                                            <th>开始学习时间</th>
+                                            <th>结束学习时间</th>
+
+
+                                        </tr>
+                                        </thead>
+                                        <tbody style="text-align: center">
+                                        <tr>
+                                            <td>1</td>
+                                            <td>1.1 34543</td>
+                                            <td>10分钟</td>
+                                            <td>2021-5-19 18：00</td>
+                                            <td>2021-5-19 18：10</td>
+
+
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>1.2 dsada</td>
+                                            <td>10分钟</td>
+                                            <td>2021-5-18 18：00</td>
+                                            <td>2021-5-18 18：10</td>
+
+
+                                        </tr>
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
         </div><!-- end row -->
 
     </div><!-- container-fluid -->

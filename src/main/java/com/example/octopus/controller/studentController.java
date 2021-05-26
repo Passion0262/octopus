@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class studentController {
@@ -60,10 +62,22 @@ public class studentController {
         return "projects";
     }
 
+    @RequestMapping("/project_detail")
+    public String project_detail(Model model) {
+
+        return "project_detail";
+    }
+
     @RequestMapping("/studylog")
     public String studylog(Model model) {
         model.addAttribute("username", "李四");
         return "studylog";
+    }
+
+    @RequestMapping("/studylog_detail")
+    public String studylog_detail(Model model) {
+        model.addAttribute("username", "李四");
+        return "studylog_detail";
     }
 
     @RequestMapping("/datasets")
@@ -72,10 +86,32 @@ public class studentController {
         return "datasets";
     }
 
+    @RequestMapping("/dataset_detail")
+    public String dataset_detail(Model model) {
+
+        return "dataset_detail";
+    }
+
     @RequestMapping("/login")
     public String login(Model model) {
         model.addAttribute("username", "李四");
         return "auth-login";
+    }
+
+
+
+    @RequestMapping("/login/confirmlogin")
+    public String confirmlogin(@RequestParam("username") String username, @RequestParam("userpwd") String userpwd,Model model) {
+        System.out.println(username);
+        System.out.println(userpwd);
+        model.addAttribute("username", "李四");
+        return "index";
+    }
+
+    @RequestMapping("/userinfo")
+    public String userinfo(Model model) {
+
+        return "userinfo";
     }
 
 }
