@@ -25,16 +25,33 @@ public class studentController {
         return "applycourse";
     }
 
+
+    @RequestMapping("/apply_detail")
+    public String apply_detail(Model model) {
+        return "apply_detail";
+    }
+
     @RequestMapping("/mycourse")
     public String mycourse(Model model) {
         model.addAttribute("username", "李四");
         return "mycourse";
     }
 
+    @RequestMapping("/course_video")
+    public String course_video(Model model) {
+        return "course_video";
+    }
+
     @RequestMapping("/experiment_task")
     public String experiment_task(Model model) {
         model.addAttribute("username", "李四");
         return "experiment_task";
+    }
+
+    @RequestMapping("/experiment_task_detail")
+    public String experiment_task_detail(Model model) {
+
+        return "experiment_task_detail";
     }
 
     @RequestMapping("/projects")
