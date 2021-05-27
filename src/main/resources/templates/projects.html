@@ -24,8 +24,7 @@
         <div class="navbar-brand-box">
           <a href="index" class="logo logo-dark">
             <span class="logo-sm"><img src="static/images/logo-sm-dark.png" alt="" height="22"></span>
-             <span class="logo-lg"><img src="static/images/logo-dark.png" alt="" height="27"></span>
-<!--            <span class="logo-lg"><img src="assets/images/logo-dark.png" alt="" height="20">人工智能实验实训平台</span>-->
+            <span class="logo-lg"><img src="static/images/logo-dark.png" alt="" height="27"></span>
           </a>
         </div>
         <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn"><i class="ri-menu-2-line align-middle"></i></button>
@@ -39,15 +38,14 @@
         <!-- 个人信息展示 退出登录操作 -->
         <div class="dropdown d-inline-block user-dropdown">
           <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <!--                    <img class="rounded-circle header-profile-user" src="/images/users/avatar-2.jpg" alt="Header Avatar">-->
-            <span class="d-none d-xl-inline-block ml-1">张三</span>
+            <img class="rounded-circle header-profile-user" src="static/images/users/avatar-2.jpg" alt="Header Avatar">
+            <span class="d-none d-xl-inline-block ml-1" th:text="${username}"></span>
             <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
           </button>
           <div class="dropdown-menu dropdown-menu-right">
             <!-- item-->
-            <a class="dropdown-item" href="#"><i class="ri-user-line align-middle mr-1"></i>XX大学</a>
-            <a class="dropdown-item" href="#"><i class="ri-wallet-2-line align-middle mr-1"></i>什么什么</a>
-            <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#"><i class="ri-shut-down-line align-middle mr-1 text-danger"></i>Logout</a>
+            <a class="dropdown-item" href="userinfo"><i class="ri-user-line align-middle mr-1"></i>个人资料</a>
+            <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#"><i class="ri-shut-down-line align-middle mr-1 text-danger"></i>注销</a>
           </div>
         </div>
         <!-- 个人信息展示 退出登录操作 -->
@@ -71,9 +69,8 @@
           <li><a href="mycourse" class=" waves-effect"><i class="ri-plant-line"></i><span>我的课程</span></a></li>
           <li><a href="experiment_task" class="waves-effect"><i class="ri-checkbox-multiple-blank-line"></i><span>实验任务</span></a></li>
           <li><a href="projects" class=" waves-effect"><i class="ri-reserved-line"></i><span>项目实战</span></a></li>
-          <li><a href="studylog" class=" waves-effect"><i class="ri-reserved-line"></i><span>学习记录</span></a></li>
+          <li><a href="studylog" class=" waves-effect"><i class="ri-file-list-3-line"></i><span>学习记录</span></a></li>
           <li><a href="datasets" class=" waves-effect"><i class="ri-download-cloud-line"></i><span>数据集</span></a></li>
-
 
 
 
@@ -103,64 +100,101 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-3">
             <a style="text-decoration: none; color: black;" href="project_detail">
             <div class="card" >
-              <img src="static/images/projects/1.jpg" alt="股票量化交易分析实战" class="img-fluid card-img-top"/>
+              <img src="static/images/showpic/task1.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
               <div class="card-body">
-                <h4 class="card-title mt-0" >股票量化交易分析实战</h4>
-                <p class="card-text" style="overflow: hidden; height: 100px;">一、使用Python爬取股票数据二、数据清洗并上传至HDFS三、使用PyHive对股票数据进行分析四、使用Django Echarts对分析数据进行可视化五、Python数据分析-量化交
-
-                </p>
-                <p class="card-text">
-                  <small class="text-muted"></small>
-                </p>
+                <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">手部识别检测</h4>
+<!--                <p class="card-text" style="overflow: hidden; height: 100px;">-->
+<!--                </p>-->
               </div>
-
             </div>
             </a>
           </div>
 
-          <div class="col-md-4">
-
-            <div class="card" >
-              <img src="static/images/projects/4.jpg" alt="招聘网站职位分析" class="img-fluid card-img-top"/>
-              <div class="card-body">
-                <h4 class="card-title mt-0" >招聘网站职位分析</h4>
-                <p class="card-text" style="overflow: hidden; height: 100px;">通过采集招聘网站大数据职位信息、利用数据清洗、数据分析、结巴分词、数据挖掘完成整体项目的开发工作。任务包含爬取招聘网站大数据职位信息、使用BeautifulSoup清洗职位信息网页、使用PySpark对智联数据进行分析、对招聘职位信息进行探索分析、使用结巴分词对岗位描述进行分词并将关键词统计、利用Echarts将职位分析结果进行可视化、建立职位模型对应聘人员进行相似度的计算。
-                </p>
-                <p class="card-text">
-                  <small class="text-muted"></small>
-                </p>
+          <div class="col-md-3">
+            <a style="text-decoration: none; color: black;" href="project_detail">
+              <div class="card" >
+                <img src="static/images/showpic/task2.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
+                <div class="card-body">
+                  <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">人脸生成性别控制</h4>
+                  <!--                <p class="card-text" style="overflow: hidden; height: 100px;">-->
+                  <!--                </p>-->
+                </div>
               </div>
-
-            </div>
-
+            </a>
           </div>
 
-
-          <div class="col-md-4">
-            <div class="card" >
-              <img src="static/images/projects/2.jpg" alt="互联网新闻自动归类项目实战" class="img-fluid card-img-top"/>
-              <div class="card-body">
-                <h4 class="card-title mt-0" >互联网新闻自动归类项目实战</h4>
-                <p class="card-text" style="overflow: hidden; height: 100px;">通过本案例的实战，了解类似今日头条、网易新闻等企业在新闻产品类应用的实现原理。项目通过采集互联网新闻数据、利用数据清洗、数据分析、机器学习完成整体项目的开发工作。任务包含采集新闻网页分类并进行数据训练、对新闻网页进行模型训练生成训练集及将新闻分类进行测试应用及展示。
-                </p>
-                <p class="card-text">
-                  <small class="text-muted"></small>
-                </p>
+          <div class="col-md-3">
+            <a style="text-decoration: none; color: black;" href="project_detail">
+              <div class="card" >
+                <img src="static/images/showpic/task3.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
+                <div class="card-body">
+                  <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">图片翻译与旧照片上色</h4>
+                  <!--                <p class="card-text" style="overflow: hidden; height: 100px;">-->
+                  <!--                </p>-->
+                </div>
               </div>
-
-            </div>
+            </a>
           </div>
 
-        </div>
-
-
-
-      </div>
+          <div class="col-md-3">
+            <a style="text-decoration: none; color: black;" href="project_detail">
+              <div class="card" >
+                <img src="static/images/showpic/task4.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
+                <div class="card-body">
+                  <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">图像风格迁移</h4>
+                  <!--                <p class="card-text" style="overflow: hidden; height: 100px;">-->
+                  <!--                </p>-->
+                </div>
+              </div>
+            </a>
+          </div>
     </div><!-- end row -->
 
+        <div class="row">
+          <div class="col-md-3">
+            <a style="text-decoration: none; color: black;" href="project_detail">
+              <div class="card" >
+                <img src="static/images/showpic/task5.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
+                <div class="card-body">
+                  <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">古诗文生成</h4>
+                  <!--                <p class="card-text" style="overflow: hidden; height: 100px;">-->
+                  <!--                </p>-->
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="col-md-3">
+            <a style="text-decoration: none; color: black;" href="project_detail">
+              <div class="card" >
+                <img src="static/images/showpic/task6.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
+                <div class="card-body">
+                  <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">语音识别</h4>
+                  <!--                <p class="card-text" style="overflow: hidden; height: 100px;">-->
+                  <!--                </p>-->
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="col-md-3">
+            <a style="text-decoration: none; color: black;" href="project_detail">
+              <div class="card" >
+                <img src="static/images/showpic/task7.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
+                <div class="card-body">
+                  <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">天气时序数据预测</h4>
+                  <!--                <p class="card-text" style="overflow: hidden; height: 100px;">-->
+                  <!--                </p>-->
+                </div>
+              </div>
+            </a>
+          </div>
+
+
+        </div><!-- end row -->
   </div><!-- container-fluid -->
 </div><!-- End Page-content -->
 <footer class="footer">

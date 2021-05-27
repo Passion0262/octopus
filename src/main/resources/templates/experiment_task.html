@@ -38,15 +38,14 @@
                 <!-- 个人信息展示 退出登录操作 -->
                 <div class="dropdown d-inline-block user-dropdown">
                     <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <!--                    <img class="rounded-circle header-profile-user" src="/images/users/avatar-2.jpg" alt="Header Avatar">-->
-                        <span class="d-none d-xl-inline-block ml-1">张三</span>
+                        <img class="rounded-circle header-profile-user" src="static/images/users/avatar-2.jpg" alt="Header Avatar">
+                        <span class="d-none d-xl-inline-block ml-1" th:text="${username}"></span>
                         <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
                         <!-- item-->
-                        <a class="dropdown-item" href="#"><i class="ri-user-line align-middle mr-1"></i>XX大学</a>
-                        <a class="dropdown-item" href="#"><i class="ri-wallet-2-line align-middle mr-1"></i>什么什么</a>
-                        <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#"><i class="ri-shut-down-line align-middle mr-1 text-danger"></i>Logout</a>
+                        <a class="dropdown-item" href="userinfo"><i class="ri-user-line align-middle mr-1"></i>个人资料</a>
+                        <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#"><i class="ri-shut-down-line align-middle mr-1 text-danger"></i>注销</a>
                     </div>
                 </div>
                 <!-- 个人信息展示 退出登录操作 -->
@@ -70,7 +69,7 @@
                     <li><a href="mycourse" class=" waves-effect"><i class="ri-plant-line"></i><span>我的课程</span></a></li>
                     <li><a href="experiment_task" class="waves-effect"><i class="ri-checkbox-multiple-blank-line"></i><span>实验任务</span></a></li>
                     <li><a href="projects" class=" waves-effect"><i class="ri-reserved-line"></i><span>项目实战</span></a></li>
-                    <li><a href="studylog" class=" waves-effect"><i class="ri-reserved-line"></i><span>学习记录</span></a></li>
+                    <li><a href="studylog" class=" waves-effect"><i class="ri-file-list-3-line"></i><span>学习记录</span></a></li>
                     <li><a href="datasets" class=" waves-effect"><i class="ri-download-cloud-line"></i><span>数据集</span></a></li>
 
 
@@ -108,13 +107,14 @@
                     <div class="col-md-3">
                         <a style="text-decoration: none; color: black;" href="experiment_task_detail">
                         <div class="card">
-                            <img src="static/images/subject/subject.jpg" alt="Python数据分析、挖掘与可视化" class="img-fluid card-img-top"/>
+                            <img src="static/images/showpic/course1.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
                             <div class="card-body">
-                                <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;" >Python数据分析与可视化</h4>
-                                <p class="card-text" style="overflow: hidden; height: 100px;">本课程为2020年12月Python数据分析、挖掘与可视化培训班专用课程。以程序设计初学者为教学对象，从程序设计基本概念出发，由浅入深、循序渐进地讲述Python程序设计的基本概念和基本方法。
+                                <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;" >深度学习-语音识别技术实践</h4>
+                                <p class="card-text" style="overflow: hidden; height: 100px;">语音识别已经逐渐进入人们的日常生活。语音识别技术是涉及语言、计算机、数学等领域的交叉学科。《深度学习：语音识别技术实践》介绍了包括C#、Perl、Python、Java在内的多种编程语言实践，开源语音识别工具包Kaldi的使用与代码分析，深度学习的开发环境搭建，卷积神经网络，以及语音识别中常见的语言模型——N元模型和依存模型等，让读者快速了解语音识别基础，掌握开发语音识别程序的算法。 《深度学习：语音识别技术实践》从语音识别的基础开始讲起，并辅以翔实的案例，既适合需要具体实现语音识别的程序员使用，也适合有一定机器学习或语音识别基础的学生、研究者或从业者阅读
+
                                 </p>
                                 <p class="card-text">
-                                    <small class="text-muted">实验任务：44</small>
+                                    <small class="text-muted">实验任务：30</small>
                                 </p>
                             </div>
                         </div>
@@ -122,49 +122,189 @@
                     </div>
                     <div class="col-md-3">
                         <div class="card">
-                            <img src="static/images/subject/28.jpg" alt="《python数据分析基础》" class="img-fluid card-img-top"/>
+                            <img src="static/images/showpic/course2.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
                             <div class="card-body">
-                                <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">《python数据分析基础》</h4>
-                                <p class="card-text" style="overflow: hidden;height: 100px;">本书由浅入深，比较适合那些从未接触过计算机语言的读者。每章配有大量的示例代码，希望读者在使用本书的时候，能够尽可能自己敲代码，少用复制粘贴的方法，这样有利于读者尽快进入“角色”，毕竟“拷贝得来终觉浅”。本书的前3章是Python的基础知识；第4章是利用Pandas库对数据进行处理、分析以及实现数据可视化；在第5章还列出了Python对文件的读取、存储方法，对网络爬虫、矩阵运算也做了简单的介绍。
+                                <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">python计算机视觉和自然语言处理</h4>
+                                <p class="card-text" style="overflow: hidden;height: 100px;">机器人是人工智能时代的重要产物，为人类的工作和生活提供了非常多的助力。对于智能机器人而言，视觉识别能力和对话能力是非常重要的两个方面，本书就是基于这两个技术展开介绍，并通过一系列的编程案例和实践项目，引导读者高效掌握机器人的开发技巧。
+                                    本书基于Python语言进行讲解，结合机器人操作系统（ROS）平台给出了丰富多样的机器人开发方案。本书立足于机器人的视觉和语言处理，通过OpenCV、自然语言处理、循环神经网络、卷积神经网络等技术提高机器人的视觉识别能力和对话能力。全书包括多个练习和项目，通过知识点和编程实践相结合的方式，快速带领读者掌握实用的机器人开发技术。
+                                    本书适合机器人或智能软硬件研发领域的工程师阅读，也适合高校人工智能相关专业的师生阅读。
+
                                 </p>
                                 <p class="card-text">
-                                    <small class="text-muted">实验任务：21</small>
+                                    <small class="text-muted">实验任务：20</small>
                                 </p>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="card">
-                            <img src="static/images/subject/29.jpg" alt="《Python网络爬虫》" class="img-fluid card-img-top"/>
+                            <img src="static/images/showpic/course3.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
                             <div class="card-body">
-                                <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">《Python网络爬虫》</h4>
-                                <p class="card-text" style="overflow: hidden;height: 100px;">《用Python写网络爬虫》讲解了如何使用Python来编写网络爬虫程序，内容包括网络爬虫简介，从页面中抓取数据的三种方法，提取缓存中的数据，使用多个线程和进程来进行并发抓取，如何抓取动态页面中的内容，与表单进行交互，处理页面中的验证码问题，以及使用Scarpy和Portia来进行数据抓取，使用本书介绍的数据抓取技术对几个真实的网站进行了抓取，旨在帮助读者活学活用书中介绍的技术。　　《用Python写网络爬虫》适合有一定Python编程经验，而且对爬虫技术感兴趣的读者阅读。
-                            </p>
+                                <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">python编程快速上手</h4>
+                                <p class="card-text" style="overflow: hidden;height: 100px;">本书是一本面向初学者的Python编程实用指南。本书不仅介绍了Python语言的基础知识，而且通过案例实践教读者如何使用这些知识和技能。本书的第一部分介绍了基本的Python编程概念，第二部分介绍了一些不同的任务，通过编写Python程序，可以让计算机自动完成它们。第二部分的每一章都有一些项目程序供读者学习。每章的末尾还提供了一些习题和深入的实践项目，帮助读者巩固所学的知识。附录部分提供了所有习题的解答。
+
+                                </p>
                                 <p class="card-text">
-                                    <small class="text-muted">实验任务：5</small>
+                                    <small class="text-muted">实验任务：20</small>
                                 </p>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="card">
-                            <img src="static/images/subject/31.jpg" alt="《python数据挖掘实践》" class="img-fluid card-img-top"/>
+                            <img src="static/images/showpic/course4.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
                             <div class="card-body">
-                                <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">《python数据挖掘实践》</h4>
-                                <p class="card-text"  style="overflow: hidden;height: 100px;">《Python数据挖掘入门与实践》一书作为数据挖掘入门读物，介绍了数据挖掘的基础知识、基本工具和实践方法，通过循序渐进地讲解算法，带你轻松踏上数据挖掘之旅。本书采用理论与实践相结合的方式，呈现了如何使用朴素贝叶斯算法、决策树和随机森林算法对实际案例进行分析预测，等等。本书也涉及神经网络、深度学习、大数据处理等内容。
-                            </p>
+                                <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">自然语言处理实战</h4>
+                                <p class="card-text"  style="overflow: hidden;height: 100px;">本书是介绍自然语言处理（NLP）和深度学习的实战书。NLP已成为深度学习的核心应用领域，而深度学习是NLP研究和应用中的必要工具。本书分为3部分：第一部分介绍NLP基础，包括分词、TF-IDF向量化以及从词频向量到语义向量的转换；第二部分讲述深度学习，包含神经网络、词向量、卷积神经网络（CNN）、循环神经网络（RNN）、长短期记忆（LSTM）网络、序列到序列建模和注意力机制等基本的深度学习模型和方法；第三部分介绍实战方面的内容，包括信息提取、问答系统、人机对话等真实世界系统的模型构建、性能挑战以及应对方法。
+                                    本书面向中高级Python开发人员，兼具基础理论与编程实战，是现代NLP领域从业者的实用参考书。
+
+                                </p>
                                 <p class="card-text">
                                     <small class="text-muted">实验任务：15</small>
                                 </p>
                             </div>
                         </div>
                     </div>
-                </div>
 
-
-
-            </div>
         </div><!-- end row -->
+
+
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <a style="text-decoration: none; color: black;" href="experiment_task_detail">
+                    <div class="card">
+                        <img src="static/images/showpic/course5.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
+                        <div class="card-body">
+                            <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;" >python图像处理实战</h4>
+                            <p class="card-text" style="overflow: hidden; height: 100px;">本书介绍如何用流行的Python 图像处理库、机器学习库和深度学习库解决图像处理问题。先介绍经典的图像处理技术，然后探索图像处理算法的演变历程，始终紧扣图像处理以及计算机视觉与深度学习方面的最新进展。全书共12 章，涵盖图像处理入门基础知识、应用导数方法实现图像增强、形态学图像处理、图像特征提取与描述符、图像分割，以及图像处理中的经典机器学习方法等内容。
+                                本书适合Python 工程师和相关研究人员阅读，也适合对计算机视觉、图像处理、机器学习和深度学习感兴趣的软件工程师参考。
+
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">实验任务：15</small>
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="static/images/showpic/course6.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
+                    <div class="card-body">
+                        <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">深度学习</h4>
+                        <p class="card-text" style="overflow: hidden;height: 100px;">本书由全球知名的3位专家Ian Goodfellow、Yoshua Bengio 和Aaron Courville撰写，是深度学习领域奠基性的经典教材。全书的内容包括3个部分：第1部分介绍基本的数学工具和机器学习的概念，它们是深度学习的预备知识；第2部分系统深入地讲解现今已成熟的深度学习方法和技术；第3部分讨论某些具有前瞻性的方向和想法，它们被公认为是深度学习未来的研究重点。
+                            《深度学习》适合各类读者阅读，包括相关专业的大学生或研究生，以及不具有机器学习或统计背景、但是想要快速补充深度学习知识，以便在实际产品或平台中应用的软件工程师
+
+                        </p>
+                        <p class="card-text">
+                            <small class="text-muted">实验任务：20</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="static/images/showpic/course7.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
+                    <div class="card-body">
+                        <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">python机器学习入门</h4>
+                        <p class="card-text" style="overflow: hidden;height: 100px;">Python是一种解释型、面向对象、动态数据类型的高级程序设计语言。它具有丰富和强大的模块（库），能够很轻松地把用其他编程语言（尤其是C/C++）编写的各种模块联结在一起。这两年随着人们对人工智能的关注越来越多，大家对Python的学习热情也越来越高。在IEEE发布的编程语言排行榜中，Python已经多年排名第一。
+
+                        </p>
+                        <p class="card-text">
+                            <small class="text-muted">实验任务：10</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="static/images/showpic/course8.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
+                    <div class="card-body">
+                        <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">图解语音识别</h4>
+                        <p class="card-text"  style="overflow: hidden;height: 100px;">《图解语音识别》从语音识别的历史和基础知识讲起，通过图解的方式对语音识别技术进行了尽可能简单的解释。内容涉及语音学基础知识、统计模式识别、有限状态自动机、语音特征的提取、声学模型和语言模型、搜索算法和基于WFST 的语音识别技术等。
+                            此外，本书没有将语音识别限定在“将语音转换成文本”的传统范畴内，而是在此基础上，还讲解了从语音识别技术到人机对话技术的演进过程和方法。内容涉及语义分析和语音对话系统的实现。
+
+
+                        </p>
+                        <p class="card-text">
+                            <small class="text-muted">实验任务：15</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+</div><!-- end row -->
+
+
+
+
+<div class="row">
+
+    <div class="col-md-3">
+        <a style="text-decoration: none; color: black;" href="experiment_task_detail">
+            <div class="card">
+                <img src="static/images/showpic/course9.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
+                <div class="card-body">
+                    <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;" >pytorch深度学习入门</h4>
+                    <p class="card-text" style="overflow: hidden; height: 100px;">本书用浅显易懂的语言，图文并貌地讲解了深度学习的基础知识，从如何挑选硬件到神经网络的初步搭建，再到实现图片识别、文本翻译、强化学习、生成对抗网络等多个目前最流行的深度学习应用。书中基于目前流行的PyTorch框架，运用Python语言实现了各种深度学习的应用程序，让理论和实践紧密结合。
+
+                    </p>
+                    <p class="card-text">
+                        <small class="text-muted">实验任务：20</small>
+                    </p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <img src="static/images/showpic/course10.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
+            <div class="card-body">
+                <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">python编程基础教程</h4>
+                <p class="card-text" style="overflow: hidden;height: 100px;">本书以教育部考试中心颁发的《全国计算机等级考试二级Python语言程序设计考试大纲（2018年版）》为基础编写。系统地介绍了Python语言的基础知识和实用技术，全书分为10章，内容主要包括：Python概述、Python语法概述、Python基本数据类型、程序控制结构、函数与模块、组合数据类型、文件操作和数据格式化、面向对象程序设计、异常处理以及Python爬虫程序。本书实例丰富，突出该课程操作性强的特点，每章都附有实例解析和习题，便于学生课后巩固相关知识。
+                    本书既可作为高等院校各专业师生的计算机程序设计课程教材，也可作为程序开发人员的参考用书，还可以作为参加全国计算机等级考试二级Python语言程序设计人员的考试用书。
+
+
+                </p>
+                <p class="card-text">
+                    <small class="text-muted">实验任务：10</small>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <img src="static/images/showpic/course11.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
+            <div class="card-body">
+                <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">简明的Tensorflow2</h4>
+                <p class="card-text" style="overflow: hidden;height: 100px;">本书围绕 TensorFlow 2 的概念和功能展开介绍，旨在以“即时执行”视角帮助读者快速入门 TensorFlow。本书共分5篇：基础篇首先介绍了 TensorFlow的安装配置和基本概念，然后以深度学习中常用的卷积神经网络、循环神经网络等网络结构为例，介绍了使用 TensorFlow建立和训练模型的方式，最后介绍了 TensorFlow中常用模块的使用方法；部署篇介绍了在服务器、嵌入式设备和浏览器等平台部署 TensorFlow模型的方法；大规模训练篇介绍了在 TensorFlow中进行分布式训练和使用 TPU 训练的方法；扩展篇介绍了多种 TensorFlow 生态系统内的常用及前沿工具；高级篇则为进阶开发者介绍了 TensorFlow程序开发的更多深入细节及技巧。
+
+                </p>
+                <p class="card-text">
+                    <small class="text-muted">实验任务：25</small>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <img src="static/images/showpic/course12.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
+            <div class="card-body">
+                <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">人工智能导论</h4>
+                <p class="card-text"  style="overflow: hidden;height: 100px;">本书主要讲述人工智能的基础知识与基础理论，并通过大量的人工智能应用帮助读者快速了解人工智能相关技术。本书共10章，分别为人工智能概述、人工智能基础知识、机器学习、深度学习、计算机视觉、自然语言处理、知识图谱、人工智能技术应用场景、智能机器人和人工智能的挑战与未来。本书内容丰富，讲解细致，注重技术发展变化。
+                    本书既可作为高校大数据专业、云计算专业、人工智能技术专业、信息管理专业、计算机网络专业的教材，又可作为人工智能与大数据爱好者的参考书。
+
+
+                </p>
+                <p class="card-text">
+                    <small class="text-muted">实验任务：20</small>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div><!-- end row -->
 
     </div><!-- container-fluid -->
 </div><!-- End Page-content -->
