@@ -30,7 +30,4 @@ public class Class_ {
     @Column(nullable = false,columnDefinition = "date comment '创建时间'")
     private Date createTime;
 
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name="teacher_student", joinColumns={@JoinColumn(name="s_id")}, inverseJoinColumns={@JoinColumn(name="t_id")})
-//    private Set<Student> students;
 }

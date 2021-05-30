@@ -28,10 +28,6 @@ public class Student_Course {
     @Column(nullable = false, columnDefinition = "varchar(30) comment '授课老师'")
     private String teacher;
 
-    @ManyToOne
-    @JoinColumn(name = "stuNumber", columnDefinition = "varchar(20) comment '学生学号'")
-    private Student stuNumber;
-
     @Column(nullable = false, columnDefinition = "varchar(20) comment '学生姓名'")
     private String stuName;
 

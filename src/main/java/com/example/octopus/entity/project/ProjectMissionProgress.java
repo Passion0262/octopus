@@ -21,15 +21,15 @@ public class ProjectMissionProgress {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne
-    @JoinColumn(name = "stuNumber")
-    private Student student;  //学生学号
+//    @ManyToOne
+//    @JoinColumn(name = "stuNumber")
+//    private Student student;  //学生学号
 
     private String stuName;  //学生姓名
 
-    @ManyToOne
-    @JoinColumn(name = "missionId")
-    private ProjectMission missionId;  //项目任务id
+//    @ManyToOne
+//    @JoinColumn(name = "missionId")
+//    private ProjectMission missionId;  //项目任务id
 
     @Column(nullable = false)
     private String missionName;  //任务名

@@ -11,9 +11,7 @@ import java.sql.Date;
  * @modified By：
  * 实验组合
  */
-@Entity
 @Data
-@Table
 public class ExperimentCombination {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

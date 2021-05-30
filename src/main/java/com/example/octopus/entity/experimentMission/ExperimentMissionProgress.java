@@ -20,17 +20,17 @@ public class ExperimentMissionProgress {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne
-    @JoinColumn(name = "stuNumber")
-    private Student student;  //学生学号
+//    @ManyToOne
+//    @JoinColumn(name = "stuNumber")
+//    private Student student;  //学生学号
 
     private String stuName;  //学生姓名
 
     private String courseName;  //课程名称
 
-    @ManyToOne
-    @JoinColumn(name = "missionId")
-    private ExperimentMission experiMissionOrigin;  //子任务id
+//    @ManyToOne
+//    @JoinColumn(name = "missionId")
+//    private ExperimentMission experiMissionOrigin;  //子任务id
 
     private Date operateTotalTime;  //操作总时长
 

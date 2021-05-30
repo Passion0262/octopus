@@ -1,18 +1,21 @@
 package com.example.octopus.controller;
 
-import com.example.octopus.service.StudentService;
+import com.example.octopus.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class studentController {
 
+    private Logger logger = LoggerFactory.getLogger(studentController.class);
+
     @Autowired
-    StudentService studentService;
+    UserService userService;
 
     @RequestMapping("/index")
     public String index(Model model) {
@@ -102,8 +105,10 @@ public class studentController {
 
     @RequestMapping("/confirmlogin")
     public String confirmlogin(@RequestParam("username") String username, @RequestParam("userpwd") String userpwd,Model model) {
-        System.out.println(username);
-        System.out.println(userpwd);
+//        System.out.println(username);
+//        System.out.println(userpwd);
+        logger.info("username:" + username);
+        logger.info("password" + userpwd);
         model.addAttribute("username", username);
         return "index";
     }

@@ -18,17 +18,17 @@ public class VideoStudyProgress {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne
-    @JoinColumn(name = "stuNumber")
-    private Student student;  //学生学号
+//    @ManyToOne
+//    @JoinColumn(name = "stuNumber")
+//    private Student student;  //学生学号
 
     private String stuName;  //学生姓名
 
     private String courseName;  //课程名称
 
-    @ManyToOne
-    @JoinColumn(name = "videoName")
-    private VideoStudyOrigin videoStudyOrigin;  //视频id
+//    @ManyToOne
+//    @JoinColumn(name = "videoName")
+//    private VideoStudyOrigin videoStudyOrigin;  //视频id
 
     private String notePath;  //笔记存放地址
 

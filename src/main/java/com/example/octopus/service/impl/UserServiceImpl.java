@@ -1,12 +1,11 @@
 package com.example.octopus.service.impl;
 
+import com.example.octopus.dao.UserMapper;
 import com.example.octopus.entity.user.Student;
-import com.example.octopus.repository.StudentRepository;
-import com.example.octopus.service.StudentService;
+import com.example.octopus.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -15,24 +14,29 @@ import java.util.List;
  * @modified By：
  */
 @Service
-public class StudentServiceImpl implements StudentService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
-    private StudentRepository studentRepository;
+    private UserMapper userMapper;
 
     @Override
     public List<Student> getStudentList() {
-        return studentRepository.findAll();
+        return userMapper.queryAllStudents();
     }
 
     @Override
     public Student findStudentByStuNumber(String stuNumber) {
-        return studentRepository.findStudentByStuNumber(stuNumber);
+        return userMapper.queryStudentByStuNumber(stuNumber);
+    }
+
+    @Override
+    public Student findStudentByName(String name) {
+        return userMapper.queryStudentByName(name);
     }
 
     @Override
     public Student login(String stuNumber, String password) {
-        return studentRepository.findStudentByStuNumberAndPassword(stuNumber, password);
+        return userMapper.queryStudentByStuNumberAndPassword(stuNumber, password);
     }
 
 //    @Override
@@ -41,13 +45,12 @@ public class StudentServiceImpl implements StudentService {
 //    }
 
     @Override
-    @Transactional
     public void updateLoginInfo(String stuNumber) {
-        studentRepository.updateLoginInfo(stuNumber);
+        userMapper.updateLoginInfoByStuNumber(stuNumber);
     }
 
     @Override
     public void resetPassword(String stuNumber) {
-        studentRepository.resetPassword(stuNumber);
+        userMapper.resetPassword(stuNumber);
     }
 }

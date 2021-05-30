@@ -19,13 +19,13 @@ public class ExperimentMission {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne
-    @JoinColumn(name = "courseId", nullable = false)
-    private Course course;  //视频所属课程
+//    @ManyToOne
+//    @JoinColumn(name = "courseId", nullable = false)
+//    private Course course;  //视频所属课程
 
-    @ManyToOne
-    @JoinColumn(name = "experimentId", nullable = false)
-    private Experiment experimentId;  //所属实验id
+//    @ManyToOne
+//    @JoinColumn(name = "experimentId", nullable = false)
+//    private Experiment experimentId;  //所属实验id
 
     @Column(nullable = false)
     private String experimentName;  //实验任务名称

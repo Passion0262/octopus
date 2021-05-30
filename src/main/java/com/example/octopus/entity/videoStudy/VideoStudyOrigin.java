@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 
+
 /**
  * @author: Hao
  * @date: 2021/5/22 12:19
@@ -18,9 +19,9 @@ public class VideoStudyOrigin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne
-    @JoinColumn(name = "courseId")
-    private Course course;  //视频所属课程
+//    @ManyToOne
+//    @JoinColumn(name = "courseId")
+//    private Course course;  //视频所属课程
 
     private String videoPath;  //视频存放地址
 

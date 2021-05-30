@@ -20,9 +20,9 @@ public class Experiment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;    //编号
 
-    @ManyToOne
-    @JoinColumn(name = "courseName")
-    private Course course;  //实验所属课程
+//    @ManyToOne
+//    @JoinColumn(name = "courseName")
+//    private Course course;  //实验所属课程
 
     @Column(nullable = false)
     private String name;  //实验名称

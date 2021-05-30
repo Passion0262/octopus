@@ -19,9 +19,9 @@ public class ProjectMission {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne
-    @JoinColumn(name = "projectId", nullable = false)
-    private Project projectId;  //任务所属项目id
+//    @ManyToOne
+//    @JoinColumn(name = "projectId", nullable = false)
+//    private Project projectId;  //任务所属项目id
 
     @Column(nullable = false)
     private String projectname;    //项目名称

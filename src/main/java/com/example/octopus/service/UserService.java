@@ -9,7 +9,7 @@ import java.util.List;
  * @date ：Created in 2021/5/12 3:21 下午
  * @modified By：
  */
-public interface StudentService {
+public interface UserService {
     /**
      * 获取所有学生列表
      * @return  学生的list
@@ -21,6 +21,12 @@ public interface StudentService {
      * @return  该学生对象
      */
     public Student findStudentByStuNumber(String stuNumber);
+
+    /**
+     * @param name 学生的name
+     * @return  该学生对象
+     */
+    public Student findStudentByName(String name);
 
     /**
      * 用于登陆时的验证
