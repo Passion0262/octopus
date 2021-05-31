@@ -4,6 +4,7 @@ import com.example.octopus.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,13 @@ public class studentController {
 
     @Autowired
     UserService userService;
+
+    @RequestMapping("/")
+    public String showHome() {
+        String stuNumber = SecurityContextHolder.getContext().getAuthentication().getName();
+        logger.info("当前登陆用户：" + stuNumber);
+        return "index";
+    }
 
     @RequestMapping("/index")
     public String index(Model model) {
@@ -103,15 +111,15 @@ public class studentController {
 
 
 
-    @RequestMapping("/confirmlogin")
-    public String confirmlogin(@RequestParam("username") String username, @RequestParam("userpwd") String userpwd,Model model) {
-//        System.out.println(username);
-//        System.out.println(userpwd);
-        logger.info("username:" + username);
-        logger.info("password" + userpwd);
-        model.addAttribute("username", username);
-        return "index";
-    }
+//    @RequestMapping("/confirmlogin")
+//    public String confirmlogin(@RequestParam("username") String username, @RequestParam("userpwd") String userpwd,Model model) {
+////        System.out.println(username);
+////        System.out.println(userpwd);
+//        logger.info("username:" + username);
+//        logger.info("password" + userpwd);
+//        model.addAttribute("username", username);
+//        return "index";
+//    }
 
     @RequestMapping("/userinfo")
     public String userinfo(Model model) {
