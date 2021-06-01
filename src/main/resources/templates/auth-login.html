@@ -61,6 +61,10 @@
 														<label for="userpassword">密码</label>
 														<input type="password" name="password" class="form-control" id="userpassword" placeholder="请输入密码">
 													</div>
+													<div>
+														<input type="text" class="form-control" name="verifyCode" required="required" placeholder="验证码">
+														<img src="getVerifyCode" title="看不清，请点我" onclick="refresh(this)" onmouseover="mouseover(this)" />
+													</div>
 													<div class="mt-4 text-center">
 														<label><input type="checkbox" name="remember-me"/>自动登录</label>
 														<button class="btn btn-primary w-md waves-effect waves-light" type="submit">登录</button>
@@ -94,5 +98,9 @@
 		<script src="static/js/libs/simplebar/simplebar.min.js"></script>
 		<script src="static/js/libs/node-waves/waves.min.js"></script>
 		<script src="static/js/app.js"></script>
+		<script>
+			function refresh(obj) { obj.src = "getVerifyCode?" + Math.random(); }
+			function mouseover(obj) { obj.style.cursor = "pointer"; }
+		</script>
 	</body>
 </html>
