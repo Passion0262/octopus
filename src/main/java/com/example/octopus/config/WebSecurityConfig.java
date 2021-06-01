@@ -2,6 +2,7 @@ package com.example.octopus.config;
 
 import com.example.octopus.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -11,6 +12,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 /**
  * @author ：shadow
@@ -52,6 +57,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
+    @Autowired
+    private DataSource dataSource;
+
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(new PasswordEncoder() {
@@ -79,7 +88,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 设置登陆成功页
                 .defaultSuccessUrl("/").permitAll()
                 .and()
-                .logout().permitAll();
+                .logout().permitAll()
+                //配置自动登录
+                .and().rememberMe()
+                .tokenRepository(persistentTokenRepository())
+                // 有效时间：单位s
+                .tokenValiditySeconds(60)
+                .userDetailsService(userDetailsService);
 
 
         // 关闭CSRF跨域
@@ -91,6 +106,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // 设置拦截忽略文件夹，可以对静态资源放行
 //        web.ignoring().antMatchers("/css/**", "/js/**", "/fonts/**", "/images/**");
         web.ignoring().antMatchers("/static/**");
+    }
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository(){
+        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+        tokenRepository.setDataSource(dataSource);
+        // 如果token表不存在，使用下面语句可以初始化该表；若存在，请注释掉这条语句，否则会报错。
+//        tokenRepository.setCreateTableOnStartup(true);
+        return tokenRepository;
     }
 }
 
