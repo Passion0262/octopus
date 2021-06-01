@@ -93,7 +93,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().rememberMe()
                 .tokenRepository(persistentTokenRepository())
                 // 有效时间：单位s
-                .tokenValiditySeconds(60)
+                .tokenValiditySeconds(60*60*24) //24小时
                 .userDetailsService(userDetailsService);
 
 
