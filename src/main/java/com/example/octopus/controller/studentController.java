@@ -1,6 +1,7 @@
 package com.example.octopus.controller;
 
 import com.example.octopus.service.UserService;
+import com.example.octopus.service.CourseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.example.octopus.entity.user.Student;
-
+import com.example.octopus.entity.user.Course;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class studentController {
@@ -20,6 +22,8 @@ public class studentController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    CourseService courseService;
 
     @RequestMapping("/login")
     public String login(Model model) {
@@ -56,11 +60,26 @@ public class studentController {
         return "userinfo";
     }
 
+    @RequestMapping("/update_phoneNumber")
+    public String update_phoneNumber(@RequestParam("phoneNumber")String phoneNumber,Model model,HttpSession session) {
+        logger.info("phoneNumber:" + phoneNumber);
+
+//        这里需要一个手机号码的更改操作
+
+        return "redirect:userinfo";
+    }
+
 
     @RequestMapping("/applycourse")
     public String applycourse(Model model,HttpSession session) {
         String stuname = (String)session.getAttribute("stuname");
         model.addAttribute("stuname", stuname);
+
+        List<Course> allcourses = courseService.findAllCourses();
+        logger.info("allcourses:" + allcourses);
+        model.addAttribute("allcourses", allcourses);
+
+
         return "applycourse";
     }
 
@@ -76,6 +95,8 @@ public class studentController {
     public String mycourse(Model model,HttpSession session) {
         String stuname = (String)session.getAttribute("stuname");
         model.addAttribute("stuname", stuname);
+
+
         return "mycourse";
     }
 

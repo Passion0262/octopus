@@ -120,42 +120,13 @@
                                         </tr>
                                         </thead>
                                         <tbody style="text-align: center">
-                                        <tr>
-                                            <td>1001</td>
-                                            <td>hadoop大数据</td>
-                                            <td>李老师</td>
-                                            <td>2021年4月1日</td>
-                                            <td>2021年10月1日</td>
+                                        <tr th:each="allcourse:${allcourses}">
+                                            <td><span th:text="${allcourse.id}"></span></td>
+                                            <td><span th:text="${allcourse.courseName}"></span></td>
+                                            <td><span th:text="${allcourse.teacher}"></span></td>
+                                            <td><span th:text="${allcourse.startTime}"></span></td>
+                                            <td><span th:text="${allcourse.endTime}"></span></td>
                                             <td><span style="color:limegreen">允许申请</span></td>
-                                            <td><a href="apply_detail">查看详情</a></td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>1002</td>
-                                            <td>python爬虫</td>
-                                            <td>朱老师</td>
-                                            <td>2021年5月1日</td>
-                                            <td>2021年12月1日</td>
-                                            <td><span style="color:limegreen">允许申请</span></td>
-                                            <td><a href="apply_detail">查看详情</a></td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>1003</td>
-                                            <td>机器学习</td>
-                                            <td>秦老师</td>
-                                            <td>2021年5月19日</td>
-                                            <td>2021年10月29日</td>
-                                            <td><span style="color:darkred">申请关闭</span></td>
-                                            <td><a href="apply_detail">查看详情</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>1004</td>
-                                            <td>神经网络</td>
-                                            <td>艾老师</td>
-                                            <td>2021年1月19日</td>
-                                            <td>2021年4月19日</td>
-                                            <td><span style="color:grey">申请已结束</span></td>
                                             <td><a href="apply_detail">查看详情</a></td>
                                         </tr>
 
