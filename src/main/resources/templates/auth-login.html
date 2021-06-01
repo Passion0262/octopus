@@ -101,5 +101,9 @@
 		<script src="static/js/libs/simplebar/simplebar.min.js"></script>
 		<script src="static/js/libs/node-waves/waves.min.js"></script>
 		<script src="static/js/app.js"></script>
+		<script>
+			function refresh(obj) { obj.src = "getVerifyCode?" + Math.random(); }
+			function mouseover(obj) { obj.style.cursor = "pointer"; }
+		</script>
 	</body>
 </html>
