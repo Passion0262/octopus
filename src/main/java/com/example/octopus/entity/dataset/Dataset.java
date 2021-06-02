@@ -7,7 +7,7 @@ import lombok.Data;
  * @date ：Created in 2021/6/2 4:55 下午
  */
 @Data
-public class DataSet {
+public class Dataset {
 
     long id;
 
