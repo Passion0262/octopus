@@ -6,12 +6,12 @@
   <title>人工智能实验实训平台</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta content="人工智能实验实训平台" name="description" />
-  <link href="static/js/libs/admin-resources/jquery.vectormap/static" rel="stylesheet" type="text/css" /><!-- DataTables -->
-  <link href="static/js/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" /><!-- Responsive datatable examples -->
-  <link href="static/js/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" /><!-- Bootstrap Css -->
-  <link href="static/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" /><!-- Icons Css -->
-  <link href="static/css/icons.min.css" rel="stylesheet" type="text/css" /><!-- App Css-->
-  <link href="static/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+  <link href="../../static/js/libs/admin-resources/jquery.vectormap/static" rel="stylesheet" type="text/css" /><!-- DataTables -->
+  <link href="../../static/js/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" /><!-- Responsive datatable examples -->
+  <link href="../../static/js/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" /><!-- Bootstrap Css -->
+  <link href="../../static/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" /><!-- Icons Css -->
+  <link href="../../static/css/icons.min.css" rel="stylesheet" type="text/css" /><!-- App Css-->
+  <link href="../../static/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
 </head>
 
 <body data-sidebar="light">
@@ -23,8 +23,8 @@
         <!-- LOGO -->
         <div class="navbar-brand-box">
           <a href="index" class="logo logo-dark">
-            <span class="logo-sm"><img src="static/images/logo-sm-dark.png" alt="" height="22"></span>
-            <span class="logo-lg"><img src="static/images/logo-dark.png" alt="" height="27"></span>
+            <span class="logo-sm"><img src="../../static/images/logo-sm-dark.png" alt="" height="22"></span>
+            <span class="logo-lg"><img src="../../static/images/logo-dark.png" alt="" height="27"></span>
           </a>
         </div>
         <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn"><i class="ri-menu-2-line align-middle"></i></button>
@@ -64,13 +64,13 @@
         <ul class="metismenu list-unstyled" id="side-menu">
 
 
-          <li><a href="index" class="waves-effect"><i class="ri-dashboard-line"></i><span>首页</span></a></li>
-          <li><a href="applycourse" class=" waves-effect"><i class="ri-leaf-line"></i><span>申请学习</span></a></li>
-          <li><a href="mycourse" class=" waves-effect"><i class="ri-plant-line"></i><span>我的课程</span></a></li>
-          <li><a href="experiment_task" class="waves-effect"><i class="ri-checkbox-multiple-blank-line"></i><span>实验任务</span></a></li>
-          <li><a href="projects" class=" waves-effect"><i class="ri-reserved-line"></i><span>项目实战</span></a></li>
-          <li><a href="studylog" class=" waves-effect"><i class="ri-reserved-line"></i><span>学习记录</span></a></li>
-          <li><a href="datasets" class=" waves-effect"><i class="ri-download-cloud-line"></i><span>数据集</span></a></li>
+          <li><a href="/index" class="waves-effect"><i class="ri-dashboard-line"></i><span>首页</span></a></li>
+          <li><a href="/applycourse" class=" waves-effect"><i class="ri-leaf-line"></i><span>申请学习</span></a></li>
+          <li><a href="/mycourse" class=" waves-effect"><i class="ri-plant-line"></i><span>我的课程</span></a></li>
+          <li><a href="/experiment_task" class="waves-effect"><i class="ri-checkbox-multiple-blank-line"></i><span>实验任务</span></a></li>
+          <li><a href="/projects" class=" waves-effect"><i class="ri-reserved-line"></i><span>项目实战</span></a></li>
+          <li><a href="/studylog" class=" waves-effect"><i class="ri-reserved-line"></i><span>学习记录</span></a></li>
+          <li><a href="/datasets" class=" waves-effect"><i class="ri-download-cloud-line"></i><span>数据集</span></a></li>
 
 
 
@@ -92,8 +92,8 @@
               <h4 class="mb-0">数据集详情</h4>
               <div class="page-title-right">
                 <ol class="breadcrumb m-0">
-                  <li class="breadcrumb-item"><a href="index"> 人工智能实验实训平台</a></li>
-                  <li class="breadcrumb-item"><a href="datasets">数据集</a></li>
+                  <li class="breadcrumb-item"><a href="/index"> 人工智能实验实训平台</a></li>
+                  <li class="breadcrumb-item"><a href="/datasets">数据集</a></li>
                   <li class="breadcrumb-item active">数据集详情</li>
                 </ol>
               </div>
@@ -103,7 +103,7 @@
         <div class="row">
 
           <div class="col-4">
-            <img src="static/images/subject/2.jpg" alt="2020全国人口普查数据" class="img-fluid"/>
+            <img th:src="'../../'+${dataset.pictureUrl}" alt="" class="img-fluid"/>
           </div>
           <div class="col-8">
             <div class="card">
@@ -111,16 +111,16 @@
                 <table id="datatable-buttons" class="table  table-bordered text-center" style="overflow-x: scroll;">
 
                   <tr>
-                    <th>资源名称</th><td>2222</td>
-                    <th>上传者</th><td>sss</td>
+                    <th>资源名称</th><td><span th:text="${dataset.name}"></span></td>
+                    <th>上传者</th><td><span th:text="${dataset.uploader}"></span></td>
                   </tr>
                   <tr>
-                    <th>文件大小</th><td>20MB</td>
-                    <th>文件格式</th><td>txt,excel</td>
+                    <th>文件大小</th><td><span th:text="${dataset.size}"></span></td>
+                    <th>文件格式</th><td><span th:text="${dataset.fileFormat}"></span></td>
                   </tr>
 
                   <tr>
-                    <th>下载次数</th><td>33</td>
+                    <th>下载次数</th><td><span th:text="${dataset.downloadNum}"></span></td>
                     <th>下载</th>
                     <td>
                       <button type="button" class="btn btn-success  waves-effect waves-light" id="">下载</button>
@@ -142,7 +142,7 @@
             <div class="card" >
               <div class="card-body">
                 <h4 class="card-title mt-2" >简介</h4>
-                <p>sawdajsghdsajkdikasjl </p>
+                <p><span th:text="${dataset.description}"></span> </p>
 
               </div>
 
@@ -172,48 +172,24 @@
 </div><!-- end main content-->
 </div><!-- END layout-wrapper -->
 
-<script>
-  !function(t){"use strict";
-    function e(){}
-    e.prototype.init=function() {
-      t("#apply_sure").click(function () {
-        Swal.fire({
-          title: "确认申请本课程么?",
-          text: "欢迎选择本课程",
-          icon: "warning",
-          showCancelButton: !0,
-          confirmButtonColor: "#34c38f",
-          cancelButtonColor: "#ff3d60",
-          confirmButtonText: "确认"
-        }).then(function (t) {
-          t.value && Swal.fire("成功", "申请成功", "success")
-        })
-      })
-    }, t.SweetAlert = new e, t.SweetAlert.Constructor = e
-  }(window.jQuery),
-          function() {
-            "use strict";
-            window.jQuery.SweetAlert.init()
-          }();
 
-</script>
 
 
 <!-- JAVASCRIPT -->
-<script src="static/js/libs/jquery/jquery.min.js"></script>
-<script src="static/js/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="static/js/libs/metismenu/metisMenu.min.js"></script>
-<script src="static/js/libs/simplebar/simplebar.min.js"></script>
-<script src="static/js/libs/node-waves/waves.min.js"></script><!-- apexcharts -->
-<script src="static/js/libs/apexcharts/apexcharts.min.js"></script><!-- jquery.vectormap map -->
-<script src="static/js/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="static/js/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-us-merc-en.js"></script><!-- Required datatable js -->
-<script src="static/js/libs/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="static/js/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script><!-- Responsive examples -->
-<script src="static/js/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-<script src="static/js/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+<script src="../../static/js/libs/jquery/jquery.min.js"></script>
+<script src="../../static/js/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../../static/js/libs/metismenu/metisMenu.min.js"></script>
+<script src="../../static/js/libs/simplebar/simplebar.min.js"></script>
+<script src="../../static/js/libs/node-waves/waves.min.js"></script><!-- apexcharts -->
+<script src="../../static/js/libs/apexcharts/apexcharts.min.js"></script><!-- jquery.vectormap map -->
+<script src="../../static/js/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="../../static/js/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-us-merc-en.js"></script><!-- Required datatable js -->
+<script src="../../static/js/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../../static/js/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script><!-- Responsive examples -->
+<script src="../../static/js/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../../static/js/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
 
-<script src="static/js/app.js"></script>
+<script src="../../static/js/app.js"></script>
 </body>
 
 </html>

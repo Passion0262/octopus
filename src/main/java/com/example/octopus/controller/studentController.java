@@ -1,7 +1,10 @@
 package com.example.octopus.controller;
 
-import com.example.octopus.service.UserService;
-import com.example.octopus.service.CourseService;
+import com.example.octopus.entity.dataset.Dataset;
+import com.example.octopus.entity.experiment.Experiment;
+import com.example.octopus.entity.experiment.ExperimentMission;
+import com.example.octopus.entity.project.Project;
+import com.example.octopus.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,13 @@ public class studentController {
     UserService userService;
     @Autowired
     CourseService courseService;
+    @Autowired
+    ExperimentService experimentService;
+    @Autowired
+    ProjectService projectService;
+    @Autowired
+    DatasetService datasetService;
+
 
     @RequestMapping("/login")
     public String login(Model model) {
@@ -44,6 +54,11 @@ public class studentController {
 
     @RequestMapping("/index")
     public String index(Model model,HttpSession session) {
+        String stuNumber = SecurityContextHolder.getContext().getAuthentication().getName();
+        Student stu = userService.findStudentByStuNumber(stuNumber);
+        session.setAttribute("stuname",stu.getName());
+
+
         String stuname = (String)session.getAttribute("stuname");
         model.addAttribute("stuname", stuname);
         return "index";
@@ -170,33 +185,93 @@ public class studentController {
         return "course_video";
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @RequestMapping("/experiment_task")
     public String experiment_task(Model model,HttpSession session) {
         String stuname = (String)session.getAttribute("stuname");
         model.addAttribute("stuname", stuname);
+
+        List<ExperimentMission> allexperiments = experimentService.findAllExperimentMission();
+//        logger.info("allExperiment:" + allexperiments);
+        model.addAttribute("allexperiments", allexperiments);
+
         return "experiment_task";
     }
 
-    @RequestMapping("/experiment_task_detail")
-    public String experiment_task_detail(Model model,HttpSession session) {
+    @RequestMapping("/experiment_task_detail/{id}")
+    public String experiment_task_detail(String id,Model model,HttpSession session) {
         String stuname = (String)session.getAttribute("stuname");
         model.addAttribute("stuname", stuname);
+
+        logger.info("experimentMission_id:" + id);
+
+        //        这里需要一个根据实验的id 返回course操作
+        ExperimentMission experimentMission = experimentService.findAllExperimentMission().get(0);
+
+        logger.info("experimentMission——detail:" + experimentMission);
+        model.addAttribute("experimentMission", experimentMission);
+
+
         return "experiment_task_detail";
     }
+
+
+
+
+
+
+
+
+
+
 
     @RequestMapping("/projects")
     public String projects(Model model,HttpSession session) {
         String stuname = (String)session.getAttribute("stuname");
         model.addAttribute("stuname", stuname);
+
+        List<Project> allprojects= projectService.findAllProject();
+//        logger.info("allProject:" + allprojects);
+        model.addAttribute("allprojects", allprojects);
+
         return "projects";
     }
 
-    @RequestMapping("/project_detail")
-    public String project_detail(Model model,HttpSession session) {
+    @RequestMapping("/project_detail/{id}")
+    public String project_detail(String id,Model model,HttpSession session) {
         String stuname = (String)session.getAttribute("stuname");
         model.addAttribute("stuname", stuname);
+
+        logger.info("project_id:" + id);
+
+        //        这里需要一个根据实验的id 返回course操作
+        Project project = projectService.findAllProject().get(0);
+        logger.info("project——detail:" + project);
+        model.addAttribute("project", project);
+
         return "project_detail";
     }
+
+
+
+
+
+
+
+
 
     @RequestMapping("/studylog")
     public String studylog(Model model,HttpSession session) {
@@ -212,17 +287,43 @@ public class studentController {
         return "studylog_detail";
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
     @RequestMapping("/datasets")
     public String datasets(Model model,HttpSession session) {
         String stuname = (String)session.getAttribute("stuname");
         model.addAttribute("stuname", stuname);
+
+        List<Dataset> alldatasets = datasetService.findAllDataset();
+        logger.info("alldatasets" + alldatasets);
+        model.addAttribute("alldatasets", alldatasets);
+
         return "datasets";
     }
 
-    @RequestMapping("/dataset_detail")
-    public String dataset_detail(Model model,HttpSession session) {
+    @RequestMapping("/dataset_detail/{id}")
+    public String dataset_detail(String id,Model model,HttpSession session) {
         String stuname = (String)session.getAttribute("stuname");
         model.addAttribute("stuname", stuname);
+
+        logger.info("dataset_id:" + id);
+
+        //        这里需要一个根据数据集的id 返回dataset操作
+        Dataset dataset = datasetService.findAllDataset().get(0);
+
+        logger.info("dataset——detail:" + dataset);
+        model.addAttribute("dataset",dataset);
+
         return "dataset_detail";
     }
 

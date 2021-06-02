@@ -99,102 +99,119 @@
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-3">
-            <a style="text-decoration: none; color: black;" href="project_detail">
-            <div class="card" >
-              <img src="static/images/showpic/task1.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
-              <div class="card-body">
-                <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">手部识别检测</h4>
-<!--                <p class="card-text" style="overflow: hidden; height: 100px;">-->
-<!--                </p>-->
-              </div>
-            </div>
-            </a>
-          </div>
 
-          <div class="col-md-3">
-            <a style="text-decoration: none; color: black;" href="project_detail">
-              <div class="card" >
-                <img src="static/images/showpic/task2.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
-                <div class="card-body">
-                  <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">人脸生成性别控制</h4>
-                  <!--                <p class="card-text" style="overflow: hidden; height: 100px;">-->
-                  <!--                </p>-->
+                <div class="row">
+                  <div class="col-md-3" th:each="project:${allprojects}">
+                    <a style="text-decoration: none; color: black;" th:href="'project_detail/id='+${project.id}">
+                    <div class="card" >
+                      <img th:src="${project.imagePath}" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
+                      <div class="card-body">
+                        <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;"><span th:text="${project.name}"></span></h4>
+        <!--                <p class="card-text" style="overflow: hidden; height: 100px;">-->
+        <!--                </p>-->
+                      </div>
+                    </div>
+                    </a>
+                  </div>
                 </div>
-              </div>
-            </a>
-          </div>
-
-          <div class="col-md-3">
-            <a style="text-decoration: none; color: black;" href="project_detail">
-              <div class="card" >
-                <img src="static/images/showpic/task3.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
-                <div class="card-body">
-                  <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">图片翻译与旧照片上色</h4>
-                  <!--                <p class="card-text" style="overflow: hidden; height: 100px;">-->
-                  <!--                </p>-->
-                </div>
-              </div>
-            </a>
-          </div>
-
-          <div class="col-md-3">
-            <a style="text-decoration: none; color: black;" href="project_detail">
-              <div class="card" >
-                <img src="static/images/showpic/task4.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
-                <div class="card-body">
-                  <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">图像风格迁移</h4>
-                  <!--                <p class="card-text" style="overflow: hidden; height: 100px;">-->
-                  <!--                </p>-->
-                </div>
-              </div>
-            </a>
-          </div>
-    </div><!-- end row -->
-
-        <div class="row">
-          <div class="col-md-3">
-            <a style="text-decoration: none; color: black;" href="project_detail">
-              <div class="card" >
-                <img src="static/images/showpic/task5.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
-                <div class="card-body">
-                  <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">古诗文生成</h4>
-                  <!--                <p class="card-text" style="overflow: hidden; height: 100px;">-->
-                  <!--                </p>-->
-                </div>
-              </div>
-            </a>
-          </div>
-
-          <div class="col-md-3">
-            <a style="text-decoration: none; color: black;" href="project_detail">
-              <div class="card" >
-                <img src="static/images/showpic/task6.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
-                <div class="card-body">
-                  <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">语音识别</h4>
-                  <!--                <p class="card-text" style="overflow: hidden; height: 100px;">-->
-                  <!--                </p>-->
-                </div>
-              </div>
-            </a>
-          </div>
-
-          <div class="col-md-3">
-            <a style="text-decoration: none; color: black;" href="project_detail">
-              <div class="card" >
-                <img src="static/images/showpic/task7.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
-                <div class="card-body">
-                  <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">天气时序数据预测</h4>
-                  <!--                <p class="card-text" style="overflow: hidden; height: 100px;">-->
-                  <!--                </p>-->
-                </div>
-              </div>
-            </a>
-          </div>
 
 
-        </div><!-- end row -->
+<!--        <div class="row">-->
+<!--          <div class="col-md-3">-->
+<!--            <a style="text-decoration: none; color: black;" href="project_detail">-->
+<!--            <div class="card" >-->
+<!--              <img src="static/images/showpic/task1.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>-->
+<!--              <div class="card-body">-->
+<!--                <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">手部识别检测</h4>-->
+<!--&lt;!&ndash;                <p class="card-text" style="overflow: hidden; height: 100px;">&ndash;&gt;-->
+<!--&lt;!&ndash;                </p>&ndash;&gt;-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            </a>-->
+<!--          </div>-->
+
+<!--          <div class="col-md-3">-->
+<!--            <a style="text-decoration: none; color: black;" href="project_detail">-->
+<!--              <div class="card" >-->
+<!--                <img src="static/images/showpic/task2.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>-->
+<!--                <div class="card-body">-->
+<!--                  <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">人脸生成性别控制</h4>-->
+<!--                  &lt;!&ndash;                <p class="card-text" style="overflow: hidden; height: 100px;">&ndash;&gt;-->
+<!--                  &lt;!&ndash;                </p>&ndash;&gt;-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </a>-->
+<!--          </div>-->
+
+<!--          <div class="col-md-3">-->
+<!--            <a style="text-decoration: none; color: black;" href="project_detail">-->
+<!--              <div class="card" >-->
+<!--                <img src="static/images/showpic/task3.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>-->
+<!--                <div class="card-body">-->
+<!--                  <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">图片翻译与旧照片上色</h4>-->
+<!--                  &lt;!&ndash;                <p class="card-text" style="overflow: hidden; height: 100px;">&ndash;&gt;-->
+<!--                  &lt;!&ndash;                </p>&ndash;&gt;-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </a>-->
+<!--          </div>-->
+
+<!--          <div class="col-md-3">-->
+<!--            <a style="text-decoration: none; color: black;" href="project_detail">-->
+<!--              <div class="card" >-->
+<!--                <img src="static/images/showpic/task4.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>-->
+<!--                <div class="card-body">-->
+<!--                  <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">图像风格迁移</h4>-->
+<!--                  &lt;!&ndash;                <p class="card-text" style="overflow: hidden; height: 100px;">&ndash;&gt;-->
+<!--                  &lt;!&ndash;                </p>&ndash;&gt;-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </a>-->
+<!--          </div>-->
+<!--    </div>&lt;!&ndash; end row &ndash;&gt;-->
+
+<!--        <div class="row">-->
+<!--          <div class="col-md-3">-->
+<!--            <a style="text-decoration: none; color: black;" href="project_detail">-->
+<!--              <div class="card" >-->
+<!--                <img src="static/images/showpic/task5.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>-->
+<!--                <div class="card-body">-->
+<!--                  <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">古诗文生成</h4>-->
+<!--                  &lt;!&ndash;                <p class="card-text" style="overflow: hidden; height: 100px;">&ndash;&gt;-->
+<!--                  &lt;!&ndash;                </p>&ndash;&gt;-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </a>-->
+<!--          </div>-->
+
+<!--          <div class="col-md-3">-->
+<!--            <a style="text-decoration: none; color: black;" href="project_detail">-->
+<!--              <div class="card" >-->
+<!--                <img src="static/images/showpic/task6.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>-->
+<!--                <div class="card-body">-->
+<!--                  <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">语音识别</h4>-->
+<!--                  &lt;!&ndash;                <p class="card-text" style="overflow: hidden; height: 100px;">&ndash;&gt;-->
+<!--                  &lt;!&ndash;                </p>&ndash;&gt;-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </a>-->
+<!--          </div>-->
+
+<!--          <div class="col-md-3">-->
+<!--            <a style="text-decoration: none; color: black;" href="project_detail">-->
+<!--              <div class="card" >-->
+<!--                <img src="static/images/showpic/task7.png" style="height: 209px;" alt="" class="img-fluid card-img-top"/>-->
+<!--                <div class="card-body">-->
+<!--                  <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;">天气时序数据预测</h4>-->
+<!--                  &lt;!&ndash;                <p class="card-text" style="overflow: hidden; height: 100px;">&ndash;&gt;-->
+<!--                  &lt;!&ndash;                </p>&ndash;&gt;-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </a>-->
+<!--          </div>-->
+
+
+<!--        </div>&lt;!&ndash; end row &ndash;&gt;-->
   </div><!-- container-fluid -->
 </div><!-- End Page-content -->
 <footer class="footer">
