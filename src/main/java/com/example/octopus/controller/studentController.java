@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.example.octopus.entity.user.Student;
@@ -70,13 +71,22 @@ public class studentController {
     }
 
 
+
+
+
+
+
+
+
+
+
     @RequestMapping("/applycourse")
     public String applycourse(Model model,HttpSession session) {
         String stuname = (String)session.getAttribute("stuname");
         model.addAttribute("stuname", stuname);
 
         List<Course> allcourses = courseService.findAllCourses();
-        logger.info("allcourses:" + allcourses);
+//        logger.info("allcourses:" + allcourses);
         model.addAttribute("allcourses", allcourses);
 
 
@@ -84,12 +94,67 @@ public class studentController {
     }
 
 
-    @RequestMapping("/apply_detail")
-    public String apply_detail(Model model,HttpSession session) {
+    @RequestMapping("/apply_detail/{id}")
+    public String apply_detail(@PathVariable(value = "id") String id, Model model, HttpSession session) {
         String stuname = (String)session.getAttribute("stuname");
         model.addAttribute("stuname", stuname);
+
+        logger.info("coursedetail_id:" + id);
+
+        //        这里需要一个根据课程的id 返回course操作
+        Course course = courseService.findAllCourses().get(0);
+
+        logger.info("course——detail:" + course);
+        model.addAttribute("course", course);
+
+        //        这里需要一个根据课程的id 用户id 判断是否选课
+        model.addAttribute("isapplied", 1);
+
         return "apply_detail";
     }
+
+    @RequestMapping("/apply_detail/sure_apply")
+    public String sure_apply( String id, Model model, HttpSession session) {
+        String stuname = (String)session.getAttribute("stuname");
+
+        logger.info("确认_id:" + id);
+
+        //        这里需要一个根据用户的id 课程id 添加申请课程
+
+        //        这里需要一个根据课程的id 用户id 判断是否选课
+        model.addAttribute("isapplied", 1);
+
+        return "redirect:/apply_detail/id="+ id;
+    }
+
+    @RequestMapping("/apply_detail/cancel_apply")
+    public String cancel_apply( String id, Model model, HttpSession session) {
+        String stuname = (String)session.getAttribute("stuname");
+
+        logger.info("取消申请_id:" + id);
+
+        //        这里需要一个根据用户的id 课程id 取消申请课程
+
+        //        这里需要一个根据课程的id 用户id 判断是否选课
+        model.addAttribute("isapplied", 0);
+
+        return "redirect:/apply_detail/id="+ id;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @RequestMapping("/mycourse")
     public String mycourse(Model model,HttpSession session) {

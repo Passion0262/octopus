@@ -6,12 +6,13 @@
   <title>人工智能实验实训平台</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta content="人工智能实验实训平台" name="description" />
-  <link href="static/js/libs/admin-resources/jquery.vectormap/static" rel="stylesheet" type="text/css" /><!-- DataTables -->
-  <link href="static/js/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" /><!-- Responsive datatable examples -->
-  <link href="static/js/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" /><!-- Bootstrap Css -->
-  <link href="static/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" /><!-- Icons Css -->
-  <link href="static/css/icons.min.css" rel="stylesheet" type="text/css" /><!-- App Css-->
-  <link href="static/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+  <link th:href="@{../../static/js/libs/admin-resources/jquery.vectormap/static}" rel="stylesheet" type="text/css" /><!-- DataTables -->
+  <link th:href="@{../../static/js/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css}" rel="stylesheet" type="text/css" /><!-- Responsive datatable examples -->
+  <link th:href="@{../../static/js/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css}" rel="stylesheet" type="text/css" /><!-- Bootstrap Css -->
+  <link th:href="@{../../static/css/bootstrap.min.css}" id="bootstrap-style" rel="stylesheet" type="text/css" /><!-- Icons Css -->
+  <link th:href="@{../../static/css/icons.min.css}" rel="stylesheet" type="text/css" /><!-- App Css-->
+  <link th:href="@{../../static/css/app.min.css}" id="app-style" rel="stylesheet" type="text/css" />
+
 </head>
 
 <body data-sidebar="light">
@@ -23,8 +24,8 @@
         <!-- LOGO -->
         <div class="navbar-brand-box">
           <a href="index" class="logo logo-dark">
-            <span class="logo-sm"><img src="static/images/logo-sm-dark.png" alt="" height="22"></span>
-            <span class="logo-lg"><img src="static/images/logo-dark.png" alt="" height="27"></span>
+            <span class="logo-sm"><img src="../../static/images/logo-sm-dark.png" alt="" height="22"></span>
+            <span class="logo-lg"><img src="../../static/images/logo-dark.png" alt="" height="27"></span>
           </a>
         </div>
         <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn"><i class="ri-menu-2-line align-middle"></i></button>
@@ -64,13 +65,13 @@
         <ul class="metismenu list-unstyled" id="side-menu">
 
 
-          <li><a href="index" class="waves-effect"><i class="ri-dashboard-line"></i><span>首页</span></a></li>
-          <li><a href="applycourse" class=" waves-effect"><i class="ri-leaf-line"></i><span>申请学习</span></a></li>
-          <li><a href="mycourse" class=" waves-effect"><i class="ri-plant-line"></i><span>我的课程</span></a></li>
-          <li><a href="experiment_task" class="waves-effect"><i class="ri-checkbox-multiple-blank-line"></i><span>实验任务</span></a></li>
-          <li><a href="projects" class=" waves-effect"><i class="ri-reserved-line"></i><span>项目实战</span></a></li>
-          <li><a href="studylog" class=" waves-effect"><i class="ri-reserved-line"></i><span>学习记录</span></a></li>
-          <li><a href="datasets" class=" waves-effect"><i class="ri-download-cloud-line"></i><span>数据集</span></a></li>
+          <li><a href="/index" class="waves-effect"><i class="ri-dashboard-line"></i><span>首页</span></a></li>
+          <li><a href="/applycourse" class=" waves-effect"><i class="ri-leaf-line"></i><span>申请学习</span></a></li>
+          <li><a href="/mycourse" class=" waves-effect"><i class="ri-plant-line"></i><span>我的课程</span></a></li>
+          <li><a href="/experiment_task" class="waves-effect"><i class="ri-checkbox-multiple-blank-line"></i><span>实验任务</span></a></li>
+          <li><a href="/projects" class=" waves-effect"><i class="ri-reserved-line"></i><span>项目实战</span></a></li>
+          <li><a href="/studylog" class=" waves-effect"><i class="ri-reserved-line"></i><span>学习记录</span></a></li>
+          <li><a href="/datasets" class=" waves-effect"><i class="ri-download-cloud-line"></i><span>数据集</span></a></li>
 
 
 
@@ -107,27 +108,41 @@
                 <table id="datatable-buttons" class="table  table-bordered text-center" style="overflow-x: scroll;">
 
                   <tr>
-                    <th>课程计划名称</th><td>hadoop大数据</td>
-                    <th>开通申请状态</th><td><span style="color:limegreen">允许申请</span></td>
+                    <th>课程计划名称</th><td><span th:text="${course.courseName}"></span></td>
+                    <th>开通申请状态</th><td>
+                    <span th:if="${course.status}=='有效'">
+                      <span style="color:limegreen">允许申请</span>
+                    </span>
+                    <span th:if="${course.status}=='无效'">
+                      <span style="color:dimgrey">禁止申请</span>
+                    </span>
+                  </td>
                   </tr>
                   <tr>
-                    <th>课程授课讲师</th><td>李老师</td>
-                    <th>课程学习时间</th><td>2021年10月22日-2022年5月18日</td>
+                    <th>课程授课讲师</th><td><span th:text="${course.teacher}"></span></td>
+                    <th>课程学习时间</th><td><span th:text="${#dates.format(course.startTime,'yyy年MM月dd日')}+'——'+${#dates.format(course.endTime,'yyy年MM月dd日')}"></span></td>
                   </tr>
                   <tr>
-                    <th>计划招生数</th><td>60</td>
-                    <th>申请开通时间</th><td>2021年4月1日-2021年10月1日</td>
+                    <th>计划招生数</th><td><span th:text="${course.numAllowed}"></span></td>
+                    <th>申请开通时间</th><td><span th:text="${course.applyTime}"></span></td>
                   </tr>
                   <tr>
-                    <th>已经申请人数</th><td>33</td>
+                    <th>已经申请人数</th><td><span th:text="${course.numParticipated}"></span></td>
                     <th>我的申请状态</th>
                     <td>
-                    <button type="button" class="btn btn-success btn-rounded waves-effect waves-light" id="apply_sure">申请课程</button>
-<!--                    <button type="button" class="btn btn-danger btn-rounded waves-effect waves-light">取消课程</button>-->
+                      <span th:if="${isapplied}=='1'">
+<!--                        <span>已申请</span>-->
+                         <button type="button" class="btn btn-danger btn-rounded waves-effect waves-light" th:onclick="cancel_apply([[${course.id}]])">取消课程课程</button>
+                      </span>
+                      <span th:if="${isapplied}=='0'">
+<!--                        <span>未申请</span>-->
+                    <button type="button" class="btn btn-success btn-rounded waves-effect waves-light" th:onclick="sure_apply([[${course.id}]])">申请课程</button>
+
+                        </span>
                     </td>
                   </tr>
                   <tr>
-                    <th>课程介绍</th><td colspan="3">这是课程介绍</td>
+                    <th>课程介绍</th><td colspan="3"><span th:text="${course.courseBrief}"></span></td>
                   </tr>
 
 
@@ -158,48 +173,75 @@
   </div><!-- end main content-->
 </div><!-- END layout-wrapper -->
 
-<script>
-  !function(t){"use strict";
-    function e(){}
-    e.prototype.init=function() {
-    t("#apply_sure").click(function () {
-      Swal.fire({
-        title: "确认申请本课程么?",
-        text: "欢迎选择本课程",
-        icon: "warning",
-        showCancelButton: !0,
-        confirmButtonColor: "#34c38f",
-        cancelButtonColor: "#ff3d60",
-        confirmButtonText: "确认"
-      }).then(function (t) {
-        t.value && Swal.fire("成功", "申请成功", "success")
-      })
-    })
-  }, t.SweetAlert = new e, t.SweetAlert.Constructor = e
-  }(window.jQuery),
-          function() {
-            "use strict";
-            window.jQuery.SweetAlert.init()
-          }();
 
-</script>
 
 
 <!-- JAVASCRIPT -->
-<script src="static/js/libs/jquery/jquery.min.js"></script>
-<script src="static/js/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="static/js/libs/metismenu/metisMenu.min.js"></script>
-<script src="static/js/libs/simplebar/simplebar.min.js"></script>
-<script src="static/js/libs/node-waves/waves.min.js"></script><!-- apexcharts -->
-<script src="static/js/libs/apexcharts/apexcharts.min.js"></script><!-- jquery.vectormap map -->
-<script src="static/js/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="static/js/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-us-merc-en.js"></script><!-- Required datatable js -->
-<script src="static/js/libs/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="static/js/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script><!-- Responsive examples -->
-<script src="static/js/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-<script src="static/js/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+<script th:src="@{../../static/js/libs/jquery/jquery.min.js}"></script>
+<script th:src="@{../../static/js/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{../../static/js/libs/metismenu/metisMenu.min.js}"></script>
+<script th:src="@{../../static/js/libs/simplebar/simplebar.min.js}"></script>
+<script th:src="@{../../static/js/libs/node-waves/waves.min.js}"></script>
+<script th:src="@{../../static/js/app.js}"></script>
+<script th:src="@{../../static/js/libs/sweetalert2/sweetalert2.min.js}"></script>
 
-<script src="static/js/app.js"></script>
+
+<script th:inline="javascript" type="text/javascript">
+
+
+  function sure_apply(id) {
+    // var couid = $("#couid").text();
+    alert(id);
+    // window.location.href="/apply_detail/id="+id;
+
+    if (id)//如果返回的有内容
+    {
+        $.ajax({
+            url: "/apply_detail/sure_apply",
+            type: 'post',
+            data: {
+                "id": id,
+            },
+            success: function () {
+                alert("申请成功");
+            },
+            error: function () {
+                alert("申请失败，请稍后再试");
+            }
+        })
+    } else {
+        alert("没有id");
+    }
+  }
+
+  function cancel_apply(id) {
+    // var couid = $("#couid").text();
+    alert(id);
+    // window.location.href="/apply_detail/id="+id;
+
+    if (id)//如果返回的有内容
+    {
+      $.ajax({
+        url: "/apply_detail/cancel_apply",
+        type: 'post',
+        data: {
+          "id": id,
+        },
+        success: function () {
+          alert("取消申请成功");
+        },
+        error: function () {
+          alert("取消申请失败，请稍后再试");
+        }
+      })
+    } else {
+      alert("没有id");
+    }
+  }
+
+
+</script>
+
 </body>
 
 </html>

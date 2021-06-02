@@ -6,12 +6,14 @@
     <title>人工智能实验实训平台</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="人工智能实验实训平台" name="description" />
-    <link href="static/js/libs/admin-resources/jquery.vectormap/static" rel="stylesheet" type="text/css" /><!-- DataTables -->
-    <link href="static/js/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" /><!-- Responsive datatable examples -->
-    <link href="static/js/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" /><!-- Bootstrap Css -->
-    <link href="static/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" /><!-- Icons Css -->
-    <link href="static/css/icons.min.css" rel="stylesheet" type="text/css" /><!-- App Css-->
-    <link href="static/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+    <link th:href="@{static/js/libs/admin-resources/jquery.vectormap/static}" rel="stylesheet" type="text/css" /><!-- DataTables -->
+    <link th:href="@{static/js/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css}" rel="stylesheet" type="text/css" /><!-- Responsive datatable examples -->
+    <link th:href="@{static/js/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css}" rel="stylesheet" type="text/css" /><!-- Bootstrap Css -->
+    <link th:href="@{static/css/bootstrap.min.css}" id="bootstrap-style" rel="stylesheet" type="text/css" /><!-- Icons Css -->
+    <link th:href="@{static/css/icons.min.css}" rel="stylesheet" type="text/css" /><!-- App Css-->
+    <link th:href="@{static/css/app.min.css}" id="app-style" rel="stylesheet" type="text/css" />
+
+
 </head>
 
 <body data-sidebar="light">
@@ -120,14 +122,27 @@
                                         </tr>
                                         </thead>
                                         <tbody style="text-align: center">
-                                        <tr th:each="allcourse:${allcourses}">
-                                            <td><span th:text="${allcourse.id}"></span></td>
-                                            <td><span th:text="${allcourse.courseName}"></span></td>
-                                            <td><span th:text="${allcourse.teacher}"></span></td>
-                                            <td><span th:text="${allcourse.startTime}"></span></td>
-                                            <td><span th:text="${allcourse.endTime}"></span></td>
-                                            <td><span style="color:limegreen">允许申请</span></td>
-                                            <td><a href="apply_detail">查看详情</a></td>
+                                        <tr th:each="course:${allcourses}">
+                                            <td><span th:text="${course.id}"></span></td>
+                                            <td><span th:text="${course.courseName}"></span></td>
+                                            <td><span th:text="${course.teacher}"></span></td>
+                                            <td><span th:text="${course.startTime}"></span></td>
+                                            <td><span th:text="${course.endTime}"></span></td>
+                                            <td>
+                                                <span th:if="${course.status}=='有效'">
+                                                <span style="color:limegreen">允许申请</span>
+                                                </span>
+                                                <span th:if="${course.status}=='无效'">
+                                                <span style="color:dimgrey">禁止申请</span>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary waves-effect waves-light" th:onclick="showdetail([[${course.id}]])">查看详情 <i class="ri-arrow-right-line align-middle ml-2"></i></button>
+
+                                                <!--                                                <button type="button" class="btn btn-outline-primary waves-effect waves-light" onclick="showdetail()">查看详情</button>-->
+<!--                                                <a th:href="/apply_detail/+''${allcourse.id}">查看详情</a>-->
+
+                                            </td>
                                         </tr>
 
 
@@ -164,21 +179,49 @@
 
 
 
+
 <!-- JAVASCRIPT -->
-<script src="static/js/libs/jquery/jquery.min.js"></script>
-<script src="static/js/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="static/js/libs/metismenu/metisMenu.min.js"></script>
-<script src="static/js/libs/simplebar/simplebar.min.js"></script>
-<script src="static/js/libs/node-waves/waves.min.js"></script><!-- apexcharts -->
-<script src="static/js/libs/apexcharts/apexcharts.min.js"></script><!-- jquery.vectormap map -->
-<script src="static/js/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="static/js/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-us-merc-en.js"></script><!-- Required datatable js -->
-<script src="static/js/libs/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="static/js/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script><!-- Responsive examples -->
-<script src="static/js/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-<script src="static/js/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
-<!--    <script src="static/js/pages/dashboard.init.js"></script>-->
-<script src="static/js/app.js"></script>
+<script th:src="@{static/js/libs/jquery/jquery.min.js}"></script>
+<script th:src="@{static/js/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{static/js/libs/metismenu/metisMenu.min.js}"></script>
+<script th:src="@{static/js/libs/simplebar/simplebar.min.js}"></script>
+<script th:src="@{static/js/libs/node-waves/waves.min.js}"></script>
+<script th:src="@{static/js/app.js}"></script>
+<script th:src="@{static/js/libs/sweetalert2/sweetalert2.min.js}"></script>
+
+<script th:inline="javascript" type="text/javascript">
+
+
+    function showdetail(id) {
+        // var couid = $("#couid").text();
+        // alert(couid);
+        window.location.href="/apply_detail/id="+id;
+
+        //这里需要注意的是，prompt有两个参数，前面是提示的话，后面是当对话框出来后，在对话框里的默认值
+        // if (couid)//如果返回的有内容
+        // {
+        //     $.ajax({
+        //         url: "/apply_detail",
+        //         type: 'post',
+        //         data: {
+        //             "id": couid,
+        //         },
+        //         success: function () {
+        //             // alert("更改成功");
+        //         },
+        //         error: function () {
+        //             // alert("更改失败，请稍后再试");
+        //         }
+        //     })
+        // } else {
+        //     // alert("没有id")
+        // }
+    }
+
+
+</script>
+
+
 </body>
 
 </html>
