@@ -1,4 +1,4 @@
-package com.example.octopus.entity.experimentMission;
+package com.example.octopus.entity.experiment;
 
 import com.example.octopus.entity.user.Student;
 import lombok.Data;

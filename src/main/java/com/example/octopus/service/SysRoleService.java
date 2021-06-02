@@ -11,4 +11,6 @@ public interface SysRoleService {
 
     public SysRole findById(long id);
 
+    public SysRole findByName(String name);
+
 }

@@ -1,6 +1,7 @@
 package com.example.octopus.config;
 
 import com.example.octopus.security.CustomAuthenticationProvider;
+import com.example.octopus.security.CustomPermissionEvaluator;
 import com.example.octopus.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
@@ -116,6 +118,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .password(new BCryptPasswordEncoder().encode("123456"))
 //                .roles("USER");
 //    }
+
+
+    /**
+     * 注入自定义PermissionEvaluator
+     */
+    @Bean
+    public DefaultWebSecurityExpressionHandler webSecurityExpressionHandler(){
+        DefaultWebSecurityExpressionHandler handler = new DefaultWebSecurityExpressionHandler();
+        handler.setPermissionEvaluator(new CustomPermissionEvaluator());
+        return handler;
+    }
 
 }
 

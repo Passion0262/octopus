@@ -33,15 +33,15 @@ class StudentServiceImplTest {
     @Test
     void findStudentById() {
         Student stu = userService.findStudentByStuNumber("1");
-        assertEquals("小明", stu.getName());
+        assertEquals("admin", stu.getName());
     }
 
     @Test
     void login() {
-        String stuNumber = "6201924124";
-        String password = "xiaoming";
+        String stuNumber = "1";
+        String password = "123";
         Student stu = userService.login(stuNumber, password);
-        assertEquals("13888888888",stu.getPhoneNumber());
+        assertEquals("12345678",stu.getPhoneNumber());
     }
 
 //    @Test
@@ -50,7 +50,7 @@ class StudentServiceImplTest {
 
     @Test
     void updateLoginInfo() {
-        String stuNumber = "6201924124";
+        String stuNumber = "1";
         userService.updateLoginInfo(stuNumber);
     }
 }

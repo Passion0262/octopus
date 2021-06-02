@@ -29,6 +29,14 @@ public interface CourseMapper {
     List<Course> queryAllCourses();
 
     /**
+     * 根据课程id返回课程
+     * @param id 课程id
+     * @return
+     */
+    @Select(("SELECT * FROM course where id = #{id}"))
+    Course queryCourse(long id);
+
+    /**
      * 如果courseid存在则更新，如果不存在则添加。
      * @param course  课程实体
      * @return 成功为true，失败为false

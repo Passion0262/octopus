@@ -25,6 +25,11 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    public Course findCourseById(long id) {
+        return courseMapper.queryCourse(id);
+    }
+
+    @Override
     public boolean saveCourse(Course course) {
         return courseMapper.saveCourse(course);
     }

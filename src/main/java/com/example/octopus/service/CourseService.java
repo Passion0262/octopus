@@ -18,6 +18,13 @@ public interface CourseService {
     List<Course> findAllCourses();
 
     /**
+     * 根据课程id查询课程
+     * @param id 课程id
+     * @return 课程实体
+     */
+    Course findCourseById(long id);
+
+    /**
      * 如果courseid存在则更新，如果不存在则添加。
      * @param course  课程实体
      * @return 成功为true，失败为false
