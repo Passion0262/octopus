@@ -25,6 +25,21 @@ public interface CourseService {
     Course findCourseById(long id);
 
     /**
+     * 根据学生学号查询该学生选的课
+     * @param stuNumber 学号
+     * @return 课程list
+     */
+    List<Course> findCourseByStuNumber(String stuNumber);
+
+    /**
+     * 查询学生是否选某一门课
+     * @param stuNumber 学号
+     * @param courseName 课程名
+     * @return 选了这门课为true，没选是false
+     */
+    boolean isChosen(String stuNumber, String courseName);
+
+    /**
      * 如果courseid存在则更新，如果不存在则添加。
      * @param course  课程实体
      * @return 成功为true，失败为false
@@ -37,5 +52,6 @@ public interface CourseService {
      * @return 成功为true，失败为false
      */
     boolean deleteCourseById(long courseid);
+
 
 }

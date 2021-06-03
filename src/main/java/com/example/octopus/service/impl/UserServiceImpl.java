@@ -53,4 +53,9 @@ public class UserServiceImpl implements UserService {
     public void resetPassword(String stuNumber) {
         userMapper.resetPassword(stuNumber);
     }
+
+    @Override
+    public boolean updatePhoneNumber(String stuNumber, String phoneNumber) {
+        return userMapper.changePhone(stuNumber, phoneNumber);
+    }
 }

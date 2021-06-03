@@ -53,4 +53,11 @@ public interface UserService {
     public void updateLoginInfo(String stuNumber);
 
     public void resetPassword(String stuNumber);
+
+    /**
+     * 根据学号更改手机号
+     * @param stuNumber 学号
+     * @param phoneNumber 手机号
+     */
+    public boolean updatePhoneNumber(String stuNumber, String phoneNumber);
 }

@@ -30,6 +30,16 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    public List<Course> findCourseByStuNumber(String stuNumber) {
+        return courseMapper.queryCourseByStuNumber(stuNumber);
+    }
+
+    @Override
+    public boolean isChosen(String stuNumber, String courseName) {
+        return courseMapper.queryCourseIsChosen(stuNumber, courseName);
+    }
+
+    @Override
     public boolean saveCourse(Course course) {
         return courseMapper.saveCourse(course);
     }

@@ -32,4 +32,7 @@ public interface UserMapper {
     @Update("UPDATE student SET stuNumber = '000000' WHERE stuNumber = #{stuNumber}}")
     boolean resetPassword(String stuNumber);
 
+    @Update("UPDATE student SET phoneNumber = #{phoneNumber} WHERE stuNumber = #{stuNumber}")
+    boolean changePhone(String stuNumber, String phoneNumber);
+
 }

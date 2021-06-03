@@ -37,11 +37,30 @@ public interface CourseMapper {
     Course queryCourse(long id);
 
     /**
+     * 根据学生学号查询所选所有课程
+     * @param stuNumber 学生学号
+     * @return 该学生选的所有课程
+     */
+    @Select("SELECT * FROM student_course where stuNumber = #{stuNumber}")
+    List<Course> queryCourseByStuNumber(String stuNumber);
+
+    /**
+     * 查询学生是否选某一门课
+     * @param stuNumber 学号
+     * @param courseName 课程名
+     * @return 选了这门课为true，没选是false
+     */
+    @Select("SELECT COUNT(id) FROM student_course WHERE stuNumber = #{stuNumber} AND courseName = #{courseName}")
+    boolean queryCourseIsChosen(String stuNumber, String courseName);
+
+    /**
      * 如果courseid存在则更新，如果不存在则添加。
      * @param course  课程实体
      * @return 成功为true，失败为false
      */
     boolean saveCourse(Course course);
+
+//    boolean chooseCourse()
 
     /**
      * 根据courseid删除课程
