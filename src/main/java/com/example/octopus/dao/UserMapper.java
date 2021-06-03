@@ -15,24 +15,24 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
     @Select("SELECT * FROM student")
-    List<Student> queryAllStudents();
+    List<Student> listAllStudents();
 
     @Select("SELECT * FROM student WHERE stuNumber = #{stuNumber}")
-    Student queryStudentByStuNumber(String stuNumber);
+    Student getStudentByStuNumber(long stuNumber);
 
     @Select("SELECT * FROM student WHERE name = #{name}")
-    Student queryStudentByName(String name);
+    Student getStudentByName(String name);
 
     @Select("SELECT * FROM student WHERE stuNumber = #{stuNumber} and password = #{password}")
-    Student queryStudentByStuNumberAndPassword(String stuNumber, String password);
+    Student getStudentByStuNumberAndPassword(long stuNumber, String password);
 
     @Update("UPDATE student SET loginNumber = loginNumber+1, lastLoginTime = CURRENT_TIMESTAMP where stuNumber = #{stuNumber}")
-    boolean updateLoginInfoByStuNumber(String stuNumber);
+    boolean updateLoginInfoByStuNumber(long stuNumber);
 
     @Update("UPDATE student SET stuNumber = '000000' WHERE stuNumber = #{stuNumber}}")
-    boolean resetPassword(String stuNumber);
+    boolean resetPassword(long stuNumber);
 
     @Update("UPDATE student SET phoneNumber = #{phoneNumber} WHERE stuNumber = #{stuNumber}")
-    boolean changePhone(String stuNumber, String phoneNumber);
+    boolean changePhone(long stuNumber, String phoneNumber);
 
 }

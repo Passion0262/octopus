@@ -2,20 +2,14 @@ package com.example.octopus.entity.experiment;
 
 import lombok.Data;
 
-import javax.persistence.*;
-
 /**
  * @author ：shadow
  * @date ：Created in 2021/5/22 1:11 下午
  * @modified By：
  * 实验任务分类
  */
-@Entity
-@Table
 @Data
 public class ExperimentMissionClassify {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;    //编号
 
     private String title;   //标题

@@ -1,7 +1,6 @@
 package com.example.octopus.controller;
 
 import com.example.octopus.entity.dataset.Dataset;
-import com.example.octopus.entity.experiment.Experiment;
 import com.example.octopus.entity.experiment.ExperimentMission;
 import com.example.octopus.entity.project.Project;
 import com.example.octopus.service.*;
@@ -39,23 +38,25 @@ public class studentController {
     @RequestMapping("/login")
     public String login(Model model) {
         return "auth-login";
+//        return "login";
     }
 
     @RequestMapping("/")
     public String showHome(Model model, HttpSession session) {
         String stuNumber = SecurityContextHolder.getContext().getAuthentication().getName();
-        Student stu = userService.findStudentByStuNumber(stuNumber);
+        Student stu = userService.findStudentByStuNumber(Long.parseLong(stuNumber));
         logger.info("当前登陆用户：" + stuNumber+":"+stu.getName());
 //        model.addAttribute("stu", stu);
 
         session.setAttribute("stuname",stu.getName());
         return "redirect:/index";
+//        return "home";
     }
 
     @RequestMapping("/index")
     public String index(Model model,HttpSession session) {
         String stuNumber = SecurityContextHolder.getContext().getAuthentication().getName();
-        Student stu = userService.findStudentByStuNumber(stuNumber);
+        Student stu = userService.findStudentByStuNumber(Long.parseLong(stuNumber));
         session.setAttribute("stuname",stu.getName());
 
 
@@ -70,7 +71,7 @@ public class studentController {
         model.addAttribute("stuname", stuname);
 
         String stuNumber = SecurityContextHolder.getContext().getAuthentication().getName();
-        Student stu = userService.findStudentByStuNumber(stuNumber);
+        Student stu = userService.findStudentByStuNumber(Long.parseLong(stuNumber));
         model.addAttribute("stu", stu);
 
         return "userinfo";

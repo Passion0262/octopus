@@ -12,6 +12,14 @@ import java.util.List;
 public interface CourseService {
 
     /**
+     * 学生选课 根据学生id，课程id
+     * @param stuNumber 学号
+     * @param courseId 课程id
+     * @return 是否成功选课
+     */
+    boolean insertChooseCourse(long stuNumber, long courseId);
+
+    /**
      * 查询所有的课程
      * @return  返回所有课程实体
      */
@@ -34,10 +42,10 @@ public interface CourseService {
     /**
      * 查询学生是否选某一门课
      * @param stuNumber 学号
-     * @param courseName 课程名
+     * @param courseId 课程id
      * @return 选了这门课为true，没选是false
      */
-    boolean isChosen(String stuNumber, String courseName);
+    boolean isChosen(long stuNumber, long courseId);
 
     /**
      * 如果courseid存在则更新，如果不存在则添加。

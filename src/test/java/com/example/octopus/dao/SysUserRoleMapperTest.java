@@ -20,12 +20,14 @@ import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
 class SysUserRoleMapperTest {
 
+    long stuNumber = 1L;
+
     @Autowired
     SysUserRoleMapper sysUserRoleMapper;
 
     @Test
     void listByUserId() {
-        List<SysUserRole> list = sysUserRoleMapper.listByUserId("1");
+        List<SysUserRole> list = sysUserRoleMapper.listByUserId(stuNumber);
         assertEquals(list.get(0).getRoleId(),1);
     }
 }

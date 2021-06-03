@@ -3,7 +3,6 @@ package com.example.octopus.entity.project;
 import com.example.octopus.entity.user.Student;
 import lombok.Data;
 
-import javax.persistence.*;
 import java.sql.Time;
 import java.util.Date;
 
@@ -13,12 +12,8 @@ import java.util.Date;
  * 项目任务进度表（存储学生项目任务进度）
  */
 
-@Entity
 @Data
-@Table
 public class ProjectMissionProgress {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
 //    @ManyToOne
@@ -31,7 +26,7 @@ public class ProjectMissionProgress {
 //    @JoinColumn(name = "missionId")
 //    private ProjectMission missionId;  //项目任务id
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String missionName;  //任务名
 
     private Time operateTotalTime;  //操作总时长
@@ -48,7 +43,7 @@ public class ProjectMissionProgress {
 
     private Date reportSubmitTime;  //任务报告提交时间
 
-    @Column(columnDefinition = "enum('审核通过','审核不通过')")
+//    @Column(columnDefinition = "enum('审核通过','审核不通过')")
     private String reportPassed;  //任务报告审核通过与否
 
     private String reportExaminer;  //任务报告审查人

@@ -15,7 +15,7 @@ import java.util.Set;
 @Data
 public class Student {
 
-    private String stuNumber;
+    private long stuNumber;
 
     private String name;
 

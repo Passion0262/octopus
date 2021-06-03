@@ -21,6 +21,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
 class StudentServiceImplTest {
 
+    long stuNumber = 1L;
+    String password = "123";
+
     @Autowired
     UserService userService = new UserServiceImpl();
 
@@ -32,14 +35,12 @@ class StudentServiceImplTest {
 
     @Test
     void findStudentById() {
-        Student stu = userService.findStudentByStuNumber("1");
+        Student stu = userService.findStudentByStuNumber(stuNumber);
         assertEquals("admin", stu.getName());
     }
 
     @Test
     void login() {
-        String stuNumber = "1";
-        String password = "123";
         Student stu = userService.login(stuNumber, password);
         assertEquals("12345678",stu.getPhoneNumber());
     }
@@ -50,7 +51,6 @@ class StudentServiceImplTest {
 
     @Test
     void updateLoginInfo() {
-        String stuNumber = "1";
         userService.updateLoginInfo(stuNumber);
     }
 }

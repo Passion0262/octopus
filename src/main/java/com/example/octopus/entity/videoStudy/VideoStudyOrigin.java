@@ -3,7 +3,6 @@ package com.example.octopus.entity.videoStudy;
 import com.example.octopus.entity.user.Course;
 import lombok.Data;
 
-import javax.persistence.*;
 
 
 /**
@@ -11,12 +10,8 @@ import javax.persistence.*;
  * @date: 2021/5/22 12:19
  * 视频学习原始内容表
  */
-@Entity
 @Data
-@Table
 public class VideoStudyOrigin {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
 //    @ManyToOne

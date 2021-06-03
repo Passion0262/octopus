@@ -20,7 +20,7 @@ public interface UserService {
      * @param stuNumber 学生的id
      * @return  该学生对象
      */
-    public Student findStudentByStuNumber(String stuNumber);
+    public Student findStudentByStuNumber(long stuNumber);
 
     /**
      * @param name 学生的name
@@ -34,7 +34,7 @@ public interface UserService {
      * @param password  学生密码
      * @return  返回学生实体
      */
-    public Student login(String stuNumber, String password);
+    public Student login(long stuNumber, String password);
 
     /**
      * 注册账号
@@ -50,14 +50,14 @@ public interface UserService {
      * @param stuNumber 学生
      * @return
      */
-    public void updateLoginInfo(String stuNumber);
+    public void updateLoginInfo(long stuNumber);
 
-    public void resetPassword(String stuNumber);
+    public void resetPassword(long stuNumber);
 
     /**
      * 根据学号更改手机号
      * @param stuNumber 学号
      * @param phoneNumber 手机号
      */
-    public boolean updatePhoneNumber(String stuNumber, String phoneNumber);
+    public boolean updatePhoneNumber(long stuNumber, String phoneNumber);
 }

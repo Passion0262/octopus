@@ -33,10 +33,10 @@ public class CustomUserDetailsService implements UserDetailsService {
     private SysUserRoleService userRoleService;
 
     @Override
-    public UserDetails loadUserByUsername(String stuNumber) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         // 从数据库中取出用户信息
-        Student user = userService.findStudentByStuNumber(stuNumber);
+        Student user = userService.findStudentByStuNumber(Long.parseLong(username));
 
         // 判断用户是否存在
         if(user == null) {
@@ -51,6 +51,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
 
         // 返回UserDetails实现类
-        return new User(user.getStuNumber(), user.getPassword(), authorities);
+        return new User(String.valueOf(user.getStuNumber()), user.getPassword(), authorities);
     }
 }

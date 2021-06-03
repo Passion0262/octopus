@@ -1,38 +1,38 @@
 package com.example.octopus.dao;
 
-import com.example.octopus.entity.user.Course;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author ：shadow
- * @date ：Created in 2021/6/1 9:24 下午
+ * @date ：Created in 2021/6/3 2:54 下午
  */
 @SpringBootTest
 @RunWith(SpringRunner.class)
-class CourseMapperTest {
+class StudentCourseMapperTest {
+
+    private final static long STUNUMBER = 1L;
+    private final static long COURSE_ID = 1L;
 
     @Autowired
-    CourseMapper courseMapper;
+    StudentCourseMapper studentCourseMapper;
 
     @Test
-    void queryAllCourses() {
-        List<Course> list =  courseMapper.listAllCourses();
-        assertEquals(3,list.size());
+    void insertStudentCourse() {
+        boolean result = studentCourseMapper.insertStudentCourse(STUNUMBER,COURSE_ID);
+        assertTrue(result);
     }
 
     @Test
-    void saveCourse() {
+    void queryCourseByStuNumber() {
     }
 
     @Test
-    void deleteCourseById() {
+    void queryCourseIsChosen() {
     }
 }

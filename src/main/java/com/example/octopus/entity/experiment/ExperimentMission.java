@@ -2,7 +2,6 @@ package com.example.octopus.entity.experiment;
 
 import lombok.Data;
 
-import javax.persistence.*;
 import java.sql.Date;
 
 /**
@@ -13,8 +12,6 @@ import java.sql.Date;
  */
 @Data
 public class ExperimentMission {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
 //    @Column(columnDefinition = "VARCHAR(50) default '' COMMENT '实验课程标题'")

@@ -11,6 +11,6 @@ import java.util.List;
  */
 public interface SysUserRoleService {
 
-    public List<SysUserRole> listByUserId(String stuNumber);
+    public List<SysUserRole> listByUserId(long stuNumber);
 
 }

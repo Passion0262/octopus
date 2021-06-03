@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @RunWith(SpringRunner.class)
 class UserServiceImplTest {
+    long stuNumber = 1L;
 
     @Autowired
     UserService userService;
@@ -46,7 +47,6 @@ class UserServiceImplTest {
 
     @Test
     void updatePhoneNumber() {
-        String stuNumber = "1";
         String new_phone = "33333";
         boolean result = userService.updatePhoneNumber(stuNumber,new_phone);
         assertTrue(result);

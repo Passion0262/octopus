@@ -3,7 +3,6 @@ package com.example.octopus.entity.experiment;
 import com.example.octopus.entity.user.Student;
 import lombok.Data;
 
-import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -12,12 +11,8 @@ import java.util.Date;
  * 实验子任务进度表（存储学生任务进度）
  */
 
-@Entity
 @Data
-@Table
 public class ExperimentMissionProgress {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
 //    @ManyToOne
@@ -46,7 +41,7 @@ public class ExperimentMissionProgress {
 
     private Date reportSubmitTime;  //任务报告提交时间
 
-    @Column(columnDefinition = "enum('审核通过','审核不通过')")
+//    @Column(columnDefinition = "enum('审核通过','审核不通过')")
     private String reportPassed;  //任务报告审核通过与否
 
     private String reportExaminer;  //任务报告审查人

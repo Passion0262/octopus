@@ -19,8 +19,17 @@ import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
 class CourseServiceImplTest {
 
+    private static final long STUDENT_ID = 1L;
+    private static final long COURSE_ID = 1L;
+
     @Autowired
     CourseServiceImpl courseService;
+
+    @Test
+    void insertChooseCourse() {
+        boolean result = courseService.insertChooseCourse(STUDENT_ID,COURSE_ID);
+        assertTrue(result);
+    }
 
     @Test
     void findAllCourses() {

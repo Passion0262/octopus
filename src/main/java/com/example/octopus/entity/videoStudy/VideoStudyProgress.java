@@ -3,19 +3,14 @@ package com.example.octopus.entity.videoStudy;
 import com.example.octopus.entity.user.Student;
 import lombok.Data;
 
-import javax.persistence.*;
 
 /**
  * @author: Hao
  * @date: 2021/5/22 12:32
  * 视频学习进度表（存储学生视频学习进度）
  */
-@Entity
 @Data
-@Table
 public class VideoStudyProgress {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
 //    @ManyToOne

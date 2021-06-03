@@ -2,7 +2,6 @@ package com.example.octopus.entity.experiment;
 
 import lombok.Data;
 
-import javax.persistence.*;
 
 /**
  * @author: Hao
@@ -10,12 +9,8 @@ import javax.persistence.*;
  *   实验远程协助
  */
 
-@Entity
 @Data
-@Table
 public class ExperimentRemoteAssist {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String stuNumber;  //学生学号

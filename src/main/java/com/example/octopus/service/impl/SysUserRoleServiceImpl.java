@@ -20,7 +20,9 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
     SysUserRoleMapper sysUserRoleMapper;
 
     @Override
-    public List<SysUserRole> listByUserId(String stuNumber) {
+    public List<SysUserRole> listByUserId(long stuNumber) {
         return sysUserRoleMapper.listByUserId(stuNumber);
     }
+
+
 }

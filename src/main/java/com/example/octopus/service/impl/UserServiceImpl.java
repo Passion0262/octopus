@@ -21,22 +21,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<Student> getStudentList() {
-        return userMapper.queryAllStudents();
+        return userMapper.listAllStudents();
     }
 
     @Override
-    public Student findStudentByStuNumber(String stuNumber) {
-        return userMapper.queryStudentByStuNumber(stuNumber);
+    public Student findStudentByStuNumber(long stuNumber) {
+        return userMapper.getStudentByStuNumber(stuNumber);
     }
 
     @Override
     public Student findStudentByName(String name) {
-        return userMapper.queryStudentByName(name);
+        return userMapper.getStudentByName(name);
     }
 
     @Override
-    public Student login(String stuNumber, String password) {
-        return userMapper.queryStudentByStuNumberAndPassword(stuNumber, password);
+    public Student login(long stuNumber, String password) {
+        return userMapper.getStudentByStuNumberAndPassword(stuNumber, password);
     }
 
 //    @Override
@@ -45,17 +45,17 @@ public class UserServiceImpl implements UserService {
 //    }
 
     @Override
-    public void updateLoginInfo(String stuNumber) {
+    public void updateLoginInfo(long stuNumber) {
         userMapper.updateLoginInfoByStuNumber(stuNumber);
     }
 
     @Override
-    public void resetPassword(String stuNumber) {
+    public void resetPassword(long stuNumber) {
         userMapper.resetPassword(stuNumber);
     }
 
     @Override
-    public boolean updatePhoneNumber(String stuNumber, String phoneNumber) {
+    public boolean updatePhoneNumber(long stuNumber, String phoneNumber) {
         return userMapper.changePhone(stuNumber, phoneNumber);
     }
 }

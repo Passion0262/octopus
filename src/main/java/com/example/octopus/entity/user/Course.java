@@ -2,7 +2,6 @@ package com.example.octopus.entity.user;
 
 import lombok.Data;
 
-import javax.persistence.*;
 import java.sql.Date;
 
 /**
@@ -30,6 +29,8 @@ public class Course {
 
 //    @Column(nullable = false,columnDefinition = "varchar(255) comment '课程标图地址'")
     private String courseImagePath;
+
+    private long experimentMissionId;
 
 //    @Column(nullable = false,columnDefinition = "date comment '开始时间'")
     private Date startTime;

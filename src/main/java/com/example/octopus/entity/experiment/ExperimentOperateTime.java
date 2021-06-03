@@ -2,19 +2,14 @@ package com.example.octopus.entity.experiment;
 
 import lombok.Data;
 
-import javax.persistence.*;
 
 /**
  * @author: Hao
  * @date: 2021/5/22 13:05
  *   实验操作时长
  */
-@Entity
 @Data
-@Table
 public class ExperimentOperateTime {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String stuNumber;  //学生学号
