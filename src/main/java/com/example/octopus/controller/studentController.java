@@ -118,7 +118,7 @@ public class studentController {
         logger.info("coursedetail_id:" + id);
 
         //        这里需要一个根据课程的id 返回course操作
-        Course course = courseService.findAllCourses().get(0);
+        Course course = courseService.findCourseById(Long.parseLong(id));
 
         logger.info("course——detail:" + course);
         model.addAttribute("course", course);
@@ -231,7 +231,14 @@ public class studentController {
 
 
 
+    @RequestMapping("/experiment_machine")
+    public String experiment_machine(Model model,HttpSession session) {
+        String stuname = (String) session.getAttribute("stuname");
+        model.addAttribute("stuname", stuname);
 
+        return "experiment_machine";
+
+    }
 
 
 
