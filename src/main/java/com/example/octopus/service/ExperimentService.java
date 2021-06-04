@@ -1,6 +1,6 @@
 package com.example.octopus.service;
 
-import com.example.octopus.entity.experiment.ExperimentMission;
+import com.example.octopus.entity.experiment.Experiment;
 
 import java.util.List;
 
@@ -10,6 +10,6 @@ import java.util.List;
  */
 public interface ExperimentService {
 
-    List<ExperimentMission> findAllExperimentMission();
+    List<Experiment> findAllExperimentMission();
 
 }
