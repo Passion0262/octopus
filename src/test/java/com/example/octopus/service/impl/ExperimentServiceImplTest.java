@@ -1,6 +1,6 @@
 package com.example.octopus.service.impl;
 
-import com.example.octopus.entity.experiment.ExperimentMission;
+import com.example.octopus.entity.experiment.Experiment;
 import com.example.octopus.service.ExperimentService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +25,7 @@ class ExperimentServiceImplTest {
 
     @Test
     void findAllExperimentMission() {
-        List<ExperimentMission> list = experimentService.findAllExperimentMission();
+        List<Experiment> list = experimentService.findAllExperimentMission();
         assertEquals(1,list.size());
     }
 }

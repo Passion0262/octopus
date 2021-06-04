@@ -1,7 +1,7 @@
 package com.example.octopus.controller;
 
 import com.example.octopus.entity.dataset.Dataset;
-import com.example.octopus.entity.experiment.ExperimentMission;
+import com.example.octopus.entity.experiment.Experiment;
 import com.example.octopus.entity.project.Project;
 import com.example.octopus.service.*;
 import org.slf4j.Logger;
@@ -208,7 +208,7 @@ public class studentController {
         String stuname = (String)session.getAttribute("stuname");
         model.addAttribute("stuname", stuname);
 
-        List<ExperimentMission> allexperiments = experimentService.findAllExperimentMission();
+        List<Experiment> allexperiments = experimentService.findAllExperimentMission();
 //        logger.info("allExperiment:" + allexperiments);
         model.addAttribute("allexperiments", allexperiments);
 
@@ -223,7 +223,7 @@ public class studentController {
         logger.info("experimentMission_id:" + id);
 
         //        这里需要一个根据实验的id 返回course操作
-        ExperimentMission experimentMission = experimentService.findAllExperimentMission().get(0);
+        Experiment experimentMission = experimentService.findAllExperimentMission().get(0);
 
         logger.info("experimentMission——detail:" + experimentMission);
         model.addAttribute("experimentMission", experimentMission);

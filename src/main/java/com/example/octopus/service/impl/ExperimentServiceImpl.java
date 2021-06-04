@@ -1,7 +1,7 @@
 package com.example.octopus.service.impl;
 
 import com.example.octopus.dao.ExperimentMapper;
-import com.example.octopus.entity.experiment.ExperimentMission;
+import com.example.octopus.entity.experiment.Experiment;
 import com.example.octopus.service.ExperimentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class ExperimentServiceImpl implements ExperimentService {
     ExperimentMapper experimentMapper;
 
     @Override
-    public List<ExperimentMission> findAllExperimentMission() {
+    public List<Experiment> findAllExperimentMission() {
         return experimentMapper.queryAllExperimentMission();
     }
 }
