@@ -293,7 +293,7 @@ public class adminController {
         HttpSession session = request.getSession();
         String username = (String)session.getAttribute("user");
         //model.addAttribute("username", "李四");
-        model.addAttribute("courses", courseService.findAllCourses());
+        model.addAttribute("courses", courseService.listCourses());
         return "admin_course";
     }
 
@@ -311,7 +311,7 @@ public class adminController {
     public ModelAndView add_course(Course course){
         System.out.println("提交新增的course");
         System.out.println(course);
-        courseService.saveCourse(course);
+        courseService.insertCourse(course);
         return new ModelAndView("redirect:/admin_course");
     }
 
@@ -333,7 +333,7 @@ public class adminController {
         System.out.println("提交修改的course");
         //修改课程信息
         System.out.println(course);
-        courseService.saveCourse(course);
+        courseService.updateCourse(course);
         return new ModelAndView("redirect:/admin_course");
     }
 
@@ -362,12 +362,12 @@ public class adminController {
         System.out.println("进入admin_course_student_add，Student_Course()");
         String user = request.getParameter("username");
         model.addAttribute("username", user);
-        model.addAttribute("course_student",new Student_Course());
+        model.addAttribute("course_student",new StudentCourse());
         return new ModelAndView("admin_course_student_add","coursestudentmodel",model);
     }
 
     @PostMapping("/add_course_student")
-    public ModelAndView add_course_student(Student_Course course_student){
+    public ModelAndView add_course_student(StudentCourse course_student){
         System.out.println("提交新增的course_student");
         System.out.println(course_student);
         //增加
@@ -383,12 +383,12 @@ public class adminController {
         String user = request.getParameter("username");
         //查找对应数据
         model.addAttribute("username", user);
-        model.addAttribute("course_student",new Student_Course());
+        model.addAttribute("course_student",new StudentCourse());
         return new ModelAndView("admin_course_student_edit","coursestudentmodel",model);
     }
 
     @PostMapping("/edit_course_student")
-    public ModelAndView edit_course_student(Student_Course course_student){
+    public ModelAndView edit_course_student(StudentCourse course_student){
         System.out.println("提交修改的course_student");
         System.out.println(course_student);
         //修改学生开课计划
