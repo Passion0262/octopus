@@ -24,7 +24,7 @@ class CourseMapperTest {
 
     @Test
     void queryAllCourses() {
-        List<Course> list =  courseMapper.listAllCourses();
+        List<Course> list =  courseMapper.listCourses();
         assertEquals(3,list.size());
     }
 

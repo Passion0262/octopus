@@ -101,7 +101,7 @@ public class studentController {
         String stuname = (String)session.getAttribute("stuname");
         model.addAttribute("stuname", stuname);
 
-        List<Course> allcourses = courseService.findAllCourses();
+        List<Course> allcourses = courseService.listCourses();
 //        logger.info("allcourses:" + allcourses);
         model.addAttribute("allcourses", allcourses);
 
@@ -208,7 +208,7 @@ public class studentController {
         String stuname = (String)session.getAttribute("stuname");
         model.addAttribute("stuname", stuname);
 
-        List<Experiment> allexperiments = experimentService.findAllExperimentMission();
+        List<Experiment> allexperiments = experimentService.listExperiments();
 //        logger.info("allExperiment:" + allexperiments);
         model.addAttribute("allexperiments", allexperiments);
 
@@ -223,7 +223,7 @@ public class studentController {
         logger.info("experimentMission_id:" + id);
 
         //        这里需要一个根据实验的id 返回course操作
-        Experiment experimentMission = experimentService.findAllExperimentMission().get(0);
+        Experiment experimentMission = experimentService.listExperiments().get(0);
 
         logger.info("experimentMission——detail:" + experimentMission);
         model.addAttribute("experimentMission", experimentMission);
@@ -254,7 +254,7 @@ public class studentController {
         String stuname = (String)session.getAttribute("stuname");
         model.addAttribute("stuname", stuname);
 
-        List<Project> allprojects= projectService.findAllProject();
+        List<Project> allprojects= projectService.listProjects();
 //        logger.info("allProject:" + allprojects);
         model.addAttribute("allprojects", allprojects);
 
@@ -269,7 +269,7 @@ public class studentController {
         logger.info("project_id:" + id);
 
         //        这里需要一个根据实验的id 返回course操作
-        Project project = projectService.findAllProject().get(0);
+        Project project = projectService.listProjects().get(0);
         logger.info("project——detail:" + project);
         model.addAttribute("project", project);
 
@@ -315,7 +315,7 @@ public class studentController {
         String stuname = (String)session.getAttribute("stuname");
         model.addAttribute("stuname", stuname);
 
-        List<Dataset> alldatasets = datasetService.findAllDataset();
+        List<Dataset> alldatasets = datasetService.listDatasets();
         logger.info("alldatasets" + alldatasets);
         model.addAttribute("alldatasets", alldatasets);
 
@@ -330,7 +330,7 @@ public class studentController {
         logger.info("dataset_id:" + id);
 
         //        这里需要一个根据数据集的id 返回dataset操作
-        Dataset dataset = datasetService.findAllDataset().get(0);
+        Dataset dataset = datasetService.listDatasets().get(0);
 
         logger.info("dataset——detail:" + dataset);
         model.addAttribute("dataset",dataset);

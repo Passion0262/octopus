@@ -19,7 +19,12 @@ public class ProjectServiceImpl implements ProjectService {
     ProjectMapper projectMapper;
 
     @Override
-    public List<Project> findAllProject() {
-        return projectMapper.queryAllProject();
+    public List<Project> listProjects() {
+        return projectMapper.listProjects();
+    }
+
+    @Override
+    public Project getProjectById(long id) {
+        return projectMapper.getProject(id);
     }
 }

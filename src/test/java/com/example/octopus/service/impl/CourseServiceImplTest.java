@@ -33,7 +33,7 @@ class CourseServiceImplTest {
 
     @Test
     void findAllCourses() {
-        List<Course> list = courseService.findAllCourses();
+        List<Course> list = courseService.listCourses();
         for (Course c:list) {
             System.out.println(c.getCourseName());
         }

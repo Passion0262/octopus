@@ -14,6 +14,13 @@ public interface ProjectService {
      * 返回所有的项目实战
      * @return  项目list
      */
-    List<Project> findAllProject();
+    List<Project> listProjects();
+
+    /**
+     * 根据项目id查找项目
+     * @param id 项目id
+     * @return 项目实体
+     */
+    Project getProjectById(long id);
 
 }

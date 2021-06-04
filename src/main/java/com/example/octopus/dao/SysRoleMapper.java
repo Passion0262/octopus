@@ -12,9 +12,9 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface SysRoleMapper {
     @Select("SELECT * FROM sys_role WHERE id = #{id}")
-    SysRole selectById(long id);
+    SysRole getById(long id);
 
     @Select("SELECT * FROM sys_role WHERE name = #{name}")
-    SysRole selectByName(String name);
+    SysRole getByName(String name);
 }
 

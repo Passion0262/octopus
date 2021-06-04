@@ -10,6 +10,18 @@ import java.util.List;
  */
 public interface ExperimentService {
 
-    List<Experiment> findAllExperimentMission();
+    /**
+     * 查找所有的实验任务
+     * @return 实验任务list
+     */
+    List<Experiment> listExperiments();
+
+    /**
+     * 根据实验任务id查找实验任务
+     * @param id 实验任务id
+     * @return 实验任务实体
+     */
+    Experiment getExperimentById(long id);
+
 
 }

@@ -11,9 +11,16 @@ import java.util.List;
 public interface DatasetService {
 
     /**
-     * 返回所有的数据集
+     * 查找所有的数据集
      * @return 数据集set
      */
-    List<Dataset> findAllDataset();
+    List<Dataset> listDatasets();
+
+    /**
+     * 根据id查找数据集
+     * @param id 数据集id
+     * @return 数据集实体
+     */
+    Dataset getDatasetById(long id);
 
 }

@@ -56,6 +56,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean updatePhoneNumber(long stuNumber, String phoneNumber) {
-        return userMapper.changePhone(stuNumber, phoneNumber);
+        return userMapper.updatePhoneByStuNumber(stuNumber, phoneNumber);
     }
 }

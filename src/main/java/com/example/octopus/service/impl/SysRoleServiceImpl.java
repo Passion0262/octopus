@@ -19,11 +19,11 @@ public class SysRoleServiceImpl implements SysRoleService {
 
     @Override
     public SysRole findById(long id) {
-        return sysRoleMapper.selectById(id);
+        return sysRoleMapper.getById(id);
     }
 
     @Override
     public SysRole findByName(String name) {
-        return sysRoleMapper.selectByName(name);
+        return sysRoleMapper.getByName(name);
     }
 }

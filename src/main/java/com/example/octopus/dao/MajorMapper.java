@@ -21,14 +21,14 @@ public interface MajorMapper {
      * @return 课程list
      */
     @Select("SELECT * FROM major")
-    List<Major> queryAllMajors();
+    List<Major> listMajors();
 
     /**
      * 如果majorid存在则更新，如果不存在则添加。
      * @param major  专业实体
      * @return 成功为true，失败为false
      */
-    boolean saveCourse(Major major);
+    boolean updateCourse(Major major);
 
     /**
      * 根据majorid删除专业

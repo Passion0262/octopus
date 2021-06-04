@@ -13,7 +13,18 @@ import java.util.List;
 @Mapper
 public interface DatasetMapper {
 
+    /**
+     * 查找所有的数据集
+     * @return 数据集list
+     */
     @Select("SELECT * FROM dataset")
-    List<Dataset> queryAllDataset();
+    List<Dataset> listDatasets();
 
+    /**
+     * 根据id查找数据集
+     * @param id 数据集id
+     * @return 数据集实体
+     */
+    @Select("SELECT * FROM dataset WHERE id = #{id}")
+    Dataset getDatasetById(long id);
 }

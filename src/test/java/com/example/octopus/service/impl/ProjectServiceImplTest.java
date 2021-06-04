@@ -25,7 +25,7 @@ class ProjectServiceImplTest {
 
     @Test
     void findAllProject() {
-        List<Project> list = projectService.findAllProject();
+        List<Project> list = projectService.listProjects();
         assertEquals(1,list.size());
     }
 }

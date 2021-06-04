@@ -25,7 +25,7 @@ class ExperimentServiceImplTest {
 
     @Test
     void findAllExperimentMission() {
-        List<Experiment> list = experimentService.findAllExperimentMission();
+        List<Experiment> list = experimentService.listExperiments();
         assertEquals(1,list.size());
     }
 }

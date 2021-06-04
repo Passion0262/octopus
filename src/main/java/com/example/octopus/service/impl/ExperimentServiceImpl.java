@@ -19,7 +19,12 @@ public class ExperimentServiceImpl implements ExperimentService {
     ExperimentMapper experimentMapper;
 
     @Override
-    public List<Experiment> findAllExperimentMission() {
-        return experimentMapper.queryAllExperimentMission();
+    public List<Experiment> listExperiments() {
+        return experimentMapper.listExperiments();
+    }
+
+    @Override
+    public Experiment getExperimentById(long id) {
+        return experimentMapper.getExperimentById(id);
     }
 }

@@ -18,7 +18,7 @@ public interface ExperimentMapper {
      * @return 实验任务list
      */
     @Select("SELECT * FROM experiment")
-    List<Experiment> queryAllExperimentMission();
+    List<Experiment> listExperiments();
 
     /**
      * 根据实验任务id查找实验任务
@@ -26,6 +26,6 @@ public interface ExperimentMapper {
      * @return 实验任务实体
      */
     @Select("SELECT * FROM experiment WHERE id = #{id}")
-    Experiment getExperiment(long id);
+    Experiment getExperimentById(long id);
 
 }

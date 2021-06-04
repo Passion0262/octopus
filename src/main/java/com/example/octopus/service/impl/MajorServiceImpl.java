@@ -21,6 +21,6 @@ public class MajorServiceImpl implements MajorService {
 
     @Override
     public List<Major> findAllMajor() {
-        return majorMapper.queryAllMajors();
+        return majorMapper.listMajors();
     }
 }

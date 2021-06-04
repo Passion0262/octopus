@@ -30,7 +30,7 @@ public interface StudentCourseMapper {
      * @return 该学生选的所有课程
      */
     @Select("SELECT * FROM student_course where stuNumber = #{stuNumber}")
-    List<Course> queryCourseByStuNumber(String stuNumber);
+    List<Course> getCourseByStuNumber(long stuNumber);
 
     /**
      * 查询学生是否选某一门课

@@ -12,18 +12,10 @@ import java.util.List;
 public interface CourseService {
 
     /**
-     * 学生选课 根据学生id，课程id
-     * @param stuNumber 学号
-     * @param courseId 课程id
-     * @return 是否成功选课
-     */
-    boolean insertChooseCourse(long stuNumber, long courseId);
-
-    /**
      * 查询所有的课程
      * @return  返回所有课程实体
      */
-    List<Course> findAllCourses();
+    List<Course> listCourses();
 
     /**
      * 根据课程id查询课程
@@ -37,7 +29,7 @@ public interface CourseService {
      * @param stuNumber 学号
      * @return 课程list
      */
-    List<Course> findCourseByStuNumber(String stuNumber);
+    List<Course> findCourseByStuNumber(long stuNumber);
 
     /**
      * 查询学生是否选某一门课
@@ -48,11 +40,26 @@ public interface CourseService {
     boolean isChosen(long stuNumber, long courseId);
 
     /**
-     * 如果courseid存在则更新，如果不存在则添加。
+     * 新增课程
      * @param course  课程实体
      * @return 成功为true，失败为false
      */
-    boolean saveCourse(Course course);
+    boolean insertCourse(Course course);
+
+    /**
+     * 新增学生选课记录 根据学生id，课程id
+     * @param stuNumber 学号
+     * @param courseId 课程id
+     * @return 是否成功选课
+     */
+    boolean insertChooseCourse(long stuNumber, long courseId);
+
+    /**
+     * 更新课程
+     * @param course 课程实体
+     * @return 是否成功更新
+     */
+    boolean updateCourse(Course course);
 
     /**
      * 根据courseid删除课程

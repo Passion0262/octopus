@@ -28,19 +28,20 @@ public class CourseServiceImpl implements CourseService {
         return studentCourseMapper.insertStudentCourse(stuNumber,courseId);
     }
 
+
     @Override
-    public List<Course> findAllCourses() {
-        return courseMapper.listAllCourses();
+    public List<Course> listCourses() {
+        return courseMapper.listCourses();
     }
 
     @Override
     public Course findCourseById(long id) {
-        return courseMapper.getCourse(id);
+        return courseMapper.getCourseById(id);
     }
 
     @Override
-    public List<Course> findCourseByStuNumber(String stuNumber) {
-        return studentCourseMapper.queryCourseByStuNumber(stuNumber);
+    public List<Course> findCourseByStuNumber(long stuNumber) {
+        return studentCourseMapper.getCourseByStuNumber(stuNumber);
     }
 
     @Override
@@ -49,8 +50,13 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public boolean saveCourse(Course course) {
-        return courseMapper.saveCourse(course);
+    public boolean insertCourse(Course course) {
+        return courseMapper.insertCourse(course);
+    }
+
+    @Override
+    public boolean updateCourse(Course course) {
+        return courseMapper.updateCourse(course);
     }
 
     @Override

@@ -23,7 +23,7 @@ class SysRoleMapperTest {
 
     @Test
     void selectById() {
-        SysRole sysRole = sysRoleMapper.selectById(1L);
+        SysRole sysRole = sysRoleMapper.getById(1L);
         assertEquals(sysRole.getName(),"ROLE_ADMIN");
     }
 }

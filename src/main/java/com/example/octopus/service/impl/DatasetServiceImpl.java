@@ -19,7 +19,12 @@ public class DatasetServiceImpl implements DatasetService {
     DatasetMapper datasetMapper;
 
     @Override
-    public List<Dataset> findAllDataset() {
-        return datasetMapper.queryAllDataset(); 
+    public List<Dataset> listDatasets() {
+        return datasetMapper.listDatasets();
+    }
+
+    @Override
+    public Dataset getDatasetById(long id) {
+        return datasetMapper.getDatasetById(id);
     }
 }

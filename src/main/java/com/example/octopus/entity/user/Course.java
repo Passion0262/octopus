@@ -25,10 +25,10 @@ public class Course {
     private String classification;
 
 //    @Column(nullable = false,columnDefinition = "varchar(255) comment '课程简介'")
-    private String courseBrief;
+    private String description;
 
 //    @Column(nullable = false,columnDefinition = "varchar(255) comment '课程标图地址'")
-    private String courseImagePath;
+    private String imagePath;
 
     private long experimentMissionId;
 
@@ -37,6 +37,9 @@ public class Course {
 
 //    @Column(columnDefinition = "date comment '结束时间'")
     private Date endTime;
+
+    //    @Column(nullable = false,columnDefinition = "date comment '开通申请时间'")
+    private Date applyTime;
 
 //    @Column(columnDefinition = "int comment '允许参加人数'")
     private int numAllowed;
@@ -47,6 +50,4 @@ public class Course {
 //    @Column(nullable = false,columnDefinition = "enum('有效','无效') default '有效'")
     private String status;
 
-//    @Column(nullable = false,columnDefinition = "date comment '开通申请时间'")
-    private Date applyTime;
 }

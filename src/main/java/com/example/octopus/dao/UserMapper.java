@@ -33,6 +33,6 @@ public interface UserMapper {
     boolean resetPassword(long stuNumber);
 
     @Update("UPDATE student SET phoneNumber = #{phoneNumber} WHERE stuNumber = #{stuNumber}")
-    boolean changePhone(long stuNumber, String phoneNumber);
+    boolean updatePhoneByStuNumber(long stuNumber, String phoneNumber);
 
 }

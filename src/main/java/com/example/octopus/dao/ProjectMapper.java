@@ -13,7 +13,18 @@ import java.util.List;
 @Mapper
 public interface ProjectMapper {
 
+    /**
+     * 查找所有的项目实战
+     * @return 项目实战list
+     */
     @Select("SELECT * FROM project")
-    List<Project> queryAllProject();
+    List<Project> listProjects();
+
+    /**
+     * 根据项目实战id查找项目实战
+     * @return 项目实战实体
+     */
+    @Select("SELECT * FROM project WHERE id = #{id}")
+    Project getProject(long id);
 
 }
