@@ -107,13 +107,13 @@
                     <div class="col-md-4" th:each="experiment:${allexperiments}">
                         <a style="text-decoration: none; color: black;" th:href="'experiment_task_detail/id='+${experiment.id}">
                             <div class="card">
-                                <img th:src="${experiment.pictureUrl}" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
+                                <img th:src="${experiment.imagePath}" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
                                 <div class="card-body">
-                                    <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;" ><span th:text="${experiment.title}"></span></h4>
+                                    <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;" ><span th:text="${experiment.name}"></span></h4>
                                     <p class="card-text" style="overflow: hidden; height: 100px;"><span th:text="${experiment.description}"></span>
                                     </p>
                                     <p class="card-text">
-                                        <small class="text-muted">实验任务：<span th:text="${experiment.missionNums}"></span></small>
+                                        <small class="text-muted">实验任务：<span th:text="${experiment.subMissionNums}"></span></small>
                                     </p>
                                 </div>
                             </div>

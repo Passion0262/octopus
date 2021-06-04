@@ -223,10 +223,10 @@ public class studentController {
         logger.info("experimentMission_id:" + id);
 
         //        这里需要一个根据实验的id 返回course操作
-        Experiment experimentMission = experimentService.listExperiments().get(0);
+        Experiment experiment = experimentService.listExperiments().get(0);
 
-        logger.info("experimentMission——detail:" + experimentMission);
-        model.addAttribute("experimentMission", experimentMission);
+        logger.info("experiment——detail:" + experiment);
+        model.addAttribute("experiment", experiment);
 
 
         return "experiment_task_detail";
