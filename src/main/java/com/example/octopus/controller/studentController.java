@@ -182,7 +182,10 @@ public class studentController {
     }
 
     @RequestMapping("/course_video")
-    public String course_video(Model model) {
+    public String course_video(Model model,HttpSession session) {
+        String stuname = (String)session.getAttribute("stuname");
+        model.addAttribute("stuname", stuname);
+
         return "course_video";
     }
 

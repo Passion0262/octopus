@@ -38,15 +38,16 @@
         <!-- 个人信息展示 退出登录操作 -->
         <div class="dropdown d-inline-block user-dropdown">
           <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <!--                    <img class="rounded-circle header-profile-user" src="/images/users/avatar-2.jpg" alt="Header Avatar">-->
-            <span class="d-none d-xl-inline-block ml-1">张三</span>
+            <!--                        <img class="rounded-circle header-profile-user" src="static/images/users/avatar-2.jpg" alt="Header Avatar">-->
+            <!--                        <span class="d-none d-xl-inline-block ml-1" th:text="${stuname}"></span>-->
+            <span class=" " th:text="${stuname}"></span>
+            <span class=" d-none" ></span>
             <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
           </button>
           <div class="dropdown-menu dropdown-menu-right">
             <!-- item-->
-            <a class="dropdown-item" href="#"><i class="ri-user-line align-middle mr-1"></i>XX大学</a>
-            <a class="dropdown-item" href="#"><i class="ri-wallet-2-line align-middle mr-1"></i>什么什么</a>
-            <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#"><i class="ri-shut-down-line align-middle mr-1 text-danger"></i>Logout</a>
+            <a class="dropdown-item" href="userinfo"><i class="ri-user-line align-middle mr-1"></i>个人资料</a>
+            <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="/logout"><i class="ri-shut-down-line align-middle mr-1 text-danger"></i>注销</a>
           </div>
         </div>
         <!-- 个人信息展示 退出登录操作 -->
@@ -126,20 +127,20 @@
                 <div id="accordion" class="custom-accordion categories-accordion mb-3">
                   <div class="categories-group-card">
                     <a href="#collapseOne" class="categories-group-list" data-toggle="collapse" aria-expanded="true" aria-controls="collapseOne">
-                      <i class="font-size-16 align-middle mr-2"></i>第一章：撒角度看<i class="mdi mdi-minus float-right accor-plus-icon"></i></a>
+                      <i class="font-size-16 align-middle mr-2"></i>第一章：XXXX<i class="mdi mdi-minus float-right accor-plus-icon"></i></a>
                     <div id="collapseOne" class="collapse show" data-parent="#accordion" style="">
                       <div>
                         <ul class="list-unstyled categories-list mb-0">
                           <li class="active"><a href="#">
                             <i class="mdi mdi-circle-medium mr-1"></i>
-                            1.1 三大
+                            1.1 XXXX
                             <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                              25%
+                            <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                              100%
                             </div>
                             </div>
                           </a></li>
-                          <li><a href="#"><i class="mdi mdi-circle-medium mr-1"></i>1.2 大萨达
+                          <li><a href="#"><i class="mdi mdi-circle-medium mr-1"></i>1.2 XXXX
                             <div class="progress">
                               <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
                                 25%
@@ -155,18 +156,18 @@
                   </div>
                   <div class="categories-group-card">
                     <a href="#collapseTwo" class="categories-group-list collapsed" data-toggle="collapse" aria-expanded="false" aria-controls="collapseTwo">
-                      <i class="font-size-16 align-middle mr-2"></i>第二章：家电节<i class="mdi mdi-minus float-right accor-plus-icon"></i></a>
+                      <i class="font-size-16 align-middle mr-2"></i>第二章：XXX<i class="mdi mdi-minus float-right accor-plus-icon"></i></a>
                     <div id="collapseTwo" class="collapse" data-parent="#accordion" style="">
                       <div>
                         <ul class="list-unstyled categories-list mb-0">
-                          <li><a href="#"><i class="mdi mdi-circle-medium mr-1"></i>2.1 大事
+                          <li><a href="#"><i class="mdi mdi-circle-medium mr-1"></i>2.1 XX
                             <div class="progress">
-                              <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                25%
+                              <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">
+                                30%
                               </div>
                             </div>
                           </a></li>
-                          <li><a href="#"><i class="mdi mdi-circle-medium mr-1"></i>2.2 萨德
+                          <li><a href="#"><i class="mdi mdi-circle-medium mr-1"></i>2.2 XXX
                             <div class="progress">
                               <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
                                 25%
