@@ -4,11 +4,7 @@
 		<meta charset="utf-8" />
 		<title>登录 | 人工智能实验训练平台后台管理</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<!--
-		<meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-		<meta content="Themesdesign" name="author" />
-		-->
-
+		<link rel="shortcut icon" href="static/images/favicon.png" />
 		<!-- Bootstrap Css -->
 		<link href="static/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
 		<!-- Icons Css -->
@@ -36,20 +32,16 @@
 												<p class="text-muted">登录后继续使用</p>
 											</div>
 											<div class="p-2 mt-5">
-												<form class="form-horizontal" action="index.html">
+												<form name="login_form" class="form-horizontal" action="/admin_confirmlogin" method="post" onsubmit="return validateForm()">
 													<div class="form-group auth-form-group-custom mb-4">
 														<i class="ri-user-2-line auti-custom-input-icon"></i>
 														<label for="username">用户名</label>
-														<input type="text" class="form-control" id="username" placeholder="请输入用户名">
+														<input name="username" type="text" class="form-control" id="username" placeholder="请输入用户名">
 													</div>
 													<div class="form-group auth-form-group-custom mb-4">
 														<i class="ri-lock-2-line auti-custom-input-icon"></i>
 														<label for="userpassword">密码</label>
-														<input type="password" class="form-control" id="userpassword" placeholder="请输入密码">
-													</div>
-													<div class="custom-control custom-checkbox">
-														<input type="checkbox" class="custom-control-input" id="customControlInline">
-														<label class="custom-control-label" for="customControlInline">记住我</label>
+														<input name="userpwd" type="password" class="form-control" id="userpassword" placeholder="请输入密码">
 													</div>
 													<div class="mt-4 text-center">
 														<button class="btn btn-primary w-md waves-effect waves-light" type="submit">登录</button>
@@ -71,8 +63,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-8">
-						<img src="static/images/loginpic.png"  class="img-fluid">
+					<div class="col-lg-8" style="display: flex;justify-content:space-around;">
+						<img src="static/images/login.png"  class="img-fluid">
 					</div>
 				</div>
 			</div>
@@ -85,5 +77,73 @@
 		<script src="static/js/libs/simplebar/simplebar.min.js"></script>
 		<script src="static/js/libs/node-waves/waves.min.js"></script>
 		<script src="static/js/app.js"></script>
+
+		<script>
+			window.onload = function(){
+				oForm = document.getElementById("login_form");
+				oUsername = document.forms["login_form"]["username"];
+				oPassword = document.forms["login_form"]["userpassword"];
+				oRemember = document.getElementById("savePassword");
+
+				//页面初始化时，如果帐号密码cookie存在则填充
+				if (getCookie('username') && getCookie('password')) {
+					oUsername.value = getCookie('username');
+					oPassword.value = getCookie('password');
+					oRemember.checked = true;
+				}
+				//复选框勾选状态发生改变时，如果未勾选则清除cookie
+				oRemember.onchange = function() {
+					if (!this.checked) {
+						delCookie('username');
+						delCookie('password');
+					}
+				};
+				//表单提交事件触发时，如果复选框是勾选状态则保存cookie
+				oForm.onsubmit = function() {
+					if (oRemember.checked) {
+						setCookie('username', oUsername.value, 1); //保存帐号到cookie，有效期1天
+						setCookie('password', oPassword.value, 1); //保存密码到cookie，有效期1天
+					}
+				};
+			}
+
+			//设置cookie
+			function setCookie(name, value, day) {
+				var date = new Date();
+				date.setDate(date.getDate() + day);
+				document.cookie = name + '=' + value + ';expires=' + date;
+			}
+
+			//获取cookie
+			function getCookie(name) {
+				var reg = RegExp(name + '=([^;]+)');
+				var arr = document.cookie.match(reg);
+				if (arr) {
+					return arr[1];
+				} else {
+					return '';
+				}
+			}
+
+			//删除cookie
+			function delCookie(name) {
+				setCookie(name, null, -1);
+			}
+
+			function validateForm(){
+				var username = document.forms["login_form"]["username"].value;
+				if (username==null || username===""){
+					alert("用户名不能为空！");
+					return false;
+				}
+				var pwd = document.forms["login_form"]["userpassword"].value;
+				if (pwd==null || pwd===""){
+					alert("密码不能为空！");
+					return false;
+				}
+				return true;
+			}
+
+		</script>
 	</body>
 </html>

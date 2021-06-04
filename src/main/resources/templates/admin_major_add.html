@@ -33,12 +33,12 @@
                         <!-- LOGO -->
                         <div class="navbar-brand-box">
                             <a href="admin_index" class="logo logo-dark">
-                                <span class="logo-sm">
-                                    <img src="static/images/logo-sm-dark.png" alt="" height="22">
-                                </span>
+                                    <span class="logo-sm">
+                                        <img src="static/images/logo-sm-dark.png" alt="" height="22">
+                                    </span>
                                 <span class="logo-lg">
-                                    <img src="static/images/logo-dark.png" alt="" height="30">
-                                </span>
+                                        <img src="static/images/logo-dark.png" alt="" height="30">
+                                    </span>
                             </a>
                         </div>
                         <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn">
@@ -59,7 +59,7 @@
                         <div class="dropdown d-inline-block user-dropdown" id="user-info">
                             <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true">
                                 <img class="rounded-circle header-profile-user" src="static/images/users/avatar-2.jpg" alt="Header Avatar">
-                                <span class="d-none d-xl-inline-block ml-1" th:text="${username}"></span>
+                                <span class="d-none d-xl-inline-block ml-1" th:text="${majormodel.username}"></span>
                                 <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
@@ -187,183 +187,50 @@
             <div class="main-content">
                 <div class="page-content">
                     <div class="container-fluid">
+                        <!-- start page title -->
                         <div class="row">
                             <div class="col-12">
-                                <div class="page-title-box d-flex align-items-center justify-content-between" id="page">
-                                    <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="#">开课管理</a></li>
-                                            <li class="breadcrumb-item active">开课计划管理</li>
-                                        </ol>
-                                    </div>
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="mb-0">增加专业</h4>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Start static table -->
-                        <!--
+                        <!-- end page title -->
                         <div class="row">
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="card-title"></h4>
-                                        <div>
-                                            <table id="datatable-buttons" class="table table-striped table-bordered table-centered" style="white-space:nowrap;">
-                                                <thead style="text-align: center;">
-                                                <tr>
-                                                    <th class="sorting_disabled">操作</th>
-                                                    <th>开课计划编号</th>
-                                                    <th>开课计划名称</th>
-                                                    <th>授课讲师</th>
-                                                    <th>授课开始日期</th>
-                                                    <th>授课结束日期</th>
-                                                    <th>允许参加人数</th>
-                                                    <th>已参加人数</th>
-                                                    <th>课程状态</th>
-                                                    <th>开通申请时间</th>
-                                                    <th>创建计划时间</th>
-                                                    <th>创建人员</th>
-                                                    <th>计划审批人员</th>
-                                                    <th>监控统计</th>
-                                                    <th>备份/复制</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody style="text-align: center;">
-                                                <tr>
-                                                    <td>
-                                                        <div style="width:30px;"></div>
-                                                        <a href="" style="color:#ff3d60" class="" data-original-title="Add">
-                                                            <i class="mdi mdi-text-box-plus font-size-18"></i>
-                                                        </a>
-                                                        <a href="" style="color:#1cbb8c" data-original-title="Edit">
-                                                            <i class="mdi mdi-pencil font-size-18"></i>
-                                                        </a>
-                                                        <a href="" style="color:#505d69" data-original-title="Delete">
-                                                            <i class="mdi mdi-trash-can font-size-18"></i>
-                                                        </a>
-                                                    </td>
-                                                    <td>1</td>
-                                                    <td>数据可视化技术</td>
-                                                    <td>王老师</td>
-                                                    <td>2020-02-06</td>
-                                                    <td>2020-07-06</td>
-                                                    <td>70</td>
-                                                    <td>66</td>
-                                                    <td><div class="badge badge-soft-success font-size-12">有效</div></td>
-                                                    <td>2020-02-01 11:11:11</td>
-                                                    <td>2020-02-01 11:11:11</td>
-                                                    <td>默认管理员</td>
-                                                    <td>默认管理员</td>
-                                                    <td>1.3GB</td>
-                                                    <td><button type="button">复制</button></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div style="width:30px;"></div>
-                                                        <a href="" style="color:#ff3d60" class="" data-original-title="Add">
-                                                            <i class="mdi mdi-text-box-plus font-size-18"></i>
-                                                        </a>
-                                                        <a href="" style="color:#1cbb8c" data-original-title="Edit">
-                                                            <i class="mdi mdi-pencil font-size-18"></i>
-                                                        </a>
-                                                        <a href="" style="color:#505d69" data-original-title="Delete">
-                                                            <i class="mdi mdi-trash-can font-size-18"></i>
-                                                        </a>
-                                                    </td>
-                                                    <td>2</td>
-                                                    <td>python Web开发</td>
-                                                    <td>王老师</td>
-                                                    <td>2020-03-06</td>
-                                                    <td>2020-06-16</td>
-                                                    <td>70</td>
-                                                    <td>20</td>
-                                                    <td><div class="badge badge-soft-warning font-size-12">无效</div></td>
-                                                    <td>2020-03-01 11:11:11</td>
-                                                    <td>2020-03-01 11:11:11</td>
-                                                    <td>默认管理员</td>
-                                                    <td>默认管理员</td>
-                                                    <td>0B</td>
-                                                    <td><button type="button">复制</button></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                        <form class="needs-validation" action="/add_major" method="post" th:object="${majormodel.major}" novalidate="" style="padding-left: 20px;">
+                                            <div class="form-group row">
+                                                <label for="add_major_id" class="col-md-2 col-form-label">专业代码：</label>
+                                                <div class="col-md-10">
+                                                    <input name="majorCode" th:value="*{majorCode}" class="form-control" type="text" value="" id="add_major_id">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="add_major_name" class="col-md-2 col-form-label">专业名称：</label>
+                                                <div class="col-md-10">
+                                                    <input name="majorName" th:value="*{majorName}" class="form-control" type="text" value=" " id="add_major_name">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="add_create_user" class="col-md-2 col-form-label">创建人员：</label>
+                                                <div class="col-md-10">
+                                                    <input name="creator" th:value="${majormodel.username}" id="add_create_user" class="form-control" type="text" readonly style="border:none;">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="add_create_time" class="col-md-2 col-form-label">创建时间：</label>
+                                                <div class="col-md-10">
+                                                    <input name="createTime" value="" id="add_create_time" class="form-control" type="text" readonly style="border:none;">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary waves-effect waves-light" style="display:block;margin:0 auto">提交</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        -->
-                        <!-- End static table -->
-
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title"></h4>
-                                        <div>
-                                            <table id="datatable-buttons" class="table table-striped table-bordered table-centered" style="white-space:nowrap;">
-                                                <thead style="text-align: center;">
-                                                <tr>
-                                                    <th class="sorting_disabled">操作</th>
-                                                    <th>开课计划编号</th>
-                                                    <th>开课计划名称</th>
-                                                    <th>授课老师</th>
-                                                    <th>课程分类</th>
-                                                    <th>课程简介</th>
-                                                    <th>课程图标</th>
-                                                    <th>授课开始日期</th>
-                                                    <th>授课结束日期</th>
-                                                    <th>允许参加人数</th>
-                                                    <th>已参加人数</th>
-                                                    <th>课程状态</th>
-                                                    <th>开通申请时间</th>
-                                                    <!--
-                                                    <th>创建计划时间</th>
-                                                    <th>创建人员</th>
-                                                    <th>计划审批人员</th>
-                                                    <th>监控统计</th>
-                                                    <th>备份/复制</th>
-                                                    -->
-                                                </tr>
-                                                </thead>
-                                                <tbody style="text-align: center;">
-                                                <tr th:each="course:${courses}">
-                                                    <td>
-                                                        <div style="width:30px;"></div>
-                                                        <a th:href="@{admin_course_add(username=${username})}" style="color:#ff3d60" class="add" data-original-title="Add">
-                                                            <i class="mdi mdi-text-box-plus font-size-18"></i>
-                                                        </a>
-                                                        <a th:href="@{admin_course_edit(username=${username},courseId=${course.id})}" class="edit" style="color:#1cbb8c" data-original-title="Edit">
-                                                            <i class="mdi mdi-pencil font-size-18"></i>
-                                                        </a>
-                                                        <a th:href="@{admin_course_delete(courseId=${course.id})}" class="delete" style="color:#505d69" data-original-title="Delete">
-                                                            <i class="mdi mdi-trash-can font-size-18"></i>
-                                                        </a>
-                                                    </td>
-                                                    <td th:text="${course.id}"></td>
-                                                    <td th:text="${course.courseName}"></td>
-                                                    <td th:text="${course.teacher}"></td>
-                                                    <td th:text="${course.classification}"></td>
-                                                    <td th:text="${course.courseBrief}"></td>
-                                                    <td><a th:href="${course.courseImagePath}">查看图片</a></td>
-                                                    <td th:text="${course.startTime}"></td>
-                                                    <td th:text="${course.endTime}"></td>
-                                                    <td th:text="${course.numAllowed}"></td>
-                                                    <td th:text="${course.numParticipated}"></td>
-                                                    <td th:text="${course.status}"></td>
-                                                    <td th:text="${course.applyTime}"></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                            <a th:href="@{admin_course_add(username=${username})}" class="add" style="display: block;text-align: right">
-                                                <i class="mdi mdi-text-box-plus font-size-18" style="color:#ff3d60"></i>新增...
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
 
                     </div>
 
@@ -426,6 +293,20 @@
         <script src="static/js/pages/datatables.init.js"></script>
         <script src="static/js/pages/dashboard.init.js"></script>
         <script src="static/js/app.js"></script>
+
+        <script type="text/javascript" th:inline="javascript">
+            window.onload = function() {
+                var oTime = document.getElementById("add_create_time");
+                setInterval(function() {
+                    var time = new Date();  // 程序计时的月从0开始取值后+1
+                    var m = time.getMonth() + 1;
+                    var t = time.getFullYear() + "-" + m + "-"
+                        + time.getDate() + " " + time.getHours() + ":"
+                        + time.getMinutes() + ":" + time.getSeconds();
+                    oTime.value = t;
+                }, 1000);
+            };
+        </script>
 
 
     </body>

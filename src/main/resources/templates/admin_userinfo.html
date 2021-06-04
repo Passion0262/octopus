@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <title>人工智能实验实训平台-后台管理</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="static/images/favicon.ico" />
+    <link rel="shortcut icon" href="static/images/favicon.png" />
     <!-- Bootstrap Css -->
     <link href="static/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <!-- Icons css -->
@@ -25,9 +25,12 @@
                     <!-- LOGO -->
                     <div class="navbar-brand-box">
                         <a href="admin_index" class="logo logo-dark">
+                            <span class="logo-sm">
+                           <img src="static/images/logo-sm-dark.png" alt="" height="22">
+                        </span>
                             <span class="logo-lg">
-                                <img src="static/images/logo-dark.png" alt="" height="30">
-                            </span>
+                            <img src="static/images/logo-dark.png" alt="" height="30">
+                        </span>
                         </a>
                     </div>
                     <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn">
@@ -192,30 +195,30 @@
                                 <div class="card-body">
                                     <form class="needs-validation" novalidate="">
                                         <div class="form-group row">
-                                            <label for="example-text-input" class="col-md-2 col-form-label">Text</label>
+                                            <label for="example-text-input" class="col-md-2 col-form-label">姓名：</label>
                                             <div class="col-md-10">
-                                                <input class="form-control" type="text" value="Artisanal kale" id="example-text-input">
+                                                <input class="form-control" type="text" th:value="${username}" id="example-text-input">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="example-email-input" class="col-md-2 col-form-label">Email</label>
+                                            <label for="example-email-input" class="col-md-2 col-form-label">邮箱</label>
                                             <div class="col-md-10">
-                                                <input class="form-control" type="email" value="bootstrap@example.com" id="example-email-input">
+                                                <input class="form-control" type="email" value="admin123@example.com" id="example-email-input">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="example-tel-input" class="col-md-2 col-form-label">Telephone</label>
+                                            <label for="example-tel-input" class="col-md-2 col-form-label">手机号码</label>
                                             <div class="col-md-10">
-                                                <input class="form-control" type="tel" value="1-(555)-555-5555" id="example-tel-input">
+                                                <input class="form-control" type="tel" value="11122233345" id="example-tel-input">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-md-2 col-form-label">Select</label>
+                                            <label class="col-md-2 col-form-label">所在学校：</label>
                                             <div class="col-md-10">
                                                 <select class="form-control">
-                                                    <option>Select</option>
-                                                    <option>Large select</option>
-                                                    <option>Small select</option>
+                                                    <option>选项</option>
+                                                    <option>江南大学</option>
+                                                    <option>无锡职业学院</option>
                                                 </select>
                                             </div>
                                         </div>

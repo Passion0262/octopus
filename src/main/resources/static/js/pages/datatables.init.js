@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	$("#datatable").DataTable({
 		drawCallback:function(){
-		 	$(".dataTables_paginate > .pagination").addClass("pagination-rounded")
+			$(".dataTables_paginate > .pagination").addClass("pagination-rounded")
 		},
 	});
 	var a=$("#datatable-buttons").DataTable({
@@ -12,79 +12,79 @@ $(document).ready(function(){
 		scrollCollapse:!0,
 		lengthChange:!1,
 		drawCallback:function(){
-		 	$(".dataTables_paginate > .pagination").addClass("pagination-rounded")
+			$(".dataTables_paginate > .pagination").addClass("pagination-rounded")
 		},
 		buttons:["copy","excel","pdf","csv","colvis"]
-	});	 
+	});
 	a.buttons().container().appendTo("#datatable-buttons_wrapper .col-md-6:eq(0)"),
-	$("#selection-datatable").DataTable({
-		select:{
-			style:"multi"
-		},
-		language:{
-			paginate:{
-				previous:"<i class='mdi mdi-chevron-left'>",
-				next:"<i class='mdi mdi-chevron-right'>"
+		$("#selection-datatable").DataTable({
+			select:{
+				style:"multi"
+			},
+			language:{
+				paginate:{
+					previous:"<i class='mdi mdi-chevron-left'>",
+					next:"<i class='mdi mdi-chevron-right'>"
+				}
+			},
+			drawCallback:function(){
+				$(".dataTables_paginate > .pagination").addClass("pagination-rounded")
 			}
-		},
-		drawCallback:function(){
-			$(".dataTables_paginate > .pagination").addClass("pagination-rounded")
-		}
-	}),
-	$("#key-datatable").DataTable({
-		keys:!0,
-		language:{
-			paginate:{
-				previous:"<i class='mdi mdi-chevron-left'>",
-				next:"<i class='mdi mdi-chevron-right'>"
+		}),
+		$("#key-datatable").DataTable({
+			keys:!0,
+			language:{
+				paginate:{
+					previous:"<i class='mdi mdi-chevron-left'>",
+					next:"<i class='mdi mdi-chevron-right'>"
+				}
+			},
+			drawCallback:function(){
+				$(".dataTables_paginate > .pagination").addClass("pagination-rounded")
 			}
-		},
-		drawCallback:function(){
-			$(".dataTables_paginate > .pagination").addClass("pagination-rounded")
-		}
-	}),
-	a.buttons().container().appendTo("#datatable-buttons_wrapper .col-md-6:eq(0)"),
-	$("#alternative-page-datatable").DataTable({
-		pagingType:"full_numbers",
-		drawCallback:function(){
-			$(".dataTables_paginate > .pagination").addClass("pagination-rounded")
-		}
-	}),
-	$("#scroll-vertical-datatable").DataTable({
-		scrollY:"350px",
-		scrollCollapse:!0,
-		paging:!1,
-		language:{
-			paginate:{
-				previous:"<i class='mdi mdi-chevron-left'>",
-				next:"<i class='mdi mdi-chevron-right'>"
+		}),
+		a.buttons().container().appendTo("#datatable-buttons_wrapper .col-md-6:eq(0)"),
+		$("#alternative-page-datatable").DataTable({
+			pagingType:"full_numbers",
+			drawCallback:function(){
+				$(".dataTables_paginate > .pagination").addClass("pagination-rounded")
 			}
-		},
-		drawCallback:function(){
-			$(".dataTables_paginate > .pagination").addClass("pagination-rounded")
-		}
-	}),
-	$("#complex-header-datatable").DataTable({
-		language:{
-			paginate:{
-				previous:"<i class='mdi mdi-chevron-left'>",
-				next:"<i class='mdi mdi-chevron-right'>"
+		}),
+		$("#scroll-vertical-datatable").DataTable({
+			scrollY:"350px",
+			scrollCollapse:!0,
+			paging:!1,
+			language:{
+				paginate:{
+					previous:"<i class='mdi mdi-chevron-left'>",
+					next:"<i class='mdi mdi-chevron-right'>"
+				}
+			},
+			drawCallback:function(){
+				$(".dataTables_paginate > .pagination").addClass("pagination-rounded")
 			}
-		},
-		drawCallback:function(){
-			$(".dataTables_paginate > .pagination").addClass("pagination-rounded")
-		},
-		columnDefs:[{visible:!1,targets:-1}]}),
-	$("#state-saving-datatable").DataTable({
-		stateSave:!0,
-		language:{
-			paginate:{
-				previous:"<i class='mdi mdi-chevron-left'>",
-				next:"<i class='mdi mdi-chevron-right'>"
+		}),
+		$("#complex-header-datatable").DataTable({
+			language:{
+				paginate:{
+					previous:"<i class='mdi mdi-chevron-left'>",
+					next:"<i class='mdi mdi-chevron-right'>"
+				}
+			},
+			drawCallback:function(){
+				$(".dataTables_paginate > .pagination").addClass("pagination-rounded")
+			},
+			columnDefs:[{visible:!1,targets:-1}]}),
+		$("#state-saving-datatable").DataTable({
+			stateSave:!0,
+			language:{
+				paginate:{
+					previous:"<i class='mdi mdi-chevron-left'>",
+					next:"<i class='mdi mdi-chevron-right'>"
+				}
+			},
+			drawCallback:function(){
+				$(".dataTables_paginate > .pagination").addClass("pagination-rounded")
 			}
-		},
-		drawCallback:function(){
-			$(".dataTables_paginate > .pagination").addClass("pagination-rounded")
-		}
-	})
+		})
 });
