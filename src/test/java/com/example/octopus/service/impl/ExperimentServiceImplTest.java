@@ -20,12 +20,22 @@ import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
 class ExperimentServiceImplTest {
 
+    private static final long STUDENT_ID = 1L;
+
     @Autowired
     ExperimentService experimentService;
 
     @Test
-    void findAllExperimentMission() {
+    void listExperiments() {
         List<Experiment> list = experimentService.listExperiments();
         assertEquals(1,list.size());
+    }
+
+    @Test
+    void listChosenByStuNumber() {
+        List<Experiment> list= experimentService.listChosenByStuNumber(STUDENT_ID);
+        for (Experiment exp:list) {
+            System.out.println(exp.getName());
+        }
     }
 }

@@ -11,7 +11,8 @@ import java.sql.Date;
  */
 @Data
 public class Teacher {
-    private String teaNumber;
+
+    private long teaNumber;
 
 //    @Column(nullable = false, columnDefinition = "varchar(20) comment '姓名'")
     private String name;
@@ -19,11 +20,13 @@ public class Teacher {
 //    @Column(nullable = false, columnDefinition = "varchar(20) comment '密码'")
     private String password;
 
+    private String majorCode;   //教授的专业的代码
+
 //    @Column(nullable = false, columnDefinition = "bool default false")
     private Boolean adminRights;  //是否拥有管理权限。默认无权限
 
-//    @Column(nullable = false,name = "phoneNumber")
-    private String phoneNumber;
+//    @Column(nullable = false,name = "phone")
+    private String phone;
 
 //    @Column(name = "loginNumber")
     private int loginNumber;
