@@ -322,16 +322,14 @@ public class adminController {
         long courseId = Long.parseLong(request.getParameter("courseId"));
         System.out.println("courseId="+courseId);
         String user = request.getParameter("username");
-        //Course course = courseService.findCourseById(courseId);
         model.addAttribute("username", user);
-        model.addAttribute("course",new Course());
+        model.addAttribute("course", courseService.findCourseById(courseId));
         return new ModelAndView("admin_course_edit","coursemodel",model);
     }
 
     @PostMapping("/edit_course")
     public ModelAndView edit_course(Course course){
         System.out.println("提交修改的course");
-        //修改课程信息
         System.out.println(course);
         courseService.updateCourse(course);
         return new ModelAndView("redirect:/admin_course");

@@ -219,21 +219,33 @@
                               </div>
                             </div>
                             <div class="form-group row">
-                              <label for="add_courseBrief" class="col-md-2 col-form-label">课程简介：</label>
+                              <label for="add_description" class="col-md-2 col-form-label">课程简介：</label>
                               <div class="col-md-10">
-                                <input name="courseBrief" th:value="*{courseBrief}" id="add_courseBrief" class="form-control" type="text">
+                                <input name="description" th:value="*{description}" id="add_description" class="form-control" type="text">
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <label for="add_imagePath" class="col-md-2 col-form-label">课程图标：</label>
+                              <div class="col-md-10">
+                                <input name="imagePath" th:value="*{imagePath}" id="add_imagePath" class="form-control" type="text">
                               </div>
                             </div>
                             <div class="form-group row">
                               <label for="add_startTime" class="col-md-2 col-form-label">授课开始日期：</label>
                               <div class="col-md-10">
-                                <input name="startTime" th:value="*{startTime}" id="add_startTime" class="form-control" type="text">
+                                <input name="startTime" th:value="*{startTime}" id="add_startTime" class="form-control" type="date">
                               </div>
                             </div>
                             <div class="form-group row">
                               <label for="add_endTime" class="col-md-2 col-form-label">授课结束日期：</label>
                               <div class="col-md-10">
-                                <input name="endTime"  th:value="*{endTime}" id="add_endTime" class="form-control" type="text">
+                                <input name="endTime"  th:value="*{endTime}" id="add_endTime" class="form-control" type="date">
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <label for="add_applyTime" class="col-md-2 col-form-label">开通申请时间：</label>
+                              <div class="col-md-10">
+                                <input name="applyTime" th:value="*{applyTime}" id="add_applyTime" class="form-control" type="date">
                               </div>
                             </div>
                             <div class="form-group row">
@@ -243,9 +255,9 @@
                               </div>
                             </div>
                             <div class="form-group row">
-                              <label for="add_applyTime" class="col-md-2 col-form-label">开通申请时间：</label>
+                              <label for="add_status" class="col-md-2 col-form-label">状态：</label>
                               <div class="col-md-10">
-                                <input name="applyTime" value="2020-03-14T13:45:00" id="add_applyTime" class="form-control" type="datetime-local">
+                                <input name="status" th:value="*{status}" id="add_status" class="form-control" type="text">
                               </div>
                             </div>
                             <button type="submit" class="btn btn-primary waves-effect waves-light" style="display:block;margin:0 auto">提交</button>

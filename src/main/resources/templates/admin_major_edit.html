@@ -222,7 +222,7 @@
                                         <div class="form-group row">
                                             <label for="edit_create_time" class="col-md-2 col-form-label">创建时间：</label>
                                             <div class="col-md-10">
-                                                <input name="createTime" th:value="*{createTime}" id="edit_create_time" class="form-control" type="text" readonly style="border:none;">
+                                                <input name="createTime" th:value="*{createTime}" id="edit_create_time" class="form-control" type="date" readonly style="border:none;">
                                             </div>
                                         </div>
                                         <button type="submit" class="btn btn-primary waves-effect waves-light" style="display:block;margin:0 auto">提交</button>
@@ -253,8 +253,8 @@
     
     <!-- END layout-wrapper -->
     </div>
-   
- 
+
+
 
     <!-- JAVASCRIPT -->
     <!-- jquery -->
@@ -267,51 +267,26 @@
     <script src="static/js/libs/simplebar/simplebar.min.js"></script>
     <!-- node-waves -->
     <script src="static/js/libs/node-waves/waves.min.js"></script>
-    <!-- apexcharts -->
-    <script src="static/js/libs/apexcharts/apexcharts.min.js"></script>
     <!-- admin-resources/jquery.vectormap -->
     <script src="static/js/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
     <script src="static/js/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-us-merc-en.js"></script>
-    <!-- datatables -->
-    <script src="static/js/libs/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="static/js/libs/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-    <script src="static/js/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
-    <script src="static/js/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="static/js/libs/datatables.net-buttons/js/buttons.colVis.min.js"></script>
-    <script src="static/js/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
-    <script src="static/js/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
-    <script src="static/js/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
-    <script src="static/js/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="static/js/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
-    <script src="static/js/libs/datatables.net-select/js/dataTables.select.min.js"></script>   
-    <!-- jszip -->
-    <script src="static/js/libs/jszip/jszip.min.js"></script>
-    <!-- pdfmake/build -->
-    <script src="static/js/libs/pdfmake/build/pdfmake.min.js"></script>
-    <script src="static/js/libs/pdfmake/build/vfs_fonts.js"></script>
+    <!-- bs-custom-file-inout -->
+    <script src="static/js/libs/bs-custom-file-input/bs-custom-file-input.min.js"></script>
     <!-- js/pages/ -->
-    <script src="static/js/pages/datatables.init.js"></script>
-    <script src="static/js/pages/dashboard.init.js"></script>
+    <script src="static/js/pages/form-element.init.js"></script>
     <script src="static/js/app.js"></script>
-
     <script type="text/javascript" th:inline="javascript">
-        function click_add_major(){
-            $.ajax({
-                url: "/admin_major/add_modal",
-                type: "get",
-                data: '',
-                success:function (object) {
-                    console.log("ajax send success");
-                    var major_entity = [[${new_major}]];
-                    console.log(major_entity);
-                    $("#add_major").modal("show");
-                },
-                error:function () {
-                    alert("ajax send failed");
-                }
-            })
-        }
-
+        window.onload = function() {
+            var oTime = document.getElementById("add_create_time");
+            setInterval(function() {
+                var time = new Date();  // 程序计时的月从0开始取值后+1
+                var m = time.getMonth() + 1;
+                var t = time.getFullYear() + "-" + m + "-"
+                    + time.getDate() + " " + time.getHours() + ":"
+                    + time.getMinutes() + ":" + time.getSeconds();
+                oTime.value = t;
+            }, 1000);
+        };
     </script>
 
 

@@ -202,6 +202,12 @@
                   <div class="card-body">
                     <form class="needs-validation" action="/edit_course" method="post" th:object="${coursemodel.course}" novalidate="" style="padding-left: 20px;">
                       <div class="form-group row">
+                        <label for="edit_id" class="col-md-2 col-form-label">课程编号：</label>
+                        <div class="col-md-10">
+                          <input name="id" th:value="*{id}" class="form-control" type="text"  id="edit_id" readonly>
+                        </div>
+                      </div>
+                      <div class="form-group row">
                         <label for="edit_courseName" class="col-md-2 col-form-label">课程名称：</label>
                         <div class="col-md-10">
                           <input name="courseName" th:value="*{courseName}" class="form-control" type="text"  id="edit_courseName">
@@ -220,21 +226,33 @@
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="edit_courseBrief" class="col-md-2 col-form-label">课程简介：</label>
+                        <label for="edit_description" class="col-md-2 col-form-label">课程简介：</label>
                         <div class="col-md-10">
-                          <input name="courseBrief" th:value="*{courseBrief}" id="edit_courseBrief" class="form-control" type="text">
+                          <input name="description" th:value="*{description}" id="edit_description" class="form-control" type="text">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="edit_imagePath" class="col-md-2 col-form-label">课程图标：</label>
+                        <div class="col-md-10">
+                          <input name="imagePath" th:value="*{imagePath}" id="edit_imagePath" class="form-control" type="text">
                         </div>
                       </div>
                       <div class="form-group row">
                         <label for="edit_startTime" class="col-md-2 col-form-label">授课开始日期：</label>
                         <div class="col-md-10">
-                          <input name="startTime" th:value="*{startTime}" id="edit_startTime" class="form-control" type="text">
+                          <input name="startTime" th:value="*{startTime}" id="edit_startTime" class="form-control" type="date">
                         </div>
                       </div>
                       <div class="form-group row">
                         <label for="edit_endTime" class="col-md-2 col-form-label">授课结束日期：</label>
                         <div class="col-md-10">
-                          <input name="endTime"  th:value="*{endTime}" id="edit_endTime" class="form-control" type="text">
+                          <input name="endTime"  th:value="*{endTime}" id="edit_endTime" class="form-control" type="date">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="edit_applyTime" class="col-md-2 col-form-label">开通申请时间：</label>
+                        <div class="col-md-10">
+                          <input name="applyTime" th:value="*{applyTime}" id="edit_applyTime" class="form-control" type="date">
                         </div>
                       </div>
                       <div class="form-group row">
@@ -244,9 +262,9 @@
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="edit_applyTime" class="col-md-2 col-form-label">开通申请时间：</label>
+                        <label for="edit_status" class="col-md-2 col-form-label">状态：</label>
                         <div class="col-md-10">
-                          <input name="applyTime" th:value="*{applyTime}" id="edit_applyTime" class="form-control" type="datetime-local">
+                          <input name="status" th:value="*{status}" id="edit_status" class="form-control" type="text">
                         </div>
                       </div>
                       <button type="submit" class="btn btn-primary waves-effect waves-light" style="display:block;margin:0 auto">提交</button>
