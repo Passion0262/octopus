@@ -2,10 +2,7 @@ package com.example.octopus.dao;
 
 import com.example.octopus.entity.user.Course;
 import com.example.octopus.entity.user.Student;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -43,20 +40,21 @@ public interface CourseMapper {
     boolean insertCourse(Course course);
 
     /**
-     * 如果courseid存在则更新，如果不存在则添加。
+     * 修改课程
      * @param course  课程实体
      * @return 成功为true，失败为false
      */
-    @Update("Update course SET course_name = #{course_name},teacher=#{teacher},classification=#{classification},description=#{description},image_path=#{image_path},experiment_mission_id=#{experiment_mission_id},start_time=#{start_time},end_time=#{end_time},apply_time=#{apply_time},num_allowed=#{num_allowed},num_participated=#{num_participated},status=#{status} WHERE id = #{id}")
+    @Update("Update course SET course_name = #{courseName},teacher=#{teacher},classification=#{classification},description=#{description},image_path=#{imagePath},experiment_mission_id=#{experimentMissionId},start_time=#{startTime},end_time=#{endTime},apply_time=#{applyTime},num_allowed=#{numAllowed},num_participated=#{numParticipated},status=#{status} WHERE id = #{id}")
     boolean updateCourse(Course course);
 
 //    boolean chooseCourse()
 
     /**
      * 根据courseid删除课程
-     * @param courseid 课程id
+     * @param courseId 课程id
      * @return 成功为true，失败为false
      */
-    boolean deleteCourseById(long courseid);
+    @Delete("DELETE FROM course WHERE id = #{courseId}")
+    boolean deleteCourseById(long courseId);
 
 }
