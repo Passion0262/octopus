@@ -200,6 +200,12 @@
                       <div class="card">
                         <div class="card-body">
                           <form class="needs-validation" action="/add_course" method="post" th:object="${coursemodel.course}" novalidate="" style="padding-left: 20px;">
+<!--                            <div class="form-group row">-->
+<!--                              <label for="add_id" class="col-md-2 col-form-label">课程编号：</label>-->
+<!--                              <div class="col-md-10">-->
+<!--                                <input name="id" th:value="*{id}" class="form-control" type="text"  id="add_id" readonly>-->
+<!--                              </div>-->
+<!--                            </div>-->
                             <div class="form-group row">
                               <label for="add_courseName" class="col-md-2 col-form-label">课程名称：</label>
                               <div class="col-md-10">
@@ -255,9 +261,13 @@
                               </div>
                             </div>
                             <div class="form-group row">
-                              <label for="add_status" class="col-md-2 col-form-label">状态：</label>
+                              <label class="col-md-2 col-form-label">状态：</label>
                               <div class="col-md-10">
-                                <input name="status" th:value="*{status}" id="add_status" class="form-control" type="text">
+                                <select class="form-control" name="status">
+                                  <option value="有效">有效</option>
+                                  <option value="无效">无效</option>
+                                </select>
+<!--                                <input name="status" th:value="*{status}" id="add_status" class="form-control" type="text">-->
                               </div>
                             </div>
                             <button type="submit" class="btn btn-primary waves-effect waves-light" style="display:block;margin:0 auto">提交</button>
