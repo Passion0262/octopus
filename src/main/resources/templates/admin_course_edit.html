@@ -200,7 +200,7 @@
               <div class="col-12">
                 <div class="card">
                   <div class="card-body">
-                    <form class="needs-validation" action="/edit_course" method="post" th:object="${coursemodel.course}" novalidate="" style="padding-left: 20px;">
+                    <form id="form" class="needs-validation" action="/edit_course" method="post" th:object="${coursemodel.course}" novalidate="" style="padding-left: 20px;">
                       <div class="form-group row">
                         <label for="edit_id" class="col-md-2 col-form-label">课程编号：</label>
                         <div class="col-md-10">
@@ -234,7 +234,9 @@
                       <div class="form-group row">
                         <label for="edit_imagePath" class="col-md-2 col-form-label">课程图标：</label>
                         <div class="col-md-10">
-                          <input name="imagePath" th:value="*{imagePath}" id="edit_imagePath" class="form-control" type="text">
+<!--                          <img th:src="*{imagePath}" alt="课程图标" class="rounded mr-2" style="max-width: 200px;">-->
+                          <input name="" id="edit_imagePath" value="" onchange="checkImg()" class="form-control btn btn-light" type="file" accept="image/png, image/jpeg, image/jpg" style="background-color: white; border: 1px solid #ced4da;">
+                          <input name="imagePath" id="imagePath" th:value="*{imagePath}" class="form-control btn btn-light" type="text" style="display: none">
                         </div>
                       </div>
                       <div class="form-group row">
@@ -271,7 +273,7 @@
 <!--                          <input name="status" th:value="*{status}" id="edit_status" class="form-control" type="text">-->
                         </div>
                       </div>
-                      <button type="submit" class="btn btn-primary waves-effect waves-light" style="display:block;margin:0 auto">提交</button>
+                      <button type="button" onclick="uploadImg()" class="btn btn-primary waves-effect waves-light" style="display:block;margin:0 auto">提交</button>
                     </form>
                   </div>
                 </div>
@@ -323,7 +325,53 @@
     <script src="static/js/app.js"></script>
 
     <script type="text/javascript" th:inline="javascript">
+      var changeImg = false;
+      function checkImg(){
+        console.log("更换图片");
+        //检查是否更换图片
+        if(!changeImg){
+          changeImg = true;
+        }
+      }
 
+      function uploadImg() {
+        console.log("changeImg="+changeImg);
+        if(changeImg){
+          var formData = new FormData();
+          formData.append('img', document.getElementById('edit_imagePath').files[0]);
+          $.ajax({
+            async: false,
+            type: 'POST',
+            url: "/upload_img",
+            dataType: 'json',
+            data: formData,
+            contentType:false,//ajax上传图片需要添加
+            processData:false,//ajax上传图片需要添加
+            success: function (data) {
+              if(data.hasOwnProperty("relativePath")){
+                console.log(data.relativePath);
+                document.getElementById("imagePath").value = data.relativePath;
+                submitForm();
+              }
+              else {
+                alert("上传图像失败");
+              }
+              //alert(data.result_msg);
+            },
+            error: function (e) {
+              alert("error");
+            }
+          })
+        }
+        else{
+          submitForm()
+        }
+      }
+
+      function submitForm(){
+        oForm = document.getElementById("form");
+        oForm.submit();
+      }
 
     </script>
 

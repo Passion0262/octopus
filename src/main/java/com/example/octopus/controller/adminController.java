@@ -1,18 +1,21 @@
 package com.example.octopus.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.example.octopus.entity.user.*;
 import com.example.octopus.service.*;
+import com.example.octopus.utils.UploadFileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 
 @Controller
@@ -460,6 +463,65 @@ public class adminController {
     public String admin_video_class(Model model) {
         model.addAttribute("username", "李四");
         return "admin_video_class";
+    }
+
+    @ResponseBody
+    @RequestMapping("/upload_img")
+    public Map imageUpload(MultipartFile img, HttpServletRequest request){
+        String result_msg = "";  //上传结果信息
+        Map<String,Object> root = new HashMap<String, Object>();
+
+        if (img.getSize() > 1024 * 1024 * 5){
+            result_msg="图片大小不能超过5M";
+        }
+        else{
+
+//            Map dict = new HashMap();
+//            dict.put("admin_course_add", "\\course");
+//            dict.put("admin_userinfo", "\\course");
+            String target_dir = "";
+            String url = request.getHeader("Referer");
+            //System.out.println("提交post请求的url:" + url);
+            if(url.contains("admin_course")){
+                target_dir = "course";
+            }
+            else if(url.contains("admin_userinfo")){
+                target_dir = "userinfo";
+            }
+
+            //判断上传文件格式
+            String fileType = img.getContentType();
+            if (fileType.equals("image/jpeg") || fileType.equals("image/png") || fileType.equals("image/jpg")) {
+                // 要上传的目标文件存放的绝对路径
+                final String localPath="static\\images\\upload\\"+target_dir;
+                //上传后保存的文件名(需要防止图片重名导致的文件覆盖)
+                //获取文件名
+                String fileName = img.getOriginalFilename();
+                //获取文件后缀名
+                String suffixName = fileName.substring(fileName.lastIndexOf("."));
+                //重新生成文件名
+                fileName = UUID.randomUUID()+suffixName;
+                if (UploadFileUtils.upload(img, localPath, fileName)) {
+                    //文件存放的相对路径(一般存放在数据库用于img标签的src)
+                    String relativePath="static/images/upload/"+target_dir+"/"+fileName;
+                    root.put("relativePath",relativePath);//前端根据是否存在该字段来判断上传是否成功
+                    result_msg="图片上传成功";
+                }
+                else{
+                    result_msg="图片上传失败";
+                }
+            }
+            else{
+                result_msg="图片格式不正确";
+            }
+        }
+
+        root.put("result_msg",result_msg);
+
+//        JSON.toJSONString(root,SerializerFeature.DisableCircularReferenceDetect);
+        String root_json= JSON.toJSONString(root);
+        System.out.println(root_json);
+        return root;
     }
 
 }

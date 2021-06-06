@@ -9,12 +9,8 @@
         <link rel="shortcut icon" href="static/images/favicon.png">
         <!-- jquery.vectormap css -->
         <link href="static/js/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
-        <!-- DataTables -->
-        <link href="static/js/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-        <!-- Responsive datatable examples -->
-        <link href="static/js/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-        <!-- Button datatable examples -->
-        <link href="static/js/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+        <!-- dropzone css -->
+        <link href="static/js/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
         <!-- Bootstrap Css -->
         <link href="static/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
         <!-- Icons css -->
@@ -199,7 +195,7 @@
                     <div class="col-12">
                       <div class="card">
                         <div class="card-body">
-                          <form class="needs-validation" action="/add_course" method="post" th:object="${coursemodel.course}" novalidate="" style="padding-left: 20px;">
+                          <form id="form" action="/add_course" method="post" th:object="${coursemodel.course}" novalidate="" style="padding-left: 20px;">
 <!--                            <div class="form-group row">-->
 <!--                              <label for="add_id" class="col-md-2 col-form-label">课程编号：</label>-->
 <!--                              <div class="col-md-10">-->
@@ -233,7 +229,8 @@
                             <div class="form-group row">
                               <label for="add_imagePath" class="col-md-2 col-form-label">课程图标：</label>
                               <div class="col-md-10">
-                                <input name="imagePath" th:value="*{imagePath}" id="add_imagePath" class="form-control" type="text">
+                                  <input name="" id="add_imagePath" value="" class="form-control btn btn-light" type="file" accept="image/png, image/jpeg, image/jpg" style="background-color: white; border: 1px solid #ced4da;">
+                                  <input name="imagePath" id="imagePath" th:value="*{imagePath}" class="form-control btn btn-light" type="text" style="display: none">
                               </div>
                             </div>
                             <div class="form-group row">
@@ -270,7 +267,7 @@
 <!--                                <input name="status" th:value="*{status}" id="add_status" class="form-control" type="text">-->
                               </div>
                             </div>
-                            <button type="submit" class="btn btn-primary waves-effect waves-light" style="display:block;margin:0 auto">提交</button>
+                            <button type="button" onclick="uploadImg()" class="btn btn-primary waves-effect waves-light" style="display:block;margin:0 auto">提交</button>
                           </form>
                         </div>
                       </div>
@@ -312,30 +309,53 @@
         <script src="static/js/libs/simplebar/simplebar.min.js"></script>
         <!-- node-waves -->
         <script src="static/js/libs/node-waves/waves.min.js"></script>
-        <!-- apexcharts -->
-<!--        <script src="static/js/libs/apexcharts/apexcharts.min.js"></script>-->
         <!-- admin-resources/jquery.vectormap -->
         <script src="static/js/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
         <script src="static/js/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-us-merc-en.js"></script>
-        <!-- bs-custom-file-inout -->
+        <!-- bs-custom-file-input -->
         <script src="static/js/libs/bs-custom-file-input/bs-custom-file-input.min.js"></script>
-
+        <!-- dropzone -->
+        <script src="static/js/libs/dropzone/min/dropzone.min.js"></script>
         <!-- js/pages/ -->
         <script src="static/js/pages/form-element.init.js"></script>
         <script src="static/js/app.js"></script>
         
         <script type="text/javascript" th:inline="javascript">
-          // window.onload = function() {
-          //   var oTime = document.getElementById("applyTime");
-          //   setInterval(function() {
-          //     var time = new Date();  // 程序计时的月从0开始取值后+1
-          //     var m = time.getMonth() + 1;
-          //     var t = time.getFullYear() + "-" + m + "-"
-          //             + time.getDate() + " " + time.getHours() + ":"
-          //             + time.getMinutes() + ":" + time.getSeconds();
-          //     oTime.value = t;
-          //   }, 1000);
-          // };
+
+            function uploadImg() {
+                var formData = new FormData();
+                formData.append('img', document.getElementById('add_imagePath').files[0]);
+                $.ajax({
+                    async: false,
+                    type: 'POST',
+                    url: "/upload_img",
+                    dataType: 'json',
+                    data: formData,
+                    contentType:false,//ajax上传图片需要添加
+                    processData:false,//ajax上传图片需要添加
+                    success: function (data) {
+                        if(data.hasOwnProperty("relativePath")){
+                            // console.log("上传图像成功！");
+                            // console.log(data.relativePath);
+                            document.getElementById("imagePath").value = data.relativePath;
+                            submitForm();
+                        }
+                        else {
+                            alert("上传图像失败");
+                        }
+                        //alert(data.result_msg);
+                    },
+                    error: function (e) {
+                        alert("error");
+                    }
+                })
+            }
+
+            function submitForm(){
+                oForm = document.getElementById("form");
+                oForm.submit();
+            }
+
         </script>
     
     
