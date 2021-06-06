@@ -2,8 +2,7 @@ package com.example.octopus.dao;
 
 import com.example.octopus.entity.user.Course;
 import com.example.octopus.entity.user.Major;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -24,17 +23,35 @@ public interface MajorMapper {
     List<Major> listMajors();
 
     /**
-     * 如果majorid存在则更新，如果不存在则添加。
-     * @param major  专业实体
-     * @return 成功为true，失败为false
+     * 根据majorCode查找major
+     * @return Major实体
      */
-    boolean updateCourse(Major major);
+    @Select("SELECT * FROM major WHERE major_code = #{majorCode}")
+    Major getByMajorCode(String majorCode);
 
     /**
-     * 根据majorid删除专业
-     * @param majorid 专业id
+     * 新增专业
+     * @param major major实体
      * @return 成功为true，失败为false
      */
-    boolean deleteMajorById(long majorid);
+    @Insert("INSERT INTO major(major_code,major_name,create_time,creator) VALUES (#{majorCode},#{majorName},CURRENT_TIMESTAMP,#{creator})")
+    boolean insertMajor(Major major);
+
+    /**
+     * 更新Major,根据id查询(注意:不是majorCode)
+     * @param major 专业实体
+     * @return 成功为true，失败为false
+     */
+    @Update("UPDATE major SET major_code=#{majorCode}, major_name=#{majorName}, creator = #{creator} WHERE id = #{id}")
+    boolean updateMajor(Major major);
+
+    /**
+     * 根据id删除专业
+     * @param id 专业id
+     * @return 成功为true，失败为false
+     */
+    @Delete("DELETE FROM major WHERE id = #{id}")
+    boolean deleteMajorById(long id);
+
 
 }

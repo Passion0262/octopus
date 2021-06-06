@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 @SpringBootTest
 @RunWith(SpringRunner.class)
-class StudentServiceImplTest {
+class UserServiceImplTest {
 
     long stuNumber = 1L;
     String password = "123";

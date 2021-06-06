@@ -1,7 +1,9 @@
 package com.example.octopus.service.impl;
 
 import com.example.octopus.dao.MajorMapper;
+import com.example.octopus.dao.TeacherMapper;
 import com.example.octopus.entity.user.Major;
+import com.example.octopus.entity.user.Teacher;
 import com.example.octopus.service.MajorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,8 +21,32 @@ public class MajorServiceImpl implements MajorService {
     @Autowired
     MajorMapper majorMapper;
 
+    @Autowired
+    TeacherMapper  teacherMapper;
+
     @Override
-    public List<Major> findAllMajor() {
+    public List<Major> listMajors() {
         return majorMapper.listMajors();
+    }
+
+    @Override
+    public Major getByTeaNumber(long teaNumber) {
+        String majorCode = teacherMapper.getByTeaNumber(teaNumber).getMajorCode();
+        return majorMapper.getByMajorCode(majorCode);
+    }
+
+    @Override
+    public boolean insertMajor(Major major) {
+        return majorMapper.insertMajor(major);
+    }
+
+    @Override
+    public boolean updateMajor(Major major) {
+        return majorMapper.updateMajor(major);
+    }
+
+    @Override
+    public boolean deleteById(long id) {
+        return majorMapper.deleteMajorById(id);
     }
 }

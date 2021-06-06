@@ -1,48 +1,47 @@
 package com.example.octopus.dao;
 
-import com.example.octopus.entity.user.Course;
+import com.example.octopus.entity.user.Major;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author ：shadow
- * @date ：Created in 2021/6/1 9:24 下午
+ * @date ：Created in 2021/6/5 8:36 下午
  */
 @SpringBootTest
 @RunWith(SpringRunner.class)
-class CourseMapperTest {
+class MajorMapperTest {
 
     @Autowired
-    CourseMapper courseMapper;
+    MajorMapper majorMapper;
 
     @Test
-    void listCourses() {
+    void listMajors() {
     }
 
     @Test
-    void getCourseById() {
+    void getByMajorCode() {
     }
 
     @Test
     void insertCourse() {
+        Major major = new Major(1,"1212","计算机",null,"as");
+        majorMapper.insertMajor(major);
     }
 
     @Test
     void updateCourse() {
-//        Course course = courseMapper.getCourseById(1);
-//        course.setCourseName("大数据");
-//        courseMapper.updateCourse(course);
+        Major major = new Major(3,"123","计算机test",null,"as");
+        majorMapper.updateMajor(major);
     }
 
     @Test
-    void deleteCourseById() {
-//        courseMapper.deleteCourseById(7L);
+    void deleteMajorById() {
+        majorMapper.deleteMajorById(3);
     }
 }

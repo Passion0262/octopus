@@ -23,5 +23,11 @@ public interface ExperimentService {
      */
     Experiment getExperimentById(long id);
 
+    /**
+     * 根据学生学号查询所有该学生选的课对应的实验任务
+     * @param stuNumber 学生学号
+     * @return experiment list
+     */
+    List<Experiment> listChosenByStuNumber(long stuNumber);
 
 }

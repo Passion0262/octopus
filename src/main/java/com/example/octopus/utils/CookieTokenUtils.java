@@ -1,9 +1,6 @@
 package com.example.octopus.utils;
 
-import com.example.octopus.service.UserService;
 import io.jsonwebtoken.*;
-import org.apache.ibatis.annotations.Insert;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

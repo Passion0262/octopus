@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 @SpringBootTest
 @RunWith(SpringRunner.class)
-class UserServiceImplTest {
+class StudentServiceImplTest {
     long stuNumber = 1L;
 
     @Autowired

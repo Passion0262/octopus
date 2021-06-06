@@ -1,6 +1,8 @@
 package com.example.octopus.entity.user;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author ：shadow
@@ -9,6 +11,8 @@ import lombok.Data;
  * 专业表
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Major {
     private long id;
 
@@ -18,9 +22,9 @@ public class Major {
 //    @Column(nullable = false, name = "majorName")
     private String majorName;
 
-//    @Column(nullable = false)
-    private String creator;
-
 //    @Column(nullable = false, name = "createTime")
     private String createTime;
+
+    //    @Column(nullable = false)
+    private String creator;
 }

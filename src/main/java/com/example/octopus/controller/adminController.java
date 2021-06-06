@@ -108,7 +108,7 @@ public class adminController {
         //管理员显示全部专业
         //老师显示自己教的专业
         //System.out.println(majorService.findAllMajor());
-        model.addAttribute("majors", majorService.findAllMajor());
+        model.addAttribute("majors", majorService.listMajors());
         model.addAttribute("username", username);
         return "admin_major";
     }
