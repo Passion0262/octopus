@@ -190,16 +190,21 @@
         },
         success: function(){
           alert("更改成功");
+          window.location.replace("/userinfo");
         },
         error: function(){
           alert("更改失败，请稍后再试");
         }
       })
-    }else if(phoneNumber){
+    }else if(phoneNumber==''){
       alert("手机号不能为空");
     }else{
-      alert("更改成功")
+      alert("更改成功");
     }
+
+    // location.reload();
+    // window.location.href="/userinfo";
+    window.location.replace("/userinfo");
   }
 
 </script>

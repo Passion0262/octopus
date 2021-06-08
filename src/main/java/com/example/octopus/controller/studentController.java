@@ -123,10 +123,23 @@ public class studentController {
 
         logger.info("phoneNumber:" + phoneNumber);
 
-//        这里需要一个手机号码的更改操作
+        Long stuNum =Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        boolean status = userService.updatePhoneNumber(stuNum,phoneNumber);
 
         return "redirect:userinfo";
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     @RequestMapping("/applycourse")
@@ -154,14 +167,19 @@ public class studentController {
 
         logger.info("coursedetail_id:" + id);
 
-        //        这里需要一个根据课程的id 返回course操作
+
         Course course = courseService.getCourseById(Long.parseLong(id));
 
         logger.info("course——detail:" + course);
         model.addAttribute("course", course);
 
-        //        这里需要一个根据课程的id 用户id 判断是否选课
-        model.addAttribute("isapplied", 1);
+
+        String stuNum = cookieThings.getCookieUserNum(request, cookieName);
+        boolean isapplied = courseService.isChosen(Long.parseLong(stuNum),Long.parseLong(id));
+
+        logger.info("isapplied:" + isapplied);
+
+        model.addAttribute("isapplied", isapplied);
 
         return "apply_detail";
     }
@@ -172,14 +190,17 @@ public class studentController {
 
 //        String stuname = (String) session.getAttribute("stuname");
 
-        logger.info("确认_id:" + id);
 
-        //        这里需要一个根据用户的id 课程id 添加申请课程
 
-        //        这里需要一个根据课程的id 用户id 判断是否选课
-        model.addAttribute("isapplied", 1);
+        String stuNum = cookieThings.getCookieUserNum(request, cookieName);
+        logger.info("确认课程_id:" + id);
+        logger.info("确认学生_id:" + stuNum);
+        boolean issuccess = courseService.insertChooseCourse(Long.parseLong(id),Long.parseLong(stuNum));
 
-        return "redirect:/apply_detail/id=" + id;
+        boolean isapplied = courseService.isChosen(Long.parseLong(stuNum),Long.parseLong(id));
+        model.addAttribute("isapplied", isapplied);
+
+        return "redirect:/apply_detail/" + id;
     }
 
     @RequestMapping("/apply_detail/cancel_apply")
@@ -190,13 +211,30 @@ public class studentController {
 
         logger.info("取消申请_id:" + id);
 
-        //        这里需要一个根据用户的id 课程id 取消申请课程
+        String stuNum = cookieThings.getCookieUserNum(request, cookieName);
+        logger.info("确认课程_id:" + id);
+        logger.info("确认学生_id:" + stuNum);
+        boolean issuccess = courseService.deleteChooseCourse(Long.parseLong(id),Long.parseLong(stuNum));
 
-        //        这里需要一个根据课程的id 用户id 判断是否选课
-        model.addAttribute("isapplied", 0);
+        boolean isapplied = courseService.isChosen(Long.parseLong(stuNum),Long.parseLong(id));
+        model.addAttribute("isapplied", isapplied);
 
-        return "redirect:/apply_detail/id=" + id;
+        return "redirect:/apply_detail/" + id;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     @RequestMapping("/mycourse")
@@ -206,19 +244,45 @@ public class studentController {
 //        String stuname = (String) session.getAttribute("stuname");
 //        model.addAttribute("stuname", stuname);
 
+        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+
+        List<Course> mycourses = courseService.listCourseByStuNumber(stuNum);
+        logger.info("mycourses:" + mycourses);
+        model.addAttribute("mycourses", mycourses);
+
+        //这里要计算完成了多少个视频 算百分比
 
         return "mycourse";
     }
 
-    @RequestMapping("/course_video")
-    public String course_video(Model model, HttpServletRequest request) {
+
+
+    @RequestMapping("/course_video/{id}")
+    public String course_video(@PathVariable(value = "id") String id,Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
+
+
+        model.addAttribute("id", id);
 
 //        String stuname = (String) session.getAttribute("stuname");
 //        model.addAttribute("stuname", stuname);
 
+
+
         return "course_video";
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     @RequestMapping("/experiment_task")
@@ -228,12 +292,14 @@ public class studentController {
 //        String stuname = (String) session.getAttribute("stuname");
 //        model.addAttribute("stuname", stuname);
 
-        List<Experiment> allexperiments = experimentService.listExperiments();
+        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        List<Experiment> allexperiments = experimentService.listChosenByStuNumber(stuNum);
 //        logger.info("allExperiment:" + allexperiments);
         model.addAttribute("allexperiments", allexperiments);
 
         return "experiment_task";
     }
+
 
     @RequestMapping("/experiment_task_detail/{id}")
     public String experiment_task_detail(String id, Model model,HttpServletRequest request) {

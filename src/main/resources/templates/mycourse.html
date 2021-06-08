@@ -118,23 +118,13 @@
                                         </tr>
                                         </thead>
                                         <tbody style="text-align: center">
-                                        <tr>
-                                            <td>1</td>
-                                            <td>hadoop大数据</td>
-                                            <td>李老师</td>
+                                        <tr th:each="course:${mycourses}">
+                                            <td><span th:text="${course.id}"></span></td>
+                                            <td><span th:text="${course.courseName}"></span></td>
+                                            <td><span th:text="${course.teacher}"></span></td>
                                             <td>50%</td>
-                                            <td><a href="course_video">继续学习</a></td>
+                                            <td><a th:href="'/course_video/'+${course.id}">继续学习</a></td>
                                         </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>python爬虫</td>
-                                            <td>朱老师</td>
-                                            <td>0%</td>
-                                            <td>继续学习</td>
-                                        </tr>
-
-
-
 
                                         </tbody>
                                     </table>
