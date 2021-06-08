@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Mapper
 public interface SysUserRoleMapper {
-    @Select("SELECT * FROM sys_user_role WHERE stuNUmber = #{stuNumber}")
+    @Select("SELECT * FROM sys_user_role WHERE stu_number = #{stuNumber}")
     List<SysUserRole> listByUserId(long stuNumber);
 }
 

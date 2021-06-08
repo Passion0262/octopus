@@ -25,7 +25,7 @@ public interface TeacherMapper {
      * @param teaNumber 老师编号
      * @return teacher实体
      */
-    @Select("SELECT * FROM teacher WHERE teaNumber = #{teaNumber}")
+    @Select("SELECT * FROM teacher WHERE tea_number = #{teaNumber}")
     Teacher getByTeaNumber(long teaNumber);
 
 }

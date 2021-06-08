@@ -29,7 +29,7 @@ public interface StudentCourseMapper {
      * @param stuNumber 学生学号
      * @return 该学生选的所有课程
      */
-    @Select("SELECT * FROM student_course where stuNumber = #{stuNumber}")
+    @Select("SELECT * FROM student_course where stu_number = #{stuNumber}")
     List<Course> getCourseByStuNumber(long stuNumber);
 
     /**
@@ -38,7 +38,7 @@ public interface StudentCourseMapper {
      * @param courseId 课程id
      * @return 选了这门课为true，没选是false
      */
-    @Select("SELECT COUNT(*) FROM student_course WHERE stuNumber = #{stuNumber} AND courseId = #{courseId}")
+    @Select("SELECT COUNT(*) FROM student_course WHERE stu_number = #{stuNumber} AND course_id = #{courseId}")
     boolean queryCourseIsChosen(long stuNumber, long courseId);
 
     /**
@@ -47,6 +47,6 @@ public interface StudentCourseMapper {
      * @param courseId 课程id
      * @return 成功为true，失败为false
      */
-    @Delete("DELETE FROM student_course WHERE stuNumber = #{stuNumber} AND courseId = #{courseId}")
+    @Delete("DELETE FROM student_course WHERE stu_number = #{stuNumber} AND course_id = #{courseId}")
     boolean deteleChooseCourse(long stuNumber,long courseId);
 }

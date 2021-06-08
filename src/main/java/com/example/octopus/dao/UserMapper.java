@@ -17,22 +17,22 @@ public interface UserMapper {
     @Select("SELECT * FROM student")
     List<Student> listAllStudents();
 
-    @Select("SELECT * FROM student WHERE stuNumber = #{stuNumber}")
+    @Select("SELECT * FROM student WHERE stu_number = #{stuNumber}")
     Student getStudentByStuNumber(long stuNumber);
 
     @Select("SELECT * FROM student WHERE name = #{name}")
     Student getStudentByName(String name);
 
-    @Select("SELECT * FROM student WHERE stuNumber = #{stuNumber} and password = #{password}")
+    @Select("SELECT * FROM student WHERE stu_number = #{stuNumber} and password = #{password}")
     Student getStudentByStuNumberAndPassword(long stuNumber, String password);
 
-    @Update("UPDATE student SET loginNumber = loginNumber+1, lastLoginTime = CURRENT_TIMESTAMP where stuNumber = #{stuNumber}")
+    @Update("UPDATE student SET login_number = login_number+1, last_login_time = CURRENT_TIMESTAMP where stu_number = #{stuNumber}")
     boolean updateLoginInfoByStuNumber(long stuNumber);
 
-    @Update("UPDATE student SET stuNumber = '000000' WHERE stuNumber = #{stuNumber}}")
+    @Update("UPDATE student SET stu_number = '000000' WHERE stu_number = #{stuNumber}}")
     boolean resetPassword(long stuNumber);
 
-    @Update("UPDATE student SET phoneNumber = #{phoneNumber} WHERE stuNumber = #{stuNumber}")
+    @Update("UPDATE student SET phone_number = #{phoneNumber} WHERE stu_number = #{stuNumber}")
     boolean updatePhoneByStuNumber(long stuNumber, String phoneNumber);
 
 }
