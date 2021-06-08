@@ -104,7 +104,7 @@
                     <div class="col-md-4" th:each="dataset:${alldatasets}">
                         <a style="text-decoration: none; color: black;" th:href="'dataset_detail/id='+${dataset.id}">
                             <div class="card" >
-                                <img th:src="${dataset.pictureUrl}" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
+                                <img th:src="${dataset.imagePath}" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
                                 <div class="card-body">
                                     <h4 class="card-title mt-0" style="overflow: hidden; height: 18px;"><span th:text="${dataset.name}"></span></h4>
                                 </div>

@@ -16,9 +16,7 @@ import java.util.Date;
 public class ProjectMissionProgress {
     private long id;
 
-//    @ManyToOne
-//    @JoinColumn(name = "stuNumber")
-//    private Student student;  //学生学号
+    private long stuNumber; //学生学号
 
     private String stuName;  //学生姓名
 

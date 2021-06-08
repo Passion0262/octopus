@@ -18,7 +18,7 @@ public class Project {
     private String name;    //项目名称
 
 //    @Column(nullable = false)
-    private String brief;     //项目简介
+    private String description;     //项目简介
 
 //    @Column(nullable = false)
     private String imagePath;  //项目简图地址

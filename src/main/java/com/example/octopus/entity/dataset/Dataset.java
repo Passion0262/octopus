@@ -23,6 +23,6 @@ public class Dataset {
 
     String fileFormat;
 
-    String pictureUrl;
+    String imagePath;
 
 }
