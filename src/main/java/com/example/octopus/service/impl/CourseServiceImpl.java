@@ -28,6 +28,11 @@ public class CourseServiceImpl implements CourseService {
         return studentCourseMapper.insertStudentCourse(stuNumber,courseId);
     }
 
+    @Override
+    public boolean deleteChooseCourse(long stuNumber, long courseId) {
+        return studentCourseMapper.deteleChooseCourse(stuNumber,courseId);
+    }
+
 
     @Override
     public List<Course> listCourses() {

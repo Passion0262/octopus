@@ -30,6 +30,14 @@ public interface MajorMapper {
     Major getByMajorCode(String majorCode);
 
     /**
+     * 根据id查找Major
+     * @param id Major id
+     * @return Major实体
+     */
+    @Select("SELECT * FROM major WHERE id = #{id}")
+    Major getById(long id);
+
+    /**
      * 新增专业
      * @param major major实体
      * @return 成功为true，失败为false
@@ -38,7 +46,7 @@ public interface MajorMapper {
     boolean insertMajor(Major major);
 
     /**
-     * 更新Major,根据id查询(注意:不是majorCode)
+     * 更新Major,根据id查询
      * @param major 专业实体
      * @return 成功为true，失败为false
      */

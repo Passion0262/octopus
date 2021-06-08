@@ -55,6 +55,14 @@ public interface CourseService {
     boolean insertChooseCourse(long stuNumber, long courseId);
 
     /**
+     * 删除学生选课记录
+     * @param stuNumber 学号
+     * @param courseId 课程id
+     * @return 是否成功删除
+     */
+    boolean deleteChooseCourse(long stuNumber, long courseId);
+
+    /**
      * 更新课程
      * @param course 课程实体
      * @return 是否成功更新

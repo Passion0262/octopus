@@ -17,6 +17,13 @@ public interface MajorService {
     List<Major> listMajors();
 
     /**
+     * 根据id查找major
+     * @param id majorid
+     * @return major实体
+     */
+    Major getById(long id);
+
+    /**
      * 根据教师工号获取所教专业信息
      * @return Major实体
      */

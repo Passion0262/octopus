@@ -21,7 +21,7 @@ public interface StudentCourseMapper {
      * @param stuNumber 学生学号
      * @return 成功为true，失败为false
      */
-    @Insert("INSERT INTO student_course VALUES(null,#{courseId},#{stuNumber},CURRENT_TIMESTAMP)")
+    @Insert("INSERT INTO student_course (id,course_id,stu_number,apply_time) VALUES(null,#{courseId},#{stuNumber},CURRENT_TIMESTAMP)")
     boolean insertStudentCourse(long courseId, long stuNumber);
 
     /**
