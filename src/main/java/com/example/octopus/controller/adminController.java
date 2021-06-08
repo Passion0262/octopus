@@ -30,8 +30,8 @@ public class adminController {
     @Autowired
     CourseService courseService;
 
-//    @Autowired
-//    DatasetService datasetService;
+    @Autowired
+    DatasetService datasetService;
 
 
     //登录
@@ -117,8 +117,6 @@ public class adminController {
     @GetMapping("/admin_major_add")
     public ModelAndView admin_major_add(HttpServletRequest request, Model model){
         System.out.println("进入admin_major_add，获取一个新Major()");
-        //Major major = new Major();
-        //major.creator = request.getParameter("username");
         String user = request.getParameter("username");
         model.addAttribute("username", user);
         model.addAttribute("major",new Major());
@@ -129,8 +127,7 @@ public class adminController {
     public ModelAndView add_major(Major major){
         System.out.println("提交新增的major");
         System.out.println(major);
-        //major.creator=""
-        //MajorService.Add(major);
+        majorService.insertMajor(major);
         return new ModelAndView("redirect:/admin_major");
     }
 
@@ -138,12 +135,11 @@ public class adminController {
     @GetMapping("/admin_major_edit")
     public ModelAndView admin_major_edit(HttpServletRequest request, Model model){
         System.out.println("进入admin_major_edit，获取指定编号的Major()");
-        String majorCode = request.getParameter("majorCode");
-        System.out.println("majorCode="+majorCode);
+        long id = Long.parseLong(request.getParameter("id"));
+        System.out.println("id="+id);
         String user = request.getParameter("username");
         model.addAttribute("username", user);
-        //Major major = 根据专业代码获取专业信息
-        model.addAttribute("major",new Major());
+        model.addAttribute("major", new Major());
         return new ModelAndView("admin_major_edit","majormodel", model);
     }
 
@@ -152,16 +148,17 @@ public class adminController {
         System.out.println("提交修改的major");
         System.out.println(major);
         //更新major
+        majorService.updateMajor(major);
         return new ModelAndView("redirect:/admin_major");
     }
 
     //删除专业
     @RequestMapping("/admin_major_delete")
     public ModelAndView admin_major_delete(HttpServletRequest request){
-        String majorCode = request.getParameter("majorCode");
-        System.out.println(majorCode);
-        System.out.println("删除 majorCode="+majorCode);
-        //根据majorCode删除major
+        long id = Long.parseLong(request.getParameter("id"));
+        System.out.println(id);
+        System.out.println("删除专业 id="+id);
+        majorService.deleteById(id);
         return new ModelAndView("redirect:/admin_major");
     }
 
@@ -463,6 +460,14 @@ public class adminController {
     public String admin_video_class(Model model) {
         model.addAttribute("username", "李四");
         return "admin_video_class";
+    }
+
+    //数据集管理
+    @RequestMapping("/admin_dataset")
+    public String admin_dataset(Model model) {
+        model.addAttribute("username", "李四");
+        model.addAttribute("datasets", datasetService.listDatasets());
+        return "admin_dataset";
     }
 
     @ResponseBody

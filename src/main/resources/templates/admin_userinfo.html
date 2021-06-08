@@ -19,161 +19,8 @@
     <!-- Begin page -->
     <div id="layout-wrapper">
 
-        <header id="page-topbar">
-            <div class="navbar-header">
-                <div class="d-flex">
-                    <!-- LOGO -->
-                    <div class="navbar-brand-box">
-                        <a href="admin_index" class="logo logo-dark">
-                            <span class="logo-sm">
-                           <img src="static/images/logo-sm-dark.png" alt="" height="22">
-                        </span>
-                            <span class="logo-lg">
-                            <img src="static/images/logo-dark.png" alt="" height="30">
-                        </span>
-                        </a>
-                    </div>
-                    <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn">
-                        <i class="ri-menu-2-line align-middle"></i>
-                    </button>
-                </div>
-
-
-                <div class="d-flex">
-
-                    <div class="dropdown d-none d-lg-inline-block ml-1">
-                        <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
-                            <i class="ri-fullscreen-line"></i>
-                        </button>
-                    </div>
-
-                    <!-- 个人信息展示 退出登录操作 -->
-                    <div class="dropdown d-inline-block user-dropdown" id="user-info">
-                        <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" >
-                            <img class="rounded-circle header-profile-user" src="static/images/users/avatar-2.jpg" alt="Header Avatar">
-                            <span class="d-none d-xl-inline-block ml-1" th:text="${username}"></span>
-                            <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <!-- item-->
-                            <a class="dropdown-item" href="admin_userinfo"><i class="ri-user-line align-middle mr-1"></i>个人资料</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-danger" href="admin_login"><i class="ri-shut-down-line align-middle mr-1 text-danger"></i>退出</a>
-                        </div>
-                    </div>
-                    <!-- 个人信息展示 退出登录操作 -->
-                </div>
-            </div>
-        </header>
-
-        <!-- ========== Left Sidebar Start ========== -->
-        <div class="vertical-menu">
-            <div data-simplebar class="h-100">
-                <!--- Sidemenu -->
-                <div id="sidebar-menu">
-                    <!-- Left Menu Start -->
-                    <ul class="metismenu list-unstyled" id="side-menu">
-                        <li class="mm-active">
-                            <a href="admin_index" class="waves-effect">
-                                <i class="ri-home-5-line"></i>
-                                <span>首页</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="has-arrow waves-effect" >
-                                <i class="mdi mdi-account-group"></i>
-                                <span>学生管理</span>
-                            </a>
-                            <ul class="sub-menu mm-collapse" >
-                                <li>
-                                    <a href="admin_major">专业管理</a>
-                                </li>
-                                <li>
-                                    <a href="admin_class">班级管理</a>
-                                </li>
-                                <li>
-                                    <a href="admin_student">学生管理</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li>
-                            <a href="#" class="has-arrow waves-effect " >
-                                <i class="mdi mdi-file-compare"></i>
-                                <span>开课管理</span>
-                            </a>
-                            <ul class="sub-menu mm-collapse" >
-                                <li>
-                                    <a href="admin_course">开课计划管理</a>
-                                </li>
-                                <li>
-                                    <a href="admin_course_student">学生开课计划</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li>
-                            <a href="#" class="has-arrow waves-effect " >
-                                <i class="ri-file-text-line"></i>
-                                <span>学习记录</span>
-                            </a>
-                            <ul class="sub-menu mm-collapse" >
-                                <li>
-                                    <a href="admin_video_log">视频学习汇总</a>
-                                </li>
-                                <li>
-                                    <a href="admin_video_log_details">视频学习详情</a>
-                                </li>
-                                <li>
-                                    <a href="admin_report">实验报告管理</a>
-                                </li>
-                                <li>
-                                    <a href="admin_experiment_log">实验操作时长</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li>
-                            <a href="#" class="has-arrow waves-effect " >
-                                <i class="ri-briefcase-2-line"></i>
-                                <span>实验管理</span>
-                            </a>
-                            <ul class="sub-menu mm-collapse" >
-                                <li>
-                                    <a href="admin_pc_type">实验机类型</a>
-                                </li>
-                                <li>
-                                    <a href="admin_cluster">实验机集群</a>
-                                </li>
-                                <li>
-                                    <a href="admin_student_pc">学生实验机</a>
-                                </li>
-                                <li>
-                                    <a href="admin_report_template">实验报告模板</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li>
-                            <a href="#" class="has-arrow waves-effect " >
-                                <i class="ri-slideshow-3-line"></i>
-                                <span>视频课程</span>
-                            </a>
-                            <ul class="sub-menu mm-collapse" >
-                                <li>
-                                    <a href="admin_video">视频课程管理</a>
-                                </li>
-                                <li>
-                                    <a href="admin_video_class">视频课程分类</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <!-- Sidebar -->
-            </div>
-        </div>
-        <!-- Left Sidebar End -->
+        <div th:replace="commons::topbar(${username})"></div>
+        <div th:replace="commons::leftSidebar"></div>
 
         <!-- ========== Main Content Start ========== -->
         <div class="main-content">
@@ -190,57 +37,58 @@
                     <!-- end page title -->
 
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-xl-8">
                             <div class="card">
                                 <div class="card-body">
                                     <form class="needs-validation" novalidate="">
                                         <div class="form-group row">
                                             <label for="example-text-input" class="col-md-2 col-form-label">姓名：</label>
                                             <div class="col-md-10">
-                                                <input class="form-control" type="text" th:value="${username}" id="example-text-input">
+                                                <input name="name" class="form-control" type="text" th:value="${username}" id="example-text-input">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="example-email-input" class="col-md-2 col-form-label">邮箱</label>
+                                            <label for="email" class="col-md-2 col-form-label">邮箱</label>
                                             <div class="col-md-10">
-                                                <input class="form-control" type="email" value="admin123@example.com" id="example-email-input">
+                                                <input name="email" class="form-control" type="email" value="admin123@example.com" id="email">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="example-tel-input" class="col-md-2 col-form-label">手机号码</label>
+                                            <label for="tel" class="col-md-2 col-form-label">手机号码</label>
                                             <div class="col-md-10">
-                                                <input class="form-control" type="tel" value="11122233345" id="example-tel-input">
+                                                <input name="tel" class="form-control" type="tel" value="11122233345" id="tel">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-md-2 col-form-label">所在学校：</label>
                                             <div class="col-md-10">
-                                                <select class="form-control">
-                                                    <option>选项</option>
-                                                    <option>江南大学</option>
-                                                    <option>无锡职业学院</option>
+                                                <select class="form-control" name="org">
+                                                    <option value="0">江南大学</option>
+                                                    <option value="1">无锡职业学院</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <button class="btn btn-primary" type="submit">修改</button>
+                                        <button class="btn btn-primary" type="submit" style="display:block;margin:0 auto">修改</button>
                                     </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4">
+                            <div class="card">
+                                <div class="card-body">
+<!--                                    <label class="col-md-3 col-form-label">头像：</label>-->
+                                    <label >头像：</label>
+                                    <div class="col-md-12">
+                                        <img class="rounded-circle avatar-xl" src="static/images/login.png" alt="头像" data-holder-rendered="true" style="display:block;margin:0 auto">
+                                    </div>
+                                    <a href="#" class="btn btn-outline-primary waves-effect waves-light" style="display:block;margin:0 auto;max-width: 150px;">更换头像</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <footer class="footer">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-sm-6">
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="text-sm-right d-none d-sm-block"><script>document.write(new Date().getFullYear())</script>© 人工智能实验实训平台</div>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
+                <div th:replace="commons::footer"></div>
             </div>
         </div>
 

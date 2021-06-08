@@ -40,8 +40,7 @@
                         <div class="page-title-box d-flex align-items-center justify-content-between" id="page">
                             <div class="page-title-right">
                                 <ol class="breadcrumb m-0">
-                                    <li class="breadcrumb-item"><a href="#">学生管理</a></li>
-                                    <li class="breadcrumb-item active">专业管理</li>
+                                    <li class="breadcrumb-item"><a href="#">数据集</a></li>
                                 </ol>
                             </div>
                         </div>
@@ -58,37 +57,41 @@
                                         <thead style="text-align: center;">
                                         <tr>
                                             <th class="sorting_disabled">操作</th>
-                                            <th>专业编号</th>
-                                            <th>专业代码</th>
-                                            <th>专业名称</th>
-                                            <th>创建人员</th>
-                                            <th>创建时间</th>
+                                            <th>数据集编号</th>
+                                            <th>数据集名称</th>
+                                            <th>数据集描述</th>
+                                            <th>上传人员</th>
+                                            <th>数据集大小</th>
+                                            <th>下载次数</th>
+                                            <th>格式</th>
                                         </tr>
                                         </thead>
                                         <tbody style="text-align: center;">
-                                        <tr th:each="major:${majors}">
+                                        <tr th:each="dataset:${datasets}">
                                             <td>
                                                 <div style="width:30px;"></div>
-                                                <a th:href="@{admin_major_add(username=${username})}" class="add" style="color:#ff3d60">
+                                                <a th:href="@{admin_dataset_add(username=${username})}" class="add" style="color:#ff3d60">
                                                     <i class="mdi mdi-text-box-plus font-size-18"></i>
                                                 </a>
-                                                <a th:href="@{admin_major_edit(username=${username},id=${major.id})}" class="edit" style="color:#1cbb8c">
+                                                <a th:href="@{admin_dataset_edit(username=${username},id=${dataset.id})}" class="edit" style="color:#1cbb8c">
                                                     <i class="mdi mdi-pencil font-size-18"></i>
                                                 </a>
-                                                <a th:href="@{admin_major_delete(id=${major.id})}" class="delete" style="color:#505d69">
+                                                <a th:href="@{admin_dataset_delete(id=${dataset.id})}" class="delete" style="color:#505d69">
                                                     <i class="mdi mdi-trash-can font-size-18"></i>
                                                 </a>
                                             </td>
-                                            <td th:text="${major.id}"></td>
-                                            <td th:text="${major.majorCode}"></td>
-                                            <td th:text="${major.majorName}"></td>
-                                            <td th:text="${major.creator}"></td>
-                                            <td th:text="${major.createTime}"></td>
+                                            <td th:text="${dataset.id}"></td>
+                                            <td th:text="${dataset.name}"></td>
+                                            <td th:text="${dataset.description}"></td>
+                                            <td th:text="${dataset.uploader}"></td>
+                                            <td th:text="${dataset.size}"></td>
+                                            <td th:text="${dataset.downloadNum}"></td>
+                                            <td th:text="${dataset.fileFormat}"></td>
                                         </tr>
                                         </tbody>
                                     </table>
                                     <div style="display: block;text-align: right;">
-                                        <a th:href="@{admin_major_add(username=${username})}" class="add">
+                                        <a th:href="@{admin_dataset_add(username=${username})}" class="add">
                                             <i class="mdi mdi-text-box-plus font-size-18" style="color:#ff3d60"></i>新增...
                                         </a>
                                     </div>
@@ -97,54 +100,6 @@
                         </div>
                     </div>
                 </div>
-
-
-                <!-- Add modal content -->
-                <!--
-                <div id="add_major" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title mt-0">增加专业</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p th:value="${new_major}"></p>
-                                <form class="needs-validation" novalidate="" style="padding-left: 20px;">
-                                    <div class="form-group row">
-                                        <label for="add_major_no" class="col-md-3 col-form-label">专业编号：</label>
-                                        <div class="col-md-8">
-                                            <input class="form-control" type="text" id="add_major_no" readonly="readonly"  style="border:none;">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="add_major_id" class="col-md-3 col-form-label">专业代码：</label>
-                                        <div class="col-md-8">
-                                            <input class="form-control" type="text" value="" id="add_major_id">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="add_major_name" class="col-md-3 col-form-label">专业名称：</label>
-                                        <div class="col-md-8">
-                                            <input class="form-control" type="text" value=" " id="add_major_name">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="add_create_user" class="col-md-3 col-form-label">创建人员：</label>
-                                        <div class="col-md-8">
-                                            <input class="form-control" type="text" th:value="${majormodel.username}" id="add_create_user" readonly="readonly"  style="border:none;">
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary waves-effect waves-light">提交</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                -->
-                <!-- /.modal -->
 
             </div>
 

@@ -1,19 +1,17 @@
 package com.example.octopus.utils;
 
-
-import org.springframework.util.ClassUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * @author: Xu
+ * @date: 2021/6/6 11:00
+ * 上传文件到指定目录
+ */
+
 public class UploadFileUtils {
-    /**
-     * @param file     文件
-     * @param path     文件存放路径
-     * @param fileName 保存的文件名
-     * @return
-     */
 
     public static boolean upload(MultipartFile file, String path, String fileName) {
         String rootPath = System.getProperty("user.dir");
