@@ -1,6 +1,8 @@
 package com.example.octopus.entity.user;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -13,6 +15,8 @@ import java.util.Set;
  * 学生表
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Student {
 
     private long stuNumber;

@@ -323,7 +323,7 @@ public class adminController {
         System.out.println("courseId="+courseId);
         String user = request.getParameter("username");
         model.addAttribute("username", user);
-        model.addAttribute("course", courseService.findCourseById(courseId));
+        model.addAttribute("course", courseService.getCourseById(courseId));
         return new ModelAndView("admin_course_edit","coursemodel",model);
     }
 

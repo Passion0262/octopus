@@ -25,12 +25,12 @@ public interface StudentCourseMapper {
     boolean insertStudentCourse(long courseId, long stuNumber);
 
     /**
-     * 根据学生学号查询所选所有课程
+     * 根据学生学号返回所有该学生选的课的courseId
      * @param stuNumber 学生学号
-     * @return 该学生选的所有课程
+     * @return 该学生选的所有课程的courseId list
      */
-    @Select("SELECT * FROM student_course where stu_number = #{stuNumber}")
-    List<Course> getCourseByStuNumber(long stuNumber);
+    @Select("SELECT course_id FROM student_course where stu_number = #{stuNumber}")
+    List<Long> listCourseIdsByStuNumber(long stuNumber);
 
     /**
      * 查询学生是否选某一门课

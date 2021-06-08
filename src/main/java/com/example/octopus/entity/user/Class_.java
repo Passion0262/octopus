@@ -1,6 +1,8 @@
 package com.example.octopus.entity.user;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 import java.util.Set;
@@ -11,6 +13,8 @@ import java.util.Set;
  * @modified By：
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Class_ {
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,6 +1,8 @@
 package com.example.octopus.entity.user;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 
@@ -11,6 +13,8 @@ import java.sql.Date;
  * @modified By：
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Course {
 
     private long id;

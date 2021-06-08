@@ -22,14 +22,14 @@ public interface CourseService {
      * @param id 课程id
      * @return 课程实体
      */
-    Course findCourseById(long id);
+    Course getCourseById(long id);
 
     /**
      * 根据学生学号查询该学生选的课
      * @param stuNumber 学号
      * @return 课程list
      */
-    List<Course> findCourseByStuNumber(long stuNumber);
+    List<Course> listCourseByStuNumber(long stuNumber);
 
     /**
      * 查询学生是否选某一门课

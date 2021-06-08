@@ -26,13 +26,15 @@ class CourseServiceImplTest {
     CourseServiceImpl courseService;
 
     @Test
-    void insertChooseCourse() {
-        boolean result = courseService.insertChooseCourse(STUDENT_ID,COURSE_ID);
-        assertTrue(result);
+    void saveCourse() {
     }
 
     @Test
-    void findAllCourses() {
+    void deleteCourseById() {
+    }
+
+    @Test
+    void ListCourses() {
         List<Course> list = courseService.listCourses();
         for (Course c:list) {
             System.out.println(c.getCourseName());
@@ -41,10 +43,38 @@ class CourseServiceImplTest {
     }
 
     @Test
-    void saveCourse() {
+    void getCourseById() {
     }
 
     @Test
-    void deleteCourseById() {
+    void listCourseByStuNumber() {
+        List<Course> list = courseService.listCourseByStuNumber(1L);
+        list.forEach(System.out::println);
+    }
+
+    @Test
+    void isChosen() {
+    }
+
+    @Test
+    void InsertChooseCourse() {
+        boolean result = courseService.insertChooseCourse(STUDENT_ID,COURSE_ID);
+        assertTrue(result);
+    }
+
+    @Test
+    void deleteChooseCourse() {
+    }
+
+    @Test
+    void insertCourse() {
+    }
+
+    @Test
+    void updateCourse() {
+    }
+
+    @Test
+    void testDeleteCourseById() {
     }
 }

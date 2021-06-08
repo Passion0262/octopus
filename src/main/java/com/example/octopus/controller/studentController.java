@@ -155,7 +155,7 @@ public class studentController {
         logger.info("coursedetail_id:" + id);
 
         //        这里需要一个根据课程的id 返回course操作
-        Course course = courseService.findCourseById(Long.parseLong(id));
+        Course course = courseService.getCourseById(Long.parseLong(id));
 
         logger.info("course——detail:" + course);
         model.addAttribute("course", course);

@@ -7,6 +7,7 @@ import com.example.octopus.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,6 +25,31 @@ public class CourseServiceImpl implements CourseService {
     StudentCourseMapper studentCourseMapper;
 
     @Override
+    public List<Course> listCourses() {
+        return courseMapper.listCourses();
+    }
+
+    @Override
+    public Course getCourseById(long id) {
+        return courseMapper.getCourseById(id);
+    }
+
+    @Override
+    public List<Course> listCourseByStuNumber(long stuNumber) {
+        List<Course> courseList = new ArrayList<>();
+        List<Long> courseIdList =  studentCourseMapper.listCourseIdsByStuNumber(stuNumber);
+        for (long id:courseIdList){
+            courseList.add(courseMapper.getCourseById(id));
+        }
+        return courseList;
+    }
+
+    @Override
+    public boolean isChosen(long stuNumber, long courseId) {
+        return studentCourseMapper.queryCourseIsChosen(stuNumber, courseId);
+    }
+
+    @Override
     public boolean insertChooseCourse(long stuNumber, long courseId) {
         return studentCourseMapper.insertStudentCourse(stuNumber,courseId);
     }
@@ -33,31 +59,11 @@ public class CourseServiceImpl implements CourseService {
         return studentCourseMapper.deteleChooseCourse(stuNumber,courseId);
     }
 
-
-    @Override
-    public List<Course> listCourses() {
-        return courseMapper.listCourses();
-    }
-
-    @Override
-    public Course findCourseById(long id) {
-        return courseMapper.getCourseById(id);
-    }
-
-    @Override
-    public List<Course> findCourseByStuNumber(long stuNumber) {
-        return studentCourseMapper.getCourseByStuNumber(stuNumber);
-    }
-
-    @Override
-    public boolean isChosen(long stuNumber, long courseId) {
-        return studentCourseMapper.queryCourseIsChosen(stuNumber, courseId);
-    }
-
     @Override
     public boolean insertCourse(Course course) {
         return courseMapper.insertCourse(course);
     }
+
 
     @Override
     public boolean updateCourse(Course course) {

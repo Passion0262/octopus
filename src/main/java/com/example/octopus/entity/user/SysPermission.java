@@ -5,17 +5,13 @@ package com.example.octopus.entity.user;
  * @date ：Created in 2021/6/1 4:03 下午
  */
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
-
-/**
- * 权限实体类
- * @author jitwxs
- * @since 2018/5/15 18:11
- */
 @Data
 public class SysPermission implements Serializable {
     static final long serialVersionUID = 1L;

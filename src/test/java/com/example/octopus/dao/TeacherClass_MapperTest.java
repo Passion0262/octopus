@@ -19,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TeacherClass_MapperTest {
 
     private static final Long TEACHER_ID = 1L;
+    private static final Long CLASS_ID = 3L;
 
     @Autowired
     TeacherClass_Mapper teacherClass_mapper;
@@ -26,10 +27,12 @@ class TeacherClass_MapperTest {
     @Test
     void listClass_idsByTeaNumber() {
         List<Long> list = teacherClass_mapper.listClass_idsByTeaNumber(TEACHER_ID);
-//        list.forEach();
+        list.forEach(System.out::println);
     }
 
     @Test
     void listTeaNumbersByClass_Id() {
+        List<Long> list = teacherClass_mapper.listTeaNumbersByClass_Id(CLASS_ID);
+        list.forEach(System.out::println);
     }
 }
