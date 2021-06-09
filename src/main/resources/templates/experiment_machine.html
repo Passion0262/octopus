@@ -12,7 +12,7 @@
     <link href="static/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" /><!-- Icons Css -->
     <link href="static/css/icons.min.css" rel="stylesheet" type="text/css" /><!-- App Css-->
     <link href="static/css/app.min.css" rel="stylesheet" type="text/css" />
-    <link href="static/js/libs/summernote/summernote-bs4.min.css"  rel="stylesheet" type="text/css" />
+    <link href="static/js/libs/summernote/summernote.css"  rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css"  href="static/js/libs/tinymce/skin.min.css">
 
     <style>
@@ -79,9 +79,9 @@
                         <h4 class="mb-4">实验任务名字</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="/index"> 人工智能实验实训平台</a></li>
-                                <li class="breadcrumb-item"><a href="/experiment_task">实验任务</a></li>
-                                <li class="breadcrumb-item active">实验机</li>
+                                <button type="button" class="btn btn-outline-dark waves-effect waves-light">实验任务</button>
+                                <span>&nbsp;&nbsp;&nbsp;</span>
+                                <button type="button" class="btn btn-outline-dark waves-effect waves-light">课程学习</button>
                             </ol>
                         </div>
                     </div>
@@ -91,9 +91,9 @@
 
                 <div class="row">
 
-                    <div class="col-md-4 " >
-                        <div class="card">
-                            <div class="card-body">
+                    <div class="col-md-4 " id="follow_machine">
+                        <div class="card" >
+                            <div class="card-body" >
                                 <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
                                     <li class="nav-item">
                                         <a class="nav-link active" data-toggle="tab" href="#txt_task" role="tab" aria-selected="true">
@@ -109,7 +109,7 @@
                                     </li>
                                 </ul>
 
-                                <div class="tab-content p-3 text-muted">
+                                <div class="tab-content p-3 text-muted" >
                                     <div class="tab-pane active" id="txt_task" role="tabpanel">
                                         <p class="mb-0">
                                         XXXXXXXXXXXXX
@@ -126,9 +126,9 @@
                     </div>
                     </div>
 
-                        <div class="col-md-8">
-                            <div class="card">
-                                <div class="card-body">
+                        <div class="col-md-8" id="machine">
+                            <div class="card" >
+                                <div class="card-body" >
 <!--                                    <p class="card-title-desc">实验机</p>-->
 
 <!--                                    <div class="embed-responsive embed-responsive-16by9" >-->
@@ -136,7 +136,7 @@
 <!--                                    </div>-->
 
                                     <div class="embed-responsive embed-responsive-16by9" >
-                                        <iframe class="embed-responsive-item" src="http://172.18.146.123:6080/#/" allowfullscreen="true" ></iframe>
+                                        <iframe class="embed-responsive-item" src="http://172.18.146.124:6081/#/" allowfullscreen="true" ></iframe>
                                     </div>
 
 
@@ -158,9 +158,17 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
+                            <div class="row">
+                                <div class="col-9">
                             <h4 class="card-title">Summernote</h4>
-
-                            <div class="summernote" style="display: none;">实验报告模板</div>
+                                </div>
+                                <div class="col-3">
+                                    <button type="button" class="btn btn-success btn-rounded waves-effect waves-light" th:onclick="">保存</button>
+                                    <button type="button" class="btn btn-success btn-rounded waves-effect waves-light" th:onclick="submit()">提交</button>
+                                </div>
+                            </div>
+                            <div class="row"></div>
+                            <div  id="summernote" ></div>
 
                         </div>
                     </div>
@@ -184,9 +192,117 @@
 <script th:src="@{static/js/libs/simplebar/simplebar.min.js}"></script>
 <script th:src="@{static/js/libs/node-waves/waves.min.js}"></script>
 <script th:src="@{static/js/app.js}"></script>
-<script th:src="@{static/js/libs/summernote/summernote-bs4.min.js}"></script>
+<script th:src="@{static/js/libs/summernote/summernote.js}"></script>
 <script th:src="@{static/js/libs/tinymce/tinymce.min.js}"></script>
 <script th:src="@{static/js/pages/form-editor.init.js}"></script>
+<script th:src="@{static/js/libs/summernote/lang/summernote-zh-CN.min.js}"></script>
+
+<script th:inline="javascript" type="text/javascript">
+    $(document).ready(function(){
+        $('#follow_machine').css("height",$('#machine').height);
+
+        $('#summernote').summernote({
+            minHeight: 300,
+            focus: false,
+            lang: 'zh-CN',
+            toolbar: [
+                ['style', ['style']],
+                ['fontname', ['fontname']],
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']], //无序列表、有序列表、段落对齐方式
+                ['height', ['height']], //行高
+                ['table',['table']], //插入表格
+                ['hr',['hr']],//插入水平线
+                ['link',['link']], //插入链接
+                ['picture',['picture']], //插入图片
+                ['fullscreen',['fullscreen']], //全屏
+                ['undo',['undo']], //撤销
+                ['redo',['redo']], //取消撤销
+                ['help',['help']], //帮助
+
+        ],
+            callbacks: {
+                //上传回调
+                onImageUpload: function (files) {
+                    var type = $(this).data('type');
+                    $.each(files, function (i, item) {
+                        sendFile(item, type);
+                    });
+                },
+                //删除回调
+                onMediaDelete: function (target) {
+                    deleteFile(target);
+                }
+            }
+
+        });
+
+
+
+    });
+
+
+
+    /**
+     * Summernote 上传图片到服务器
+     * @param {any} file 图片文件
+     * @param {string} type 图片类型，在textarea 标签 中 添加 data-type 属性 英文 小写
+     */
+    function sendFile(file, type) {
+        alert(file);
+        alert(type);
+        $.ajax({
+            data: {
+                'file':file,
+                'dir':type,
+            },
+            type: "POST",
+            url: "/sendImage",
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                if (result.success) {
+                    $(".summernote").summernote('insertImage', result.url);
+                }
+            },
+            error: function () {
+                alert('上传失败!');
+            }
+        });
+    }
+    /**
+     * Summernote 删除到服务器中的图片
+     * @param {object} target//回调参数
+     */
+
+    function deleteFile(target) {
+        var picUrl = target.attr('src');
+        $.ajax({
+            data: { },
+            type: "POST",
+            url: "/deleteImage",
+            processData: true,
+            success: function (result) {
+            },
+            error: function () {
+                alert('删除失败!');
+            }
+        });
+
+    }
+
+    function submit(){
+        var allstr = $('#summernote').summernote('code');
+        alert(allstr);
+    }
+
+
+</script>
+
 </body>
 
 </html>

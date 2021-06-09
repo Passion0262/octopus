@@ -67,7 +67,7 @@ public class studentController {
     public String showHome(Model model, HttpServletRequest request, HttpServletResponse response) {
 
         String stuNumber = SecurityContextHolder.getContext().getAuthentication().getName();
-        Student stu = userService.findStudentByStuNumber(Long.parseLong(stuNumber));
+        Student stu = userService.getStudentByStuNumber(Long.parseLong(stuNumber));
         logger.info("当前登陆用户：" + stuNumber + ":" + stu.getName());
 
         // 创建带token的cookie，token中包含用户id和name
@@ -110,7 +110,7 @@ public class studentController {
 //
 //        String stuNumber = SecurityContextHolder.getContext().getAuthentication().getName();
 //        Student stu = userService.findStudentByStuNumber(Long.parseLong(stuNumber));
-        Student stu = userService.findStudentByStuNumber(Long.parseLong(stuNum));
+        Student stu = userService.getStudentByStuNumber(Long.parseLong(stuNum));
         model.addAttribute("stu", stu);
 
         return "userinfo";
@@ -246,7 +246,7 @@ public class studentController {
 
         Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
 
-        List<Course> mycourses = courseService.listCourseByStuNumber(stuNum);
+        List<Course> mycourses = courseService.listCoursesByStuNumber(stuNum);
         logger.info("mycourses:" + mycourses);
         model.addAttribute("mycourses", mycourses);
 
@@ -294,7 +294,7 @@ public class studentController {
 
         Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         List<Experiment> allexperiments = experimentService.listChosenByStuNumber(stuNum);
-//        logger.info("allExperiment:" + allexperiments);
+        logger.info("allExperiment:" + allexperiments);
         model.addAttribute("allexperiments", allexperiments);
 
         return "experiment_task";
@@ -331,6 +331,23 @@ public class studentController {
         return "experiment_machine";
 
     }
+
+    @RequestMapping("/sendImage")
+    public String sendImag(Model model, HttpServletRequest request) {
+
+        logger.info("fileupload:" + request.getParameter("file"));
+        logger.info("fileupload:" + request.getParameter("dir"));
+        return "redirect:/experiment_machine";
+    }
+
+    @RequestMapping("/deleteImage")
+    public String deleteImag(Model model, HttpServletRequest request) {
+
+//        logger.info("fileupload:" + request.getParameter("file"));
+//        logger.info("fileupload:" + request.getParameter("dir"));
+        return "redirect:/experiment_machine";
+    }
+
 
 
     @RequestMapping("/projects")

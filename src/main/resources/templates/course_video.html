@@ -108,7 +108,16 @@
             <div class="card">
               <div class="card-body">
                 <h4 class="card-title">课程名字</h4>
+                <div class="row">
+                  <div class="col-md-9">
                 <p class="card-title-desc">小标题名字</p>
+                  </div>
+                  <div class="col-md-3">
+                    <button type="button" class="btn btn-success btn-rounded waves-effect waves-light" th:onclick="">进入实验机</button>
+
+                  </div>
+
+                </div>
                 <div class="embed-responsive embed-responsive-16by9">
                   <iframe class="embed-responsive-item" src="http://vjs.zencdn.net/v/oceans.mp4" allowfullscreen="true"></iframe></div>
 
@@ -179,10 +188,10 @@
                     </div>
                   </div>
 
-                  <div class="categories-group-card">
-                    <a href="" class="categories-group-list collapsed" data-toggle="collapse" aria-expanded="false" >
-                      <i class="font-size-16 align-middle mr-2"></i><a style="text-decoration: none;" th:href="'/experiment_task_detail/'+${id}">课程实验任务</a></a>
-                  </div>
+<!--                  <div class="categories-group-card">-->
+<!--                    <a href="" class="categories-group-list collapsed" data-toggle="collapse" aria-expanded="false" >-->
+<!--                      <i class="font-size-16 align-middle mr-2"></i><a style="text-decoration: none;" th:href="'/experiment_task_detail/'+${id}">课程实验任务</a></a>-->
+<!--                  </div>-->
 
 
                  </div>
@@ -246,6 +255,16 @@
 <script src="../../static/js/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
 <!--    <script src="static/js/pages/dashboard.init.js"></script>-->
 <script src="../../static/js/app.js"></script>
+
+
+<script th:inline="javascript" type="text/javascript">
+
+
+</script>
+
+
+
+
 </body>
 
 </html>
