@@ -48,7 +48,7 @@ class CourseServiceImplTest {
 
     @Test
     void listCourseByStuNumber() {
-        List<Course> list = courseService.listCourseByStuNumber(1L);
+        List<Course> list = courseService.listCoursesByStuNumber(1L);
         list.forEach(System.out::println);
     }
 

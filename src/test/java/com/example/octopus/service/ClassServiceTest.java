@@ -30,11 +30,11 @@ class ClassServiceTest {
     void getClass_Byid() {
     }
 
-    @Test
-    void listClass_sByTeaNumber() {
-        List<Class_> list = classService.listClass_sByTeaNumber(1L);
-        list.forEach(System.out::println);
-    }
+//    @Test
+//    void listClass_sByTeaNumber() {
+//        List<Class_> list = classService.listClass_sByTeaNumber(1L);
+//        list.forEach(System.out::println);
+//    }
 
     @Test
     void deleteByClassName() {

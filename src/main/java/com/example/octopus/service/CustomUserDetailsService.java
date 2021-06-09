@@ -36,7 +36,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         // 从数据库中取出用户信息
-        Student user = userService.findStudentByStuNumber(Long.parseLong(username));
+        Student user = userService.getStudentByStuNumber(Long.parseLong(username));
 
         // 判断用户是否存在
         if(user == null) {

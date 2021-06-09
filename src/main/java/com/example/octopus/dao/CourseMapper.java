@@ -2,6 +2,7 @@ package com.example.octopus.dao;
 
 import com.example.octopus.entity.user.Course;
 import com.example.octopus.entity.user.Student;
+import com.example.octopus.entity.user.StudentCourse;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -46,8 +47,6 @@ public interface CourseMapper {
      */
     @Update("Update course SET course_name = #{courseName},teacher=#{teacher},classification=#{classification},description=#{description},image_path=#{imagePath},experiment_mission_id=#{experimentMissionId},start_time=#{startTime},end_time=#{endTime},apply_time=#{applyTime},num_allowed=#{numAllowed},num_participated=#{numParticipated},status=#{status} WHERE id = #{id}")
     boolean updateCourse(Course course);
-
-//    boolean chooseCourse()
 
     /**
      * 根据courseid删除课程

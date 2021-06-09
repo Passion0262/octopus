@@ -1,6 +1,8 @@
 package com.example.octopus.service;
 
 import com.example.octopus.entity.user.Course;
+import com.example.octopus.entity.user.Student;
+import com.example.octopus.entity.user.StudentCourse;
 
 import java.util.List;
 
@@ -12,12 +14,6 @@ import java.util.List;
 public interface CourseService {
 
     /**
-     * 查询所有的课程
-     * @return  返回所有课程实体
-     */
-    List<Course> listCourses();
-
-    /**
      * 根据课程id查询课程
      * @param id 课程id
      * @return 课程实体
@@ -25,11 +21,24 @@ public interface CourseService {
     Course getCourseById(long id);
 
     /**
+     * 查询所有的课程
+     * @return  返回所有课程实体
+     */
+    List<Course> listCourses();
+
+    /**
      * 根据学生学号查询该学生选的课
      * @param stuNumber 学号
      * @return 课程list
      */
-    List<Course> listCourseByStuNumber(long stuNumber);
+    List<Course> listCoursesByStuNumber(long stuNumber);
+
+    /**
+     * 根据教师编号查询该教师教授的课程list
+     * @param teaNumber 教师编号
+     * @return courseList
+     */
+    List<Course> listCoursesByTeaNumber(long teaNumber);
 
     /**
      * 查询学生是否选某一门课
@@ -75,6 +84,5 @@ public interface CourseService {
      * @return 成功为true，失败为false
      */
     boolean deleteCourseById(long courseid);
-
 
 }

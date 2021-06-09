@@ -2,7 +2,11 @@ package com.example.octopus.service.impl;
 
 import com.example.octopus.dao.CourseMapper;
 import com.example.octopus.dao.StudentCourseMapper;
+import com.example.octopus.dao.TeacherCourseMapper;
+import com.example.octopus.dao.UserMapper;
 import com.example.octopus.entity.user.Course;
+import com.example.octopus.entity.user.Student;
+import com.example.octopus.entity.user.StudentCourse;
 import com.example.octopus.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,12 +26,13 @@ public class CourseServiceImpl implements CourseService {
     CourseMapper courseMapper;
 
     @Autowired
+    UserMapper userMapper;
+
+    @Autowired
     StudentCourseMapper studentCourseMapper;
 
-    @Override
-    public List<Course> listCourses() {
-        return courseMapper.listCourses();
-    }
+    @Autowired
+    TeacherCourseMapper teacherCourseMapper;
 
     @Override
     public Course getCourseById(long id) {
@@ -35,9 +40,24 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> listCourseByStuNumber(long stuNumber) {
+    public List<Course> listCourses() {
+        return courseMapper.listCourses();
+    }
+
+    @Override
+    public List<Course> listCoursesByStuNumber(long stuNumber) {
         List<Course> courseList = new ArrayList<>();
         List<Long> courseIdList =  studentCourseMapper.listCourseIdsByStuNumber(stuNumber);
+        for (long id:courseIdList){
+            courseList.add(courseMapper.getCourseById(id));
+        }
+        return courseList;
+    }
+
+    @Override
+    public List<Course> listCoursesByTeaNumber(long teaNumber) {
+        List<Course> courseList = new ArrayList<>();
+        List<Long> courseIdList = teacherCourseMapper.listCourseIdsByTeaNumber(teaNumber);
         for (long id:courseIdList){
             courseList.add(courseMapper.getCourseById(id));
         }

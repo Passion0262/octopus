@@ -1,9 +1,7 @@
 package com.example.octopus.dao;
 
 import com.example.octopus.entity.user.Student;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -26,6 +24,12 @@ public interface UserMapper {
     @Select("SELECT * FROM student WHERE stu_number = #{stuNumber} and password = #{password}")
     Student getStudentByStuNumberAndPassword(long stuNumber, String password);
 
+    @Insert("INSERT INTO student (stu_number,name,password,major,class_name,phone_number,login_number,last_login_time,study_time) VALUES (#{stuNumber},#{name},#{password},#{major},#{className},#{phoneNumber},0,CURRENT_TIMESTAMP,0)")
+    boolean insertStudent(Student student);
+
+    @Update("UPDATE student SET name=#{name},password=#{password},major=#{major},class_name=#{className},phone_number=#{phoneNumber},login_number=#{loginNumber},last_login_time=#{lastLoginTime},study_time=#{studyTime} WHERE stu_number=#{stuNumber}")
+    boolean updateStudent(Student student);
+
     @Update("UPDATE student SET login_number = login_number+1, last_login_time = CURRENT_TIMESTAMP where stu_number = #{stuNumber}")
     boolean updateLoginInfoByStuNumber(long stuNumber);
 
@@ -34,5 +38,8 @@ public interface UserMapper {
 
     @Update("UPDATE student SET phone_number = #{phoneNumber} WHERE stu_number = #{stuNumber}")
     boolean updatePhoneByStuNumber(long stuNumber, String phoneNumber);
+
+    @Delete("DELETE FROM student WHERE stu_number=#{stuNumber}")
+    boolean deleteByStuNumber(long stuNumber);
 
 }

@@ -1,7 +1,7 @@
 package com.example.octopus.service.impl;
 
 import com.example.octopus.dao.ClassMapper;
-import com.example.octopus.dao.TeacherClass_Mapper;
+import com.example.octopus.dao.TeacherCourseMapper;
 import com.example.octopus.entity.user.Class_;
 import com.example.octopus.service.ClassService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class ClassServiceImpl implements ClassService {
     ClassMapper classMapper;
 
     @Autowired
-    TeacherClass_Mapper teacherClass_mapper;
+    TeacherCourseMapper teacherCourse_mapper;
 
     @Override
     public boolean insertClass(Class_ class_) {
@@ -36,16 +36,6 @@ public class ClassServiceImpl implements ClassService {
     @Override
     public Class_ getClass_Byid(long classId) {
         return classMapper.getById(classId);
-    }
-
-    @Override
-    public List<Class_> listClass_sByTeaNumber(long teaNumber) {
-        List<Class_> classList = new ArrayList<>();
-        List<Long> classIdList = teacherClass_mapper.listClass_idsByTeaNumber(teaNumber);
-        for (long classId:classIdList) {
-            classList.add(classMapper.getById(classId));
-        }
-        return classList;
     }
 
     @Override

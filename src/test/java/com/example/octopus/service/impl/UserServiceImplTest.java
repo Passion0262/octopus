@@ -29,13 +29,13 @@ class UserServiceImplTest {
 
     @Test
     void getStudentList() {
-        List<Student> list = userService.getStudentList();
+        List<Student> list = userService.listStudents();
         assertEquals(2, list.size());
     }
 
     @Test
     void findStudentById() {
-        Student stu = userService.findStudentByStuNumber(stuNumber);
+        Student stu = userService.getStudentByStuNumber(stuNumber);
         assertEquals("admin", stu.getName());
     }
 

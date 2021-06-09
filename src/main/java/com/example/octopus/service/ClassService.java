@@ -20,7 +20,7 @@ public interface ClassService {
     boolean insertClass(Class_ class_);
 
     /**
-     * 找到所有课程
+     * 查询所有课程
      * @return class实体list
      */
     List<Class_> listClass_s();
@@ -31,13 +31,6 @@ public interface ClassService {
      * @return 返回class_实体
      */
     Class_ getClass_Byid(long classId);
-
-    /**
-     * 根据教师编号查询所有该教师教授的课程
-     * @param teaNumber 教师编号
-     * @return class实体 list
-     */
-    List<Class_> listClass_sByTeaNumber(long teaNumber);
 
     /**
      * 根据className删除班级

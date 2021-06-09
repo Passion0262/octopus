@@ -33,7 +33,7 @@ public interface ExperimentMapper {
      * @param stuNumber 学生学号
      * @return experiment list
      */
-    @Select("SELECT experiment_mission_id FROM student_course WHERE stu_number = #{stuNumber}")
+    @Select("SELECT experiment_mission_id FROM course_experiment WHERE stu_number = #{stuNumber}")
     List<Long> listChosenExperiments(long stuNumber);
 
 }
