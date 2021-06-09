@@ -67,13 +67,20 @@
                                                 <input name="creator" th:value="${classmodel.username}" id="add_creator" class="form-control" type="text" style="border:none;" readonly>
                                             </div>
                                         </div>
-                                        <div class="form-group row">
-                                            <label for="add_createTime" class="col-md-2 col-form-label">创建时间：</label>
-                                            <div class="col-md-10">
-                                                <input class="form-control" type="text" th:value="*{createTime}" id="add_createTime" style="border:none;" readonly>
-                                            </div>
+<!--                                        <div class="form-group row">-->
+<!--                                            <label for="add_createTime" class="col-md-2 col-form-label">创建时间：</label>-->
+<!--                                            <div class="col-md-10">-->
+<!--                                                <input class="form-control" type="text" th:value="*{createTime}" id="add_createTime" style="border:none;" readonly>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+                                        <div class="row" style="display: block;text-align: center;">
+                                            <a href="admin_class" class="btn btn-light btn-rounded waves-effect waves-light">
+                                                <i class="ri-close-line align-middle mr-2"></i>取消
+                                            </a>
+                                            <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light" style="margin: 20px;">
+                                                <i class="ri-check-line align-middle mr-2"></i>提交
+                                            </button>
                                         </div>
-                                        <button type="submit" class="btn btn-primary waves-effect waves-light" style="display:block;margin:0 auto">提交</button>
                                     </form>
                                 </div>
                             </div>
@@ -133,17 +140,16 @@
     <script src="static/js/app.js"></script>
 
     <script type="text/javascript" th:inline="javascript">
-        window.onload = function() {
-            var oTime = document.getElementById("add_createTime");
-            setInterval(function() {
-                var time = new Date();  // 程序计时的月从0开始取值后+1
-                var m = time.getMonth() + 1;
-                var t = time.getFullYear() + "-" + m + "-"
-                    + time.getDate() + " " + time.getHours() + ":"
-                    + time.getMinutes() + ":" + time.getSeconds();
-                oTime.value = t;
-            }, 1000);
-        };
+        // window.onload = function() {
+        //     var oTime = document.getElementById("add_createTime");
+        //     setInterval(function() {
+        //         var time = new Date();  // 程序计时的月从0开始取值后+1
+        //         var m = time.getMonth() + 1;
+        //         var t = time.getFullYear() + "-" + m + "-"
+        //             + time.getDate();
+        //         oTime.value = t;
+        //     }, 1000);
+        // };
     </script>
 
 

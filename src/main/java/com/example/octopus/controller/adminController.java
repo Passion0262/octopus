@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.example.octopus.entity.user.*;
 import com.example.octopus.service.*;
 import com.example.octopus.utils.UploadFileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,18 +22,25 @@ import java.util.UUID;
 
 @Controller
 public class adminController {
+    
+    private Logger logger = LoggerFactory.getLogger(adminController.class);
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     MajorService majorService;
 
     @Autowired
-    UserService userService;
+    ClassService classService;
 
     @Autowired
     CourseService courseService;
 
     @Autowired
     DatasetService datasetService;
+    
+    
 
 
     //登录
@@ -44,8 +53,8 @@ public class adminController {
     //登录验证 跳转到首页
     @PostMapping("/admin_confirmlogin")
     public String admin_confirmlogin(@RequestParam("username") String username, @RequestParam("userpwd") String userpwd, HttpSession session) {
-        System.out.println("用户名：" + username);
-        System.out.println("密码：" + userpwd);
+        logger.info("用户名：" + username);
+        logger.info("密码：" + userpwd);
         session.setAttribute("user",username);
         return "redirect:/admin_index";
     }
@@ -57,10 +66,10 @@ public class adminController {
         String email = request.getParameter("email");
         String phonenumber = request.getParameter("phonenumber");
         String new_pwd = request.getParameter("new_pwd");
-        System.out.println("用户名：" + username);
-        System.out.println("邮箱：" + email);
-        System.out.println("手机号码：" + phonenumber);
-        System.out.println("新密码：" + new_pwd);
+        logger.info("用户名：" + username);
+        logger.info("邮箱：" + email);
+        logger.info("手机号码：" + phonenumber);
+        logger.info("新密码：" + new_pwd);
         //重置密码
         return "admin_reset_pwd";
     }
@@ -76,9 +85,9 @@ public class adminController {
     public String confirmlogin(HttpServletRequest request, Model model) {
         try{
             HttpSession session = request.getSession();
-            //System.out.println(session);
+            //logger.info(session);
             String username = (String)session.getAttribute("user");
-            //System.out.println("用户名：" + username);
+            //logger.info("用户名：" + username);
             model.addAttribute("username", username);
             return "admin_index";
         }
@@ -100,14 +109,10 @@ public class adminController {
     //专业管理
     @RequestMapping("/admin_major")
     public String admin_major(HttpServletRequest request, Model model) {
-        System.out.println("进入专业管理");
+        logger.info("进入专业管理");
         //判断用户是管理员还是老师
         HttpSession session = request.getSession();
         String username = (String)session.getAttribute("user");
-        //根据身份显示信息
-        //管理员显示全部专业
-        //老师显示自己教的专业
-        //System.out.println(majorService.findAllMajor());
         model.addAttribute("majors", majorService.listMajors());
         model.addAttribute("username", username);
         return "admin_major";
@@ -116,7 +121,7 @@ public class adminController {
     //增加专业
     @GetMapping("/admin_major_add")
     public ModelAndView admin_major_add(HttpServletRequest request, Model model){
-        System.out.println("进入admin_major_add，获取一个新Major()");
+        logger.info("进入admin_major_add，获取一个新Major()");
         String user = request.getParameter("username");
         model.addAttribute("username", user);
         model.addAttribute("major",new Major());
@@ -125,8 +130,7 @@ public class adminController {
 
     @PostMapping("/add_major")
     public ModelAndView add_major(Major major){
-        System.out.println("提交新增的major");
-        System.out.println(major);
+        logger.info("提交新增的major: [{}]", major);
         majorService.insertMajor(major);
         return new ModelAndView("redirect:/admin_major");
     }
@@ -134,20 +138,18 @@ public class adminController {
     //修改专业
     @GetMapping("/admin_major_edit")
     public ModelAndView admin_major_edit(HttpServletRequest request, Model model){
-        System.out.println("进入admin_major_edit，获取指定编号的Major()");
+        logger.info("进入admin_major_edit，获取指定编号的Major()");
         long id = Long.parseLong(request.getParameter("id"));
-        System.out.println("id="+id);
+        logger.info("id="+id);
         String user = request.getParameter("username");
         model.addAttribute("username", user);
-        model.addAttribute("major", new Major());
+        model.addAttribute("major", majorService.getById(id));
         return new ModelAndView("admin_major_edit","majormodel", model);
     }
 
     @PostMapping("/edit_major")
     public ModelAndView edit_major(Major major){
-        System.out.println("提交修改的major");
-        System.out.println(major);
-        //更新major
+        logger.info("提交修改的major: [{}]", major);
         majorService.updateMajor(major);
         return new ModelAndView("redirect:/admin_major");
     }
@@ -156,8 +158,7 @@ public class adminController {
     @RequestMapping("/admin_major_delete")
     public ModelAndView admin_major_delete(HttpServletRequest request){
         long id = Long.parseLong(request.getParameter("id"));
-        System.out.println(id);
-        System.out.println("删除专业 id="+id);
+        logger.info("删除专业 id=[{}]", id);
         majorService.deleteById(id);
         return new ModelAndView("redirect:/admin_major");
     }
@@ -165,20 +166,18 @@ public class adminController {
     //班级管理
     @RequestMapping("/admin_class")
     public String admin_class(HttpServletRequest request, Model model) {
-        System.out.println("进入班级管理");
+        logger.info("进入班级管理");
         HttpSession session = request.getSession();
         String username = (String)session.getAttribute("user");
         model.addAttribute("username", username);
-        //判断身份
-        //管理员返回所有班级
-        //老师只返回自己教的班级
+        model.addAttribute("classes", classService.listClass_s());
         return "admin_class";
     }
 
     //增加班级
     @GetMapping("/admin_class_add")
     public ModelAndView admin_class_add(HttpServletRequest request, Model model){
-        System.out.println("进入admin_major_add，获取一个新Class_()");
+        logger.info("进入admin_major_add，获取一个新Class_()");
         String user = request.getParameter("username");
         model.addAttribute("username", user);
         model.addAttribute("class",new Class_());
@@ -187,30 +186,27 @@ public class adminController {
 
     @PostMapping("/add_class")
     public ModelAndView add_class(Class_ class_){
-        System.out.println("提交新增的class_");
-        System.out.println(class_);
-        //studentService.增加班级
+        logger.info("提交新增的class_: [{}]", class_);
+        classService.insertClass(class_);
         return new ModelAndView("redirect:/admin_class");
     }
 
     //修改班级
     @GetMapping("/admin_class_edit")
     public ModelAndView admin_class_edit(HttpServletRequest request, Model model){
-        System.out.println("admin_class_edit，获取指定名字的Class_()");
-        String className = request.getParameter("className");
-        System.out.println("className="+className);
+        logger.info("admin_class_edit，获取指定id的Class_()");
+        long id = Long.parseLong(request.getParameter("id"));
+        logger.info("class id="+id);
         String user = request.getParameter("username");
-        //根据className查询班级信息
         model.addAttribute("username", user);
-        model.addAttribute("class",new Class_());
+        model.addAttribute("class", classService.getClass_Byid(id));
         return new ModelAndView("admin_class_edit","classmodel",model);
     }
 
     @PostMapping("/edit_class")
     public ModelAndView edit_class(Class_ class_){
-        System.out.println("提交修改的class");
-        System.out.println(class_);
-        //修改班级信息
+        logger.info("提交修改的class_: [{}]", class_);
+        //修改
         return new ModelAndView("redirect:/admin_class");
     }
 
@@ -218,19 +214,19 @@ public class adminController {
     @RequestMapping("/admin_class_delete")
     public ModelAndView admin_class_delete(HttpServletRequest request){
         String className = request.getParameter("className");
-        System.out.println("删除 className="+className);
-        //删除班级
+        logger.info("删除 className="+className);
+        classService.deleteByClassName(className);
         return new ModelAndView("redirect:/admin_class");
     }
 
     //学生管理
     @RequestMapping("/admin_student")
     public String admin_student(HttpServletRequest request, Model model) {
-        System.out.println("进入学生管理");
+        logger.info("进入学生管理");
         HttpSession session = request.getSession();
         String username = (String)session.getAttribute("user");
         model.addAttribute("username", username);
-        model.addAttribute("students", userService.getStudentList());
+        model.addAttribute("students", userService.listStudents());
         //判断身份
         //管理员返回所有学生
         //老师只返回自己教的学生
@@ -240,7 +236,7 @@ public class adminController {
     //增加学生
     @GetMapping("/admin_student_add")
     public ModelAndView admin_student_add(HttpServletRequest request, Model model){
-        System.out.println("进入admin_student_add，获取一个新Student()");
+        logger.info("进入admin_student_add，获取一个新Student()");
         String user = request.getParameter("username");
         model.addAttribute("username", user);
         model.addAttribute("student",new Student());
@@ -249,8 +245,7 @@ public class adminController {
 
     @PostMapping("/add_student")
     public ModelAndView add_student(Student student){
-        System.out.println("提交新增的student");
-        System.out.println(student);
+        logger.info("提交新增的student: [{}]", student);
         //补全最近登录时间 登录总时长信息
         //userService.增加学生
         return new ModelAndView("redirect:/admin_student");
@@ -259,11 +254,11 @@ public class adminController {
     //修改学生
     @GetMapping("/admin_student_edit")
     public ModelAndView admin_student_edit(HttpServletRequest request, Model model){
-        System.out.println("admin_student_edit，获取指定名字的Student()");
+        logger.info("admin_student_edit，获取指定名字的Student()");
         long stuNumber = Long.parseLong(request.getParameter("stuNumber"));
-        System.out.println("stuNumber="+stuNumber);
+        logger.info("stuNumber="+stuNumber);
         String user = request.getParameter("username");
-        Student student = userService.findStudentByStuNumber(stuNumber);
+        Student student = userService.getStudentByStuNumber(stuNumber);
         model.addAttribute("username", user);
         model.addAttribute("student",student);
         return new ModelAndView("admin_student_edit","stumodel",model);
@@ -271,8 +266,7 @@ public class adminController {
 
     @PostMapping("/edit_student")
     public ModelAndView edit_student(Student student){
-        System.out.println("提交修改的student");
-        System.out.println(student);
+        logger.info("提交修改的student: [{}]", student);
         //修改学生信息
         return new ModelAndView("redirect:/admin_student");
     }
@@ -281,7 +275,7 @@ public class adminController {
     @RequestMapping("/admin_student_delete")
     public ModelAndView admin_student_delete(HttpServletRequest request){
         String stuNumber = request.getParameter("stuNumber");
-        System.out.println("删除 stuNumber="+stuNumber);
+        logger.info("删除 stuNumber="+stuNumber);
         //删除学生
         return new ModelAndView("redirect:/admin_student");
     }
@@ -289,7 +283,7 @@ public class adminController {
     //开课计划管理
     @RequestMapping("/admin_course")
     public String admin_course(HttpServletRequest request,Model model) {
-        System.out.println("进入开课计划管理");
+        logger.info("进入开课计划管理");
         HttpSession session = request.getSession();
         String username = (String)session.getAttribute("user");
         //model.addAttribute("username", "李四");
@@ -300,7 +294,7 @@ public class adminController {
     //课程增加
     @GetMapping("/admin_course_add")
     public ModelAndView admin_course_add(HttpServletRequest request, Model model){
-        System.out.println("进入admin_course_add，获取一个新Course()");
+        logger.info("进入admin_course_add，获取一个新Course()");
         String user = request.getParameter("username");
         model.addAttribute("username", user);
         model.addAttribute("course",new Course());
@@ -309,8 +303,7 @@ public class adminController {
 
     @PostMapping("/add_course")
     public ModelAndView add_course(Course course){
-        System.out.println("提交新增的course");
-        System.out.println(course);
+        logger.info("提交新增的course: [{}]", course);
         courseService.insertCourse(course);
         return new ModelAndView("redirect:/admin_course");
     }
@@ -318,9 +311,9 @@ public class adminController {
     //修改课程
     @GetMapping("/admin_course_edit")
     public ModelAndView admin_course_edit(HttpServletRequest request, Model model){
-        System.out.println("进入admin_course_edit，获取指定名字的Course()");
+        logger.info("进入admin_course_edit，获取指定名字的Course()");
         long courseId = Long.parseLong(request.getParameter("courseId"));
-        System.out.println("courseId="+courseId);
+        logger.info("courseId="+courseId);
         String user = request.getParameter("username");
         model.addAttribute("username", user);
         model.addAttribute("course", courseService.getCourseById(courseId));
@@ -329,8 +322,7 @@ public class adminController {
 
     @PostMapping("/edit_course")
     public ModelAndView edit_course(Course course){
-        System.out.println("提交修改的course");
-        System.out.println(course);
+        logger.info("提交修改的course: [{}]", course);
         courseService.updateCourse(course);
         return new ModelAndView("redirect:/admin_course");
     }
@@ -339,7 +331,7 @@ public class adminController {
     @RequestMapping("/admin_course_delete")
     public ModelAndView admin_course_delete(HttpServletRequest request){
         long courseId = Long.parseLong(request.getParameter("courseId"));
-        System.out.println("删除 courseId="+courseId);
+        logger.info("删除 courseId="+courseId);
         courseService.deleteCourseById(courseId);
         return new ModelAndView("redirect:/admin_course");
     }
@@ -347,7 +339,7 @@ public class adminController {
     //学生开课计划管理
     @RequestMapping("/admin_course_student")
     public String admin_course_student(Model model) {
-        System.out.println("进入学生开课计划管理");
+        logger.info("进入学生开课计划管理");
         //model.addAttribute("username", "李四");
         //返回
         //model.addAttribute("course_students", );
@@ -357,7 +349,7 @@ public class adminController {
     //学生开课计划增加
     @GetMapping("/admin_course_student_add")
     public ModelAndView admin_course_student_add(HttpServletRequest request, Model model){
-        System.out.println("进入admin_course_student_add，Student_Course()");
+        logger.info("进入admin_course_student_add，Student_Course()");
         String user = request.getParameter("username");
         model.addAttribute("username", user);
         model.addAttribute("course_student",new StudentCourse());
@@ -366,8 +358,7 @@ public class adminController {
 
     @PostMapping("/add_course_student")
     public ModelAndView add_course_student(StudentCourse course_student){
-        System.out.println("提交新增的course_student");
-        System.out.println(course_student);
+        logger.info("提交新增的course_student: [{}]", course_student);
         //增加
         return new ModelAndView("redirect:/admin_course_student");
     }
@@ -375,9 +366,9 @@ public class adminController {
     //修改学生开课计划
     @GetMapping("/admin_course_student_edit")
     public ModelAndView admin_course_student_edit(HttpServletRequest request, Model model){
-        System.out.println("进入admin_course_student_edit，获取指定名字的Student_Course()");
+        logger.info("进入admin_course_student_edit，获取指定名字的Student_Course()");
         long id = Long.parseLong(request.getParameter("id"));
-        System.out.println("id="+id);
+        logger.info("id="+id);
         String user = request.getParameter("username");
         //查找对应数据
         model.addAttribute("username", user);
@@ -387,8 +378,7 @@ public class adminController {
 
     @PostMapping("/edit_course_student")
     public ModelAndView edit_course_student(StudentCourse course_student){
-        System.out.println("提交修改的course_student");
-        System.out.println(course_student);
+        logger.info("提交修改的course_student: [{}]", course_student);
         //修改学生开课计划
         return new ModelAndView("redirect:/admin_course_student");
     }
@@ -397,7 +387,7 @@ public class adminController {
     @RequestMapping("/admin_course_student_delete")
     public ModelAndView admin_course_student_delete(HttpServletRequest request){
         long courseId = Long.parseLong(request.getParameter("id"));
-        System.out.println("删除 courseId="+courseId);
+        logger.info("删除 courseId="+courseId);
         //删除
         return new ModelAndView("redirect:/admin_course_student");
     }
@@ -418,6 +408,13 @@ public class adminController {
     public String admin_report(Model model) {
         model.addAttribute("username", "李四");
         return "admin_report";
+    }
+
+    @RequestMapping("/admin_report_detail")
+    public String admin_report_detail(Model model) {
+        model.addAttribute("username", "李四");
+        model.addAttribute("pdf", "https://arxiv.org/pdf/1508.01006v1.pdf");
+        return "admin_report_detail";
     }
 
     @RequestMapping("/admin_experiment_log")
@@ -486,7 +483,7 @@ public class adminController {
 //            dict.put("admin_userinfo", "\\course");
             String target_dir = "";
             String url = request.getHeader("Referer");
-            //System.out.println("提交post请求的url:" + url);
+            //logger.info("提交post请求的url:" + url);
             if(url.contains("admin_course")){
                 target_dir = "course";
             }
@@ -525,8 +522,9 @@ public class adminController {
 
 //        JSON.toJSONString(root,SerializerFeature.DisableCircularReferenceDetect);
         String root_json= JSON.toJSONString(root);
-        System.out.println(root_json);
+        logger.info(root_json);
         return root;
     }
+
 
 }

@@ -105,7 +105,9 @@
                                                     <td th:text="${course.applyTime}"></td>
                                                     <td th:text="${course.numAllowed}"></td>
                                                     <td th:text="${course.numParticipated}"></td>
-                                                    <td th:text="${course.status}"></td>
+                                                    <td>
+                                                        <div th:text="${course.status}" th:class="${course.status=='有效'?'badge badge-soft-success':'badge badge-soft-warning'}" style="font-size: 13px"></div>
+                                                    </td>
                                                 </tr>
                                                 </tbody>
                                             </table>
@@ -120,29 +122,8 @@
                             </div>
                         </div>
 
-                        <!-- modal -->
-                        <div id="img_modal" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title mt-0">课程图标</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body" id="modal-body" style="display: flex;justify-content:space-around;">
-<!--                                        <img id="show_img" th:src="${img_path}" />-->
-                                    </div>
-                                </div>
-                                <!-- /.modal-content -->
-                            </div>
-                            <!-- /.modal-dialog -->
-                        </div>
-                        <!-- /.modal -->
-
 
                     </div>
-
                 </div>
                 <!-- container-fluid -->
 

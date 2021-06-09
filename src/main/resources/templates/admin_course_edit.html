@@ -121,7 +121,14 @@
 <!--                          <input name="status" th:value="*{status}" id="edit_status" class="form-control" type="text">-->
                         </div>
                       </div>
-                      <button type="button" onclick="uploadImg()" class="btn btn-primary waves-effect waves-light" style="display:block;margin:0 auto">提交</button>
+                        <div class="row" style="display: block;text-align: center;">
+                            <a href="admin_course" class="btn btn-light btn-rounded waves-effect waves-light">
+                                <i class="ri-close-line align-middle mr-2"></i>取消
+                            </a>
+                            <button type="button" onclick="uploadImg()" class="btn btn-success btn-rounded waves-effect waves-light" style="margin: 20px;">
+                                <i class="ri-check-line align-middle mr-2"></i>提交
+                            </button>
+                        </div>
                     </form>
                   </div>
                 </div>
