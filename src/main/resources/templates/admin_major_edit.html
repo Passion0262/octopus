@@ -70,16 +70,23 @@
                                         <div class="form-group row">
                                             <label for="edit_create_user" class="col-md-2 col-form-label">创建人员：</label>
                                             <div class="col-md-10">
-                                                <input name="creator" th:value="${majormodel.username}" id="edit_create_user" class="form-control" type="text" readonly style="border:none;">
+                                                <input name="creator" th:value="*{creator}" id="edit_create_user" class="form-control" type="text" readonly style="border:none;">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="edit_create_time" class="col-md-2 col-form-label">创建时间：</label>
                                             <div class="col-md-10">
-                                                <input name="createTime" value="" id="edit_create_time" class="form-control" type="text" readonly style="border:none;">
+                                                <input name="createTime" th:value="*{createTime}" id="edit_create_time" class="form-control" type="text" readonly style="border:none;">
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-primary waves-effect waves-light" style="display:block;margin:0 auto">提交</button>
+                                        <div class="row" style="display: block;text-align: center;">
+                                            <a href="admin_major" class="btn btn-light btn-rounded waves-effect waves-light">
+                                                <i class="ri-close-line align-middle mr-2"></i>取消
+                                            </a>
+                                            <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light" style="margin: 20px;">
+                                                <i class="ri-check-line align-middle mr-2"></i>提交
+                                            </button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>

@@ -48,7 +48,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <form class="needs-validation" action="/edit_class" method="post" th:object="${classmodel.student}" novalidate="" style="padding-left: 20px;">
+                                    <form class="needs-validation" action="/edit_class" method="post" th:object="${classmodel.class}" novalidate="" style="padding-left: 20px;">
                                         <div class="form-group row">
                                             <label for="edit_className" class="col-md-2 col-form-label">班级名称：</label>
                                             <div class="col-md-10">
@@ -64,7 +64,7 @@
                                         <div class="form-group row">
                                             <label for="edit_creator" class="col-md-2 col-form-label">创建人员：</label>
                                             <div class="col-md-10">
-                                                <input name="creator" th:value="*{classmodel.creator}" id="edit_creator" class="form-control" type="text" style="border:none;" readonly>
+                                                <input name="creator" th:value="*{creator}" id="edit_creator" class="form-control" type="text" style="border:none;" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -73,7 +73,15 @@
                                                 <input class="form-control" type="text" th:value="*{createTime}" id="edit_createTime" style="border:none;" readonly>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-primary waves-effect waves-light" style="display:block;margin:0 auto">提交</button>
+
+                                        <div class="row" style="display: block;text-align: center;">
+                                            <a href="admin_class" class="btn btn-light btn-rounded waves-effect waves-light">
+                                                <i class="ri-close-line align-middle mr-2"></i>取消
+                                            </a>
+                                            <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light" style="margin: 20px;">
+                                                <i class="ri-check-line align-middle mr-2"></i>提交
+                                            </button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>

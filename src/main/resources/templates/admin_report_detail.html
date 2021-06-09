@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>人工智能实验实训平台-后台管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="static/images/favicon.png" />
+    <!-- Bootstrap Css -->
+    <link href="static/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <!-- Icons css -->
+    <link href="static/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="static/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+    <!-- Ion-rangeslider css -->
+    <link href="static/js/libs/ion-rangeslider/css/ion.rangeSlider.min.css" rel="stylesheet" type="text/css" />
+
+
+    <style type="text/css">
+        iframe {
+            height: 600px;
+            width: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body data-sidebar="light">
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+        <div th:replace="commons::topbar(${username})"></div>
+        <div th:replace="commons::leftSidebar"></div>
+
+        <!-- ========== Main Content Start ========== -->
+        <div class="main-content">
+            <div class="page-content">
+                <div class="container-fluid">
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-flex align-items-center justify-content-between">
+                                <h4 class="mb-0">报告审阅</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+
+                    <div class="row">
+                        <div class="card" style="width:100%;margin-bottom: 10px;">
+                            <div class="card-body" style="padding: 8px;">
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <iframe id="previewpdf" th:src="'static/js/pdf/web/viewer.html?file='+${pdf}"></iframe>
+                                    </div>
+                                    <div class="col-md-3" style="padding-top: 50px;padding-left: 30px;">
+                                        <div class="row">
+                                            <p th:text="'姓名：'+${stuName}" style="display: flex;align-items: center;margin-bottom: 20px; margin-top: 20px;"></p>
+                                        </div>
+                                        <div class="row">
+                                            <p th:text="'所属任务：'" style="display: flex;align-items: center;margin-bottom: 20px; margin-top: 20px;"></p>
+                                        </div>
+                                        <div class="row">
+                                            <p th:text="'报告来源：'" style="display: flex;align-items: center;margin-bottom: 20px; margin-top: 20px;"></p>
+                                        </div>
+                                        <div class="row">
+                                            <p th:text="'提交时间：'" style="display: flex;align-items: center;margin-bottom: 20px; margin-top: 20px;"></p>
+                                        </div>
+                                        <div class="row">
+                                            <p th:text="'得分：'" style="display: flex;align-items: center;margin-bottom: 20px; margin-top: 20px;"></p>
+                                        </div>
+                                        <div class="col-md-14">
+                                            <input type="text" id="score" name="score">
+                                        </div>
+                                        <div class="row">
+                                            <p th:text="'审核老师：'" style="display: flex;align-items: center;margin-bottom: 20px; margin-top: 20px;"></p>
+                                        </div>
+                                        <div class="row" style="display: block;text-align: center;margin-top: 30px;">
+                                            <a href="admin_report" class="btn btn-light btn-rounded waves-effect waves-light" style="margin: 10px;">
+                                                <i class="ri-close-line align-middle mr-2"></i>取消
+                                            </a>
+                                            <button onclick="getScore()" type="submit" class="btn btn-success btn-rounded waves-effect waves-light" style="margin: 10px;">
+                                                <i class="ri-check-line align-middle mr-2"></i>提交
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+<!--                    <div class="row">-->
+<!--                        <div class="card" style="width:100%;">-->
+<!--                            <div class="card-body" style="padding-top: 5px;">-->
+<!--                                <div class="row" style="width: 100%;text-align: center;display: flex;align-items: center;">-->
+<!--                                    <div class="col-md-3">-->
+<!--                                        <p th:text="'姓名：'+${stuName}" style="display: flex;align-items: center;margin: 0px;margin-left: 30%;"></p>-->
+<!--                                    </div>-->
+<!--                                    <div class="row col-md-6">-->
+<!--                                        <div class="col-md-4" style="width: 100%;text-align: center;display: flex;align-items: center;padding-left: 20px;">-->
+<!--                                            <p style="display: flex;align-items: center;padding: 10px;margin: 0px;">得分：</p>-->
+<!--                                        </div>-->
+<!--                                        <div class="col-md-8">-->
+<!--                                            <input type="text" id="score" name="score">-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-md-3">-->
+<!--                                        <button onclick="getScore()" type="submit" class="btn btn-success btn-rounded waves-effect waves-light" style="margin: 20px;">-->
+<!--                                            <i class="ri-check-line align-middle mr-2"></i>提交-->
+<!--                                        </button>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <iframe id="previewpdf" th:src="'static/js/pdf/web/viewer.html?file='+${pdf}"></iframe>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+
+                <div th:replace="commons::footer"></div>
+            </div>
+        </div>
+
+        <!-- Main Content End -->
+    </div>
+                    </div>
+
+
+
+    <!-- JAVASCRIPT -->
+    <!-- jquery -->
+    <script src="static/js/libs/jquery/jquery.min.js"></script>
+    <!-- bootstrap/js -->
+    <script src="static/js/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- metismenu -->
+    <script src="static/js/libs/metismenu/metisMenu.min.js"></script>
+    <!-- simplebar -->
+    <script src="static/js/libs/simplebar/simplebar.min.js"></script>
+    <!-- node-waves -->
+    <script src="static/js/libs/node-waves/waves.min.js"></script>
+    <!-- ion-rangeslider/js -->
+    <script src="static/js/libs/ion-rangeslider/js/ion.rangeSlider.min.js"></script>
+    <!-- js/pages/ -->
+    <script src="static/js/pages/range-sliders.init.js"></script>
+    <!-- app.js -->
+    <script src="static/js/app.js"></script>
+
+    <script type="text/javascript" th:inline="javascript">
+        function getScore(){
+            var oScore = document.getElementById("score");
+            console.log(oScore.value);
+        }
+    </script>
+
+
+
+</body>
+</html>
