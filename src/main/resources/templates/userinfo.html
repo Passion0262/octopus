@@ -194,6 +194,7 @@
         },
         error: function(){
           alert("更改失败，请稍后再试");
+          window.location.replace("/userinfo");
         }
       })
     }else if(phoneNumber==''){
@@ -202,9 +203,9 @@
       alert("更改成功");
     }
 
-    // location.reload();
+    location.reload();
     // window.location.href="/userinfo";
-    window.location.replace("/userinfo");
+    // window.location.replace("/userinfo");
   }
 
 </script>

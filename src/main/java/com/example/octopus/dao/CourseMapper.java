@@ -1,10 +1,13 @@
 package com.example.octopus.dao;
 
+import com.example.octopus.entity.experiment.Chapter;
+import com.example.octopus.entity.experiment.Video;
 import com.example.octopus.entity.user.Course;
 import com.example.octopus.entity.user.Student;
 import com.example.octopus.entity.user.StudentCourse;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
+
 
 import java.util.List;
 
@@ -55,5 +58,23 @@ public interface CourseMapper {
      */
     @Delete("DELETE FROM course WHERE id = #{courseId}")
     boolean deleteCourseById(long courseId);
+
+
+    /**
+     * 根据courseid查询章节
+     * @param courseId 课程id
+     * @return chapter list
+     */
+    @Select(("SELECT * FROM chapter where course_id = #{courseId} order by number" ))
+    List<Chapter> selectChapterByCourseId(long courseId) ;
+
+    /**
+     * 根据 chapterid 查询视频
+     * @param chapterId 课程id
+     * @return video list
+     */
+    @Select(("SELECT * FROM video where chapter_id = #{chapterId} order by number"))
+    List<Video> selectVideoByChapterId(long chapterId) ;
+
 
 }
