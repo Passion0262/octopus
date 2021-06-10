@@ -32,10 +32,10 @@ class ExperimentServiceImplTest {
     }
 
     @Test
-    void listChosenByStuNumber() {
-        List<Experiment> list= experimentService.listChosenByStuNumber(STUDENT_ID);
+    void listExperimentsByStuNumber() {
+        List<Experiment> list= experimentService.listExperimentsByStuNumber(STUDENT_ID);
         for (Experiment exp:list) {
-            System.out.println(exp.getName());
+            System.out.println(exp);
         }
     }
 }

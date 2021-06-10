@@ -5,8 +5,6 @@ import com.example.octopus.dao.StudentCourseMapper;
 import com.example.octopus.dao.TeacherCourseMapper;
 import com.example.octopus.dao.UserMapper;
 import com.example.octopus.entity.user.Course;
-import com.example.octopus.entity.user.Student;
-import com.example.octopus.entity.user.StudentCourse;
 import com.example.octopus.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,21 +60,6 @@ public class CourseServiceImpl implements CourseService {
             courseList.add(courseMapper.getCourseById(id));
         }
         return courseList;
-    }
-
-    @Override
-    public boolean isChosen(long stuNumber, long courseId) {
-        return studentCourseMapper.queryCourseIsChosen(stuNumber, courseId);
-    }
-
-    @Override
-    public boolean insertChooseCourse(long stuNumber, long courseId) {
-        return studentCourseMapper.insertStudentCourse(stuNumber,courseId);
-    }
-
-    @Override
-    public boolean deleteChooseCourse(long stuNumber, long courseId) {
-        return studentCourseMapper.deteleChooseCourse(stuNumber,courseId);
     }
 
     @Override

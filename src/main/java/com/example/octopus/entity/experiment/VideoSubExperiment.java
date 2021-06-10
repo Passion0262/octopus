@@ -4,7 +4,7 @@ import lombok.Data;
 import java.sql.Date;
 
 @Data
-public class Video_SubExperiment {
+public class VideoSubExperiment {
     private long id;
 
     private long videoId;

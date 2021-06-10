@@ -24,15 +24,32 @@ class StudentCourseMapperTest {
 
     @Test
     void insertStudentCourse() {
-        boolean result = studentCourseMapper.insertStudentCourse(STUNUMBER,COURSE_ID);
-        assertTrue(result);
+//        boolean result = studentCourseMapper.insertStudentCourse(STUNUMBER,COURSE_ID);
+//        assertTrue(result);
     }
 
     @Test
-    void queryCourseByStuNumber() {
+    void getById() {
+        System.out.println(studentCourseMapper.getById(3L));
+    }
+
+    @Test
+    void listByCourseId() {
+    }
+
+    @Test
+    void listCourseIdsByStuNumber() {
+    }
+
+    @Test
+    void listStuNumbersByCourseId() {
     }
 
     @Test
     void queryCourseIsChosen() {
+    }
+
+    @Test
+    void deteleChooseCourse() {
     }
 }

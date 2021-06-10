@@ -1,8 +1,10 @@
 package com.example.octopus.service.impl;
 
-import com.example.octopus.dao.ExperimentMapper;
+import com.example.octopus.dao.CourseExperimentMapper;
+import com.example.octopus.dao.experiment.ExperimentMapper;
 import com.example.octopus.entity.experiment.Experiment;
 import com.example.octopus.service.ExperimentService;
+import com.example.octopus.service.StudentCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,12 @@ public class ExperimentServiceImpl implements ExperimentService {
     @Autowired
     ExperimentMapper experimentMapper;
 
+    @Autowired
+    CourseExperimentMapper courseExperimentMapper;
+
+    @Autowired
+    StudentCourseService studentCourseService;
+
     @Override
     public List<Experiment> listExperiments() {
         return experimentMapper.listExperiments();
@@ -30,14 +38,25 @@ public class ExperimentServiceImpl implements ExperimentService {
     }
 
     @Override
-    public List<Experiment> listChosenByStuNumber(long stuNumber) {
-        //根据学生学号获取所有选的课对应的所有experiment的id
-        List<Long> id_list = experimentMapper.listChosenExperiments(stuNumber);
+    public Experiment getExperimentByCourseId(long courseId) {
+        long experimentId = courseExperimentMapper.getExperimentIdByCourseId(courseId);
+        return getExperimentById(experimentId);
+    }
+
+    @Override
+    public List<Experiment> listExperimentsByStuNumber(long stuNumber) {
+        //根据学生学号获取所有选的课程id list
+        List<Long> courseIdList = studentCourseService.listCourseIdsByStuNumber(stuNumber);
         //根据experiment id 遍历获取experiment实体
         List<Experiment> exp_list = new ArrayList<Experiment>();
-        for (long id:id_list) {
-            Experiment exp = experimentMapper.getExperimentById(id);
-            exp_list.add(exp);
+        for (long courseId:courseIdList) {
+            Long experimentId = courseExperimentMapper.getExperimentIdByCourseId(courseId);
+            if (experimentId!=null) {
+                Experiment exp = getExperimentById(experimentId);
+                if (exp!=null) {
+                    exp_list.add(exp);
+                }
+            }
         }
         return exp_list;
     }

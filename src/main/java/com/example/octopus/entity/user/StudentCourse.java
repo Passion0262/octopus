@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
+import java.sql.Time;
 
 /**
  * @author ：shadow
@@ -29,8 +29,6 @@ public class StudentCourse {
 
     private String stuClass;
 
-    private String experimentMissionId;
-
-    private Date applyTime;
+    private Time applyTime;
 
 }

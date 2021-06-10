@@ -33,6 +33,8 @@ public class studentController {
     @Autowired
     CourseService courseService;
     @Autowired
+    StudentCourseService studentCourseService;
+    @Autowired
     ExperimentService experimentService;
     @Autowired
     ProjectService projectService;
@@ -175,7 +177,7 @@ public class studentController {
 
 
         String stuNum = cookieThings.getCookieUserNum(request, cookieName);
-        boolean isapplied = courseService.isChosen(Long.parseLong(stuNum),Long.parseLong(id));
+        boolean isapplied = studentCourseService.isChosen(Long.parseLong(stuNum),Long.parseLong(id));
 
         logger.info("isapplied:" + isapplied);
 
@@ -195,9 +197,9 @@ public class studentController {
         String stuNum = cookieThings.getCookieUserNum(request, cookieName);
         logger.info("确认课程_id:" + id);
         logger.info("确认学生_id:" + stuNum);
-        boolean issuccess = courseService.insertChooseCourse(Long.parseLong(id),Long.parseLong(stuNum));
+        boolean issuccess = studentCourseService.insertStudentCourse(Long.parseLong(id),Long.parseLong(stuNum));
 
-        boolean isapplied = courseService.isChosen(Long.parseLong(stuNum),Long.parseLong(id));
+        boolean isapplied = studentCourseService.isChosen(Long.parseLong(stuNum),Long.parseLong(id));
         model.addAttribute("isapplied", isapplied);
 
         return "redirect:/apply_detail/" + id;
@@ -214,9 +216,9 @@ public class studentController {
         String stuNum = cookieThings.getCookieUserNum(request, cookieName);
         logger.info("确认课程_id:" + id);
         logger.info("确认学生_id:" + stuNum);
-        boolean issuccess = courseService.deleteChooseCourse(Long.parseLong(id),Long.parseLong(stuNum));
+        boolean issuccess = studentCourseService.deleteStudentCourse(Long.parseLong(id),Long.parseLong(stuNum));
 
-        boolean isapplied = courseService.isChosen(Long.parseLong(stuNum),Long.parseLong(id));
+        boolean isapplied = studentCourseService.isChosen(Long.parseLong(stuNum),Long.parseLong(id));
         model.addAttribute("isapplied", isapplied);
 
         return "redirect:/apply_detail/" + id;
@@ -293,7 +295,7 @@ public class studentController {
 //        model.addAttribute("stuname", stuname);
 
         Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
-        List<Experiment> allexperiments = experimentService.listChosenByStuNumber(stuNum);
+        List<Experiment> allexperiments = experimentService.listExperimentsByStuNumber(stuNum);
         logger.info("allExperiment:" + allexperiments);
         model.addAttribute("allexperiments", allexperiments);
 

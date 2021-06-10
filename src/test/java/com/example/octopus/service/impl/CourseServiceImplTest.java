@@ -58,8 +58,6 @@ class CourseServiceImplTest {
 
     @Test
     void InsertChooseCourse() {
-        boolean result = courseService.insertChooseCourse(STUDENT_ID,COURSE_ID);
-        assertTrue(result);
     }
 
     @Test

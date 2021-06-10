@@ -18,19 +18,18 @@ public interface StudentCourseMapper {
 
     /**
      * 学生选课
-     * @param courseId 课程id
-     * @param stuNumber 学生学号
+     * @param studentCourse 学生-课程实体
      * @return 成功为true，失败为false
      */
-    @Insert("INSERT INTO student_course (id,course_id,stu_number,apply_time) VALUES(null,#{courseId},#{stuNumber},CURRENT_TIMESTAMP)")
-    boolean insertStudentCourse(long courseId, long stuNumber);
+    @Insert("INSERT INTO student_course (id,stu_number,course_id,course_name,stu_name,stu_major,stu_class,apply_time) VALUES(null,#{stuNumber},#{courseId},#{courseName},#{stuName},#{stuMajor},#{stuClass},CURRENT_TIMESTAMP)")
+    boolean insertStudentCourse(StudentCourse studentCourse);
 
     /**
      * 根据id返回学生选课记录
      * @param id student-course表id
      * @return student-course实体类
      */
-    @Select("SELECT * FROM WHERE id = #{id}")
+    @Select("SELECT * FROM student_course WHERE id = #{id}")
     StudentCourse getById(long id);
 
     /**
@@ -57,6 +56,8 @@ public interface StudentCourseMapper {
     @Select("SELECT UNIQUE stu_number FROM student_course WHERE course_id = #{courseId}")
     List<Long> listStuNumbersByCourseId(long courseId);
 
+
+
     /**
      * 查询学生是否选某一门课
      * @param stuNumber 学号
@@ -64,14 +65,23 @@ public interface StudentCourseMapper {
      * @return 选了这门课为true，没选是false
      */
     @Select("SELECT COUNT(*) FROM student_course WHERE stu_number = #{stuNumber} AND course_id = #{courseId}")
-    boolean queryCourseIsChosen(long stuNumber, long courseId);
+    boolean getCourseIsChosen(long stuNumber, long courseId);
 
     /**
-     * 学生取消选课
+     * 根据id删除学生-课程记录
+     * @param id 记录id
+     * @return 成功为true，失败为false
+     */
+    @Delete("DELETE FROM student_course WHERE id = #{id}")
+    boolean deleteStudentCourse(long id);
+
+    /**
+     * 根据学号和课程id删除学生-课程记录
      * @param stuNumber 学号
      * @param courseId 课程id
      * @return 成功为true，失败为false
      */
     @Delete("DELETE FROM student_course WHERE stu_number = #{stuNumber} AND course_id = #{courseId}")
-    boolean deteleChooseCourse(long stuNumber,long courseId);
+    boolean deteleStudentCourse(long stuNumber, long courseId);
+
 }

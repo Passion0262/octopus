@@ -41,35 +41,11 @@ public interface CourseService {
     List<Course> listCoursesByTeaNumber(long teaNumber);
 
     /**
-     * 查询学生是否选某一门课
-     * @param stuNumber 学号
-     * @param courseId 课程id
-     * @return 选了这门课为true，没选是false
-     */
-    boolean isChosen(long stuNumber, long courseId);
-
-    /**
      * 新增课程
      * @param course  课程实体
      * @return 成功为true，失败为false
      */
     boolean insertCourse(Course course);
-
-    /**
-     * 新增学生选课记录 根据学生id，课程id
-     * @param stuNumber 学号
-     * @param courseId 课程id
-     * @return 是否成功选课
-     */
-    boolean insertChooseCourse(long stuNumber, long courseId);
-
-    /**
-     * 删除学生选课记录
-     * @param stuNumber 学号
-     * @param courseId 课程id
-     * @return 是否成功删除
-     */
-    boolean deleteChooseCourse(long stuNumber, long courseId);
 
     /**
      * 更新课程
