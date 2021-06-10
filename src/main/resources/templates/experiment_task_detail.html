@@ -69,7 +69,7 @@
           <li><a href="/mycourse" class=" waves-effect"><i class="ri-plant-line"></i><span>我的课程</span></a></li>
           <li><a href="/experiment_task" class="waves-effect"><i class="ri-checkbox-multiple-blank-line"></i><span>实验任务</span></a></li>
           <li><a href="/projects" class=" waves-effect"><i class="ri-reserved-line"></i><span>项目实战</span></a></li>
-          <li><a href="/studylog" class=" waves-effect"><i class="ri-reserved-line"></i><span>学习记录</span></a></li>
+          <li><a href="/studylog" class=" waves-effect"><i class="ri-file-list-3-line"></i><span>学习记录</span></a></li>
           <li><a href="/datasets" class=" waves-effect"><i class="ri-download-cloud-line"></i><span>数据集</span></a></li>
 
 
@@ -116,16 +116,16 @@
           <div class="col-12" th:each="module:${modules}">
             <div class="card">
               <div class="card-body">
-                <h4 class="card-title mt-0" ><span th:text="${module.name}"></span></h4>
+                <h4 class="card-title mt-0">模块<span th:text="${module.number}"></span>:&nbsp;&nbsp;&nbsp;<span th:text="${module.name}"></span></h4>
 
                 <div class="row" th:each="subExperiment:${subExperiments[moduleStat.index]}">
                 <div class="col-3"><img th:src="'../../'+${subExperiment.imagePath}" class="img-fluid"/></div>
                   <div class="col-6">
-                    <p class="card-text"><span th:text="${subExperiment.name}"></span></p>
+                    <p class="card-text">任务<span th:text="${subExperiment.number}"></span>:&nbsp;&nbsp;&nbsp;<span th:text="${subExperiment.name}"></span></p>
 <!--                    <p class="card-text">操作时长</p>-->
                   </div>
                 <div class="col-3">
-                  <button type="button" class="btn btn-primary  waves-effect waves-light">继续学习</button>
+                  <button type="button" class="btn btn-primary  waves-effect waves-light" th:onclick="window.location.href ='/experiment_machine/'+${subExperiment.id}">继续学习</button>
                 </div>
                   <div class="col-12" style="margin-top: 20px;"></div>
                 </div>
