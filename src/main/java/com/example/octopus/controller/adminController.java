@@ -37,6 +37,15 @@ public class adminController {
     @Autowired
     CourseService courseService;
 
+//    @Autowired
+//    StudentCourseService studentcourseService;
+
+    @Autowired
+    ExperimentService experimentService;
+
+    @Autowired
+    ProjectService projectService;
+
     @Autowired
     DatasetService datasetService;
     
@@ -57,6 +66,16 @@ public class adminController {
         logger.info("密码：" + userpwd);
         session.setAttribute("user",username);
         return "redirect:/admin_index";
+    }
+
+    //个人资料
+    @RequestMapping("/admin_userinfo")
+    public String admin_userinfo(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        String username = (String)session.getAttribute("user");
+        model.addAttribute("username", username);
+        //查询个人资料
+        return "admin_userinfo";
     }
 
     //重置密码
@@ -80,6 +99,9 @@ public class adminController {
         return "admin_reset_pwd";
     }
 
+
+
+
     //首页
     @RequestMapping("/admin_index")
     public String confirmlogin(HttpServletRequest request, Model model) {
@@ -89,6 +111,10 @@ public class adminController {
             String username = (String)session.getAttribute("user");
             //logger.info("用户名：" + username);
             model.addAttribute("username", username);
+            model.addAttribute("sizeof_experiments", experimentService.listExperiments().size());
+            model.addAttribute("sizeof_projects", experimentService.listExperiments().size());
+            model.addAttribute("sizeof_datasets", datasetService.listDatasets().size());
+
             return "admin_index";
         }
         catch (Exception e){
@@ -96,15 +122,8 @@ public class adminController {
         }
     }
 
-    //个人资料
-    @RequestMapping("/admin_userinfo")
-    public String admin_userinfo(HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession();
-        String username = (String)session.getAttribute("user");
-        model.addAttribute("username", username);
-        //查询个人资料
-        return "admin_userinfo";
-    }
+
+
 
     //专业管理
     @RequestMapping("/admin_major")
@@ -113,8 +132,9 @@ public class adminController {
         //判断用户是管理员还是老师
         HttpSession session = request.getSession();
         String username = (String)session.getAttribute("user");
-        model.addAttribute("majors", majorService.listMajors());
         model.addAttribute("username", username);
+        model.addAttribute("majors", majorService.listMajors());
+        //model.addAttribute("majors", majorService.getByTeaNumber(Long.parseLong("1")));
         return "admin_major";
     }
 
@@ -162,6 +182,9 @@ public class adminController {
         majorService.deleteById(id);
         return new ModelAndView("redirect:/admin_major");
     }
+
+
+
 
     //班级管理
     @RequestMapping("/admin_class")
@@ -219,6 +242,10 @@ public class adminController {
         return new ModelAndView("redirect:/admin_class");
     }
 
+
+
+
+
     //学生管理
     @RequestMapping("/admin_student")
     public String admin_student(HttpServletRequest request, Model model) {
@@ -227,6 +254,7 @@ public class adminController {
         String username = (String)session.getAttribute("user");
         model.addAttribute("username", username);
         model.addAttribute("students", userService.listStudents());
+        //model.addAttribute("students", userService.listStudentsByTeaNumber(Long.parseLong("1")));
         //判断身份
         //管理员返回所有学生
         //老师只返回自己教的学生
@@ -247,7 +275,7 @@ public class adminController {
     public ModelAndView add_student(Student student){
         logger.info("提交新增的student: [{}]", student);
         //补全最近登录时间 登录总时长信息
-        //userService.增加学生
+        userService.insertStudent(student);
         return new ModelAndView("redirect:/admin_student");
     }
 
@@ -267,7 +295,7 @@ public class adminController {
     @PostMapping("/edit_student")
     public ModelAndView edit_student(Student student){
         logger.info("提交修改的student: [{}]", student);
-        //修改学生信息
+        userService.updateStudent(student);
         return new ModelAndView("redirect:/admin_student");
     }
 
@@ -280,13 +308,17 @@ public class adminController {
         return new ModelAndView("redirect:/admin_student");
     }
 
+
+
+
+
     //开课计划管理
     @RequestMapping("/admin_course")
     public String admin_course(HttpServletRequest request,Model model) {
         logger.info("进入开课计划管理");
         HttpSession session = request.getSession();
         String username = (String)session.getAttribute("user");
-        //model.addAttribute("username", "李四");
+        model.addAttribute("username", username);
         model.addAttribute("courses", courseService.listCourses());
         return "admin_course";
     }
@@ -336,13 +368,19 @@ public class adminController {
         return new ModelAndView("redirect:/admin_course");
     }
 
+
+
+
+
     //学生开课计划管理
     @RequestMapping("/admin_course_student")
-    public String admin_course_student(Model model) {
+    public String admin_course_student(HttpServletRequest request, Model model) {
         logger.info("进入学生开课计划管理");
-        //model.addAttribute("username", "李四");
+        HttpSession session = request.getSession();
+        String username = (String)session.getAttribute("user");
+        model.addAttribute("username", username);
         //返回
-        //model.addAttribute("course_students", );
+        //model.addAttribute("course_students", studentcourseService.listStudentCoursesByTeaNumber());
         return "admin_course_student";
     }
 
@@ -350,8 +388,9 @@ public class adminController {
     @GetMapping("/admin_course_student_add")
     public ModelAndView admin_course_student_add(HttpServletRequest request, Model model){
         logger.info("进入admin_course_student_add，Student_Course()");
-        String user = request.getParameter("username");
-        model.addAttribute("username", user);
+        HttpSession session = request.getSession();
+        String username = (String)session.getAttribute("user");
+        model.addAttribute("username", username);
         model.addAttribute("course_student",new StudentCourse());
         return new ModelAndView("admin_course_student_add","coursestudentmodel",model);
     }
@@ -363,25 +402,25 @@ public class adminController {
         return new ModelAndView("redirect:/admin_course_student");
     }
 
-    //修改学生开课计划
-    @GetMapping("/admin_course_student_edit")
-    public ModelAndView admin_course_student_edit(HttpServletRequest request, Model model){
-        logger.info("进入admin_course_student_edit，获取指定名字的Student_Course()");
-        long id = Long.parseLong(request.getParameter("id"));
-        logger.info("id="+id);
-        String user = request.getParameter("username");
-        //查找对应数据
-        model.addAttribute("username", user);
-        model.addAttribute("course_student",new StudentCourse());
-        return new ModelAndView("admin_course_student_edit","coursestudentmodel",model);
-    }
-
-    @PostMapping("/edit_course_student")
-    public ModelAndView edit_course_student(StudentCourse course_student){
-        logger.info("提交修改的course_student: [{}]", course_student);
-        //修改学生开课计划
-        return new ModelAndView("redirect:/admin_course_student");
-    }
+//    //修改学生开课计划
+//    @GetMapping("/admin_course_student_edit")
+//    public ModelAndView admin_course_student_edit(HttpServletRequest request, Model model){
+//        logger.info("进入admin_course_student_edit，获取指定名字的Student_Course()");
+//        long id = Long.parseLong(request.getParameter("id"));
+//        logger.info("id="+id);
+//        String user = request.getParameter("username");
+//        //查找对应数据
+//        model.addAttribute("username", user);
+//        model.addAttribute("course_student",new StudentCourse());
+//        return new ModelAndView("admin_course_student_edit","coursestudentmodel",model);
+//    }
+//
+//    @PostMapping("/edit_course_student")
+//    public ModelAndView edit_course_student(StudentCourse course_student){
+//        logger.info("提交修改的course_student: [{}]", course_student);
+//        //修改学生开课计划
+//        return new ModelAndView("redirect:/admin_course_student");
+//    }
 
     //删除学生开课计划
     @RequestMapping("/admin_course_student_delete")
@@ -392,77 +431,105 @@ public class adminController {
         return new ModelAndView("redirect:/admin_course_student");
     }
 
+
+
+
+
     @RequestMapping("/admin_video_log")
-    public String admin_video_log(Model model) {
-        model.addAttribute("username", "李四");
+    public String admin_video_log(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        String username = (String)session.getAttribute("user");
+        model.addAttribute("username", username);
         return "admin_video_log";
     }
 
     @RequestMapping("/admin_video_log_details")
-    public String admin_video_log_details(Model model) {
-        model.addAttribute("username", "李四");
+    public String admin_video_log_details(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        String username = (String)session.getAttribute("user");
+        model.addAttribute("username", username);
         return "admin_video_log_details";
     }
 
     @RequestMapping("/admin_report")
-    public String admin_report(Model model) {
-        model.addAttribute("username", "李四");
+    public String admin_report(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        String username = (String)session.getAttribute("user");
+        model.addAttribute("username", username);
         return "admin_report";
     }
 
     @RequestMapping("/admin_report_detail")
-    public String admin_report_detail(Model model) {
-        model.addAttribute("username", "李四");
+    public String admin_report_detail(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        String username = (String)session.getAttribute("user");
+        model.addAttribute("username", username);
         model.addAttribute("pdf", "https://arxiv.org/pdf/1508.01006v1.pdf");
         return "admin_report_detail";
     }
 
     @RequestMapping("/admin_experiment_log")
-    public String admin_experiment_log(Model model) {
-        model.addAttribute("username", "李四");
+    public String admin_experiment_log(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        String username = (String)session.getAttribute("user");
+        model.addAttribute("username", username);
         return "admin_experiment_log";
     }
 
     @RequestMapping("/admin_pc_type")
-    public String admin_pc_type(Model model) {
-        model.addAttribute("username", "李四");
+    public String admin_pc_type(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        String username = (String)session.getAttribute("user");
+        model.addAttribute("username", username);
         return "admin_pc_type";
     }
 
     @RequestMapping("/admin_cluster")
-    public String admin_cluster(Model model) {
-        model.addAttribute("username", "李四");
+    public String admin_cluster(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        String username = (String)session.getAttribute("user");
+        model.addAttribute("username", username);
         return "admin_cluster";
     }
 
     @RequestMapping("/admin_student_pc")
-    public String admin_student_pc(Model model) {
-        model.addAttribute("username", "李四");
+    public String admin_student_pc(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        String username = (String)session.getAttribute("user");
+        model.addAttribute("username", username);
         return "admin_student_pc";
     }
 
     @RequestMapping("/admin_report_template")
-    public String admin_report_template(Model model) {
-        model.addAttribute("username", "李四");
+    public String admin_report_template(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        String username = (String)session.getAttribute("user");
+        model.addAttribute("username", username);
         return "admin_report_template";
     }
 
     @RequestMapping("/admin_video")
-    public String admin_video(Model model) {
-        model.addAttribute("username", "李四");
+    public String admin_video(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        String username = (String)session.getAttribute("user");
+        model.addAttribute("username", username);
         return "admin_video";
     }
 
     @RequestMapping("/admin_video_class")
-    public String admin_video_class(Model model) {
-        model.addAttribute("username", "李四");
+    public String admin_video_class(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        String username = (String)session.getAttribute("user");
+        model.addAttribute("username", username);
         return "admin_video_class";
     }
 
     //数据集管理
     @RequestMapping("/admin_dataset")
-    public String admin_dataset(Model model) {
-        model.addAttribute("username", "李四");
+    public String admin_dataset(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        String username = (String)session.getAttribute("user");
+        model.addAttribute("username", username);
         model.addAttribute("datasets", datasetService.listDatasets());
         return "admin_dataset";
     }
@@ -510,11 +577,11 @@ public class adminController {
                     result_msg="图片上传成功";
                 }
                 else{
-                    result_msg="图片上传失败";
+                    result_msg="图片上传失败!";
                 }
             }
             else{
-                result_msg="图片格式不正确";
+                result_msg="图片格式不正确!";
             }
         }
 
@@ -526,5 +593,55 @@ public class adminController {
         return root;
     }
 
+
+    @RequestMapping("/report_upload")
+    public String report_upload(Model model) {
+
+        return "report_upload";
+    }
+
+    @ResponseBody
+    @RequestMapping("/upload_file")
+    public Map fileUpload(MultipartFile file, HttpServletRequest request){
+        String result_msg = "";  //上传结果信息
+        Map<String,Object> root = new HashMap<String, Object>();
+
+        //判断上传文件格式
+        String fileType = file.getContentType();
+        System.out.println(fileType);
+        if (fileType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document") ||
+                fileType.equals("application/pdf") ||
+                fileType.equals("application/msword")) {
+            // 要上传的目标文件存放的绝对路径
+            final String localPath="static\\reportsTemp";
+            //上传后保存的文件名(需要防止图片重名导致的文件覆盖)
+            //获取文件名
+            String fileName = file.getOriginalFilename();
+//            //获取文件后缀名
+//            String suffixName = fileName.substring(fileName.lastIndexOf("."));
+//            //重新生成文件名
+//            fileName = UUID.randomUUID()+suffixName;
+            if (UploadFileUtils.upload(file, localPath, fileName)) {
+                //文件存放的相对路径(一般存放在数据库用于img标签的src)
+                String relativePath="static/reportsTemp/"+fileName;
+                root.put("relativePath",relativePath);//前端根据是否存在该字段来判断上传是否成功
+                result_msg="文件上传成功";
+            }
+            else{
+                result_msg="文件上传失败";
+            }
+        }
+        else{
+            result_msg="文件格式不正确";
+        }
+
+
+        root.put("result_msg",result_msg);
+
+//        JSON.toJSONString(root,SerializerFeature.DisableCircularReferenceDetect);
+        String root_json= JSON.toJSONString(root);
+        logger.info(root_json);
+        return root;
+    }
 
 }
