@@ -113,35 +113,26 @@
             </div>
           </div>
 
-          <div class="col-12">
+          <div class="col-12" th:each="module:${modules}">
             <div class="card">
               <div class="card-body">
-                <h4 class="card-title mt-0" >模块一：python基础操作</h4>
-                <div class="row">
-                <div class="col-3"><img src="../../static/images/subject/subject.jpg" class="img-fluid"/></div>
+                <h4 class="card-title mt-0" ><span th:text="${module.name}"></span></h4>
+
+                <div class="row" th:each="subExperiment:${subExperiments[moduleStat.index]}">
+                <div class="col-3"><img th:src="'../../'+${subExperiment.imagePath}" class="img-fluid"/></div>
                   <div class="col-6">
-                    <p class="card-text">1.1 任务一</p>
-                    <p class="card-text">操作时长</p>
+                    <p class="card-text"><span th:text="${subExperiment.name}"></span></p>
+<!--                    <p class="card-text">操作时长</p>-->
                   </div>
                 <div class="col-3">
                   <button type="button" class="btn btn-primary  waves-effect waves-light">继续学习</button>
                 </div>
+                  <div class="col-12" style="margin-top: 20px;"></div>
                 </div>
 
 
-                <div class="col-12" style="margin-top: 20px;"></div>
 
 
-                <div class="row">
-                  <div class="col-3"><img src="../../static/images/subject/subject.jpg" alt="Python数据分析、挖掘与可视化" class="img-fluid"/></div>
-                  <div class="col-6">
-                    <p class="card-text">1.1 任务一</p>
-                    <p class="card-text">操作时长</p>
-                  </div>
-                  <div class="col-3">
-                    <button type="button" class="btn btn-primary  waves-effect waves-light">继续学习</button>
-                  </div>
-                </div>
 
               </div>
             </div>
@@ -150,39 +141,39 @@
 
 
 
-          <div class="col-12">
-            <div class="card">
-              <div class="card-body">
-                <h4 class="card-title mt-0" >模块二：python基础操作</h4>
-                <div class="row">
-                  <div class="col-3"><img src="../../static/images/subject/subject.jpg" alt="Python数据分析、挖掘与可视化" class="img-fluid"/></div>
-                  <div class="col-6">
-                    <p class="card-text">1.1 任务一</p>
-                    <p class="card-text">操作时长</p>
-                  </div>
-                  <div class="col-3">
-                    <button type="button" class="btn btn-primary  waves-effect waves-light">继续学习</button>
-                  </div>
-                </div>
+<!--          <div class="col-12">-->
+<!--            <div class="card">-->
+<!--              <div class="card-body">-->
+<!--                <h4 class="card-title mt-0" >模块二：python基础操作</h4>-->
+<!--                <div class="row">-->
+<!--                  <div class="col-3"><img src="../../static/images/subject/subject.jpg" alt="Python数据分析、挖掘与可视化" class="img-fluid"/></div>-->
+<!--                  <div class="col-6">-->
+<!--                    <p class="card-text">1.1 任务一</p>-->
+<!--                    <p class="card-text">操作时长</p>-->
+<!--                  </div>-->
+<!--                  <div class="col-3">-->
+<!--                    <button type="button" class="btn btn-primary  waves-effect waves-light">继续学习</button>-->
+<!--                  </div>-->
+<!--                </div>-->
 
 
-                <div class="col-12" style="margin-top: 20px;"></div>
+<!--                <div class="col-12" style="margin-top: 20px;"></div>-->
 
 
-                <div class="row">
-                  <div class="col-3"><img src="../../static/images/subject/subject.jpg" alt="Python数据分析、挖掘与可视化" class="img-fluid"/></div>
-                  <div class="col-6">
-                    <p class="card-text">1.1 任务一</p>
-                    <p class="card-text">操作时长</p>
-                  </div>
-                  <div class="col-3">
-                    <button type="button" class="btn btn-primary  waves-effect waves-light">继续学习</button>
-                  </div>
-                </div>
+<!--                <div class="row">-->
+<!--                  <div class="col-3"><img src="../../static/images/subject/subject.jpg" alt="Python数据分析、挖掘与可视化" class="img-fluid"/></div>-->
+<!--                  <div class="col-6">-->
+<!--                    <p class="card-text">1.1 任务一</p>-->
+<!--                    <p class="card-text">操作时长</p>-->
+<!--                  </div>-->
+<!--                  <div class="col-3">-->
+<!--                    <button type="button" class="btn btn-primary  waves-effect waves-light">继续学习</button>-->
+<!--                  </div>-->
+<!--                </div>-->
 
-              </div>
-            </div>
-          </div>
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
 
 
         </div><!-- end row -->
