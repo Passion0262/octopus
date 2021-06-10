@@ -360,8 +360,8 @@ public class studentController {
     }
 
 
-    @RequestMapping("/experiment_machine")
-    public String experiment_machine(Model model, HttpServletRequest request) {
+    @RequestMapping("/experiment_machine/{id}")
+    public String experiment_machine(@PathVariable(value = "id") String id,Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
 //        String stuname = (String) session.getAttribute("stuname");
