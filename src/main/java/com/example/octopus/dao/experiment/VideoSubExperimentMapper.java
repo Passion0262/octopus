@@ -14,13 +14,13 @@ public interface VideoSubExperimentMapper {
     /**
      * 根据experimentId查找对应的videoId
      */
-    @Select("SELECT video_id FROM video_sub_experiment WHERE sub_experiment_id = subExperimentId")
+    @Select("SELECT video_id FROM video_sub_experiment WHERE sub_experiment_id = #{subExperimentId}")
     long getVideoIdBySubExperimentId(long subExperimentId);
 
     /**
      * 根据videoId查找对应的experimentId
      */
-    @Select("SELECT sub_experiment_id FROM video_sub_experiment WHERE video_id = videoId")
+    @Select("SELECT sub_experiment_id FROM video_sub_experiment WHERE video_id = #{videoId}")
     long getSubExperimentIdByVideoId(long videoId);
 
 }

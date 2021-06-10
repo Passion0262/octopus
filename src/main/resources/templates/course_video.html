@@ -107,19 +107,19 @@
           <div class="col-md-8">
             <div class="card">
               <div class="card-body">
-                <h4 class="card-title">课程名字</h4>
+                <h4 class="card-title"><span th:text="${course.courseName}"></span></h4>
                 <div class="row">
                   <div class="col-md-9">
-                <p class="card-title-desc">小标题名字</p>
+                <p class="card-title-desc"><span id="videotitle"> 小标题名字</span></p>
                   </div>
-                  <div class="col-md-3">
-                    <button type="button" class="btn btn-success btn-rounded waves-effect waves-light" th:onclick="">进入实验机</button>
+                  <div class="col-md-3" id="machinebutton">
+
 
                   </div>
 
                 </div>
                 <div class="embed-responsive embed-responsive-16by9">
-                  <iframe class="embed-responsive-item" src="http://vjs.zencdn.net/v/oceans.mp4" allowfullscreen="true"></iframe></div>
+                  <iframe class="embed-responsive-item" id ="videoplay" src="" allowfullscreen="true"></iframe></div>
 
                 </div>
               </div>
@@ -134,22 +134,27 @@
 
 
                 <div id="accordion" class="custom-accordion categories-accordion mb-3">
-                  <div class="categories-group-card">
-                    <a href="#collapseOne" class="categories-group-list" data-toggle="collapse" aria-expanded="true" aria-controls="collapseOne">
-                      <i class="font-size-16 align-middle mr-2"></i>第一章：XXXX<i class="mdi mdi-minus float-right accor-plus-icon"></i></a>
-                    <div id="collapseOne" class="collapse show" data-parent="#accordion" style="">
+
+                  <div class="categories-group-card" th:each="chapter:${chapters}">
+                    <a th:href="'#collapse'+${chapter.number}" class="categories-group-list" data-toggle="collapse" aria-expanded="false" th:aria-controls="'collapse'+${chapter.number}">
+                      <i class="font-size-16 align-middle mr-2"></i>章节<span th:text="${chapter.number}"></span>:&nbsp;&nbsp;&nbsp;<span th:text="${chapter.name}"></span><i class="mdi mdi-minus float-right accor-plus-icon"></i></a>
+                    <div th:id="'collapse'+${chapter.number}" class="collapse" data-parent="#accordion" style="">
                       <div>
                         <ul class="list-unstyled categories-list mb-0">
-                          <li class="active"><a href="#">
-                            <i class="mdi mdi-circle-medium mr-1"></i>
-                            1.1 XXXX
-                            <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                              100%
-                            </div>
-                            </div>
-                          </a></li>
-                          <li><a href="#"><i class="mdi mdi-circle-medium mr-1"></i>1.2 XXXX
+
+<!--                          <li class="active"><a href="#">-->
+<!--                            <i class="mdi mdi-circle-medium mr-1"></i>-->
+<!--                            1.1 XXXX-->
+<!--                            <div class="progress">-->
+<!--                            <div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">-->
+<!--                              100%-->
+<!--                            </div>-->
+<!--                            </div>-->
+<!--                          </a></li>-->
+
+                          <li th:each="video:${videos[chapterStat.index]}">
+                            <a href="#" th:onclick="showvideo([[${video}]])">
+                            <i class="mdi mdi-circle-medium mr-1"></i><span th:text="${video.number}"></span>:&nbsp;&nbsp;&nbsp;<span th:text="${video.name}"></span>
                             <div class="progress">
                               <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
                                 25%
@@ -162,31 +167,10 @@
                       </div>
                     </div>
                   </div>
-                  <div class="categories-group-card">
-                    <a href="#collapseTwo" class="categories-group-list collapsed" data-toggle="collapse" aria-expanded="false" aria-controls="collapseTwo">
-                      <i class="font-size-16 align-middle mr-2"></i>第二章：XXX<i class="mdi mdi-minus float-right accor-plus-icon"></i></a>
-                    <div id="collapseTwo" class="collapse" data-parent="#accordion" style="">
-                      <div>
-                        <ul class="list-unstyled categories-list mb-0">
-                          <li><a href="#"><i class="mdi mdi-circle-medium mr-1"></i>2.1 XX
-                            <div class="progress">
-                              <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">
-                                30%
-                              </div>
-                            </div>
-                          </a></li>
-                          <li><a href="#"><i class="mdi mdi-circle-medium mr-1"></i>2.2 XXX
-                            <div class="progress">
-                              <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                25%
-                              </div>
-                            </div>
-                          </a></li>
 
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
+
+
+
 
 <!--                  <div class="categories-group-card">-->
 <!--                    <a href="" class="categories-group-list collapsed" data-toggle="collapse" aria-expanded="false" >-->
@@ -258,6 +242,23 @@
 
 
 <script th:inline="javascript" type="text/javascript">
+  $(document).ready(function() {
+
+
+  });
+
+
+  function showvideo(video) {
+    // alert(video);
+     $("#videotitle").html(video.name);
+     $("#videoplay").attr("src",video.path);
+
+
+
+    // <button type="button" className="btn btn-success btn-rounded waves-effect waves-light"
+    //         th:onclick="indow.location.href ='/experiment_machine/'+[[${experiment.id}]]">进入实验机</button>
+
+  }
 
 
 </script>

@@ -1,10 +1,7 @@
 package com.example.octopus.controller;
 
 import com.example.octopus.entity.dataset.Dataset;
-import com.example.octopus.entity.experiment.Chapter;
-import com.example.octopus.entity.experiment.Experiment;
-import com.example.octopus.entity.experiment.Module;
-import com.example.octopus.entity.experiment.SubExperiment;
+import com.example.octopus.entity.experiment.*;
 import com.example.octopus.entity.project.Project;
 import com.example.octopus.entity.user.Teacher;
 import com.example.octopus.service.*;
@@ -56,6 +53,8 @@ public class studentController {
     ChapterService chapterService;
     @Autowired
     TeacherService teacherService;
+    @Autowired
+    VideoService videoService;
 
 
     private final static String cookieName = "cookie_";
@@ -267,6 +266,40 @@ public class studentController {
         logger.info("course——detail:" + course);
         model.addAttribute("course", course);
 
+        List<Chapter> chapters = chapterService.listChaptersByCourseId(courseid_id);
+        logger.info("chapters:" + chapters);
+        logger.info("chapters:" + chapters.size());
+        model.addAttribute("chapters", chapters);
+        model.addAttribute("chaptersnum", chapters.size());
+
+        List<List<Video>> videos = new ArrayList<>();
+//        List<List<Long>> tosubexperiments = new ArrayList<>();
+
+        for (int i=0;i<chapters.size();i++){
+//            logger.info("chaptersid:" + chapters.get(i).getId());
+            List<Video> video = videoService.listVideosByChapterId(chapters.get(i).getId());
+            videos.add(video);
+
+//            List<Long> tosubs = new ArrayList<>();
+//            for (int j=0;j<video.size();j++){
+//                Long tosub = subExperimentService.getSubExperimentByVideoId(video.get(j).getId()).getId();
+//                tosubs.add(tosub);
+//            }
+//            tosubexperiments.add(tosubs);
+        }
+
+        logger.info("videos:" + videos);
+        model.addAttribute("videos", videos);
+
+        logger.info("startvideo:" + videos.get(0).get(0));
+        model.addAttribute("startvideo", videos.get(0).get(0));
+
+//        logger.info("tosubexperiments:" + tosubexperiments);
+//        model.addAttribute("tosubexperiments", tosubexperiments);
+
+
+        Experiment experiment = experimentService.getExperimentByCourseId(courseid_id);
+        model.addAttribute("experiment", experiment);
 
         return "course_video";
     }

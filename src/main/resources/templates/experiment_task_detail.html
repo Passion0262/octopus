@@ -22,7 +22,7 @@
       <div class="d-flex">
         <!-- LOGO -->
         <div class="navbar-brand-box">
-          <a href="index" class="logo logo-dark">
+          <a href="/index" class="logo logo-dark">
             <span class="logo-sm"><img src="../../static/images/logo-sm-dark.png" alt="" height="22"></span>
             <span class="logo-lg"><img src="../../static/images/logo-dark.png" alt="" height="27"></span>
           </a>
@@ -44,7 +44,7 @@
           </button>
           <div class="dropdown-menu dropdown-menu-right">
             <!-- item-->
-            <a class="dropdown-item" href="userinfo"><i class="ri-user-line align-middle mr-1"></i>个人资料</a>
+            <a class="dropdown-item" href="/userinfo"><i class="ri-user-line align-middle mr-1"></i>个人资料</a>
             <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="/logout"><i class="ri-shut-down-line align-middle mr-1 text-danger"></i>注销</a>
           </div>
         </div>
@@ -125,7 +125,7 @@
 <!--                    <p class="card-text">操作时长</p>-->
                   </div>
                 <div class="col-3">
-                  <button type="button" class="btn btn-primary  waves-effect waves-light" th:onclick="window.location.href ='/experiment_machine/'+${subExperiment.id}">继续学习</button>
+                  <button type="button" class="btn btn-primary  waves-effect waves-light" th:onclick="window.location.href ='/experiment_machine/'+[[${subExperiment.id}]]">继续学习</button>
                 </div>
                   <div class="col-12" style="margin-top: 20px;"></div>
                 </div>

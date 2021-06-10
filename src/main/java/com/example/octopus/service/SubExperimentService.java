@@ -35,6 +35,11 @@ public interface SubExperimentService {
     /**
      * 根据video查找对应的experimentId
      */
+    long getSubExperimentIdByVideoId(long videoId);
+
+    /**
+     * 根据video查找对应的experiment
+     */
     SubExperiment getSubExperimentByVideoId(long videoId);
 
 }
