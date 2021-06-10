@@ -1,7 +1,10 @@
 package com.example.octopus.controller;
 
 import com.example.octopus.entity.dataset.Dataset;
+import com.example.octopus.entity.experiment.Chapter;
 import com.example.octopus.entity.experiment.Experiment;
+import com.example.octopus.entity.experiment.Module;
+import com.example.octopus.entity.experiment.SubExperiment;
 import com.example.octopus.entity.project.Project;
 import com.example.octopus.service.*;
 import com.example.octopus.utils.CookieTokenUtils;
@@ -21,6 +24,7 @@ import com.example.octopus.entity.user.Course;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -37,9 +41,16 @@ public class studentController {
     @Autowired
     ExperimentService experimentService;
     @Autowired
+    SubExperimentService subExperimentService;
+    @Autowired
     ProjectService projectService;
     @Autowired
     DatasetService datasetService;
+    @Autowired
+    ModuleService moduleService;
+    @Autowired
+    ChapterService chapterService;
+
 
     private final static String cookieName = "cookie_";
 
@@ -85,7 +96,7 @@ public class studentController {
     @RequestMapping("/index")
     public String index(Model model, HttpServletRequest request) {
         String stuNumber = SecurityContextHolder.getContext().getAuthentication().getName();
-        if (!stuNumber.equals(cookieThings.getCookieUserNum(request, cookieName))) return "redirect:/";
+        if(!stuNumber.equals(cookieThings.getCookieUserNum(request, cookieName))) return "redirect:/";
 
         if (!cookieCheck(model, request)) return "redirect:/login";
 
@@ -125,11 +136,23 @@ public class studentController {
 
         logger.info("phoneNumber:" + phoneNumber);
 
-        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
-        boolean status = userService.updatePhoneNumber(stuNum, phoneNumber);
+        Long stuNum =Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        boolean status = userService.updatePhoneNumber(stuNum,phoneNumber);
 
         return "redirect:userinfo";
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     @RequestMapping("/applycourse")
@@ -181,6 +204,7 @@ public class studentController {
 //        String stuname = (String) session.getAttribute("stuname");
 
 
+
         String stuNum = cookieThings.getCookieUserNum(request, cookieName);
         logger.info("确认课程_id:" + id);
         logger.info("确认学生_id:" + stuNum);
@@ -193,7 +217,7 @@ public class studentController {
     }
 
     @RequestMapping("/apply_detail/cancel_apply")
-    public String cancel_apply(String id, Model model, HttpServletRequest request) {
+    public String cancel_apply(String id, Model model,HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
 //        String stuname = (String) session.getAttribute("stuname");
@@ -204,12 +228,27 @@ public class studentController {
         logger.info("确认课程_id:" + id);
         logger.info("确认学生_id:" + stuNum);
         boolean issuccess = studentCourseService.deleteStudentCourse(Long.parseLong(id),Long.parseLong(stuNum));
+        logger.info("删除申请是否成功:" + issuccess);
 
         boolean isapplied = studentCourseService.isChosen(Long.parseLong(stuNum),Long.parseLong(id));
         model.addAttribute("isapplied", isapplied);
 
         return "redirect:/apply_detail/" + id;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     @RequestMapping("/mycourse")
@@ -233,22 +272,43 @@ public class studentController {
 
 
     @RequestMapping("/course_video/{id}")
-    public String course_video(@PathVariable(value = "id") String id, Model model, HttpServletRequest request) {
+    public String course_video(@PathVariable(value = "id") String id,Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
 
         model.addAttribute("id", id);
 
-//        String stuname = (String) session.getAttribute("stuname");
-//        model.addAttribute("stuname", stuname);
+        logger.info("courseid_id:" + id);
+        Long courseid_id = Long.parseLong(id);
+
+        Course course = courseService.getCourseById(courseid_id);
+
+        logger.info("course——detail:" + course);
+        model.addAttribute("course", course);
+
+
+
+
 
 
         return "course_video";
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
     @RequestMapping("/experiment_task")
-    public String experiment_task(Model model, HttpServletRequest request) {
+    public String experiment_task(Model model,HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
 //        String stuname = (String) session.getAttribute("stuname");
@@ -264,19 +324,36 @@ public class studentController {
 
 
     @RequestMapping("/experiment_task_detail/{id}")
-    public String experiment_task_detail(String id, Model model, HttpServletRequest request) {
+    public String experiment_task_detail(@PathVariable(value = "id") String id, Model model,HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
 //        String stuname = (String) session.getAttribute("stuname");
 //        model.addAttribute("stuname", stuname);
 
-        logger.info("experimentMission_id:" + id);
+        logger.info("experiment_id:" + id);
+        Long experiment_id = Long.parseLong(id);
 
-        //        这里需要一个根据实验的id 返回course操作
-        Experiment experiment = experimentService.listExperiments().get(0);
+        Experiment experiment = experimentService.getExperimentById(experiment_id);
 
         logger.info("experiment——detail:" + experiment);
         model.addAttribute("experiment", experiment);
+
+        List<Module> modules = moduleService.listModulesByExperimentId(experiment_id);
+        logger.info("experiment——module:" + modules);
+        logger.info("experiment——module-size:" + modules.size());
+        model.addAttribute("modules", modules);
+        model.addAttribute("modulesnum", modules.size());
+
+        List<List<SubExperiment>> subExperiments = new ArrayList<>();
+        for (int i=0;i<modules.size();i++){
+            logger.info("experiment——module-sub:" + modules.get(i).getId());
+            List<SubExperiment> subExperiment = subExperimentService.listSubExperimentsByModuleId(modules.get(i).getId());
+            subExperiments.add(subExperiment);
+        }
+        logger.info("subExperiments:" + subExperiments);
+        model.addAttribute("subExperiments", subExperiments);
+
+
 
 
         return "experiment_task_detail";
