@@ -9,6 +9,7 @@ import com.example.octopus.utils.UploadFileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -63,7 +64,7 @@ public class adminController {
         // 检查cookie合法性
         TokenCheckUtils tokenCheck = cookieThings.validateToken(request, cookieName);
         if (tokenCheck.isSuccess()) {
-            model.addAttribute("stuname", tokenCheck.getUserName());
+            model.addAttribute("username", tokenCheck.getUserName());
             return true;
         } else {
             logger.info(tokenCheck.getErrorType() + "  需要重新登录!");
@@ -74,28 +75,24 @@ public class adminController {
 
     //登录
     @RequestMapping("/admin_login")
-    public String admin_login(Model model, HttpServletRequest request, HttpSession session) {
-        cookieThings.deleteCookie(request, cookieName);
-
-        //session.setAttribute("user", "null");
-        return "admin_login";
+    public String admin_login() {
+        return "redirect:/login";
     }
 
-    //登录验证 跳转到首页
-    @PostMapping("/admin_confirmlogin")
-    public String admin_confirmlogin(@RequestParam("username") String username, @RequestParam("userpwd") String userpwd, HttpSession session) {
-        logger.info("用户名：" + username);
-        logger.info("密码：" + userpwd);
-        session.setAttribute("user", username);
-        return "redirect:/admin_index";
-    }
+//    //登录验证 跳转到首页
+//    @PostMapping("/admin_confirmlogin")
+//    public String admin_confirmlogin(@RequestParam("username") String username, @RequestParam("userpwd") String userpwd, HttpSession session) {
+//        logger.info("用户名：" + username);
+//        logger.info("密码：" + userpwd);
+//        session.setAttribute("user", username);
+//        return "redirect:/admin_index";
+//    }
 
     //个人资料
     @RequestMapping("/admin_userinfo")
     public String admin_userinfo(HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("user");
-        model.addAttribute("username", username);
+        if (!cookieCheck(model, request)) return "redirect:/login";
+
         //查询个人资料
         return "admin_userinfo";
     }
@@ -125,12 +122,21 @@ public class adminController {
     //首页
     @RequestMapping("/admin_index")
     public String confirmlogin(HttpServletRequest request, Model model) {
+        String teaNumber = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (!teaNumber.equals(cookieThings.getCookieUserNum(request, cookieName))) return "redirect:/";
+
+        if (!cookieCheck(model, request)) return "redirect:/login";
+
+        // todo 获取用户名及用户id的方法使用如下语句
+        String teaName = cookieThings.getCookieUserName(request, cookieName);
+        String teaNum = cookieThings.getCookieUserNum(request, cookieName);
+
         try {
             HttpSession session = request.getSession();
             //logger.info(session);
-            String username = (String) session.getAttribute("user");
+            //String username = (String) session.getAttribute("user");
             //logger.info("用户名：" + username);
-            model.addAttribute("username", username);
+            //model.addAttribute("username", username);
             model.addAttribute("sizeof_experiments", experimentService.listExperiments().size());
             model.addAttribute("sizeof_projects", experimentService.listExperiments().size());
             model.addAttribute("sizeof_datasets", datasetService.listDatasets().size());
@@ -145,11 +151,13 @@ public class adminController {
     //专业管理
     @RequestMapping("/admin_major")
     public String admin_major(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return "redirect:/login";
+
         logger.info("进入专业管理");
         //判断用户是管理员还是老师
-        HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("user");
-        model.addAttribute("username", username);
+//        HttpSession session = request.getSession();
+//        String username = (String) session.getAttribute("user");
+//        model.addAttribute("username", username);
         model.addAttribute("majors", majorService.listMajors());
         //model.addAttribute("majors", majorService.getByTeaNumber(Long.parseLong("1")));
         return "admin_major";
@@ -204,10 +212,9 @@ public class adminController {
     //班级管理
     @RequestMapping("/admin_class")
     public String admin_class(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return "redirect:/login";
+
         logger.info("进入班级管理");
-        HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("user");
-        model.addAttribute("username", username);
         model.addAttribute("classes", classService.listClass_s());
         return "admin_class";
     }
@@ -260,10 +267,9 @@ public class adminController {
     //学生管理
     @RequestMapping("/admin_student")
     public String admin_student(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return "redirect:/login";
+
         logger.info("进入学生管理");
-        HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("user");
-        model.addAttribute("username", username);
         model.addAttribute("students", userService.listStudents());
         //model.addAttribute("students", userService.listStudentsByTeaNumber(Long.parseLong("1")));
         //判断身份
@@ -322,10 +328,9 @@ public class adminController {
     //开课计划管理
     @RequestMapping("/admin_course")
     public String admin_course(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return "redirect:/login";
+
         logger.info("进入开课计划管理");
-        HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("user");
-        model.addAttribute("username", username);
         model.addAttribute("courses", courseService.listCourses());
         return "admin_course";
     }
@@ -378,10 +383,9 @@ public class adminController {
     //学生开课计划管理
     @RequestMapping("/admin_course_student")
     public String admin_course_student(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return "redirect:/login";
+
         logger.info("进入学生开课计划管理");
-        HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("user");
-        model.addAttribute("username", username);
         //返回
         //model.addAttribute("course_students", studentcourseService.listStudentCoursesByTeaNumber());
         return "admin_course_student";
@@ -436,99 +440,87 @@ public class adminController {
 
     @RequestMapping("/admin_video_log")
     public String admin_video_log(HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("user");
-        model.addAttribute("username", username);
+        if (!cookieCheck(model, request)) return "redirect:/login";
+
         return "admin_video_log";
     }
 
     @RequestMapping("/admin_video_log_details")
     public String admin_video_log_details(HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("user");
-        model.addAttribute("username", username);
+        if (!cookieCheck(model, request)) return "redirect:/login";
+
         return "admin_video_log_details";
     }
 
     @RequestMapping("/admin_report")
     public String admin_report(HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("user");
-        model.addAttribute("username", username);
+        if (!cookieCheck(model, request)) return "redirect:/login";
+
         return "admin_report";
     }
 
     @RequestMapping("/admin_report_detail")
     public String admin_report_detail(HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("user");
-        model.addAttribute("username", username);
+        if (!cookieCheck(model, request)) return "redirect:/login";
+
         model.addAttribute("pdf", "https://arxiv.org/pdf/1508.01006v1.pdf");
         return "admin_report_detail";
     }
 
     @RequestMapping("/admin_experiment_log")
     public String admin_experiment_log(HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("user");
-        model.addAttribute("username", username);
+        if (!cookieCheck(model, request)) return "redirect:/login";
+
         return "admin_experiment_log";
     }
 
     @RequestMapping("/admin_pc_type")
     public String admin_pc_type(HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("user");
-        model.addAttribute("username", username);
+        if (!cookieCheck(model, request)) return "redirect:/login";
+
         return "admin_pc_type";
     }
 
     @RequestMapping("/admin_cluster")
     public String admin_cluster(HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("user");
-        model.addAttribute("username", username);
+        if (!cookieCheck(model, request)) return "redirect:/login";
+
         return "admin_cluster";
     }
 
     @RequestMapping("/admin_student_pc")
     public String admin_student_pc(HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("user");
-        model.addAttribute("username", username);
+        if (!cookieCheck(model, request)) return "redirect:/login";
+
         return "admin_student_pc";
     }
 
     @RequestMapping("/admin_report_template")
     public String admin_report_template(HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("user");
-        model.addAttribute("username", username);
+        if (!cookieCheck(model, request)) return "redirect:/login";
+
         return "admin_report_template";
     }
 
     @RequestMapping("/admin_video")
     public String admin_video(HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("user");
-        model.addAttribute("username", username);
+        if (!cookieCheck(model, request)) return "redirect:/login";
+
         return "admin_video";
     }
 
     @RequestMapping("/admin_video_class")
     public String admin_video_class(HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("user");
-        model.addAttribute("username", username);
+        if (!cookieCheck(model, request)) return "redirect:/login";
+
         return "admin_video_class";
     }
 
     //数据集管理
     @RequestMapping("/admin_dataset")
     public String admin_dataset(HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("user");
-        model.addAttribute("username", username);
+        if (!cookieCheck(model, request)) return "redirect:/login";
+
         model.addAttribute("datasets", datasetService.listDatasets());
         return "admin_dataset";
     }
@@ -590,7 +582,8 @@ public class adminController {
 
 
     @RequestMapping("/report_upload")
-    public String report_upload(Model model) {
+    public String report_upload(Model model, HttpServletRequest request) {
+        if (!cookieCheck(model, request)) return "redirect:/login";
 
         return "report_upload";
     }
