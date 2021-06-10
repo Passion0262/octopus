@@ -41,6 +41,13 @@ public interface CourseService {
     List<Course> listCoursesByTeaNumber(long teaNumber);
 
     /**
+     * 查询选课人数是否已达上限
+     * @param courseId 课程id
+     * @return 满了为true，没满为false
+     */
+    boolean isFull(long courseId);
+
+    /**
      * 新增课程
      * @param course  课程实体
      * @return 成功为true，失败为false

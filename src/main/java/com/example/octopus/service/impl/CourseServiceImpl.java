@@ -63,6 +63,12 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    public boolean isFull(long courseId) {
+        Course course = getCourseById(courseId);
+        return course.getNumParticipated() >= course.getNumAllowed();
+    }
+
+    @Override
     public boolean insertCourse(Course course) {
         return courseMapper.insertCourse(course);
     }

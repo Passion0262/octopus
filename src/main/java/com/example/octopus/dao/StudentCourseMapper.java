@@ -17,6 +17,13 @@ import java.util.List;
 public interface StudentCourseMapper {
 
     /**
+     * 返回所有学生-课程信息
+     * @return 学生课程 list
+     */
+    @Select("SELECT * FROM student_course")
+    List<StudentCourse> listStudentCourses();
+
+    /**
      * 学生选课
      * @param studentCourse 学生-课程实体
      * @return 成功为true，失败为false

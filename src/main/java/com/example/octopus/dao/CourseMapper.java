@@ -66,7 +66,7 @@ public interface CourseMapper {
      * @return chapter list
      */
     @Select(("SELECT * FROM chapter where course_id = #{courseId} order by number" ))
-    List<Chapter> selectChapterByCourseId(long courseId) ;
+    List<Chapter> getChapterByCourseId(long courseId) ;
 
     /**
      * 根据 chapterid 查询视频
@@ -74,7 +74,7 @@ public interface CourseMapper {
      * @return video list
      */
     @Select(("SELECT * FROM video where chapter_id = #{chapterId} order by number"))
-    List<Video> selectVideoByChapterId(long chapterId) ;
+    List<Video> getVideoByChapterId(long chapterId) ;
 
 
 }
