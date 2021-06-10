@@ -85,7 +85,7 @@ public class studentController {
     @RequestMapping("/index")
     public String index(Model model, HttpServletRequest request) {
         String stuNumber = SecurityContextHolder.getContext().getAuthentication().getName();
-        if(!stuNumber.equals(cookieThings.getCookieUserNum(request, cookieName))) return "redirect:/";
+        if (!stuNumber.equals(cookieThings.getCookieUserNum(request, cookieName))) return "redirect:/";
 
         if (!cookieCheck(model, request)) return "redirect:/login";
 
@@ -125,23 +125,11 @@ public class studentController {
 
         logger.info("phoneNumber:" + phoneNumber);
 
-        Long stuNum =Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
-        boolean status = userService.updatePhoneNumber(stuNum,phoneNumber);
+        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        boolean status = userService.updatePhoneNumber(stuNum, phoneNumber);
 
         return "redirect:userinfo";
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     @RequestMapping("/applycourse")
@@ -193,7 +181,6 @@ public class studentController {
 //        String stuname = (String) session.getAttribute("stuname");
 
 
-
         String stuNum = cookieThings.getCookieUserNum(request, cookieName);
         logger.info("确认课程_id:" + id);
         logger.info("确认学生_id:" + stuNum);
@@ -206,7 +193,7 @@ public class studentController {
     }
 
     @RequestMapping("/apply_detail/cancel_apply")
-    public String cancel_apply(String id, Model model,HttpServletRequest request) {
+    public String cancel_apply(String id, Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
 //        String stuname = (String) session.getAttribute("stuname");
@@ -223,20 +210,6 @@ public class studentController {
 
         return "redirect:/apply_detail/" + id;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     @RequestMapping("/mycourse")
@@ -260,7 +233,7 @@ public class studentController {
 
 
     @RequestMapping("/course_video/{id}")
-    public String course_video(@PathVariable(value = "id") String id,Model model, HttpServletRequest request) {
+    public String course_video(@PathVariable(value = "id") String id, Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
 
@@ -270,25 +243,12 @@ public class studentController {
 //        model.addAttribute("stuname", stuname);
 
 
-
         return "course_video";
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     @RequestMapping("/experiment_task")
-    public String experiment_task(Model model,HttpServletRequest request) {
+    public String experiment_task(Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
 //        String stuname = (String) session.getAttribute("stuname");
@@ -304,7 +264,7 @@ public class studentController {
 
 
     @RequestMapping("/experiment_task_detail/{id}")
-    public String experiment_task_detail(String id, Model model,HttpServletRequest request) {
+    public String experiment_task_detail(String id, Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
 //        String stuname = (String) session.getAttribute("stuname");
