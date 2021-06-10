@@ -6,6 +6,7 @@ import com.example.octopus.entity.experiment.Experiment;
 import com.example.octopus.entity.experiment.Module;
 import com.example.octopus.entity.experiment.SubExperiment;
 import com.example.octopus.entity.project.Project;
+import com.example.octopus.entity.user.Teacher;
 import com.example.octopus.service.*;
 import com.example.octopus.utils.CookieTokenUtils;
 import com.example.octopus.utils.TokenCheckUtils;
@@ -33,6 +34,9 @@ public class studentController {
     private Logger logger = LoggerFactory.getLogger(studentController.class);
 
     @Autowired
+    SysUserRoleService sysUserRoleService;
+
+    @Autowired
     UserService userService;
     @Autowired
     CourseService courseService;
@@ -50,6 +54,8 @@ public class studentController {
     ModuleService moduleService;
     @Autowired
     ChapterService chapterService;
+    @Autowired
+    TeacherService teacherService;
 
 
     private final static String cookieName = "cookie_";
@@ -79,24 +85,27 @@ public class studentController {
     @RequestMapping("/")
     public String showHome(Model model, HttpServletRequest request, HttpServletResponse response) {
 
-        String stuNumber = SecurityContextHolder.getContext().getAuthentication().getName();
-        Student stu = userService.getStudentByStuNumber(Long.parseLong(stuNumber));
-        logger.info("当前登陆用户：" + stuNumber + ":" + stu.getName());
-
-        // 创建带token的cookie，token中包含用户id和name
-//        CookieTokenUtils cookieTokenUtils = new CookieTokenUtils();
-        cookieThings.setCookie(stuNumber, stu.getName(), response, cookieName);
-
-//        model.addAttribute("stu", stu);
-//        session.setAttribute("stuname",stu.getName());
-//        return "home";
-        return "redirect:/index";
+        String userNumber = SecurityContextHolder.getContext().getAuthentication().getName();
+        int role = sysUserRoleService.getRoleIdByUserId(Long.parseLong(userNumber));  //查表获取用户权限代码
+        if (role == 2) {
+            //身份为学生，进入前台系统
+            Student stu = userService.getStudentByStuNumber(Long.parseLong(userNumber));
+            logger.info("当前登陆身份为：学生        欢迎您，" + userNumber + ":" + stu.getName());
+            cookieThings.setCookie(userNumber, stu.getName(), response, cookieName);
+            return "redirect:/index";
+        } else {
+            //身份为教师或管理员，进入后台系统
+            Teacher tea = teacherService.getTeacherByTeaNumber(Long.parseLong(userNumber));
+            logger.info("当前登陆身份为：教师/管理员        欢迎您，" + userNumber + ":" + tea.getName());
+            cookieThings.setCookie(userNumber, tea.getName(), response, cookieName);
+            return "redirect:/admin_index";
+        }
     }
 
     @RequestMapping("/index")
     public String index(Model model, HttpServletRequest request) {
         String stuNumber = SecurityContextHolder.getContext().getAuthentication().getName();
-        if(!stuNumber.equals(cookieThings.getCookieUserNum(request, cookieName))) return "redirect:/";
+        if (!stuNumber.equals(cookieThings.getCookieUserNum(request, cookieName))) return "redirect:/";
 
         if (!cookieCheck(model, request)) return "redirect:/login";
 
@@ -136,23 +145,11 @@ public class studentController {
 
         logger.info("phoneNumber:" + phoneNumber);
 
-        Long stuNum =Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
-        boolean status = userService.updatePhoneNumber(stuNum,phoneNumber);
+        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        boolean status = userService.updatePhoneNumber(stuNum, phoneNumber);
 
         return "redirect:userinfo";
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     @RequestMapping("/applycourse")
@@ -188,7 +185,7 @@ public class studentController {
 
 
         String stuNum = cookieThings.getCookieUserNum(request, cookieName);
-        boolean isapplied = studentCourseService.isChosen(Long.parseLong(stuNum),Long.parseLong(id));
+        boolean isapplied = studentCourseService.isChosen(Long.parseLong(stuNum), Long.parseLong(id));
 
         logger.info("isapplied:" + isapplied);
 
@@ -204,20 +201,19 @@ public class studentController {
 //        String stuname = (String) session.getAttribute("stuname");
 
 
-
         String stuNum = cookieThings.getCookieUserNum(request, cookieName);
         logger.info("确认课程_id:" + id);
         logger.info("确认学生_id:" + stuNum);
-        boolean issuccess = studentCourseService.insertStudentCourse(Long.parseLong(id),Long.parseLong(stuNum));
+        boolean issuccess = studentCourseService.insertStudentCourse(Long.parseLong(id), Long.parseLong(stuNum));
 
-        boolean isapplied = studentCourseService.isChosen(Long.parseLong(stuNum),Long.parseLong(id));
+        boolean isapplied = studentCourseService.isChosen(Long.parseLong(stuNum), Long.parseLong(id));
         model.addAttribute("isapplied", isapplied);
 
         return "redirect:/apply_detail/" + id;
     }
 
     @RequestMapping("/apply_detail/cancel_apply")
-    public String cancel_apply(String id, Model model,HttpServletRequest request) {
+    public String cancel_apply(String id, Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
 //        String stuname = (String) session.getAttribute("stuname");
@@ -227,28 +223,14 @@ public class studentController {
         String stuNum = cookieThings.getCookieUserNum(request, cookieName);
         logger.info("确认课程_id:" + id);
         logger.info("确认学生_id:" + stuNum);
-        boolean issuccess = studentCourseService.deleteStudentCourse(Long.parseLong(id),Long.parseLong(stuNum));
+        boolean issuccess = studentCourseService.deleteStudentCourse(Long.parseLong(id), Long.parseLong(stuNum));
         logger.info("删除申请是否成功:" + issuccess);
 
-        boolean isapplied = studentCourseService.isChosen(Long.parseLong(stuNum),Long.parseLong(id));
+        boolean isapplied = studentCourseService.isChosen(Long.parseLong(stuNum), Long.parseLong(id));
         model.addAttribute("isapplied", isapplied);
 
         return "redirect:/apply_detail/" + id;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     @RequestMapping("/mycourse")
@@ -270,9 +252,8 @@ public class studentController {
     }
 
 
-
     @RequestMapping("/course_video/{id}")
-    public String course_video(@PathVariable(value = "id") String id,Model model, HttpServletRequest request) {
+    public String course_video(@PathVariable(value = "id") String id, Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
 
@@ -287,28 +268,12 @@ public class studentController {
         model.addAttribute("course", course);
 
 
-
-
-
-
         return "course_video";
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     @RequestMapping("/experiment_task")
-    public String experiment_task(Model model,HttpServletRequest request) {
+    public String experiment_task(Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
 //        String stuname = (String) session.getAttribute("stuname");
@@ -324,7 +289,7 @@ public class studentController {
 
 
     @RequestMapping("/experiment_task_detail/{id}")
-    public String experiment_task_detail(@PathVariable(value = "id") String id, Model model,HttpServletRequest request) {
+    public String experiment_task_detail(@PathVariable(value = "id") String id, Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
 //        String stuname = (String) session.getAttribute("stuname");
@@ -345,7 +310,7 @@ public class studentController {
         model.addAttribute("modulesnum", modules.size());
 
         List<List<SubExperiment>> subExperiments = new ArrayList<>();
-        for (int i=0;i<modules.size();i++){
+        for (int i = 0; i < modules.size(); i++) {
             logger.info("experiment——module-sub:" + modules.get(i).getId());
             List<SubExperiment> subExperiment = subExperimentService.listSubExperimentsByModuleId(modules.get(i).getId());
             subExperiments.add(subExperiment);
@@ -354,14 +319,12 @@ public class studentController {
         model.addAttribute("subExperiments", subExperiments);
 
 
-
-
         return "experiment_task_detail";
     }
 
 
     @RequestMapping("/experiment_machine/{id}")
-    public String experiment_machine(@PathVariable(value = "id") String id,Model model, HttpServletRequest request) {
+    public String experiment_machine(@PathVariable(value = "id") String id, Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
 //        String stuname = (String) session.getAttribute("stuname");
@@ -386,7 +349,6 @@ public class studentController {
 //        logger.info("fileupload:" + request.getParameter("dir"));
         return "redirect:/experiment_machine";
     }
-
 
 
     @RequestMapping("/projects")

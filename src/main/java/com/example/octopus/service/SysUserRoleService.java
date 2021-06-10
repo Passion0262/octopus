@@ -13,4 +13,11 @@ public interface SysUserRoleService {
 
     public List<SysUserRole> listByUserId(long stuNumber);
 
+    /**
+     * 在sys_user_role表中，通过用户号（包括学生号和教师号）来查找对应的角色权限
+     * @param stuNumber  用户号，包括学生号和教师号，非单一的学生号
+     * @return 返回角色权限代码
+     */
+    public int getRoleIdByUserId(long stuNumber);
+
 }

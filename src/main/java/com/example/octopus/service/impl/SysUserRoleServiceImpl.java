@@ -24,5 +24,9 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
         return sysUserRoleMapper.listByUserId(stuNumber);
     }
 
+    @Override
+    public int getRoleIdByUserId(long stuNumber){
+        return sysUserRoleMapper.getRoleByUserId(stuNumber);
+    }
 
 }
