@@ -204,6 +204,7 @@
             },
             success: function () {
                 alert("申请成功");
+                window.location.replace("/apply_detail/"+id);
             },
             error: function () {
                 alert("申请失败，请稍后再试");
@@ -230,6 +231,7 @@
         },
         success: function () {
           alert("取消申请成功");
+          window.location.replace("/apply_detail/"+id);
         },
         error: function () {
           alert("取消申请失败，请稍后再试");
