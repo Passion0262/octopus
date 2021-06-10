@@ -2,6 +2,7 @@ package com.example.octopus.controller;
 
 import com.example.octopus.entity.dataset.Dataset;
 import com.example.octopus.entity.experiment.*;
+import com.example.octopus.entity.experiment.Module;
 import com.example.octopus.entity.project.Project;
 import com.example.octopus.entity.user.Teacher;
 import com.example.octopus.service.*;

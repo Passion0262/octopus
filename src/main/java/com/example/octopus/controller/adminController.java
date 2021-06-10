@@ -166,46 +166,52 @@ public class adminController {
     //增加专业
     @GetMapping("/admin_major_add")
     public ModelAndView admin_major_add(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
         logger.info("进入admin_major_add，获取一个新Major()");
-        String user = request.getParameter("username");
-        model.addAttribute("username", user);
         model.addAttribute("major", new Major());
         return new ModelAndView("admin_major_add", "majormodel", model);
     }
 
     @PostMapping("/add_major")
-    public ModelAndView add_major(Major major) {
+    public ModelAndView add_major(Major major, HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
         logger.info("提交新增的major: [{}]", major);
         majorService.insertMajor(major);
-        return new ModelAndView("redirect:/admin_major");
+        return new ModelAndView("redirect:/admin_major", "majormodel", model);
     }
 
     //修改专业
     @GetMapping("/admin_major_edit")
     public ModelAndView admin_major_edit(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
         logger.info("进入admin_major_edit，获取指定编号的Major()");
         long id = Long.parseLong(request.getParameter("id"));
         logger.info("id=" + id);
-        String user = request.getParameter("username");
-        model.addAttribute("username", user);
         model.addAttribute("major", majorService.getById(id));
         return new ModelAndView("admin_major_edit", "majormodel", model);
     }
 
     @PostMapping("/edit_major")
-    public ModelAndView edit_major(Major major) {
+    public ModelAndView edit_major(Major major, HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
         logger.info("提交修改的major: [{}]", major);
         majorService.updateMajor(major);
-        return new ModelAndView("redirect:/admin_major");
+        return new ModelAndView("redirect:/admin_major", "majormodel", model);
     }
 
     //删除专业
     @RequestMapping("/admin_major_delete")
-    public ModelAndView admin_major_delete(HttpServletRequest request) {
+    public ModelAndView admin_major_delete(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
         long id = Long.parseLong(request.getParameter("id"));
         logger.info("删除专业 id=[{}]", id);
         majorService.deleteById(id);
-        return new ModelAndView("redirect:/admin_major");
+        return new ModelAndView("redirect:/admin_major", "majormodel", model);
     }
 
 
@@ -222,46 +228,53 @@ public class adminController {
     //增加班级
     @GetMapping("/admin_class_add")
     public ModelAndView admin_class_add(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
+
         logger.info("进入admin_major_add，获取一个新Class_()");
-        String user = request.getParameter("username");
-        model.addAttribute("username", user);
         model.addAttribute("class", new Class_());
         return new ModelAndView("admin_class_add", "classmodel", model);
     }
 
     @PostMapping("/add_class")
-    public ModelAndView add_class(Class_ class_) {
+    public ModelAndView add_class(Class_ class_, Model model, HttpServletRequest request) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
         logger.info("提交新增的class_: [{}]", class_);
         classService.insertClass(class_);
-        return new ModelAndView("redirect:/admin_class");
+        return new ModelAndView("redirect:/admin_class", "classmodel", model);
     }
 
     //修改班级
     @GetMapping("/admin_class_edit")
     public ModelAndView admin_class_edit(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
         logger.info("admin_class_edit，获取指定id的Class_()");
         long id = Long.parseLong(request.getParameter("id"));
         logger.info("class id=" + id);
-        String user = request.getParameter("username");
-        model.addAttribute("username", user);
         model.addAttribute("class", classService.getClass_Byid(id));
         return new ModelAndView("admin_class_edit", "classmodel", model);
     }
 
     @PostMapping("/edit_class")
-    public ModelAndView edit_class(Class_ class_) {
+    public ModelAndView edit_class(Class_ class_, Model model, HttpServletRequest request) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
         logger.info("提交修改的class_: [{}]", class_);
         //修改
-        return new ModelAndView("redirect:/admin_class");
+        return new ModelAndView("redirect:/admin_class", "classmodel", model);
     }
 
     //删除班级
     @RequestMapping("/admin_class_delete")
-    public ModelAndView admin_class_delete(HttpServletRequest request) {
+    public ModelAndView admin_class_delete(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
         String className = request.getParameter("className");
         logger.info("删除 className=" + className);
         classService.deleteByClassName(className);
-        return new ModelAndView("redirect:/admin_class");
+        return new ModelAndView("redirect:/admin_class", "classmodel", model);
     }
 
     //学生管理
@@ -281,48 +294,54 @@ public class adminController {
     //增加学生
     @GetMapping("/admin_student_add")
     public ModelAndView admin_student_add(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
         logger.info("进入admin_student_add，获取一个新Student()");
-        String user = request.getParameter("username");
-        model.addAttribute("username", user);
         model.addAttribute("student", new Student());
         return new ModelAndView("admin_student_add", "stumodel", model);
     }
 
     @PostMapping("/add_student")
-    public ModelAndView add_student(Student student) {
+    public ModelAndView add_student(Student student, HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
         logger.info("提交新增的student: [{}]", student);
         //补全最近登录时间 登录总时长信息
         userService.insertStudent(student);
-        return new ModelAndView("redirect:/admin_student");
+        return new ModelAndView("redirect:/admin_student", "stumodel", model);
     }
 
     //修改学生
     @GetMapping("/admin_student_edit")
     public ModelAndView admin_student_edit(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
         logger.info("admin_student_edit，获取指定名字的Student()");
         long stuNumber = Long.parseLong(request.getParameter("stuNumber"));
         logger.info("stuNumber=" + stuNumber);
-        String user = request.getParameter("username");
         Student student = userService.getStudentByStuNumber(stuNumber);
-        model.addAttribute("username", user);
         model.addAttribute("student", student);
         return new ModelAndView("admin_student_edit", "stumodel", model);
     }
 
     @PostMapping("/edit_student")
-    public ModelAndView edit_student(Student student) {
+    public ModelAndView edit_student(Student student, HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
         logger.info("提交修改的student: [{}]", student);
         userService.updateStudent(student);
-        return new ModelAndView("redirect:/admin_student");
+        return new ModelAndView("redirect:/admin_student", "stumodel", model);
     }
 
     //删除学生
     @RequestMapping("/admin_student_delete")
-    public ModelAndView admin_student_delete(HttpServletRequest request) {
+    public ModelAndView admin_student_delete(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
         String stuNumber = request.getParameter("stuNumber");
         logger.info("删除 stuNumber=" + stuNumber);
         //删除学生
-        return new ModelAndView("redirect:/admin_student");
+        return new ModelAndView("redirect:/admin_student", "stumodel", model);
     }
 
     //开课计划管理
@@ -338,46 +357,52 @@ public class adminController {
     //课程增加
     @GetMapping("/admin_course_add")
     public ModelAndView admin_course_add(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
         logger.info("进入admin_course_add，获取一个新Course()");
-        String user = request.getParameter("username");
-        model.addAttribute("username", user);
         model.addAttribute("course", new Course());
         return new ModelAndView("admin_course_add", "coursemodel", model);
     }
 
     @PostMapping("/add_course")
-    public ModelAndView add_course(Course course) {
+    public ModelAndView add_course(Course course, HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
         logger.info("提交新增的course: [{}]", course);
         courseService.insertCourse(course);
-        return new ModelAndView("redirect:/admin_course");
+        return new ModelAndView("redirect:/admin_course", "coursemodel", model);
     }
 
     //修改课程
     @GetMapping("/admin_course_edit")
     public ModelAndView admin_course_edit(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
         logger.info("进入admin_course_edit，获取指定名字的Course()");
         long courseId = Long.parseLong(request.getParameter("courseId"));
         logger.info("courseId=" + courseId);
-        String user = request.getParameter("username");
-        model.addAttribute("username", user);
         model.addAttribute("course", courseService.getCourseById(courseId));
         return new ModelAndView("admin_course_edit", "coursemodel", model);
     }
 
     @PostMapping("/edit_course")
-    public ModelAndView edit_course(Course course) {
+    public ModelAndView edit_course(Course course, Model model, HttpServletRequest request) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
         logger.info("提交修改的course: [{}]", course);
         courseService.updateCourse(course);
-        return new ModelAndView("redirect:/admin_course");
+        return new ModelAndView("redirect:/admin_course", "coursemodel", model);
     }
 
     //删除课程
     @RequestMapping("/admin_course_delete")
-    public ModelAndView admin_course_delete(HttpServletRequest request) {
+    public ModelAndView admin_course_delete(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
         long courseId = Long.parseLong(request.getParameter("courseId"));
         logger.info("删除 courseId=" + courseId);
         courseService.deleteCourseById(courseId);
-        return new ModelAndView("redirect:/admin_course");
+        return new ModelAndView("redirect:/admin_course", "coursemodel", model);
     }
 
     //学生开课计划管理
@@ -394,16 +419,17 @@ public class adminController {
     //学生开课计划增加
     @GetMapping("/admin_course_student_add")
     public ModelAndView admin_course_student_add(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
         logger.info("进入admin_course_student_add，Student_Course()");
-        HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("user");
-        model.addAttribute("username", username);
         model.addAttribute("course_student", new StudentCourse());
         return new ModelAndView("admin_course_student_add", "coursestudentmodel", model);
     }
 
     @PostMapping("/add_course_student")
-    public ModelAndView add_course_student(StudentCourse course_student) {
+    public ModelAndView add_course_student(StudentCourse course_student, Model model, HttpServletRequest request) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
         logger.info("提交新增的course_student: [{}]", course_student);
         //增加
         return new ModelAndView("redirect:/admin_course_student");
@@ -431,11 +457,13 @@ public class adminController {
 
     //删除学生开课计划
     @RequestMapping("/admin_course_student_delete")
-    public ModelAndView admin_course_student_delete(HttpServletRequest request) {
+    public ModelAndView admin_course_student_delete(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
         long courseId = Long.parseLong(request.getParameter("id"));
         logger.info("删除 courseId=" + courseId);
         //删除
-        return new ModelAndView("redirect:/admin_course_student");
+        return new ModelAndView("redirect:/admin_course_student", "coursestudentmodel", model);
     }
 
     @RequestMapping("/admin_video_log")
