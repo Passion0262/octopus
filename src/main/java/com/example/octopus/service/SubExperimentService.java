@@ -32,4 +32,9 @@ public interface SubExperimentService {
      */
     int getSubExperimentNumsByExperimentId(long experimentId);
 
+    /**
+     * 根据video查找对应的experimentId
+     */
+    SubExperiment getSubExperimentByVideoId(long videoId);
+
 }

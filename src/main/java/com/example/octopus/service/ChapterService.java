@@ -10,5 +10,5 @@ public interface ChapterService {
      * @param courseId  课程id
      * @return chapter list
      */
-    List<Chapter> listChapterByCourseId(long courseId) ;
+    List<Chapter> listChaptersByCourseId(long courseId) ;
 }

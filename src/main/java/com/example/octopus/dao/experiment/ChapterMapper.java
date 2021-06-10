@@ -1,4 +1,4 @@
-package com.example.octopus.dao;
+package com.example.octopus.dao.experiment;
 
 import com.example.octopus.entity.experiment.Chapter;
 import com.example.octopus.entity.experiment.Module;
@@ -16,5 +16,5 @@ public interface ChapterMapper {
      * @return chapter list
      */
     @Select(("SELECT * FROM chapter where course_id = #{courseId} order by number" ))
-    List<Chapter> listChapterByCourseId(long courseId) ;
+    List<Chapter> listChaptersByCourseId(long courseId) ;
 }

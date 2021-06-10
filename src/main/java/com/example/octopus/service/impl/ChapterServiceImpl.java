@@ -1,6 +1,6 @@
 package com.example.octopus.service.impl;
 
-import com.example.octopus.dao.ChapterMapper;
+import com.example.octopus.dao.experiment.ChapterMapper;
 import com.example.octopus.entity.experiment.Chapter;
 import com.example.octopus.service.ChapterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ public class ChapterServiceImpl implements ChapterService {
     ChapterMapper chapterMapper;
 
     @Override
-    public List<Chapter> listChapterByCourseId(long courseId) {
-        return chapterMapper.listChapterByCourseId(courseId);
+    public List<Chapter> listChaptersByCourseId(long courseId) {
+        return chapterMapper.listChaptersByCourseId(courseId);
     }
 }
