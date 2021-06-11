@@ -26,7 +26,7 @@ public class Course {
     private String teacher;
 
 //    @Column(nullable = false,columnDefinition = "varchar(30) comment '分类'")
-    private String classification;
+//    private String classification;
 
 //    @Column(nullable = false,columnDefinition = "varchar(255) comment '课程简介'")
     private String description;
@@ -34,7 +34,7 @@ public class Course {
 //    @Column(nullable = false,columnDefinition = "varchar(255) comment '课程标图地址'")
     private String imagePath;
 
-    private long experimentMissionId;
+//    private long experimentMissionId;
 
 //    @Column(nullable = false,columnDefinition = "date comment '开始时间'")
     private Date startTime;

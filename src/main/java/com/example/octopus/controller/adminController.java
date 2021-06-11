@@ -135,8 +135,8 @@ public class adminController {
             HttpSession session = request.getSession();
             //logger.info(session);
             //String username = (String) session.getAttribute("user");
-            //logger.info("用户名：" + username);
-            //model.addAttribute("username", username);
+            logger.info("用户名：" + teaName);
+            model.addAttribute("username", teaName);
             model.addAttribute("sizeof_experiments", experimentService.listExperiments().size());
             model.addAttribute("sizeof_projects", experimentService.listExperiments().size());
             model.addAttribute("sizeof_datasets", datasetService.listDatasets().size());
@@ -152,12 +152,13 @@ public class adminController {
     @RequestMapping("/admin_major")
     public String admin_major(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-
+        String teaName = cookieThings.getCookieUserName(request, cookieName);
+        String teaNum = cookieThings.getCookieUserNum(request, cookieName);
         logger.info("进入专业管理");
         //判断用户是管理员还是老师
 //        HttpSession session = request.getSession();
 //        String username = (String) session.getAttribute("user");
-//        model.addAttribute("username", username);
+        model.addAttribute("username", teaName);
         model.addAttribute("majors", majorService.listMajors());
         //model.addAttribute("majors", majorService.getByTeaNumber(Long.parseLong("1")));
         return "admin_major";
@@ -219,7 +220,9 @@ public class adminController {
     @RequestMapping("/admin_class")
     public String admin_class(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-
+        String teaName = cookieThings.getCookieUserName(request, cookieName);
+        String teaNum = cookieThings.getCookieUserNum(request, cookieName);
+        model.addAttribute("username", teaName);
         logger.info("进入班级管理");
         model.addAttribute("classes", classService.listClass_s());
         return "admin_class";
@@ -281,7 +284,9 @@ public class adminController {
     @RequestMapping("/admin_student")
     public String admin_student(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-
+        String teaName = cookieThings.getCookieUserName(request, cookieName);
+        String teaNum = cookieThings.getCookieUserNum(request, cookieName);
+        model.addAttribute("username", teaName);
         logger.info("进入学生管理");
         model.addAttribute("students", userService.listStudents());
         //model.addAttribute("students", userService.listStudentsByTeaNumber(Long.parseLong("1")));
@@ -348,7 +353,9 @@ public class adminController {
     @RequestMapping("/admin_course")
     public String admin_course(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-
+        String teaName = cookieThings.getCookieUserName(request, cookieName);
+        String teaNum = cookieThings.getCookieUserNum(request, cookieName);
+        model.addAttribute("username", teaName);
         logger.info("进入开课计划管理");
         model.addAttribute("courses", courseService.listCourses());
         return "admin_course";
@@ -409,7 +416,9 @@ public class adminController {
     @RequestMapping("/admin_course_student")
     public String admin_course_student(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-
+        String teaName = cookieThings.getCookieUserName(request, cookieName);
+        String teaNum = cookieThings.getCookieUserNum(request, cookieName);
+        model.addAttribute("username", teaName);
         logger.info("进入学生开课计划管理");
         //返回
         //model.addAttribute("course_students", studentcourseService.listStudentCoursesByTeaNumber());
@@ -469,28 +478,36 @@ public class adminController {
     @RequestMapping("/admin_video_log")
     public String admin_video_log(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-
+        String teaName = cookieThings.getCookieUserName(request, cookieName);
+        String teaNum = cookieThings.getCookieUserNum(request, cookieName);
+        model.addAttribute("username", teaName);
         return "admin_video_log";
     }
 
     @RequestMapping("/admin_video_log_details")
     public String admin_video_log_details(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-
+        String teaName = cookieThings.getCookieUserName(request, cookieName);
+        String teaNum = cookieThings.getCookieUserNum(request, cookieName);
+        model.addAttribute("username", teaName);
         return "admin_video_log_details";
     }
 
     @RequestMapping("/admin_report")
     public String admin_report(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-
+        String teaName = cookieThings.getCookieUserName(request, cookieName);
+        String teaNum = cookieThings.getCookieUserNum(request, cookieName);
+        model.addAttribute("username", teaName);
         return "admin_report";
     }
 
     @RequestMapping("/admin_report_detail")
     public String admin_report_detail(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-
+        String teaName = cookieThings.getCookieUserName(request, cookieName);
+        String teaNum = cookieThings.getCookieUserNum(request, cookieName);
+        model.addAttribute("username", teaName);
         model.addAttribute("pdf", "https://arxiv.org/pdf/1508.01006v1.pdf");
         return "admin_report_detail";
     }
@@ -498,49 +515,63 @@ public class adminController {
     @RequestMapping("/admin_experiment_log")
     public String admin_experiment_log(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-
+        String teaName = cookieThings.getCookieUserName(request, cookieName);
+        String teaNum = cookieThings.getCookieUserNum(request, cookieName);
+        model.addAttribute("username", teaName);
         return "admin_experiment_log";
     }
 
     @RequestMapping("/admin_pc_type")
     public String admin_pc_type(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-
+        String teaName = cookieThings.getCookieUserName(request, cookieName);
+        String teaNum = cookieThings.getCookieUserNum(request, cookieName);
+        model.addAttribute("username", teaName);
         return "admin_pc_type";
     }
 
     @RequestMapping("/admin_cluster")
     public String admin_cluster(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-
+        String teaName = cookieThings.getCookieUserName(request, cookieName);
+        String teaNum = cookieThings.getCookieUserNum(request, cookieName);
+        model.addAttribute("username", teaName);
         return "admin_cluster";
     }
 
     @RequestMapping("/admin_student_pc")
     public String admin_student_pc(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-
+        String teaName = cookieThings.getCookieUserName(request, cookieName);
+        String teaNum = cookieThings.getCookieUserNum(request, cookieName);
+        model.addAttribute("username", teaName);
         return "admin_student_pc";
     }
 
     @RequestMapping("/admin_report_template")
     public String admin_report_template(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-
+        String teaName = cookieThings.getCookieUserName(request, cookieName);
+        String teaNum = cookieThings.getCookieUserNum(request, cookieName);
+        model.addAttribute("username", teaName);
         return "admin_report_template";
     }
 
     @RequestMapping("/admin_video")
     public String admin_video(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-
+        String teaName = cookieThings.getCookieUserName(request, cookieName);
+        String teaNum = cookieThings.getCookieUserNum(request, cookieName);
+        model.addAttribute("username", teaName);
         return "admin_video";
     }
 
     @RequestMapping("/admin_video_class")
     public String admin_video_class(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-
+        String teaName = cookieThings.getCookieUserName(request, cookieName);
+        String teaNum = cookieThings.getCookieUserNum(request, cookieName);
+        model.addAttribute("username", teaName);
         return "admin_video_class";
     }
 
@@ -548,7 +579,9 @@ public class adminController {
     @RequestMapping("/admin_dataset")
     public String admin_dataset(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-
+        String teaName = cookieThings.getCookieUserName(request, cookieName);
+        String teaNum = cookieThings.getCookieUserNum(request, cookieName);
+        model.addAttribute("username", teaName);
         model.addAttribute("datasets", datasetService.listDatasets());
         return "admin_dataset";
     }
