@@ -353,6 +353,8 @@ public class studentController {
         model.addAttribute("subExperiments", subExperiments);
 
 
+
+
         return "experiment_task_detail";
     }
 
@@ -363,6 +365,15 @@ public class studentController {
 
 //        String stuname = (String) session.getAttribute("stuname");
 //        model.addAttribute("stuname", stuname);
+
+//        logger.info("id",id);
+//        Long sub_id = Long.parseLong(id);
+//        logger.info("sub_id",sub_id);
+//
+//        SubExperiment subExperiment = subExperimentService.getById(sub_id);
+//        logger.info("subExperiment",subExperiment);
+
+
 
         return "experiment_machine";
 
@@ -400,16 +411,17 @@ public class studentController {
     }
 
     @RequestMapping("/project_detail/{id}")
-    public String project_detail(String id, Model model, HttpServletRequest request) {
+    public String project_detail(@PathVariable(value = "id") String id, Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
 //        String stuname = (String) session.getAttribute("stuname");
 //        model.addAttribute("stuname", stuname);
+        long project_id = Long.parseLong(id);
 
-        logger.info("project_id:" + id);
+        logger.info("project_id:" + project_id);
 
         //        这里需要一个根据实验的id 返回course操作
-        Project project = projectService.listProjects().get(0);
+        Project project = projectService.getProjectById(project_id);
         logger.info("project——detail:" + project);
         model.addAttribute("project", project);
 
@@ -451,17 +463,18 @@ public class studentController {
     }
 
     @RequestMapping("/dataset_detail/{id}")
-    public String dataset_detail(String id, Model model, HttpServletRequest request) {
+    public String dataset_detail(@PathVariable(value = "id") String id, Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
 //        String stuname = (String) session.getAttribute("stuname");
 //        model.addAttribute("stuname", stuname);
 
-        logger.info("dataset_id:" + id);
+        long dataset_id = Long.parseLong(id);
+        logger.info("dataset_id:" + dataset_id);
 
         //        这里需要一个根据数据集的id 返回dataset操作
-        Dataset dataset = datasetService.listDatasets().get(0);
-
+//        Dataset dataset = datasetService.listDatasets().get(0);
+        Dataset dataset = datasetService.getDatasetById(dataset_id);
         logger.info("dataset——detail:" + dataset);
         model.addAttribute("dataset", dataset);
 
