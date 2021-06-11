@@ -366,12 +366,12 @@ public class studentController {
 //        String stuname = (String) session.getAttribute("stuname");
 //        model.addAttribute("stuname", stuname);
 
-        logger.info("id",id);
-        Long sub_id = Long.parseLong(id);
-        logger.info("sub_id",sub_id);
-
-        SubExperiment subExperiment = subExperimentService.getById(sub_id);
-        logger.info("subExperiment",subExperiment);
+//        logger.info("id",id);
+//        Long sub_id = Long.parseLong(id);
+//        logger.info("sub_id",sub_id);
+//
+//        SubExperiment subExperiment = subExperimentService.getById(sub_id);
+//        logger.info("subExperiment",subExperiment);
 
 
 
