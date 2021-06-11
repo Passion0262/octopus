@@ -353,26 +353,41 @@ public class studentController {
         model.addAttribute("subExperiments", subExperiments);
 
 
-
-
         return "experiment_task_detail";
     }
 
 
+
     @RequestMapping("/experiment_machine/{id}")
-    public String experiment_machine(@PathVariable(value = "id") String id, Model model, HttpServletRequest request) {
+    public String experiment_machine(@PathVariable("id")String id,Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
 //        String stuname = (String) session.getAttribute("stuname");
 //        model.addAttribute("stuname", stuname);
 
-//        logger.info("id",id);
-//        Long sub_id = Long.parseLong(id);
-//        logger.info("sub_id",sub_id);
-//
-//        SubExperiment subExperiment = subExperimentService.getById(sub_id);
-//        logger.info("subExperiment",subExperiment);
+        logger.info("id:"+id);
+        Long sub_id = Long.parseLong(id);
+        logger.info("sub_id:"+sub_id);
 
+        SubExperiment subExperiment = subExperimentService.getById(sub_id);
+        logger.info("subExperiment:"+subExperiment);
+        model.addAttribute("subExperiment", subExperiment );
+
+        Experiment experiment = experimentService.getExperimentById(subExperiment.getExperimentId());
+        logger.info("experiment:"+experiment);
+        model.addAttribute("experiment", experiment );
+
+        // 这里要调整
+        Video video = videoService.getVideoBySubExperimentId(sub_id);
+        logger.info("video:"+video);
+        if(video==null){
+            model.addAttribute("isvideo", 0);
+            model.addAttribute("videocourse", 0);
+        }else{
+            model.addAttribute("isvideo", 1);
+            logger.info("videocourse:"+video.getCourseId());
+            model.addAttribute("videocourse", video.getCourseId());
+        }
 
 
         return "experiment_machine";

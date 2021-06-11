@@ -13,7 +13,7 @@
     <link href="../../static/css/icons.min.css" rel="stylesheet" type="text/css" /><!-- App Css-->
     <link href="../../static/css/app.min.css" rel="stylesheet" type="text/css" />
     <link href="../../static/js/libs/summernote/summernote.css"  rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css"  href="static/js/libs/tinymce/skin.min.css">
+    <link rel="stylesheet" type="text/css"  href="../../static/js/libs/tinymce/skin.min.css">
 
     <style>
         /*.embed-responsive-2by1 {*/
@@ -30,7 +30,7 @@
             <div class="d-flex">
                 <!-- LOGO -->
                 <div class="navbar-brand-box">
-                    <a href="index" class="logo logo-dark">
+                    <a href="/index" class="logo logo-dark">
                         <span class="logo-sm"><img src="../../static/images/logo-sm-dark.png" alt="" height="22"></span>
                         <span class="logo-lg"><img src="../../static/images/logo-dark.png" alt="" height="27"></span>
                     </a>
@@ -76,12 +76,17 @@
                 <div class="col-12">
                     <!-- 修改路径 -->
                     <div class="page-title-box d-flex align-items-center justify-content-between">
-                        <h4 class="mb-4">实验任务名字</h4>
+                        <h4 class="mb-4"><span th:text="${experiment.name}"></span>:&nbsp;&nbsp;&nbsp;<span th:text="${subExperiment.name}"></span></h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <button type="button" class="btn btn-outline-dark waves-effect waves-light" th:onclick="">实验任务</button>
+                                <button type="button" class="btn btn-outline-dark waves-effect waves-light" th:onclick="location.href='/experiment_task_detail/'+[[${subExperiment.experimentId}]]">实验任务</button>
                                 <span>&nbsp;&nbsp;&nbsp;</span>
-                                <button type="button" class="btn btn-outline-dark waves-effect waves-light">课程学习</button>
+                                <span th:if="${isvideo}==0">
+                                <button type="button" disabled class="btn btn-outline-dark waves-effect waves-light" th:onclick="location.href='/course_video/'+[[${videocourse}]]">课程学习</button>
+                                </span>
+                                <span th:if="${isvideo}==1">
+                                <button type="button"  class="btn btn-outline-dark waves-effect waves-light" th:onclick="location.href='/course_video/'+[[${videocourse}]]">课程学习</button>
+                                </span>
                             </ol>
                         </div>
                     </div>
@@ -112,7 +117,7 @@
                                 <div class="tab-content p-3 text-muted" >
                                     <div class="tab-pane active" id="txt_task" role="tabpanel">
                                         <p class="mb-0">
-                                        XXXXXXXXXXXXX
+                                          XXXXXXXX
                                         </p>
                                 </div>
                                     <div class="tab-pane " id="txt_profile" role="tabpanel">
@@ -168,7 +173,7 @@
                                 </div>
                             </div>
                             <div class="row"></div>
-                            <div  id="summernote" ></div>
+                            <div  id="summernote" >实验报告模板</div>
 
                         </div>
                     </div>
