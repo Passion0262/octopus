@@ -102,7 +102,7 @@
 
                 <div class="row">
                   <div class="col-md-3" th:each="project:${allprojects}">
-                    <a style="text-decoration: none; color: black;" th:href="'project_detail/id='+${project.id}">
+                    <a style="text-decoration: none; color: black;" th:href="'project_detail/'+${project.id}">
                     <div class="card" >
                       <img th:src="${project.imagePath}" style="height: 209px;" alt="" class="img-fluid card-img-top"/>
                       <div class="card-body">
