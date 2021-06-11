@@ -40,47 +40,54 @@
                         <div class="col-xl-8">
                             <div class="card">
                                 <div class="card-body">
-                                    <form class="needs-validation" novalidate="">
+                                    <form class="needs-validation" novalidate="" th:object="${userinfo}">
                                         <div class="form-group row">
                                             <label for="example-text-input" class="col-md-2 col-form-label">账号：</label>
                                             <div class="col-md-10">
-                                                <input name="loginNumber" class="form-control" type="text" th:value="${loginNumber}" id="example-text-input">
+                                                <input name="loginNumber" class="form-control" type="text" th:value="*{loginNumber}" id="example-text-input" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="example-text-input" class="col-md-2 col-form-label">姓名：</label>
                                             <div class="col-md-10">
-                                                <input name="name" class="form-control" type="text" th:value="${username}" id="example-text-input">
+                                                <input name="name" class="form-control" type="text" th:value="*{name}" id="example-text-input">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="password" class="col-md-2 col-form-label">密码：</label>
+                                            <div class="col-md-10">
+                                                <input name="password" class="form-control" type="password" th:value="*{password}" id="password">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="phone" class="col-md-2 col-form-label">手机号码：</label>
+                                            <div class="col-md-10">
+                                                <input name="phone" class="form-control" th:value="*{phone}" type="tel" id="phone">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="majorCode" class="col-md-2 col-form-label">教授专业代码：</label>
+                                            <div class="col-md-10">
+                                                <input name="majorCode" class="form-control" type="text" th:value="*{majorCode}" id="majorCode">
                                             </div>
                                         </div>
 <!--                                        <div class="form-group row">-->
-<!--                                            <label for="email" class="col-md-2 col-form-label">邮箱</label>-->
+<!--                                            <label class="col-md-2 col-form-label">所在学校：</label>-->
 <!--                                            <div class="col-md-10">-->
-<!--                                                <input name="email" class="form-control" type="email" value="admin123@example.com" id="email">-->
+<!--                                                <select class="form-control" name="org">-->
+<!--                                                    <option value="0">江南大学</option>-->
+<!--                                                    <option value="1">无锡职业学院</option>-->
+<!--                                                </select>-->
 <!--                                            </div>-->
 <!--                                        </div>-->
-                                        <div class="form-group row">
-                                            <label for="tel" class="col-md-2 col-form-label">手机号码：</label>
-                                            <div class="col-md-10">
-                                                <input name="tel" class="form-control" type="tel" value="11122233345" id="tel">
-                                            </div>
+                                        <div class="row" style="display: block;text-align: center;">
+                                            <a href="admin_student" class="btn btn-light btn-rounded waves-effect waves-light">
+                                                <i class="ri-close-line align-middle mr-2"></i>取消
+                                            </a>
+                                            <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light" style="margin: 20px;">
+                                                <i class="ri-check-line align-middle mr-2"></i>提交
+                                            </button>
                                         </div>
-                                        <div class="form-group row">
-                                            <label for="tel" class="col-md-2 col-form-label">教授专业代码：</label>
-                                            <div class="col-md-10">
-                                                <input name="majorCode" class="form-control" type="text" value="123" id="majorCode">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-md-2 col-form-label">所在学校：</label>
-                                            <div class="col-md-10">
-                                                <select class="form-control" name="org">
-                                                    <option value="0">江南大学</option>
-                                                    <option value="1">无锡职业学院</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <button class="btn btn-primary" type="submit" style="display:block;margin:0 auto">修改</button>
                                     </form>
                                 </div>
                             </div>
@@ -91,7 +98,7 @@
 <!--                                    <label class="col-md-3 col-form-label">头像：</label>-->
                                     <label >头像：</label>
                                     <div class="col-md-12">
-                                        <img class="rounded-circle avatar-xl" src="static/images/login.png" alt="头像" data-holder-rendered="true" style="display:block;margin:0 auto">
+                                        <img class="rounded-circle avatar-xl" src="static/images/avatar-1.jpg" alt="头像" data-holder-rendered="true" style="display:block;margin:0 auto">
                                     </div>
                                     <a href="#" class="btn btn-outline-primary waves-effect waves-light" style="display:block;margin:0 auto;max-width: 150px;">更换头像</a>
                                 </div>
