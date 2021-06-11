@@ -204,7 +204,7 @@ public class studentController {
         String stuNum = cookieThings.getCookieUserNum(request, cookieName);
         logger.info("确认课程_id:" + id);
         logger.info("确认学生_id:" + stuNum);
-        boolean issuccess = studentCourseService.insertStudentCourse(Long.parseLong(id), Long.parseLong(stuNum));
+        boolean issuccess = studentCourseService.insertStudentCourse( Long.parseLong(stuNum),Long.parseLong(id));
 
         boolean isapplied = studentCourseService.isChosen(Long.parseLong(stuNum), Long.parseLong(id));
         model.addAttribute("isapplied", isapplied);
@@ -223,7 +223,7 @@ public class studentController {
         String stuNum = cookieThings.getCookieUserNum(request, cookieName);
         logger.info("确认课程_id:" + id);
         logger.info("确认学生_id:" + stuNum);
-        boolean issuccess = studentCourseService.deleteStudentCourse(Long.parseLong(id), Long.parseLong(stuNum));
+        boolean issuccess = studentCourseService.deleteStudentCourse( Long.parseLong(stuNum),Long.parseLong(id));
         logger.info("删除申请是否成功:" + issuccess);
 
         boolean isapplied = studentCourseService.isChosen(Long.parseLong(stuNum), Long.parseLong(id));
