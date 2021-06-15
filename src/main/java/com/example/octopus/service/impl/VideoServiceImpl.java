@@ -38,8 +38,17 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
+    public Long getVideoIdBySubExperimentId(long subExperimentId) {
+        return videoSubExperimentMapper.getVideoIdBySubExperimentId(subExperimentId);
+    }
+
+    @Override
     public Video getVideoBySubExperimentId(long subExperimentId) {
-        long videoId = videoSubExperimentMapper.getVideoIdBySubExperimentId(subExperimentId);
-        return getById(videoId);
+        Long videoId = getVideoIdBySubExperimentId(subExperimentId);
+        if (videoId == null){
+            return null;
+        }else {
+            return getById(videoId);
+        }
     }
 }

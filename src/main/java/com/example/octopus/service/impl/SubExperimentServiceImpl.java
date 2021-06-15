@@ -38,13 +38,8 @@ public class SubExperimentServiceImpl implements SubExperimentService {
     }
 
     @Override
-    public long getSubExperimentIdByVideoId(long videoId) {
-        Long experimentId = videoSubExperimentMapper.getSubExperimentIdByVideoId(videoId);
-        if (experimentId!=null){
-            return experimentId;
-        }else {
-            return 0;
-        }
+    public Long getSubExperimentIdByVideoId(long videoId) {
+        return videoSubExperimentMapper.getSubExperimentIdByVideoId(videoId);
     }
 
     @Override

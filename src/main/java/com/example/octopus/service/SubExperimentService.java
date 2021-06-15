@@ -1,7 +1,6 @@
 package com.example.octopus.service;
 
 import com.example.octopus.entity.experiment.SubExperiment;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -35,7 +34,7 @@ public interface SubExperimentService {
     /**
      * 根据video查找对应的experimentId
      */
-    long getSubExperimentIdByVideoId(long videoId);
+    Long getSubExperimentIdByVideoId(long videoId);
 
     /**
      * 根据video查找对应的experiment

@@ -27,6 +27,11 @@ public interface VideoService {
     Video getById(long id);
 
     /**
+     * 根据experimentId查找对应的videoId
+     */
+    Long getVideoIdBySubExperimentId(long subExperimentId);
+
+    /**
      * 根据experimentId查找对应的video
      */
     Video getVideoBySubExperimentId(long subExperimentId);
