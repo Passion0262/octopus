@@ -12,6 +12,11 @@ import java.util.List;
 public interface VideoService {
 
     /**
+     * 返回所有视频的实体list
+     */
+    List<Video> listVideos();
+
+    /**
      * 根据courseId返回对应的video list
      */
     List<Video> listVideosByCourseId(long courseId);

@@ -14,6 +14,12 @@ import java.util.List;
 public interface VideoMapper {
 
     /**
+     * 返回所有video的list
+     */
+    @Select("SELECT * FROM video")
+    List<Video> listVideos();
+
+    /**
      * 根据courseId返回对应的video list
      */
     @Select("SELECT * FROM video WHERE course_id = #{courseId}")

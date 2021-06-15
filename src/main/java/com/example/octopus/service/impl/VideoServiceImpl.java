@@ -23,6 +23,11 @@ public class VideoServiceImpl implements VideoService {
     VideoSubExperimentMapper videoSubExperimentMapper;
 
     @Override
+    public List<Video> listVideos() {
+        return videoMapper.listVideos();
+    }
+
+    @Override
     public List<Video> listVideosByCourseId(long courseId) {
         return videoMapper.listVideosByCourseId(courseId);
     }

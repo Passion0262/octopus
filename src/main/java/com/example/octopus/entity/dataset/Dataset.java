@@ -25,6 +25,8 @@ public class Dataset {
 
     int downloadNum;
 
+    String downloadPath;
+
     String fileFormat;
 
     String imagePath;
