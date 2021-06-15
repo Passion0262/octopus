@@ -112,18 +112,21 @@
                   <div class="col-md-9">
                 <p class="card-title-desc"><span id="videotitle"> 小标题名字</span></p>
                   </div>
-                  <div class="col-md-3" id="machinebutton">
+                  <div class="col-md-3 float-right" id="machinebutton" >
                     <button type="button"  class="btn btn-outline-dark waves-effect waves-light"
                             th:onclick="location.href ='/experiment_machine/1'">进入实验机</button>
                   </div>
 
                 </div>
                 <div class="embed-responsive embed-responsive-16by9">
-                  <iframe class="embed-responsive-item" id ="videoplay" src="" allowfullscreen="true"></iframe></div>
+<!--                  <iframe class="embed-responsive-item" id ="videoplay" src="" allowfullscreen="true"></iframe></div>-->
+                  <video  id="videoplay"  controls="controls" src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" type="video/mp4">
+                  </video>
 
                 </div>
               </div>
             </div>
+          </div>
 
 
 
@@ -136,7 +139,7 @@
                 <div id="accordion" class="custom-accordion categories-accordion mb-3">
 
                   <div class="categories-group-card" th:each="chapter:${chapters}">
-                    <a th:href="'#collapse'+${chapter.number}" class="categories-group-list" data-toggle="collapse" aria-expanded="false" th:aria-controls="'collapse'+${chapter.number}">
+                    <a th:id ="'aa'+${chapter.number}" th:href="'#collapse'+${chapter.number}" class="categories-group-list collapsed" data-toggle="collapse" aria-expanded="false" th:aria-controls="'collapse'+${chapter.number}">
                       <i class="font-size-16 align-middle mr-2"></i>章节<span th:text="${chapter.number}"></span>:&nbsp;&nbsp;&nbsp;<span th:text="${chapter.name}"></span><i class="mdi mdi-minus float-right accor-plus-icon"></i></a>
                     <div th:id="'collapse'+${chapter.number}" class="collapse" data-parent="#accordion" style="">
                       <div>
@@ -244,6 +247,19 @@
 <script th:inline="javascript" type="text/javascript">
   $(document).ready(function() {
     showvideo([[${startvideo}]]);
+    var id =[[${startvideo.chapterId}]];
+    alert(id);
+    $("#aa"+id).removeClass("collapsed");
+    $("#aa"+id).attr("aria-expanded","true");
+    $("#collapse"+id).addClass("show");
+
+    document.getElementById("videoplay").addEventListener(
+            "loadedmetadata",
+            function() {
+              this.currentTime = 10;
+            });
+
+
 
 
   });
@@ -260,6 +276,9 @@
     //         th:onclick="indow.location.href ='/experiment_machine/'+[[${experiment.id}]]">进入实验机</button>
 
   }
+
+
+
 
 
 </script>

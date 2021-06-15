@@ -283,7 +283,7 @@ public class studentController {
 
 //            List<Long> tosubs = new ArrayList<>();
 //            for (int j=0;j<video.size();j++){
-//                Long tosub = subExperimentService.getSubExperimentByVideoId(video.get(j).getId()).getId();
+//                Long tosub = subExperimentService.getSubExperimentIdByVideoId(video.get(j).getId());
 //                tosubs.add(tosub);
 //            }
 //            tosubexperiments.add(tosubs);
@@ -295,8 +295,10 @@ public class studentController {
         logger.info("startvideo:" + videos.get(0).get(0));
         model.addAttribute("startvideo", videos.get(0).get(0));
 
+
 //        logger.info("tosubexperiments:" + tosubexperiments);
 //        model.addAttribute("tosubexperiments", tosubexperiments);
+
 
 
         Experiment experiment = experimentService.getExperimentByCourseId(courseid_id);
