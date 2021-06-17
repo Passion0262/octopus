@@ -75,4 +75,15 @@ public class StudentCourseServiceImpl implements StudentCourseService {
     public boolean deleteStudentCourse(long stuNumber, long courseId) {
         return studentCourseMapper.deteleStudentCourse(stuNumber,courseId);
     }
+
+    @Override
+    public boolean insertByClass(String className, long course_id) {
+        List<Student> studentList = userMapper.listByClassName(className);
+        String courseName = courseMapper.getCourseById(course_id).getCourseName();
+        for (Student s:studentList) {
+            StudentCourse studentCourse = new StudentCourse(1L,s.getStuNumber(),course_id,courseName,s.getName(),s.getMajor(),className,null);
+            studentCourseMapper.insertStudentCourse(studentCourse);
+        }
+        return true;
+    }
 }
