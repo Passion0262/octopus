@@ -58,4 +58,9 @@ public interface StudentCourseService {
      */
     boolean deleteStudentCourse(long stuNumber, long courseId);
 
+    /**
+     * 一整个班级的学生全部选课
+     */
+    boolean insertByClass(String className, long course_id);
+
 }

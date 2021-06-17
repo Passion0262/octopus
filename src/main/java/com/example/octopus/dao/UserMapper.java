@@ -15,6 +15,9 @@ public interface UserMapper {
     @Select("SELECT * FROM student")
     List<Student> listAllStudents();
 
+    @Select("SELECT * FROM student WHERE class_name = #{className}")
+    List<Student> listByClassName(String className);
+
     @Select("SELECT * FROM student WHERE stu_number = #{stuNumber}")
     Student getStudentByStuNumber(long stuNumber);
 

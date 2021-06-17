@@ -51,4 +51,9 @@ class StudentCourseServiceImplTest {
     @Test
     void deleteStudentCourse() {
     }
+
+    @Test
+    void insertByClass() {
+        studentCourseService.insertByClass("计算机",1L);
+    }
 }
