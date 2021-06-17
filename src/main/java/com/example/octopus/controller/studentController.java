@@ -274,19 +274,19 @@ public class studentController {
         model.addAttribute("chaptersnum", chapters.size());
 
         List<List<Video>> videos = new ArrayList<>();
-//        List<List<Long>> tosubexperiments = new ArrayList<>();
+        List<List<Long>> tosubexperiments = new ArrayList<>();
 
         for (int i=0;i<chapters.size();i++){
 //            logger.info("chaptersid:" + chapters.get(i).getId());
             List<Video> video = videoService.listVideosByChapterId(chapters.get(i).getId());
             videos.add(video);
 
-//            List<Long> tosubs = new ArrayList<>();
-//            for (int j=0;j<video.size();j++){
-//                Long tosub = subExperimentService.getSubExperimentIdByVideoId(video.get(j).getId());
-//                tosubs.add(tosub);
-//            }
-//            tosubexperiments.add(tosubs);
+            List<Long> tosubs = new ArrayList<>();
+            for (int j=0;j<video.size();j++){
+                Long tosub = subExperimentService.getSubExperimentIdByVideoId(video.get(j).getId());
+                tosubs.add(tosub);
+            }
+            tosubexperiments.add(tosubs);
         }
 
         logger.info("videos:" + videos);
@@ -296,8 +296,8 @@ public class studentController {
         model.addAttribute("startvideo", videos.get(0).get(0));
 
 
-//        logger.info("tosubexperiments:" + tosubexperiments);
-//        model.addAttribute("tosubexperiments", tosubexperiments);
+        logger.info("tosubexperiments:" + tosubexperiments);
+        model.addAttribute("tosubexperiments", tosubexperiments);
 
 
 

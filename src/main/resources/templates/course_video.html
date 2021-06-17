@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta content="人工智能实验实训平台" name="description" />
   <link href="../../static/js/libs/admin-resources/jquery.vectormap/static" rel="stylesheet" type="text/css" /><!-- DataTables -->
+  <link href="../../static/js/libs/video/video-js.min.css" rel="stylesheet" type="text/css" />
   <link href="../../static/js/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" /><!-- Responsive datatable examples -->
   <link href="../../static/js/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" /><!-- Bootstrap Css -->
   <link href="../../static/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" /><!-- Icons Css -->
@@ -112,15 +113,15 @@
                   <div class="col-md-9">
                 <p class="card-title-desc"><span id="videotitle"> 小标题名字</span></p>
                   </div>
-                  <div class="col-md-3 float-right" id="machinebutton" >
-                    <button type="button"  class="btn btn-outline-dark waves-effect waves-light"
+                  <div class="col-md-3 "  style="">
+                    <button id="machinebutton" type="button"  class="btn btn-outline-dark waves-effect waves-light"
                             th:onclick="location.href ='/experiment_machine/1'">进入实验机</button>
                   </div>
 
                 </div>
                 <div class="embed-responsive embed-responsive-16by9">
 <!--                  <iframe class="embed-responsive-item" id ="videoplay" src="" allowfullscreen="true"></iframe></div>-->
-                  <video  id="videoplay"  controls="controls" src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" type="video/mp4">
+                  <video  id="videoplay" controls="controls" src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" type="video/mp4">
                   </video>
 
                 </div>
@@ -157,10 +158,13 @@
 
                           <li th:each="video:${videos[chapterStat.index]}">
                             <a href="#" th:onclick="showvideo([[${video}]])">
-                            <i class="mdi mdi-circle-medium mr-1"></i><span th:text="${video.number}"></span>:&nbsp;&nbsp;&nbsp;<span th:text="${video.name}"></span>
+
+                              <i class="mdi mdi-circle-medium mr-1"></i>
+                              <span th:text="${video.number}"></span>:&nbsp;&nbsp;&nbsp;<span th:text="${video.name}"></span>
+
                             <div class="progress">
-                              <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                25%
+                              <div th:id ="'v'+${video.id}" class="progress-bar" role="progressbar" width="0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                <span th:id ="'vv'+${video.id}" text="0%"></span>
                               </div>
                             </div>
                           </a></li>
@@ -229,6 +233,7 @@
 
 <!-- JAVASCRIPT -->
 <script src="../../static/js/libs/jquery/jquery.min.js"></script>
+<script src="../../static/js/libs/video/video.min.js"></script>
 <script src="../../static/js/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="../../static/js/libs/metismenu/metisMenu.min.js"></script>
 <script src="../../static/js/libs/simplebar/simplebar.min.js"></script>
@@ -245,23 +250,133 @@
 
 
 <script th:inline="javascript" type="text/javascript">
+  var currentvideoid = 0;
+  var myDate = new Date();
+
   $(document).ready(function() {
     showvideo([[${startvideo}]]);
     var id =[[${startvideo.chapterId}]];
-    alert(id);
     $("#aa"+id).removeClass("collapsed");
     $("#aa"+id).attr("aria-expanded","true");
     $("#collapse"+id).addClass("show");
 
-    document.getElementById("videoplay").addEventListener(
+    var videoplay = document.getElementById("videoplay");
+    videoplay.addEventListener(
             "loadedmetadata",
             function() {
               this.currentTime = 10;
             });
 
+    videoplay.addEventListener(
+            "timeupdate",
+            function() {
+              var timeDisplay;
+              var duration;
+              //用秒数来显示当前播放进度
+              // timeDisplay = Math.floor(videoplay.currentTime);
+              // duration = Math.floor(videoplay.duration);
+              // console.log('总时长',duration);
+              // console.log('当前播放的时长',timeDisplay);
+            },false);
+
+    videoplay.addEventListener(
+            "play",
+            function() {
+              var nowtime = myDate.toLocaleString( );
+              console.log('视频id',currentvideoid);
+              console.log('开始时间',nowtime);
+            });
 
 
+    videoplay.addEventListener(
+            "ended",
+            function() {
+              var nowtime = myDate.toLocaleString( );
+              console.log('视频id',currentvideoid);
+              console.log('结束时间',nowtime);
+            });
 
+    videoplay.addEventListener(
+            "abort",
+            function() {
+              var nowtime = myDate.toLocaleString( );
+              console.log('视频id',currentvideoid);
+              console.log('abort时间',nowtime);
+            });
+    videoplay.addEventListener(
+            "readystatechange",
+            function() {
+              var nowtime = myDate.toLocaleString( );
+              console.log('视频id',currentvideoid);
+              console.log('readystatechange时间',nowtime);
+            });
+
+    videoplay.addEventListener(
+            "pause",
+            function() {
+              var nowtime = myDate.toLocaleString( );
+              console.log('视频id',currentvideoid);
+              console.log('暂停时间',nowtime);
+            });
+
+      if(window.addEventListener){
+        window.addEventListener("beforeunload",function(){
+          var nowtime = myDate.toLocaleString( );
+          console.log('视频id',currentvideoid);
+          console.log('结束时间be',nowtime);
+          alert("1");
+        },false);
+      }else{
+        window.attachEvent("onbeforeunload",function(){
+          var nowtime = myDate.toLocaleString( );
+          console.log('视频id',currentvideoid);
+          console.log('结束时间onbe',nowtime);
+          alert("2");
+        });
+      }
+
+  //   var player = videojs('videoplay', options, function onPlayerReady() {
+  //     var time1;
+  //     // 这里的t1可以更改为当前视频的学习时间
+  //     var t1 = 0;
+  //
+  //     function aa() {
+  //       console.log('...' );
+  //         var videoLength = videoplay.duration;
+  //         console.log('总时长',videoLength );
+  //         t1 = t1 + 1;
+  //         var progress = t1/videoLength*100;
+  //         if(t1>=videoLength){
+  //           progress = 100;
+  //         }
+  //         $("#v"+currentvideoid).attr("width",progress);
+  //         $("#vv"+currentvideoid).text(progress+"%");
+  //
+  //     }
+  //     this.on('play', function () {
+  //       console.log('开始播放');
+  //       time1 = setInterval(function () {
+  //         aa();
+  //       }, 1000)
+  //     });
+  //     this.on('ended', function () {
+  //       console.log('结束播放');
+  //       window.clearInterval(time1);
+  //       countTime();   //向后台发数据
+  //     });
+  //     this.on('pause', function () {
+  //       console.log('暂停播放');
+  //       window.clearInterval(time1);
+  //       countTime();  //向后台发数据
+  //     });
+  //   });
+  //
+  //   if(window.addEventListener){
+  //     window.addEventListener("beforeunload",countTime,false);
+  //   }else{
+  //     window.attachEvent("onbeforeunload",countTime);
+  //   }
+  //
   });
 
 
@@ -269,14 +384,31 @@
     // alert(video);
      $("#videotitle").html(video.name);
      $("#videoplay").attr("src",video.path);
-
-
-
-    // <button type="button" className="btn btn-success btn-rounded waves-effect waves-light"
-    //         th:onclick="indow.location.href ='/experiment_machine/'+[[${experiment.id}]]">进入实验机</button>
-
+     var tosubexperiments = [[${tosubexperiments}]];
+     if(tosubexperiments[video.chapterId-1][video.number-1]!=null){
+       $("#machinebutton").attr("disabled",false);
+       $("#machinebutton").click(function(){
+         window.location.href ='/experiment_machine/'+tosubexperiments[video.chapterId-1][video.number-1];
+       });
+     }else{
+       $("#machinebutton").attr("disabled",true);
+     }
+    currentvideoid = video.id;
+     alert(currentvideoid);
   }
 
+  function countTime() {
+    // var sTime = $("#aa").val();
+    // $.ajax({
+    //   url : "url",
+    //   type : "POST",
+    //   dataType : 'json',
+    //   data : {'sTime':sTime,"},
+    //   success:function (data) {
+    //     console.log(data);
+    //   }
+    // })
+  }
 
 
 

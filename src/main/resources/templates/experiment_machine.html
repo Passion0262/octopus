@@ -74,11 +74,16 @@
                 <div class="row">
 
                 <div class="col-12">
-                    <!-- 修改路径 -->
-                    <div class="page-title-box d-flex align-items-center justify-content-between">
+                    <div class="page-title-box d-flex align-items-center justify-content-between" style="padding-bottom: 5px; padding-top: 5px;">
                         <h4 class="mb-4"><span th:text="${experiment.name}"></span>:&nbsp;&nbsp;&nbsp;<span th:text="${subExperiment.name}"></span></h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
+                                <button type="button" class="btn btn-outline-info waves-effect waves-light" th:onclick="showpdf()">文档模式</button>
+                                <span>&nbsp;&nbsp;&nbsp;</span>
+                                <button type="button" class="btn btn-outline-info waves-effect waves-light active" th:onclick="showm1()">虚拟机模式</button>
+                                <span>&nbsp;&nbsp;&nbsp;</span>
+                                <button type="button" class="btn btn-outline-info waves-effect waves-light" th:onclick="">jupyter模式</button>
+                                <span>&nbsp;&nbsp;&nbsp;</span>
                                 <button type="button" class="btn btn-outline-dark waves-effect waves-light" th:onclick="location.href='/experiment_task_detail/'+[[${subExperiment.experimentId}]]">实验任务</button>
                                 <span>&nbsp;&nbsp;&nbsp;</span>
                                 <span th:if="${isvideo}==0">
@@ -96,14 +101,20 @@
 
                 <div class="row">
 
-                    <div class="col-md-4 " id="follow_machine">
-                        <div class="card" >
-                            <div class="card-body" >
+                    <div class="col-md-4 " id="follow_machine" height="400px">
+                        <div class="card" height="400px" >
+                            <div class="card-body"  height="400px">
                                 <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
                                     <li class="nav-item">
                                         <a class="nav-link active" data-toggle="tab" href="#txt_task" role="tab" aria-selected="true">
                                             <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
                                             <span class="d-none d-sm-block">实验要求</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link " data-toggle="tab" href="#txt_core" role="tab" aria-selected="false">
+                                            <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                                            <span class="d-none d-sm-block">核心知识</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
@@ -116,18 +127,18 @@
 
                                 <div class="tab-content p-3 text-muted" >
                                     <div class="tab-pane active" id="txt_task" role="tabpanel">
-                                        <p class="mb-0">
-                                          实验要求：
-                                            一、目的
-
-                                            二、步骤
-
-                                        </p>
+                                        <embed src="../../static/images/showpic/demo1.pdf" type="application/pdf" />
                                 </div>
-                                    <div class="tab-pane " id="txt_profile" role="tabpanel">
+
+                                    <div class="tab-pane " id="txt_core" role="tabpanel">
+
+                                           <iframe src="../../static/images/showpic/demo1.pdf"></iframe>
 
 
+                                    </div>
 
+                                    <div class="tab-pane " id="txt_profile" role="tabpanel" >
+                                                <div  id="summernote" >实验报告模板</div>
                                     </div>
                                 </div>
 
@@ -135,7 +146,7 @@
                     </div>
                     </div>
 
-                        <div class="col-md-8" id="machine">
+                        <div class="col-md-8" id="machine" height="400px">
                             <div class="card" >
                                 <div class="card-body" >
 <!--                                    <p class="card-title-desc">实验机</p>-->
@@ -163,26 +174,26 @@
 
                 </div><!-- end row -->
 
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-9">
-                            <h4 class="card-title">Summernote</h4>
-                                </div>
-                                <div class="col-3">
-                                    <button type="button" class="btn btn-success btn-rounded waves-effect waves-light" th:onclick="">保存</button>
-                                    <button type="button" class="btn btn-success btn-rounded waves-effect waves-light" th:onclick="submit()">提交</button>
-                                </div>
-                            </div>
-                            <div class="row"></div>
-                            <div  id="summernote" >实验报告模板</div>
+<!--            <div class="row">-->
+<!--                <div class="col-12">-->
+<!--                    <div class="card">-->
+<!--                        <div class="card-body">-->
+<!--                            <div class="row">-->
+<!--                                <div class="col-9">-->
+<!--                            <h4 class="card-title">Summernote</h4>-->
+<!--                                </div>-->
+<!--                                <div class="col-3">-->
+<!--                                    <button type="button" class="btn btn-success btn-rounded waves-effect waves-light" th:onclick="">保存</button>-->
+<!--                                    <button type="button" class="btn btn-success btn-rounded waves-effect waves-light" th:onclick="submit()">提交</button>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="row"></div>-->
+<!--                            <div  id="summernote" >实验报告模板</div>-->
 
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
 
 
             </div><!-- container-fluid -->
@@ -307,6 +318,15 @@
     function submit(){
         var allstr = $('#summernote').summernote('code');
         alert(allstr);
+    }
+
+    function showpdf(){
+        $("#follow_machine").attr("class","col-md-12");
+        $("#machine").attr("class","");
+    }
+    function showm1(){
+        $("#follow_machine").attr("class","col-md-4");
+        $("#machine").attr("class","col-md-8");
     }
 
 
