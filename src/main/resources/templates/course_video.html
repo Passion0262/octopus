@@ -6,7 +6,6 @@
   <title>人工智能实验实训平台</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta content="人工智能实验实训平台" name="description" />
-  <link href="../../static/js/libs/admin-resources/jquery.vectormap/static" rel="stylesheet" type="text/css" /><!-- DataTables -->
   <link href="../../static/js/libs/video/video-js.min.css" rel="stylesheet" type="text/css" />
   <link href="../../static/js/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" /><!-- Responsive datatable examples -->
   <link href="../../static/js/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" /><!-- Bootstrap Css -->
@@ -252,6 +251,10 @@
 <script th:inline="javascript" type="text/javascript">
   var currentvideoid = 0;
   var myDate = new Date();
+  var starttime = new Date();
+  var endtime = new Date();
+  var isplay = 0;
+  var learntime = 0;
 
   $(document).ready(function() {
     showvideo([[${startvideo}]]);
@@ -273,67 +276,44 @@
               var timeDisplay;
               var duration;
               //用秒数来显示当前播放进度
-              // timeDisplay = Math.floor(videoplay.currentTime);
-              // duration = Math.floor(videoplay.duration);
-              // console.log('总时长',duration);
-              // console.log('当前播放的时长',timeDisplay);
+              timeDisplay = Math.floor(videoplay.currentTime);
+              duration = Math.floor(videoplay.duration);
+              console.log('总时长',duration);
+              console.log('当前播放的时长',timeDisplay);
             },false);
 
     videoplay.addEventListener(
             "play",
             function() {
-              var nowtime = myDate.toLocaleString( );
-              console.log('视频id',currentvideoid);
-              console.log('开始时间',nowtime);
+              if(isplay==false){
+                starttime = myDate.toLocaleString();
+              }
+              isplay = true;
+              console.log('kaishi视频id',currentvideoid);
+              console.log('ksidhi时间',starttime);
             });
 
 
     videoplay.addEventListener(
             "ended",
             function() {
-              var nowtime = myDate.toLocaleString( );
-              console.log('视频id',currentvideoid);
-              console.log('结束时间',nowtime);
+
+              endtime = myDate.toLocaleString( );
+              sendvideoinfo();
+              isplay = false;
+              console.log('jis视频id',currentvideoid);
+              console.log('jis时间',endtime);
             });
 
-    videoplay.addEventListener(
-            "abort",
-            function() {
-              var nowtime = myDate.toLocaleString( );
-              console.log('视频id',currentvideoid);
-              console.log('abort时间',nowtime);
-            });
-    videoplay.addEventListener(
-            "readystatechange",
-            function() {
-              var nowtime = myDate.toLocaleString( );
-              console.log('视频id',currentvideoid);
-              console.log('readystatechange时间',nowtime);
-            });
+      window.onunload = function () {
+      endtime = myDate.toLocaleString( );
+      sendvideoinfo();
+      isplay = false;
+      console.log('onunload');
+      console.log('jisun视频id',currentvideoid);
+      console.log('jisun时间',endtime);
+    };
 
-    videoplay.addEventListener(
-            "pause",
-            function() {
-              var nowtime = myDate.toLocaleString( );
-              console.log('视频id',currentvideoid);
-              console.log('暂停时间',nowtime);
-            });
-
-      if(window.addEventListener){
-        window.addEventListener("beforeunload",function(){
-          var nowtime = myDate.toLocaleString( );
-          console.log('视频id',currentvideoid);
-          console.log('结束时间be',nowtime);
-          alert("1");
-        },false);
-      }else{
-        window.attachEvent("onbeforeunload",function(){
-          var nowtime = myDate.toLocaleString( );
-          console.log('视频id',currentvideoid);
-          console.log('结束时间onbe',nowtime);
-          alert("2");
-        });
-      }
 
   //   var player = videojs('videoplay', options, function onPlayerReady() {
   //     var time1;
@@ -393,21 +373,30 @@
      }else{
        $("#machinebutton").attr("disabled",true);
      }
+
+     if(isplay==true){
+       endtime = myDate.toLocaleString( );
+       sendvideoinfo();
+       console.log('qoeh视频id',currentvideoid);
+       console.log('qiehun时间',endtime);
+     }
+    isplay = false;
+
     currentvideoid = video.id;
-     alert(currentvideoid);
+
   }
 
-  function countTime() {
+  function sendvideoinfo() {
     // var sTime = $("#aa").val();
-    // $.ajax({
-    //   url : "url",
-    //   type : "POST",
-    //   dataType : 'json',
-    //   data : {'sTime':sTime,"},
-    //   success:function (data) {
-    //     console.log(data);
-    //   }
-    // })
+    $.ajax({
+      url : "update_videotime",
+      type : "POST",
+      dataType : 'json',
+      data : {'videoid':currentvideoid,'starttime':starttime,'endtime':endtime},
+      success:function (data) {
+        console.log(data);
+      }
+    })
   }
 
 
