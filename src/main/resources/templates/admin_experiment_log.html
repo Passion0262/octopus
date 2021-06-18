@@ -59,8 +59,8 @@
                                                 <tr>
                                                     <th>姓名</th>
                                                     <th>学号</th>
-                                                    <th>专业</th>
                                                     <th>班级</th>
+                                                    <th>专业</th>
                                                     <th>开课计划</th>
                                                     <th>实验任务</th>
                                                     <th>操作总时长</th>
@@ -71,19 +71,32 @@
                                                 </tr>
                                             </thead>
                                             <tbody style="text-align: center;">
-                                            <tr>
-                                                <td>丁一</td>
-                                                <td>10001</td>
-                                                <td>大数据技术与应用</td>
-                                                <td>大数据2101</td>
-                                                <td>spark课程</td>
-                                                <td>pyspark SQL文件处理</td>
-                                                <td>2小时11分09秒</td>
-                                                <td>2021-02-08 11:20:01</td>
-                                                <td>2020-04-18 11:20:01</td>
-                                                <td>操作详细</td>
-                                                <td>实验监控(123)</td>
-                                            </tr>
+                                                <tr th:each="log:${experiment_logs}">
+                                                    <td th:text="${log.stuNum}"></td>
+                                                    <td th:text="${log.stuName}"></td>
+                                                    <td th:text="${log.class}"></td>
+                                                    <td th:text="${log.major}"></td>
+                                                    <td th:text="${log.course}"></td>
+                                                    <td th:text="${log.experimentMission}"></td>
+                                                    <td th:text="${log.totalTime}"></td>
+                                                    <td th:text="${log.startTime}"></td>
+                                                    <td th:text="${log.lastTime}"></td>
+                                                    <td th:text="${log.detail}"></td>
+                                                    <td th:text="${log.monitor}"></td>
+                                                </tr>
+<!--                                            <tr>-->
+<!--                                                <td>丁一</td>-->
+<!--                                                <td>10001</td>-->
+<!--                                                <td>大数据技术与应用</td>-->
+<!--                                                <td>大数据2101</td>-->
+<!--                                                <td>spark课程</td>-->
+<!--                                                <td>pyspark SQL文件处理</td>-->
+<!--                                                <td>2小时11分09秒</td>-->
+<!--                                                <td>2021-02-08 11:20:01</td>-->
+<!--                                                <td>2020-04-18 11:20:01</td>-->
+<!--                                                <td>操作详细</td>-->
+<!--                                                <td>实验监控(123)</td>-->
+<!--                                            </tr>-->
                                             
                                             </tbody>
                                         </table>

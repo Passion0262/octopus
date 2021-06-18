@@ -71,32 +71,43 @@
                                                 </tr>
                                             </thead>
                                             <tbody style="text-align: center;">
-                                            <tr>
-                                                <td>10001</td>
-                                                <td>丁一</td>
-                                                <td>大数据技术与应用</td>
-                                                <td>大数据2101</td>
-                                                <td>数据可视化技术</td>
-                                                <td>0小时56分11秒</td>
-                                                <td>1.1简介</td>
-                                                <td>2020-02-10</td>
-                                                <td>2020-02-08 11:20:01</td>
-                                                <td>2020-03-18 14:11:19</td>
-                                                <td>0小时0分0秒</td>
-                                            </tr>
-                                            <tr>
-                                                <td>10002</td>
-                                                <td>王五</td>
-                                                <td>大数据技术与应用</td>
-                                                <td>大数据2101</td>
-                                                <td>数据可视化技术</td>
-                                                <td>3小时56分11秒</td>
-                                                <td>1.1简介</td>
-                                                <td>2020-02-09</td>
-                                                <td>2020-02-08 11:20:01</td>
-                                                <td>2020-03-18 14:11:19</td>
-                                                <td>0小时56分11秒</td>
-                                            </tr>
+                                                <tr th:each="log_detail:${video_log_details}">
+                                                    <td th:text="${log_detail.stuNum}"></td>
+                                                    <td th:text="${log_detail.stuName}"></td>
+                                                    <td th:text="${log_detail.class}"></td>
+                                                    <td th:text="${log_detail.major}"></td>
+                                                    <td th:text="${log_detail.course}"></td>
+                                                    <td th:text="${log_detail.video}"></td>
+                                                    <td th:text="${log_detail.startTime}"></td>
+                                                    <td th:text="${log_detail.endTime}"></td>
+                                                    <td th:text="${log_detail.overTime}"></td>
+                                                </tr>
+<!--                                            <tr>-->
+<!--                                                <td>10001</td>-->
+<!--                                                <td>丁一</td>-->
+<!--                                                <td>大数据技术与应用</td>-->
+<!--                                                <td>大数据2101</td>-->
+<!--                                                <td>数据可视化技术</td>-->
+<!--                                                <td>0小时56分11秒</td>-->
+<!--                                                <td>1.1简介</td>-->
+<!--                                                <td>2020-02-10</td>-->
+<!--                                                <td>2020-02-08 11:20:01</td>-->
+<!--                                                <td>2020-03-18 14:11:19</td>-->
+<!--                                                <td>0小时0分0秒</td>-->
+<!--                                            </tr>-->
+<!--                                            <tr>-->
+<!--                                                <td>10002</td>-->
+<!--                                                <td>王五</td>-->
+<!--                                                <td>大数据技术与应用</td>-->
+<!--                                                <td>大数据2101</td>-->
+<!--                                                <td>数据可视化技术</td>-->
+<!--                                                <td>3小时56分11秒</td>-->
+<!--                                                <td>1.1简介</td>-->
+<!--                                                <td>2020-02-09</td>-->
+<!--                                                <td>2020-02-08 11:20:01</td>-->
+<!--                                                <td>2020-03-18 14:11:19</td>-->
+<!--                                                <td>0小时56分11秒</td>-->
+<!--                                            </tr>-->
                                             </tbody>
                                         </table>
                                     </div>
