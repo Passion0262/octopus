@@ -26,6 +26,12 @@ public interface VideoMapper {
     List<Video> listVideosByCourseId(long courseId);
 
     /**
+     * 根据courseId返回对应的videoId list
+     */
+    @Select("SELECT id FROM video WHERE course_id = #{courseId}")
+    List<Long> listVideoIdsByCourseId(long courseId);
+
+    /**
      * 根据chapterId返回对应的video list
      */
     @Select("SELECT * FROM video WHERE chapter_id = #{chapterId}")
