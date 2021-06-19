@@ -313,7 +313,7 @@ public class studentController {
     }
 
     @RequestMapping("/update_videotime")
-    public void update_videotime( Model model, HttpServletRequest request) {
+    public String update_videotime( Model model, HttpServletRequest request) {
 //        DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 //        try {
 //        Date starttime = sdf.parse((request.getParameter("starttime")));
@@ -324,18 +324,24 @@ public class studentController {
 //            e.printStackTrace();
 //        }
 
+        Long id =Long.parseLong(request.getParameter("courseid"));
         String starttime =(request.getParameter("starttime"));
         String endtime = (request.getParameter("endtime"));
-        logger.info("starttime:" + starttime);
-        logger.info("endtime:" + endtime);
+        String currenttime = (request.getParameter("currenttime"));
+        String jindu = (request.getParameter("jindu"));
+        String learntime = (request.getParameter("learntime"));
         Long videoid = Long.parseLong(request.getParameter("videoid"));
         Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
 
-
         logger.info("videoid:" + videoid);
         logger.info("stuNum:" + stuNum);
+        logger.info("starttime:" + starttime);
+        logger.info("endtime:" + endtime);
+        logger.info("currenttime:" + currenttime);
+        logger.info("jindu:" + jindu);
+        logger.info("learntime:" + learntime);
 
-
+        return "redirect:/course_video/"+id;
     }
 
 

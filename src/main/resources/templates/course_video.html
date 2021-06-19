@@ -162,8 +162,8 @@
                               <span th:text="${video.number}"></span>:&nbsp;&nbsp;&nbsp;<span th:text="${video.name}"></span>
 
                             <div class="progress">
-                              <div th:id ="'v'+${video.id}" class="progress-bar" role="progressbar" width="0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                                <span th:id ="'vv'+${video.id}" text="0%"></span>
+                              <div th:id ="'v'+${video.id}" class="progress-bar" role="progressbar" style="width:0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                <span th:id ="'vv'+${video.id}" >0%</span>
                               </div>
                             </div>
                           </a></li>
@@ -255,6 +255,11 @@
   var endtime = new Date();
   var isplay = 0;
   var learntime = 0;
+  var alreadytime = 0;
+  var acurrentTime = 0;
+  var bcurrentTime = 0;
+  var pro = 0;
+  var time1;
 
   $(document).ready(function() {
     showvideo([[${startvideo}]]);
@@ -267,20 +272,21 @@
     videoplay.addEventListener(
             "loadedmetadata",
             function() {
-              this.currentTime = 10;
+              this.currentTime = acurrentTime;
             });
 
-    videoplay.addEventListener(
-            "timeupdate",
-            function() {
-              var timeDisplay;
-              var duration;
-              //用秒数来显示当前播放进度
-              timeDisplay = Math.floor(videoplay.currentTime);
-              duration = Math.floor(videoplay.duration);
-              console.log('总时长',duration);
-              console.log('当前播放的时长',timeDisplay);
-            },false);
+    // videoplay.addEventListener(
+    //         "timeupdate",
+    //         function() {
+    //           //用秒数来显示当前播放进度
+    //           // timeDisplay = Math.floor(videoplay.currentTime);
+    //           // duration = Math.floor(videoplay.duration);
+    //           time1 = setInterval(function () {
+    //             aa(Math.floor(videoplay.duration));
+    //           }, 100)
+    //
+    //         },false);
+
 
     videoplay.addEventListener(
             "play",
@@ -289,9 +295,32 @@
                 starttime = myDate.toLocaleString();
               }
               isplay = true;
+              time1 = setInterval(function () {
+                aa(Math.floor(videoplay.duration));
+                bcurrentTime = Math.floor(videoplay.currentTime);
+              }, 1000)
               console.log('kaishi视频id',currentvideoid);
               console.log('ksidhi时间',starttime);
             });
+
+    videoplay.addEventListener(
+            "pause",
+            function() {
+              window.clearInterval(time1);
+              console.log('暂停');
+            });
+
+    function aa(duration){
+      learntime = learntime+1;
+      pro = Math.floor(((alreadytime+learntime)/duration)*100);
+      console.log('pro',pro);
+      if(pro<=100) changebar(pro);
+    }
+
+    function changebar(pro){
+      $("#v"+currentvideoid).attr("style","width:"+pro+"%");
+      $("#vv"+currentvideoid).text(pro+"%");
+    }
 
 
     videoplay.addEventListener(
@@ -301,14 +330,21 @@
               endtime = myDate.toLocaleString( );
               sendvideoinfo();
               isplay = false;
+              window.clearInterval(time1);
+              learntime = 0
               console.log('jis视频id',currentvideoid);
               console.log('jis时间',endtime);
             });
 
-      window.onunload = function () {
+
+
+
+      window.onbeforeunload = function () {
       endtime = myDate.toLocaleString( );
       sendvideoinfo();
       isplay = false;
+      window.clearInterval(time1);
+      learntime = 0
       console.log('onunload');
       console.log('jisun视频id',currentvideoid);
       console.log('jisun时间',endtime);
@@ -364,7 +400,10 @@
     // alert(video);
      $("#videotitle").html(video.name);
      $("#videoplay").attr("src",video.path);
-     var tosubexperiments = [[${tosubexperiments}]];
+
+
+
+    var tosubexperiments = [[${tosubexperiments}]];
      if(tosubexperiments[video.chapterId-1][video.number-1]!=null){
        $("#machinebutton").attr("disabled",false);
        $("#machinebutton").click(function(){
@@ -377,24 +416,38 @@
      if(isplay==true){
        endtime = myDate.toLocaleString( );
        sendvideoinfo();
+       window.clearInterval(time1);
+       learntime = 0
        console.log('qoeh视频id',currentvideoid);
        console.log('qiehun时间',endtime);
      }
     isplay = false;
-
+    pro = 0;
+    alreadytime = 0;
+    acurrentTime = 0;
     currentvideoid = video.id;
 
   }
 
+
+
+
   function sendvideoinfo() {
-    // var sTime = $("#aa").val();
     $.ajax({
-      url : "update_videotime",
+      url : "/update_videotime",
       type : "POST",
-      dataType : 'json',
-      data : {'videoid':currentvideoid,'starttime':starttime,'endtime':endtime},
+
+      data : {
+        'courseid':[[${course.id}]],
+        'videoid':currentvideoid,
+        'starttime':starttime,
+        'endtime':endtime,
+        'currenttime':bcurrentTime,
+        'learntime':learntime,
+        'jindu':pro,
+      },
       success:function (data) {
-        console.log(data);
+        // console.log(data);
       }
     })
   }
