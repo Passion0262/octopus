@@ -43,8 +43,8 @@ public class adminController {
     @Autowired
     CourseService courseService;
 
-//    @Autowired
-//    StudentCourseService studentcourseService;
+    @Autowired
+    StudentCourseService studentcourseService;
 
     @Autowired
     ExperimentService experimentService;
@@ -54,6 +54,9 @@ public class adminController {
 
     @Autowired
     DatasetService datasetService;
+
+    @Autowired
+    VideoService videoService;
 
     private final static String cookieName = "cookie_";
 
@@ -266,7 +269,7 @@ public class adminController {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
 
         logger.info("提交修改的class_: [{}]", class_);
-        //修改
+        // todo 提交到数据库
         return new ModelAndView("redirect:/admin_class", "classmodel", model);
     }
 
@@ -312,7 +315,6 @@ public class adminController {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
 
         logger.info("提交新增的student: [{}]", student);
-        //补全最近登录时间 登录总时长信息
         userService.insertStudent(student);
         return new ModelAndView("redirect:/admin_student", "stumodel", model);
     }
@@ -422,7 +424,7 @@ public class adminController {
         model.addAttribute("username", teaName);
         logger.info("进入学生开课计划管理");
         //返回
-        //model.addAttribute("course_students", studentcourseService.listStudentCoursesByTeaNumber());
+        model.addAttribute("course_students", studentcourseService.listStudentCoursesByTeaNumber(teaNum));
         return "admin_course_student";
     }
 
@@ -441,7 +443,7 @@ public class adminController {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
 
         logger.info("提交新增的course_student: [{}]", course_student);
-        //增加
+        // todo 向数据库提交新增的course_student
         return new ModelAndView("redirect:/admin_course_student");
     }
 
@@ -472,28 +474,39 @@ public class adminController {
 
         long courseId = Long.parseLong(request.getParameter("id"));
         logger.info("删除 courseId=" + courseId);
-        //删除
+        // todo 数据库删除对应数据
         return new ModelAndView("redirect:/admin_course_student", "coursestudentmodel", model);
     }
 
+    //视频学习汇总 仅展示
     @RequestMapping("/admin_video_log")
     public String admin_video_log(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
         String teaName = cookieThings.getCookieUserName(request, cookieName);
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         model.addAttribute("username", teaName);
+
+        // todo 请求数据返回
+        //model.addAttribute("video_logs", videoService.listVideoLogs());
+
         return "admin_video_log";
     }
 
+    //视频学习详情 仅展示
     @RequestMapping("/admin_video_log_details")
     public String admin_video_log_details(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
         String teaName = cookieThings.getCookieUserName(request, cookieName);
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         model.addAttribute("username", teaName);
+
+        // todo 请求数据返回
+        //model.addAttribute("video_log_details", videoService.listVideoLogDetails());
+
         return "admin_video_log_details";
     }
 
+    // 实验报告管理
     @RequestMapping("/admin_report")
     public String admin_report(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
@@ -503,6 +516,7 @@ public class adminController {
         return "admin_report";
     }
 
+    //实验报告详情
     @RequestMapping("/admin_report_detail")
     public String admin_report_detail(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
@@ -513,15 +527,31 @@ public class adminController {
         return "admin_report_detail";
     }
 
+    //提交实验报告评分
+    @PostMapping("/report_score")
+    public ModelAndView report_score( Model model, HttpServletRequest request) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
+        logger.info("提交报告分数: [{}]", "xxx");
+        // todo 向数据库提交报告评分
+        return new ModelAndView("redirect:/admin_report");
+    }
+
+
+    //实验操作时长 仅展示
     @RequestMapping("/admin_experiment_log")
     public String admin_experiment_log(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
         String teaName = cookieThings.getCookieUserName(request, cookieName);
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         model.addAttribute("username", teaName);
+
+        // todo 请求数据返回
+        //model.addAttribute("experiment_logs", );
         return "admin_experiment_log";
     }
 
+    // 实验机类型管理
     @RequestMapping("/admin_pc_type")
     public String admin_pc_type(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
@@ -531,6 +561,7 @@ public class adminController {
         return "admin_pc_type";
     }
 
+    // 实验机集群管理
     @RequestMapping("/admin_cluster")
     public String admin_cluster(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
@@ -540,6 +571,7 @@ public class adminController {
         return "admin_cluster";
     }
 
+    // 学生实验机管理
     @RequestMapping("/admin_student_pc")
     public String admin_student_pc(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
@@ -549,6 +581,7 @@ public class adminController {
         return "admin_student_pc";
     }
 
+    // 实验报告模板
     @RequestMapping("/admin_report_template")
     public String admin_report_template(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
@@ -558,15 +591,19 @@ public class adminController {
         return "admin_report_template";
     }
 
+    // 视频管理
     @RequestMapping("/admin_video")
     public String admin_video(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
         String teaName = cookieThings.getCookieUserName(request, cookieName);
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         model.addAttribute("username", teaName);
+        System.out.println(videoService.listVideos());
+        model.addAttribute("video", videoService.listVideos());
         return "admin_video";
     }
 
+    // 视频分类管理
     @RequestMapping("/admin_video_class")
     public String admin_video_class(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
@@ -587,6 +624,7 @@ public class adminController {
         return "admin_dataset";
     }
 
+    //上传图片
     @ResponseBody
     @RequestMapping("/upload_img")
     public Map imageUpload(MultipartFile img, HttpServletRequest request) {
@@ -643,13 +681,8 @@ public class adminController {
     }
 
 
-    @RequestMapping("/report_upload")
-    public String report_upload(Model model, HttpServletRequest request) {
-        if (!cookieCheck(model, request)) return "redirect:/login";
 
-        return "report_upload";
-    }
-
+    //上传文件
     @ResponseBody
     @RequestMapping("/upload_file")
     public Map fileUpload(MultipartFile file, HttpServletRequest request) {

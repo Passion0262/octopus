@@ -59,33 +59,56 @@
                                             <thead style="text-align: center;">
                                                 <tr>
                                                     <th class="sorting_disabled">操作</th>
+                                                    <th id="sort">视频编号</th>
                                                     <th>课程编号</th>
                                                     <th>课程名称</th>
                                                     <th>所属章节号</th>
                                                     <th>所属章节名</th>
-                                                    <th>所属小节号</th>
+                                                    <th>视频名称</th>
                                                     <th>视频地址</th>
                                                 </tr>
                                             </thead>
                                             <tbody style="text-align: center;">
+                                            <tr th:each="video:${video}">
                                                 <td>
                                                     <div style="width:30px;"></div>
-                                                    <a href="#" class="add" style="color:#ff3d60" data-original-title="Add">
+                                                    <a th:href="@{admin_video_add(username=${username})}" class="add" style="color:#ff3d60" data-original-title="Add">
                                                         <i class="mdi mdi-text-box-plus font-size-18"></i>
                                                     </a>
-                                                    <a href="#" class="edit" style="color:#1cbb8c" data-original-title="Edit">
+                                                    <a th:href="@{admin_video_edit(username=${username},id=${video.id})}" class="edit" style="color:#1cbb8c" data-original-title="Edit">
                                                         <i class="mdi mdi-pencil font-size-18"></i>
                                                     </a>
-                                                    <a href="#" class="delete" style="color:#505d69" data-original-title="Delete">
+                                                    <a th:href="@{admin_video_delete(id=${video.id})}" class="delete" style="color:#505d69" data-original-title="Delete">
                                                         <i class="mdi mdi-trash-can font-size-18"></i>
                                                     </a>
                                                 </td>
-                                                <td>1</td>
-                                                <td>python安装</td>
-                                                <td>1</td>
-                                                <td>python安装</td>
-                                                <td>1</td>
-                                                <td><a style="color:#5664d2">查看视频</a></td>
+                                                <td th:text="${video.id}"></td>
+                                                <td th:text="${video.courseId}"></td>
+                                                <td >课程名</td>
+                                                <td th:text="${video.chapterId}"></td>
+                                                <td >章节名</td>
+                                                <td th:text="${video.name}"></td>
+                                                <td><a th:href="${video.path}" style="color:#5664d2">查看视频</a></td>
+
+                                            </tr>
+<!--                                                <td>-->
+<!--                                                    <div style="width:30px;"></div>-->
+<!--                                                    <a href="#" class="add" style="color:#ff3d60" data-original-title="Add">-->
+<!--                                                        <i class="mdi mdi-text-box-plus font-size-18"></i>-->
+<!--                                                    </a>-->
+<!--                                                    <a href="#" class="edit" style="color:#1cbb8c" data-original-title="Edit">-->
+<!--                                                        <i class="mdi mdi-pencil font-size-18"></i>-->
+<!--                                                    </a>-->
+<!--                                                    <a href="#" class="delete" style="color:#505d69" data-original-title="Delete">-->
+<!--                                                        <i class="mdi mdi-trash-can font-size-18"></i>-->
+<!--                                                    </a>-->
+<!--                                                </td>-->
+<!--                                                <td>1</td>-->
+<!--                                                <td>python安装</td>-->
+<!--                                                <td>1</td>-->
+<!--                                                <td>python安装</td>-->
+<!--                                                <td>1</td>-->
+<!--                                                <td><a style="color:#5664d2">查看视频</a></td>-->
                                             </tbody>
                                         </table>
                                     </div>
@@ -145,6 +168,12 @@
     <script src="static/js/pages/datatables.init.js"></script>
     <script src="static/js/pages/dashboard.init.js"></script>
     <script src="static/js/app.js"></script>
+
+    <script type="text/javascript" th:inline="javascript">
+        function load(){
+            document.getElementById("sort").click();
+        }
+    </script>
 
 
 </body>

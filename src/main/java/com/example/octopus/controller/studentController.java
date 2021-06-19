@@ -8,6 +8,9 @@ import com.example.octopus.entity.user.Teacher;
 import com.example.octopus.service.*;
 import com.example.octopus.utils.CookieTokenUtils;
 import com.example.octopus.utils.TokenCheckUtils;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +26,9 @@ import com.example.octopus.entity.user.Course;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -274,19 +279,19 @@ public class studentController {
         model.addAttribute("chaptersnum", chapters.size());
 
         List<List<Video>> videos = new ArrayList<>();
-//        List<List<Long>> tosubexperiments = new ArrayList<>();
+        List<List<Long>> tosubexperiments = new ArrayList<>();
 
         for (int i=0;i<chapters.size();i++){
 //            logger.info("chaptersid:" + chapters.get(i).getId());
             List<Video> video = videoService.listVideosByChapterId(chapters.get(i).getId());
             videos.add(video);
 
-//            List<Long> tosubs = new ArrayList<>();
-//            for (int j=0;j<video.size();j++){
-//                Long tosub = subExperimentService.getSubExperimentIdByVideoId(video.get(j).getId());
-//                tosubs.add(tosub);
-//            }
-//            tosubexperiments.add(tosubs);
+            List<Long> tosubs = new ArrayList<>();
+            for (int j=0;j<video.size();j++){
+                Long tosub = subExperimentService.getSubExperimentIdByVideoId(video.get(j).getId());
+                tosubs.add(tosub);
+            }
+            tosubexperiments.add(tosubs);
         }
 
         logger.info("videos:" + videos);
@@ -296,8 +301,8 @@ public class studentController {
         model.addAttribute("startvideo", videos.get(0).get(0));
 
 
-//        logger.info("tosubexperiments:" + tosubexperiments);
-//        model.addAttribute("tosubexperiments", tosubexperiments);
+        logger.info("tosubexperiments:" + tosubexperiments);
+        model.addAttribute("tosubexperiments", tosubexperiments);
 
 
 
@@ -306,6 +311,34 @@ public class studentController {
 
         return "course_video";
     }
+
+    @RequestMapping("/update_videotime")
+    public void update_videotime( Model model, HttpServletRequest request) {
+//        DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+//        try {
+//        Date starttime = sdf.parse((request.getParameter("starttime")));
+//        Date endtime = sdf.parse((request.getParameter("endtime")));
+//        logger.info("starttime:" + starttime);
+//        logger.info("endtime:" + endtime);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+        String starttime =(request.getParameter("starttime"));
+        String endtime = (request.getParameter("endtime"));
+        logger.info("starttime:" + starttime);
+        logger.info("endtime:" + endtime);
+        Long videoid = Long.parseLong(request.getParameter("videoid"));
+        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+
+
+        logger.info("videoid:" + videoid);
+        logger.info("stuNum:" + stuNum);
+
+
+    }
+
+
 
 
     @RequestMapping("/experiment_task")

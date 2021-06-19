@@ -67,25 +67,25 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody style="text-align: center;white-space:nowrap;">
-                                                <tr th:each="class:${classes}">
-                                                    <td>
-                                                        <div style="width:30px;"></div>
-                                                        <a th:href="@{admin_class_add(username=${username})}" class="add" style="color:#ff3d60" data-original-title="Add">
-                                                            <i class="mdi mdi-text-box-plus font-size-18"></i>
-                                                        </a>
-                                                        <a th:href="@{admin_class_edit(username=${username},id=${class.id})}" class="edit" style="color:#1cbb8c" data-original-title="Edit">
-                                                            <i class="mdi mdi-pencil font-size-18"></i>
-                                                        </a>
-                                                        <a th:href="@{admin_class_delete(className=${class.className})}" class="delete" style="color:#505d69" data-original-title="Delete">
-                                                            <i class="mdi mdi-trash-can font-size-18"></i>
-                                                        </a>
-                                                    </td>
-                                                    <td th:text="${class.id}"></td>
-                                                    <td th:text="${class.major}"></td>
-                                                    <td th:text="${class.className}"></td>
-                                                    <td th:text="${class.creator}"></td>
-                                                    <td th:text="${class.createTime}"></td>
-                                                </tr>
+                                                    <tr th:each="class:${classes}">
+                                                        <td>
+                                                            <div style="width:30px;"></div>
+                                                            <a th:href="@{admin_class_add(username=${username})}" class="add" style="color:#ff3d60" data-original-title="Add">
+                                                                <i class="mdi mdi-text-box-plus font-size-18"></i>
+                                                            </a>
+                                                            <a th:href="@{admin_class_edit(username=${username},id=${class.id})}" class="edit" style="color:#1cbb8c" data-original-title="Edit">
+                                                                <i class="mdi mdi-pencil font-size-18"></i>
+                                                            </a>
+                                                            <a th:href="@{admin_class_delete(className=${class.className})}" class="delete" style="color:#505d69" data-original-title="Delete">
+                                                                <i class="mdi mdi-trash-can font-size-18"></i>
+                                                            </a>
+                                                        </td>
+                                                        <td th:text="${class.id}"></td>
+                                                        <td th:text="${class.major}"></td>
+                                                        <td th:text="${class.className}"></td>
+                                                        <td th:text="${class.creator}"></td>
+                                                        <td th:text="${class.createTime}"></td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                             <div style="display: block;text-align: right;">
