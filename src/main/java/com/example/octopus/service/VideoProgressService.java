@@ -37,4 +37,8 @@ public interface VideoProgressService {
      */
     boolean updateById(VideoProgress videoProgress);
 
+    /**
+     *  插入videoProgress
+     */
+    boolean insertVideoProgress(VideoProgress videoProgress);
 }

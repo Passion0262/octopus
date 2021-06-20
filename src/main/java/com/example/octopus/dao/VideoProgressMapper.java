@@ -1,6 +1,7 @@
 package com.example.octopus.dao;
 
 import com.example.octopus.entity.experiment.VideoProgress;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -37,5 +38,8 @@ public interface VideoProgressMapper {
      */
     @Update("UPDATE video_progress SET study_time = #{studyTime},progress = #{progress}, last_video_progress=#{lastVideoProgress} WHERE id = #{id}")
     boolean updateById(VideoProgress videoProgress);
+
+    @Insert("INSERT INTO video_progress(video_id,stu_number,start_time,end_time,study_time,progress,last_video_progress) VALUES (#{videoId},#{stuNumber},#{startTime},#{endTime},#{studyTime},#{progress},#{lastVideoProgress})")
+    boolean insertVideoProgress(VideoProgress videoProgress);
 
 }

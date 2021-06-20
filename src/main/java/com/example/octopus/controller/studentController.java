@@ -9,7 +9,9 @@ import com.example.octopus.service.*;
 import com.example.octopus.utils.CookieTokenUtils;
 import com.example.octopus.utils.TokenCheckUtils;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,6 +63,9 @@ public class studentController {
     TeacherService teacherService;
     @Autowired
     VideoService videoService;
+
+    @Autowired
+    VideoProgressService videoProgressService;
 
 
     private final static String cookieName = "cookie_";
@@ -313,7 +318,7 @@ public class studentController {
     }
 
     @RequestMapping("/update_videotime")
-    public String update_videotime( Model model, HttpServletRequest request) {
+    public String update_videotime( Model model, HttpServletRequest request) throws ParseException {
 //        DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 //        try {
 //        Date starttime = sdf.parse((request.getParameter("starttime")));
@@ -327,11 +332,31 @@ public class studentController {
         Long id =Long.parseLong(request.getParameter("courseid"));
         String starttime =(request.getParameter("starttime"));
         String endtime = (request.getParameter("endtime"));
-        String currenttime = (request.getParameter("currenttime"));
-        String jindu = (request.getParameter("jindu"));
-        String learntime = (request.getParameter("learntime"));
+        Integer currenttime = Integer.parseInt((request.getParameter("currenttime")));
+        Integer jindu = Integer.parseInt((request.getParameter("jindu")));
+        Integer learntime = Integer.parseInt((request.getParameter("learntime")));
         Long videoid = Long.parseLong(request.getParameter("videoid"));
         Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+
+//        String strDateFormat = "yyyy-MM-dd HH:mm:ss";
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        Date startdate = simpleDateFormat.parse(starttime);
+        Date startdate = new Date(starttime);
+        Date enddate = new Date(endtime);
+        Timestamp startst = new Timestamp(startdate.getTime());
+        Timestamp endst = new Timestamp(enddate.getTime());
+        logger.info("startdate:" + startdate);
+        logger.info("enddate:" + startdate);
+
+        VideoProgress videoProgress = new VideoProgress();
+        videoProgress.setVideoId(videoid);
+        videoProgress.setStuNumber(stuNum);
+        videoProgress.setStartTime(startst);
+        videoProgress.setEndTime(endst);
+        videoProgress.setProgress(jindu);
+        videoProgress.setLastVideoProgress(currenttime);
+        videoProgress.setStudyTime(learntime);
+        boolean issuccess = videoProgressService.insertVideoProgress(videoProgress);
 
         logger.info("videoid:" + videoid);
         logger.info("stuNum:" + stuNum);

@@ -3,6 +3,8 @@ package com.example.octopus.entity.experiment;
 import lombok.Data;
 
 import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * @author ：shadow
@@ -17,9 +19,9 @@ public class VideoProgress {
 
     private long stuNumber;
 
-    private Time startTime;     //开始学习时间
+    private Timestamp startTime;     //开始学习时间
 
-    private Time endTime;       //结束学习时间
+    private Timestamp endTime;       //结束学习时间
 
     private int studyTime;      //有效学习时长,单位:秒
 
