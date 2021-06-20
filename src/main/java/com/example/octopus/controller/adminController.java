@@ -379,8 +379,6 @@ public class adminController {
         if (teaNum == 1) {
             logger.info("进入admin_student_add，获取一个新Student()");
             model.addAttribute("student", new Student());
-            model.addAttribute("majors", majorService.listMajors());
-            model.addAttribute("classes", classService.listClass_s());
             model.addAttribute("role", "admin");
             model.addAttribute("username", teaName);
         }
@@ -413,8 +411,6 @@ public class adminController {
             logger.info("admin_student_edit，获取指定名字的Student(),stuNumber=" + stuNumber);
             Student student = userService.getStudentByStuNumber(stuNumber);
             model.addAttribute("student", student);
-            model.addAttribute("majors", majorService.listMajors());
-            model.addAttribute("classes", classService.listClass_s());
             model.addAttribute("role", "admin");
             model.addAttribute("username", teaName);
         }
@@ -461,7 +457,14 @@ public class adminController {
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         model.addAttribute("username", teaName);
         logger.info("进入开课计划管理");
-        model.addAttribute("courses", courseService.listCourses());
+        if(teaNum == 1){
+            model.addAttribute("role", "admin");
+            model.addAttribute("courses", courseService.listCourses());
+        }
+        else{
+            model.addAttribute("role", "teacher");
+            model.addAttribute("courses", courseService.listCoursesByTeaNumber(teaNum));
+        }
         return "admin_course";
     }
 
@@ -469,7 +472,14 @@ public class adminController {
     @GetMapping("/admin_course_add")
     public ModelAndView admin_course_add(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-
+        String teaName = cookieThings.getCookieUserName(request, cookieName);
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        if (teaNum == 1) {
+            model.addAttribute("role", "admin");
+        }
+        else{
+            model.addAttribute("role", "teacher");
+        }
         logger.info("进入admin_course_add，获取一个新Course()");
         model.addAttribute("course", new Course());
         return new ModelAndView("admin_course_add", "coursemodel", model);
@@ -488,10 +498,16 @@ public class adminController {
     @GetMapping("/admin_course_edit")
     public ModelAndView admin_course_edit(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-
-        logger.info("进入admin_course_edit，获取指定名字的Course()");
+        String teaName = cookieThings.getCookieUserName(request, cookieName);
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        if (teaNum == 1) {
+            model.addAttribute("role", "admin");
+        }
+        else{
+            model.addAttribute("role", "teacher");
+        }
         long courseId = Long.parseLong(request.getParameter("courseId"));
-        logger.info("courseId=" + courseId);
+        logger.info("进入admin_course_edit，获取指定名字的Course(), courseId=" + courseId);
         model.addAttribute("course", courseService.getCourseById(courseId));
         return new ModelAndView("admin_course_edit", "coursemodel", model);
     }
@@ -524,8 +540,14 @@ public class adminController {
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         model.addAttribute("username", teaName);
         logger.info("进入学生开课计划管理");
-        //返回
-        model.addAttribute("course_students", studentcourseService.listStudentCoursesByTeaNumber(teaNum));
+        if(teaNum == 1){
+            model.addAttribute("role", "admin");
+            //model.addAttribute("courses", studentcourseService.listStudentCourses());
+        }
+        else{
+            model.addAttribute("role", "teacher");
+            model.addAttribute("course_students", studentcourseService.listStudentCoursesByTeaNumber(teaNum));
+        }
         return "admin_course_student";
     }
 
@@ -533,9 +555,16 @@ public class adminController {
     @GetMapping("/admin_course_student_add")
     public ModelAndView admin_course_student_add(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-
+        String teaName = cookieThings.getCookieUserName(request, cookieName);
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         logger.info("进入admin_course_student_add，Student_Course()");
-        model.addAttribute("course_student", new StudentCourse());
+        if(teaNum == 1){
+            model.addAttribute("course_student", new StudentCourse());
+            model.addAttribute("role", "admin");
+        }
+        else{
+            model.addAttribute("role", "teacher");
+        }
         return new ModelAndView("admin_course_student_add", "coursestudentmodel", model);
     }
 
@@ -586,10 +615,14 @@ public class adminController {
         String teaName = cookieThings.getCookieUserName(request, cookieName);
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         model.addAttribute("username", teaName);
-
-        // todo 请求数据返回
-        //model.addAttribute("video_logs", videoService.listVideoLogs());
-
+        if(teaNum == 1){
+            model.addAttribute("role", "admin");
+            //model.addAttribute("video_logs", videoService.listVideoLogs());
+        }
+        else{
+            model.addAttribute("role", "teacher");
+            //model.addAttribute("video_logs", videoService.listVideoLogsByTeaNumber(teaNum));
+        }
         return "admin_video_log";
     }
 
@@ -600,10 +633,14 @@ public class adminController {
         String teaName = cookieThings.getCookieUserName(request, cookieName);
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         model.addAttribute("username", teaName);
-
-        // todo 请求数据返回
-        //model.addAttribute("video_log_details", videoService.listVideoLogDetails());
-
+        if(teaNum == 1){
+            model.addAttribute("role", "admin");
+            //model.addAttribute("video_log_details", videoService.listVideoLogDetails());
+        }
+        else{
+            model.addAttribute("role", "teacher");
+            //model.addAttribute("video_log_details", videoService.listVideoLogDetailsByTeaNumber(teaNum));
+        }
         return "admin_video_log_details";
     }
 
@@ -614,6 +651,14 @@ public class adminController {
         String teaName = cookieThings.getCookieUserName(request, cookieName);
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         model.addAttribute("username", teaName);
+        if(teaNum == 1){
+            model.addAttribute("role", "admin");
+            //model.addAttribute("reports", );
+        }
+        else{
+            model.addAttribute("role", "teacher");
+            //model.addAttribute("reports", );
+        }
         return "admin_report";
     }
 
@@ -624,6 +669,12 @@ public class adminController {
         String teaName = cookieThings.getCookieUserName(request, cookieName);
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         model.addAttribute("username", teaName);
+        if(teaNum == 1){
+            model.addAttribute("role", "admin");
+        }
+        else{
+            model.addAttribute("role", "teacher");
+        }
         model.addAttribute("pdf", "https://arxiv.org/pdf/1508.01006v1.pdf");
         return "admin_report_detail";
     }
@@ -646,9 +697,14 @@ public class adminController {
         String teaName = cookieThings.getCookieUserName(request, cookieName);
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         model.addAttribute("username", teaName);
-
-        // todo 请求数据返回
-        //model.addAttribute("experiment_logs", );
+        if(teaNum == 1){
+            model.addAttribute("role", "admin");
+            //model.addAttribute("experiment_logs", );
+        }
+        else{
+            model.addAttribute("role", "teacher");
+            //model.addAttribute("experiment_logs", );
+        }
         return "admin_experiment_log";
     }
 
@@ -659,6 +715,14 @@ public class adminController {
         String teaName = cookieThings.getCookieUserName(request, cookieName);
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         model.addAttribute("username", teaName);
+        if(teaNum == 1){
+            model.addAttribute("role", "admin");
+            //model.addAttribute("pc_types", );
+        }
+        else{
+            model.addAttribute("role", "teacher");
+            //model.addAttribute("pc_types", );
+        }
         return "admin_pc_type";
     }
 
@@ -669,6 +733,14 @@ public class adminController {
         String teaName = cookieThings.getCookieUserName(request, cookieName);
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         model.addAttribute("username", teaName);
+        if(teaNum == 1){
+            model.addAttribute("role", "admin");
+            //model.addAttribute("clusters", );
+        }
+        else{
+            model.addAttribute("role", "teacher");
+            //model.addAttribute("clusters", );
+        }
         return "admin_cluster";
     }
 
@@ -679,6 +751,14 @@ public class adminController {
         String teaName = cookieThings.getCookieUserName(request, cookieName);
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         model.addAttribute("username", teaName);
+        if(teaNum == 1){
+            model.addAttribute("role", "admin");
+            //model.addAttribute("student_pc", );
+        }
+        else{
+            model.addAttribute("role", "teacher");
+            //model.addAttribute("student_pc", );
+        }
         return "admin_student_pc";
     }
 
@@ -689,6 +769,14 @@ public class adminController {
         String teaName = cookieThings.getCookieUserName(request, cookieName);
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         model.addAttribute("username", teaName);
+        if(teaNum == 1){
+            model.addAttribute("role", "admin");
+            //model.addAttribute("report_template", );
+        }
+        else{
+            model.addAttribute("role", "teacher");
+            //model.addAttribute("report_template", );
+        }
         return "admin_report_template";
     }
 
@@ -699,8 +787,14 @@ public class adminController {
         String teaName = cookieThings.getCookieUserName(request, cookieName);
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         model.addAttribute("username", teaName);
-        System.out.println(videoService.listVideos());
-        model.addAttribute("video", videoService.listVideos());
+        if(teaNum == 1){
+            model.addAttribute("role", "admin");
+            model.addAttribute("video", videoService.listVideos());
+        }
+        else{
+            model.addAttribute("role", "teacher");
+            model.addAttribute("video", videoService.listVideos());
+        }
         return "admin_video";
     }
 
@@ -711,6 +805,14 @@ public class adminController {
         String teaName = cookieThings.getCookieUserName(request, cookieName);
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         model.addAttribute("username", teaName);
+        if(teaNum == 1){
+            model.addAttribute("role", "admin");
+            //model.addAttribute("video", videoService.listVideos());
+        }
+        else{
+            model.addAttribute("role", "teacher");
+            //model.addAttribute("video", videoService.listVideos());
+        }
         return "admin_video_class";
     }
 
@@ -721,7 +823,14 @@ public class adminController {
         String teaName = cookieThings.getCookieUserName(request, cookieName);
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         model.addAttribute("username", teaName);
-        model.addAttribute("datasets", datasetService.listDatasets());
+        if(teaNum == 1){
+            model.addAttribute("role", "admin");
+            model.addAttribute("datasets", datasetService.listDatasets());
+        }
+        else{
+            model.addAttribute("role", "teacher");
+            model.addAttribute("datasets", datasetService.listDatasets());
+        }
         return "admin_dataset";
     }
 
