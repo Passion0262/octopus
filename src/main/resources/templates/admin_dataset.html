@@ -29,7 +29,7 @@
 <div id="layout-wrapper">
 
     <div th:replace="commons::topbar(${username})"></div>
-    <div th:replace="commons::leftSidebar"></div>
+    <div th:replace="commons::leftSidebar(${role})"></div>
 
     <!-- Start right Content here -->
     <div class="main-content">
