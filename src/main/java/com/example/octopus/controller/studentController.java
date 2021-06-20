@@ -262,51 +262,74 @@ public class studentController {
     }
 
 
-    @RequestMapping("/course_video/{id}")
-    public String course_video(@PathVariable(value = "id") String id, Model model, HttpServletRequest request) {
+    @RequestMapping("/course_video/{id}/{videoid}")
+    public String course_video(@PathVariable(value = "id") String id,@PathVariable(value = "videoid") String videoid, Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
 
         model.addAttribute("id", id);
 
-        logger.info("courseid_id:" + id);
+//        logger.info("courseid_id:" + id);
         Long courseid_id = Long.parseLong(id);
+        Long currvideo_id = Long.parseLong(videoid);
 
         Course course = courseService.getCourseById(courseid_id);
 
-        logger.info("course——detail:" + course);
+//        logger.info("course——detail:" + course);
         model.addAttribute("course", course);
 
         List<Chapter> chapters = chapterService.listChaptersByCourseId(courseid_id);
-        logger.info("chapters:" + chapters);
-        logger.info("chapters:" + chapters.size());
+//        logger.info("chapters:" + chapters);
+//        logger.info("chapters:" + chapters.size());
         model.addAttribute("chapters", chapters);
         model.addAttribute("chaptersnum", chapters.size());
 
         List<List<Video>> videos = new ArrayList<>();
         List<List<Long>> tosubexperiments = new ArrayList<>();
+        List<List<VideoProgress>> videopros = new ArrayList<>();
+        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
 
         for (int i=0;i<chapters.size();i++){
 //            logger.info("chaptersid:" + chapters.get(i).getId());
             List<Video> video = videoService.listVideosByChapterId(chapters.get(i).getId());
             videos.add(video);
 
+            List<VideoProgress> videopro = new ArrayList<>();
             List<Long> tosubs = new ArrayList<>();
+
             for (int j=0;j<video.size();j++){
                 Long tosub = subExperimentService.getSubExperimentIdByVideoId(video.get(j).getId());
+                VideoProgress videop = videoProgressService.getByVideoIdAndStuNumber(video.get(j).getId(),stuNum);
+                videopro.add(videop);
                 tosubs.add(tosub);
             }
             tosubexperiments.add(tosubs);
+            videopros.add(videopro);
         }
 
-        logger.info("videos:" + videos);
+//        logger.info("videos:" + videos);
         model.addAttribute("videos", videos);
 
-        logger.info("startvideo:" + videos.get(0).get(0));
-        model.addAttribute("startvideo", videos.get(0).get(0));
+        model.addAttribute("videopros", videopros);
+//        logger.info("videopros:" + videopros);
+
+//        logger.info("startvideo:" + videos.get(0).get(0));
+
+        if(currvideo_id==0||currvideo_id==null){
+            model.addAttribute("startvideo", videos.get(0).get(0));
+            model.addAttribute("startvideopro", videopros.get(0).get(0));
+        }else{
+            Video startvideo = videoService.getById(currvideo_id);
+            VideoProgress startvideopro = videoProgressService.getByVideoIdAndStuNumber(currvideo_id,stuNum);
+            model.addAttribute("startvideo", startvideo);
+            logger.info("startvideo:" + startvideo);
+            model.addAttribute("startvideopro", startvideopro);
+            logger.info("startvideopro:" + startvideopro);
+        }
 
 
-        logger.info("tosubexperiments:" + tosubexperiments);
+
+//        logger.info("tosubexperiments:" + tosubexperiments);
         model.addAttribute("tosubexperiments", tosubexperiments);
 
 
@@ -329,6 +352,8 @@ public class studentController {
 //            e.printStackTrace();
 //        }
 
+        logger.info("视频学习记录新增");
+
         Long id =Long.parseLong(request.getParameter("courseid"));
         String starttime =(request.getParameter("starttime"));
         String endtime = (request.getParameter("endtime"));
@@ -345,8 +370,8 @@ public class studentController {
         Date enddate = new Date(endtime);
         Timestamp startst = new Timestamp(startdate.getTime());
         Timestamp endst = new Timestamp(enddate.getTime());
-        logger.info("startdate:" + startdate);
-        logger.info("enddate:" + startdate);
+//        logger.info("startdate:" + startdate);
+//        logger.info("enddate:" + startdate);
 
         VideoProgress videoProgress = new VideoProgress();
         videoProgress.setVideoId(videoid);
@@ -358,15 +383,15 @@ public class studentController {
         videoProgress.setStudyTime(learntime);
         boolean issuccess = videoProgressService.insertVideoProgress(videoProgress);
 
-        logger.info("videoid:" + videoid);
-        logger.info("stuNum:" + stuNum);
-        logger.info("starttime:" + starttime);
-        logger.info("endtime:" + endtime);
-        logger.info("currenttime:" + currenttime);
-        logger.info("jindu:" + jindu);
-        logger.info("learntime:" + learntime);
+//        logger.info("videoid:" + videoid);
+//        logger.info("stuNum:" + stuNum);
+//        logger.info("starttime:" + starttime);
+//        logger.info("endtime:" + endtime);
+//        logger.info("currenttime:" + currenttime);
+//        logger.info("jindu:" + jindu);
+//        logger.info("learntime:" + learntime);
 
-        return "redirect:/course_video/"+id;
+        return "redirect:/course_video/"+id+"/"+videoid;
     }
 
 

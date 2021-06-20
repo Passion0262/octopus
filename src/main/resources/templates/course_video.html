@@ -156,16 +156,26 @@
 <!--                          </a></li>-->
 
                           <li th:each="video:${videos[chapterStat.index]}">
-                            <a href="#" th:onclick="showvideo([[${video}]])">
+                            <a href="#" th:onclick="showvideo([[${video}]],[[${videopros[chapterStat.index][videoStat.index]}]])">
 
                               <i class="mdi mdi-circle-medium mr-1"></i>
                               <span th:text="${video.number}"></span>:&nbsp;&nbsp;&nbsp;<span th:text="${video.name}"></span>
 
+
+                              <span th:if="${videopros[chapterStat.index][videoStat.index]}==null">
                             <div class="progress">
-                              <div th:id ="'v'+${video.id}" class="progress-bar" role="progressbar" style="width:0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                                <span th:id ="'vv'+${video.id}" >0%</span>
+                                 <div th:id ="'v'+${video.id}" class="progress-bar" role="progressbar" style="width:0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                <span th:id ="'vv'+${video.id}" text="0%"></span>
                               </div>
                             </div>
+                                </span>
+                              <span th:if="${videopros[chapterStat.index][videoStat.index]}!=null">
+                            <div class="progress">
+                              <div th:id ="'v'+${video.id}" class="progress-bar" role="progressbar" th:style="'width:'+${videopros[chapterStat.index][videoStat.index].progress}+'%'" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                <span th:id ="'vv'+${video.id}" th:text="${videopros[chapterStat.index][videoStat.index].progress}+'%'"></span>
+                              </div>
+                            </div>
+                                </span>
                           </a></li>
 
 
@@ -254,15 +264,16 @@
   var endtime = new Date();
   var isplay = 0;
   var learntime = 0;
-  var alreadytime = 0;
+  var alreadypro = 0;
   var acurrentTime = 0;
   var bcurrentTime = 0;
+  var courseid = [[${course.id}]];
   var pro = 0;
   var time1;
 
 
   $(document).ready(function() {
-    showvideo([[${startvideo}]]);
+    showvideo([[${startvideo}]],[[${startvideopro}]]);
     var id =[[${startvideo.chapterId}]];
     $("#aa"+id).removeClass("collapsed");
     $("#aa"+id).attr("aria-expanded","true");
@@ -272,6 +283,7 @@
     videoplay.addEventListener(
             "loadedmetadata",
             function() {
+              // alert( acurrentTime);
               this.currentTime = acurrentTime;
             });
 
@@ -312,7 +324,10 @@
 
     function aa(duration){
       learntime = learntime+1;
-      pro = Math.floor(((alreadytime+learntime)/duration)*100);
+      var alreadytime  = alreadypro/100*duration;
+      if(alreadytime+learntime<duration){
+        pro = Math.floor(((alreadytime+learntime)/duration)*100);
+      }
       console.log('pro',pro);
       if(pro<=100) changebar(pro);
     }
@@ -340,14 +355,16 @@
 
 
       window.onbeforeunload = function () {
-        endtime = new Date();
-      sendvideoinfo();
-      isplay = false;
-      window.clearInterval(time1);
-      learntime = 0
-      console.log('onunload');
-      console.log('jisun视频id',currentvideoid);
-      console.log('jisun时间',endtime);
+        if(isplay == true) {
+          endtime = new Date();
+          sendvideoinfo();
+          isplay = false;
+          window.clearInterval(time1);
+          learntime = 0
+          console.log('onunload');
+          console.log('jisun视频id', currentvideoid);
+          console.log('jisun时间', endtime);
+        }
     };
 
 
@@ -397,7 +414,9 @@
 
 
 
-  function showvideo(video) {
+  function showvideo(video,videopro) {
+    // console.log('video',video);
+    // console.log('videopro',videopro);
     // alert(video);
      $("#videotitle").html(video.name);
      $("#videoplay").attr("src",video.path);
@@ -422,10 +441,18 @@
        console.log('qoeh视频id',currentvideoid);
        console.log('qiehun时间',endtime);
      }
+
+     if(videopro==null){
+       pro = 0;
+       acurrentTime = 0;
+       alreadypro = 0;
+     }else{
+       pro = videopro.progress;
+       alreadypro = videopro.progress;
+       acurrentTime = videopro.lastVideoProgress;
+     }
+
     isplay = false;
-    pro = 0;
-    alreadytime = 0;
-    acurrentTime = 0;
     currentvideoid = video.id;
 
   }
@@ -439,7 +466,7 @@
       type : "POST",
 
       data : {
-        'courseid':[[${course.id}]],
+        'courseid':courseid,
         'videoid':currentvideoid,
         'starttime':starttime,
         'endtime':endtime,
@@ -448,7 +475,7 @@
         'jindu':pro,
       },
       success:function (data) {
-        // console.log(data);
+        window.location.replace("/course_video/"+courseid+"/"+currentvideoid);
       }
     })
   }
