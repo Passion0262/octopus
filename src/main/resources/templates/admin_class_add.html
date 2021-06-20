@@ -29,7 +29,7 @@
     <div id="layout-wrapper">
 
         <div th:replace="commons::topbar(${classmodel.username})"></div>
-        <div th:replace="commons::leftSidebar"></div>
+        <div th:replace="commons::leftSidebar(${classmodel.role})"></div>
         
         <!-- Start right Content here -->
         <div class="main-content">
@@ -58,7 +58,11 @@
                                         <div class="form-group row">
                                             <label for="add_major" class="col-md-2 col-form-label">所属专业：</label>
                                             <div class="col-md-10">
-                                                <input name="major" th:value="*{major}" class="form-control" type="text" id="add_major">
+                                                <select name="major" th:value="*{major}" class="form-control" id="add_major">
+                                                    <option value="0" style="display: none;">请选择专业</option>
+<!--                                                    <option th:each="majors:${classmodel.majors}" th:text="${majors.majorName}" th:value="${majors.majorName}"></option>-->
+                                                </select>
+<!--                                                <input name="major" th:value="*{major}" class="form-control" type="text" id="add_major">-->
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -140,16 +144,23 @@
     <script src="static/js/app.js"></script>
 
     <script type="text/javascript" th:inline="javascript">
-        // window.onload = function() {
-        //     var oTime = document.getElementById("add_createTime");
-        //     setInterval(function() {
-        //         var time = new Date();  // 程序计时的月从0开始取值后+1
-        //         var m = time.getMonth() + 1;
-        //         var t = time.getFullYear() + "-" + m + "-"
-        //             + time.getDate();
-        //         oTime.value = t;
-        //     }, 1000);
-        // };
+        $(function () {
+            //发送请求获取所有的专业
+            $.ajax({
+                type:"GET",
+                url:"get_all_major",
+                success:function (data) {
+                    console.log(data);
+                    for(var i = 0;i < data.majors.length;i++){
+                        var option = $("<option></option>").text(data.majors[i].majorName);
+                        option.attr("value", data.majors[i].id);
+                        //将option添加到select标签中
+                        $("#add_major").append(option);
+                    }
+                }
+            })
+        })
+
     </script>
 
 

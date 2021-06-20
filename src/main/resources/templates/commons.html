@@ -50,7 +50,7 @@
 <!-- Topbar End -->
 
 <!-- ========== Left Sidebar Start ========== -->
-<div class="vertical-menu" th:fragment="leftSidebar">
+<div class="vertical-menu" th:fragment="leftSidebar(role)">
   <div data-simplebar class="h-100">
     <!--- Sidemenu -->
     <div id="sidebar-menu">
@@ -72,7 +72,7 @@
               <a href="admin_major">专业管理</a>
             </li>
             <li>
-              <a href="admin_class">班级管理</a>
+              <a href="admin_class" th:if="${role} eq 'admin'">班级管理</a>
             </li>
             <li>
               <a href="admin_student">学生管理</a>
