@@ -10,7 +10,7 @@
   <link href="../../static/js/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" /><!-- Responsive datatable examples -->
   <link href="../../static/js/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" /><!-- Bootstrap Css -->
   <link href="../../static/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" /><!-- Icons Css -->
-  <link href="../../static/css/icons.min.css" rel="stylesheet" type="text/css" /><!-- App Css-->
+<!--  <link href="../../static/css/icons.min.css" rel="stylesheet" type="text/css" />&lt;!&ndash; App Css&ndash;&gt;-->
   <link href="../../static/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
 </head>
 
@@ -250,7 +250,6 @@
 
 <script th:inline="javascript" type="text/javascript">
   var currentvideoid = 0;
-  var myDate = new Date();
   var starttime = new Date();
   var endtime = new Date();
   var isplay = 0;
@@ -260,6 +259,7 @@
   var bcurrentTime = 0;
   var pro = 0;
   var time1;
+
 
   $(document).ready(function() {
     showvideo([[${startvideo}]]);
@@ -292,7 +292,7 @@
             "play",
             function() {
               if(isplay==false){
-                starttime = myDate.toLocaleString();
+                starttime = new Date();
               }
               isplay = true;
               time1 = setInterval(function () {
@@ -327,7 +327,7 @@
             "ended",
             function() {
 
-              endtime = myDate.toLocaleString( );
+              endtime = new Date();
               sendvideoinfo();
               isplay = false;
               window.clearInterval(time1);
@@ -340,7 +340,7 @@
 
 
       window.onbeforeunload = function () {
-      endtime = myDate.toLocaleString( );
+        endtime = new Date();
       sendvideoinfo();
       isplay = false;
       window.clearInterval(time1);
@@ -396,6 +396,7 @@
   });
 
 
+
   function showvideo(video) {
     // alert(video);
      $("#videotitle").html(video.name);
@@ -414,7 +415,7 @@
      }
 
      if(isplay==true){
-       endtime = myDate.toLocaleString( );
+       endtime = new Date();
        sendvideoinfo();
        window.clearInterval(time1);
        learntime = 0

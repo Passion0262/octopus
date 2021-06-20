@@ -53,4 +53,9 @@ public class VideoProgressServiceImple implements VideoProgressService {
     public boolean updateById(VideoProgress videoProgress) {
         return videoProgressMapper.updateById(videoProgress);
     }
+
+    @Override
+    public boolean insertVideoProgress(VideoProgress videoProgress) {
+        return videoProgressMapper.insertVideoProgress(videoProgress);
+    }
 }
