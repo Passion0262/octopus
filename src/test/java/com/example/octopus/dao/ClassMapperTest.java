@@ -21,8 +21,8 @@ class ClassMapperTest {
 
     @Test
     void insertClass() {
-        Class_ class_ = new Class_(1L,"大数据","计算机","jack",null);
-        classMapper.insertClass(class_);
+//        Class_ class_ = new Class_(1L,"大数据","计算机","jack",null);
+//        classMapper.insertClass(class_);
     }
 
     @Test

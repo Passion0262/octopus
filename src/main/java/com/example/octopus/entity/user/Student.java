@@ -25,9 +25,9 @@ public class Student {
 
     private String password;
 
-    private String major;
+    private long majorId;
 
-    private String className;
+    private long classId;
 
     private String phoneNumber;
 

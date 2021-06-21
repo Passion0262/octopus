@@ -30,7 +30,7 @@ public interface UserMapper {
     @Insert("INSERT INTO student (stu_number,name,password,major,class_name,phone_number,login_number,last_login_time,study_time) VALUES (#{stuNumber},#{name},#{password},#{major},#{className},#{phoneNumber},0,CURRENT_TIMESTAMP,0)")
     boolean insertStudent(Student student);
 
-    @Update("UPDATE student SET name=#{name},password=#{password},major=#{major},class_name=#{className},phone_number=#{phoneNumber},login_number=#{loginNumber},last_login_time=#{lastLoginTime},study_time=#{studyTime} WHERE stu_number=#{stuNumber}")
+    @Update("UPDATE student SET name=#{name},password=#{password},major_id=#{majorId},class_id=#{classId},phone_number=#{phoneNumber},login_number=#{loginNumber},last_login_time=#{lastLoginTime},study_time=#{studyTime} WHERE stu_number=#{stuNumber}")
     boolean updateStudent(Student student);
 
     @Update("UPDATE student SET login_number = login_number+1, last_login_time = CURRENT_TIMESTAMP where stu_number = #{stuNumber}")

@@ -38,6 +38,12 @@ public interface MajorMapper {
     Major getById(long id);
 
     /**
+     *  根据id获取majorName
+     */
+    @Select("SELECT major_name FROM major WHERE id = #{id}")
+    String getNameById(long id);
+
+    /**
      * 新增专业
      * @param major major实体
      * @return 成功为true，失败为false

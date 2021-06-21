@@ -20,7 +20,7 @@ public interface ClassMapper {
      * @param class_ 班级实体
      * @return 成功为true，失败为false
      */
-    @Insert("INSERT INTO class_(class_name, major, creator, create_time) VALUES (#{className},#{major},#{creator},CURRENT_TIMESTAMP)")
+    @Insert("INSERT INTO class_(class_name, major_id, creator, create_time) VALUES (#{className},#{majorId},#{creator},CURRENT_TIMESTAMP)")
     boolean insertClass(Class_ class_);
 
     /**
@@ -37,6 +37,12 @@ public interface ClassMapper {
      */
     @Select("SELECT * FROM class_ WHERE id = #{id}")
     Class_ getById(long id);
+
+    /**
+     *  根据id查找className
+     */
+    @Select("SELECT class_name FROM class_ WHERE id = #{id}")
+    String getNameById(long id);
 
     /**
      * 根据className删除班级

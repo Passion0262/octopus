@@ -1,9 +1,6 @@
 package com.example.octopus.service.impl;
 
-import com.example.octopus.dao.CourseMapper;
-import com.example.octopus.dao.StudentCourseMapper;
-import com.example.octopus.dao.TeacherCourseMapper;
-import com.example.octopus.dao.UserMapper;
+import com.example.octopus.dao.*;
 import com.example.octopus.entity.user.Course;
 import com.example.octopus.entity.user.Student;
 import com.example.octopus.entity.user.StudentCourse;
@@ -26,6 +23,12 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 
     @Autowired
     CourseMapper courseMapper;
+
+    @Autowired
+    MajorMapper majorMapper;
+
+    @Autowired
+    ClassMapper classMapper;
 
     @Autowired
     StudentCourseMapper studentCourseMapper;
@@ -60,9 +63,12 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 
     @Override
     public boolean insertStudentCourse(long stuNumber, long courseId) {
+        if (isChosen(stuNumber,courseId)){
+            deleteStudentCourse(stuNumber,courseId);
+        }
         Student s = userMapper.getStudentByStuNumber(stuNumber);
         Course c = courseMapper.getCourseById(courseId);
-        StudentCourse studentCourse = new StudentCourse(1L,stuNumber,courseId,c.getCourseName(),s.getName(),s.getMajor(),s.getClassName(),null);
+        StudentCourse studentCourse = new StudentCourse(1L,stuNumber,courseId,c.getCourseName(),s.getName(),majorMapper.getNameById(s.getMajorId()),classMapper.getNameById(s.getClassId()),null);
         return insertStudentCourse(studentCourse);
     }
 
@@ -81,7 +87,7 @@ public class StudentCourseServiceImpl implements StudentCourseService {
         List<Student> studentList = userMapper.listByClassName(className);
         String courseName = courseMapper.getCourseById(course_id).getCourseName();
         for (Student s:studentList) {
-            StudentCourse studentCourse = new StudentCourse(1L,s.getStuNumber(),course_id,courseName,s.getName(),s.getMajor(),className,null);
+            StudentCourse studentCourse = new StudentCourse(1L,s.getStuNumber(),course_id,courseName,s.getName(),majorMapper.getNameById(s.getMajorId()),className,null);
             studentCourseMapper.insertStudentCourse(studentCourse);
         }
         return true;

@@ -23,7 +23,9 @@ public class Class_ {
     private String className;
 
 //    @Column(nullable = false,columnDefinition = "varchar(20) comment '所属专业'")
-    private String major;
+    private long majorId;
+
+    private String school;
 
 //    @Column(nullable = false,columnDefinition = "varchar(20) comment '创建人员'")
     private String creator;

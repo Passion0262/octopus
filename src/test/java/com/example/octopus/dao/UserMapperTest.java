@@ -41,7 +41,7 @@ class UserMapperTest {
 
     @Test
     void insertStudent() {
-        Student student = new Student(3L,"1","1","1","1","1",1,null, Time.valueOf(LocalTime.MAX));
+        Student student = new Student(3L,"1","1",1,1,"1",1,null, Time.valueOf(LocalTime.MAX));
         userMapper.insertStudent(student);
     }
 

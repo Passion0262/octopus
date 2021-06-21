@@ -28,6 +28,8 @@ public class Teacher {
 //    @Column(nullable = false,name = "phone")
     private String phone;
 
+    private String school;
+
 //    @Column(name = "loginNumber")
     private int loginNumber;
 
