@@ -64,18 +64,18 @@
                                                 <div class="form-group row">
                                                     <label for="edit_major" class="col-md-2 col-form-label">所属专业：</label>
                                                     <div class="col-md-10">
-                                                        <select name="major" th:value="*{major}" class="form-control" id="edit_major" onchange="getClass()">
-                                                            <option value="0" style="display: none;" th:text="*{major}"></option>
+                                                        <select name="majorId" th:value="*{majorId}" class="form-control" id="edit_major" onchange="getClass()">
+                                                            <option value="0" style="display: none;" th:text="*{majorId}"></option>
 <!--                                                            <option th:each="majors:${stumodel.majors}" th:text="${majors.majorName}" th:value="${majors.majorName}"></option>-->
                                                         </select>
 <!--                                                        <input name="major" th:value="*{major}" id="edit_major" class="form-control" type="text" >-->
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label for="edit_className" class="col-md-2 col-form-label">所属班级：</label>
+                                                    <label for="edit_class" class="col-md-2 col-form-label">所属班级：</label>
                                                     <div class="col-md-10">
-                                                        <select id="edit_className" name="className" th:value="*{className}" class="form-control">
-                                                            <option value="0" style="display: none;" th:text="*{className}"></option>
+                                                        <select id="edit_class" name="classId" th:value="*{classId}" class="form-control">
+                                                            <option value="0" style="display: none;" th:text="*{classId}"></option>
                                                         </select>
 <!--                                                        <input name="className" th:value="*{className}" id="edit_className" class="form-control" type="text">-->
                                                     </div>

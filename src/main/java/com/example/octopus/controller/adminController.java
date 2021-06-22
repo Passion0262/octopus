@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.*;
+import java.io.File;
 
 
 @Controller
@@ -889,7 +890,13 @@ public class adminController {
                 String suffixName = fileName.substring(fileName.lastIndexOf("."));
                 //重新生成文件名
                 fileName = UUID.randomUUID() + suffixName;
-                if (UploadFileUtils.upload(img, localPath, fileName)) {
+                String result = UploadFileUtils.upload(img, localPath, fileName);
+                while (result.equals("exists")){
+                    //重新生成文件名
+                    fileName = UUID.randomUUID() + suffixName;
+                    result = UploadFileUtils.upload(img, localPath, fileName);
+                }
+                if (result.equals("true")) {
                     //文件存放的相对路径(一般存放在数据库用于img标签的src)
                     String relativePath = "static/images/upload/" + target_dir + "/" + fileName;
                     root.put("relativePath", relativePath);//前端根据是否存在该字段来判断上传是否成功
@@ -930,11 +937,15 @@ public class adminController {
             //上传后保存的文件名(需要防止图片重名导致的文件覆盖)
             //获取文件名
             String fileName = file.getOriginalFilename();
-//            //获取文件后缀名
-//            String suffixName = fileName.substring(fileName.lastIndexOf("."));
-//            //重新生成文件名
-//            fileName = UUID.randomUUID()+suffixName;
-            if (UploadFileUtils.upload(file, localPath, fileName)) {
+            //获取文件后缀名
+            String suffixName = fileName.substring(fileName.lastIndexOf("."));
+            String result = UploadFileUtils.upload(file, localPath, fileName);
+            while (result.equals("exists")){
+                //重新生成文件名
+                fileName = UUID.randomUUID() + suffixName;
+                result = UploadFileUtils.upload(file, localPath, fileName);
+            }
+            if (result.equals("true")) {
                 //文件存放的相对路径(一般存放在数据库用于img标签的src)
                 String relativePath = "static/reportsTemp/" + fileName;
                 root.put("relativePath", relativePath);//前端根据是否存在该字段来判断上传是否成功
@@ -954,5 +965,6 @@ public class adminController {
         logger.info(root_json);
         return root;
     }
+
 
 }
