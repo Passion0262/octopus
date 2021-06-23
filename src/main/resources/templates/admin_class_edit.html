@@ -50,6 +50,12 @@
                                 <div class="card-body">
                                     <form class="needs-validation" action="/edit_class" method="post" th:object="${classmodel.class}" novalidate="" style="padding-left: 20px;">
                                         <div class="form-group row">
+                                            <label for="edit_id" class="col-md-2 col-form-label">班级编号：</label>
+                                            <div class="col-md-10">
+                                                <input name="id" th:value="*{id}" class="form-control" type="text"  id="edit_id" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
                                             <label for="edit_className" class="col-md-2 col-form-label">班级名称：</label>
                                             <div class="col-md-10">
                                                 <input name="className" th:value="*{className}" class="form-control" type="text"  id="edit_className">

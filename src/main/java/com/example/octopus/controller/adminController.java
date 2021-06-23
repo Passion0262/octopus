@@ -57,6 +57,9 @@ public class adminController {
     @Autowired
     VideoService videoService;
 
+    @Autowired
+    DockerService dockerService;
+
     private final static String cookieName = "cookie_";
 
     private CookieTokenUtils cookieThings = new CookieTokenUtils();
@@ -327,7 +330,7 @@ public class adminController {
         if (teaNum == 1) {
             logger.info("提交修改的class_: [{}]", class_);
             // todo class_.major = majorService.getMajorNameById(class_.major);
-            // todo 提交到数据库
+            classService.updateClass(class_);
         }
         else{
             logger.info("[{}]没有修改班级权限！", teaName);

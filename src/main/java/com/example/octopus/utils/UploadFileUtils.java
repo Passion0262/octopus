@@ -19,7 +19,7 @@ public class UploadFileUtils {
 
         //确定上传的文件名
         String realPath = rootPath + "\\src\\main\\resources\\" + path + "\\" + fileName;
-        System.out.println("上传文件：" + realPath);
+        //System.out.println("上传文件：" + realPath);
 
         File dest = new File(realPath);
 
