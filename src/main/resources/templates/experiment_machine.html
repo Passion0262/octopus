@@ -101,7 +101,7 @@
 
                     <div class="col-md-4 " id="follow_machine" style="padding-right: 0px;">
                         <div class="card" id="follow_machine1" >
-                            <div class="card-body" style="padding: 5px;" >
+                            <div class="card-body" style="padding-top:5px;padding-left: 0px; padding-right: 0px;padding-bottom: 0px;" >
                                 <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
                                     <li class="nav-item">
                                         <a class="nav-link active" data-toggle="tab" href="#txt_task" role="tab" aria-selected="true">
@@ -125,22 +125,24 @@
 
                                 <div class="tab-content  text-muted" id="tabtext" style="min-height: 300px;">
                                     <div class="tab-pane active" id="txt_task" role="tabpanel">
-<!--                                        <embed src="../../static/images/showpic/demo1.pdf#zoom=50" type="application/pdf" />-->
+                                        <embed src="../../static/images/showpic/demo1.pdf#zoom=50" type="application/pdf" />
                                 </div>
 
                                     <div class="tab-pane " id="txt_core" role="tabpanel">
 
-<!--                                        <embed src="../../static/images/showpic/demo1.pdf#zoom=100" type="application/pdf" />-->
+                                        <embed src="../../static/images/showpic/demo1.pdf#zoom=100" type="application/pdf" />
 
 
                                     </div>
 
                                     <div class="tab-pane " id="txt_profile" role="tabpanel" >
-                                        <div  style="float: right">
-                                            <button type="button"  class="btn btn-primary btn-rounded waves-effect waves-light" onclick="">保存</button>
-                                            <button type="button"  class="btn btn-primary btn-rounded waves-effect waves-light" onclick="">提交</button>
+                                        <div style="height: 40px;padding:2px 5px;">
+                                        <div  style="float: right;">
+                                            <button type="button"  class="btn btn-primary btn-rounded waves-effect waves-light" onclick="savetext()">保存</button>
+                                            <button type="button"  class="btn btn-primary btn-rounded waves-effect waves-light" onclick="submittext()">提交</button>
                                         </div>
-                                                <div  id="summernote" >实验报告模板</div>
+                                        </div>
+                                                <div  id="summernote"  >实验报告模板</div>
                                     </div>
                                 </div>
 
@@ -218,8 +220,11 @@
 <script th:src="@{../../static/js/libs/tinymce/tinymce.min.js}"></script>
 <script th:src="@{../../static/js/pages/form-editor.init.js}"></script>
 <script th:src="@{../../static/js/libs/summernote/lang/summernote-zh-CN.min.js}"></script>
+<script th:src="@{../../static/js/libs/htmlToPdf/html2canvas.min.js}"></script>
+<script th:src="@{../../static/js/libs/htmlToPdf/jspdf.min.js}"></script>
 
 <script th:inline="javascript" type="text/javascript">
+
     $(document).ready(function(){
         $('#follow_machine').css("height",$('#machine').height());
         $('#follow_machine1').css("height",$('#machine1').height());
@@ -227,30 +232,33 @@
         $(window).resize(function(){
             $('#follow_machine').css("height",$('#machine').height());
             $('#follow_machine1').css("height",$('#machine1').height());
+
         });
 
 
         $('#summernote').summernote({
-            minHeight: 250,
+            height : $('#machine1').height()/2,
+            maxHeight:500,
             focus: false,
             lang: 'zh-CN',
+            dialogsFade: true,
+            disableDragAndDrop: false,
             toolbar: [
                 ['style', ['style']],
-                ['fontname', ['fontname']],
+                // ['fontname', ['fontname']],
                 ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['font', ['superscript', 'subscript']],
                 ['fontsize', ['fontsize']],
                 ['color', ['color']],
                 ['para', ['ul', 'ol', 'paragraph']], //无序列表、有序列表、段落对齐方式
-                ['height', ['height']], //行高
                 ['table',['table']], //插入表格
-                ['hr',['hr']],//插入水平线
-                ['link',['link']], //插入链接
-                ['picture',['picture']], //插入图片
+                ['link',['link']],
+                ['picture',['picture']],
                 ['fullscreen',['fullscreen']], //全屏
                 ['undo',['undo']], //撤销
                 ['redo',['redo']], //取消撤销
-                ['help',['help']], //帮助
+                // ['help',['help']]
+
 
         ],
             callbacks: {
@@ -275,11 +283,7 @@
 
 
 
-    /**
-     * Summernote 上传图片到服务器
-     * @param {any} file 图片文件
-     * @param {string} type 图片类型，在textarea 标签 中 添加 data-type 属性 英文 小写
-     */
+
     function sendFile(file, type) {
         alert(file);
         alert(type);
@@ -303,10 +307,7 @@
             }
         });
     }
-    /**
-     * Summernote 删除到服务器中的图片
-     * @param {object} target//回调参数
-     */
+
 
     function deleteFile(target) {
         var picUrl = target.attr('src');
@@ -324,9 +325,42 @@
 
     }
 
-    function submit(){
+    function submittext(){
         var allstr = $('#summernote').summernote('code');
-        alert(allstr);
+        convertpdf();
+        $.ajax({
+            data: {
+                'experid':[[${subExperiment.id}]],
+                'text':allstr,
+            },
+            type: "POST",
+            url: "/submitExperText",
+            processData: true,
+            success: function () {
+            },
+            error: function () {
+                alert('提交成功!');
+            }
+        });
+    }
+
+    function savetext(){
+        var allstr = $('#summernote').summernote('code');
+        $.ajax({
+            data: {
+                'experid':[[${subExperiment.id}]],
+                'text':allstr,
+            },
+            type: "POST",
+            url: "/saveExperText",
+            processData: true,
+            success: function () {
+            },
+            error: function () {
+                alert('保存成功!');
+            }
+        });
+
     }
 
     function showpdf(){
@@ -338,6 +372,130 @@
         $("#machine").attr("class","col-md-8");
     }
 
+    function convertpdf(){
+
+        // var element = $(".note-editable"); // 这个dom元素是要导出pdf的div容器
+        // var w = element.width(); // 获得该容器的宽
+        // var h = element.height(); // 获得该容器的高
+        // var offsetTop = element.offset().top; // 获得该容器到文档顶部的距离
+        // var offsetLeft = element.offset().left; // 获得该容器到文档最左的距离
+        // var canvas = document.createElement("canvas");
+        // var abs = 0;
+        // var win_i = $(window).width(); // 获得当前可视窗口的宽度（不包含滚动条）
+        // var win_o = window.innerWidth; // 获得当前窗口的宽度（包含滚动条）
+        // if(win_o>win_i){
+        //     abs = (win_o - win_i)/2; // 获得滚动条长度的一半
+        // }
+        // canvas.width = w * 2; // 将画布宽&&高放大两倍
+        // canvas.height = h * 2;
+        // var context = canvas.getContext("2d");
+        // context.scale(2, 2);
+        // context.translate(-offsetLeft-abs,-offsetTop);
+        // // 这里默认横向没有滚动条的情况，因为offset.left(),有无滚动条的时候存在差值，因此
+        // // translate的时候，要把这个差值去掉
+        // html2canvas(element).then(function(canvas) {
+        //     var contentWidth = canvas.width;
+        //     var contentHeight = canvas.height;
+        //     //一页pdf显示html页面生成的canvas高度;
+        //     var pageHeight = contentWidth / 592.28 * 841.89;
+        //     //未生成pdf的html页面高度
+        //     var leftHeight = contentHeight;
+        //     //页面偏移
+        //     var position = 0;
+        //     //a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
+        //     var imgWidth = 595.28;
+        //     var imgHeight = 592.28/contentWidth * contentHeight;
+        //
+        //     var pageData = canvas.toDataURL('image/jpeg', 1.0);
+        //
+        //     var pdf = new jsPDF('', 'pt', 'a4');
+        //
+        //     //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
+        //     //当内容未超过pdf一页显示的范围，无需分页
+        //     if (leftHeight < pageHeight) {
+        //         pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight);
+        //     } else { // 分页
+        //         while(leftHeight > 0) {
+        //             pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
+        //             leftHeight -= pageHeight;
+        //             position -= 841.89;
+        //             //避免添加空白页
+        //             if(leftHeight > 0) {
+        //                 pdf.addPage();
+        //             }
+        //         }
+        //     }
+        //     pdf.save('shiyanbaogao.pdf');
+        // })
+
+
+            var element = $(".note-editable");    // 这个dom元素是要导出pdf的div容器
+            element.get(0).style.background = "#FFFFFF";
+            var w = element.width();    // 获得该容器的宽
+            var h = element.height();    // 获得该容器的高
+            var offsetTop = element.offset().top;    // 获得该容器到文档顶部的距离
+            var offsetLeft = element.offset().left;    // 获得该容器到文档最左的距离
+            var canvas = document.createElement("canvas");
+            var abs = 2;
+            var win_i = $(window).width();    // 获得当前可视窗口的宽度（不包含滚动条）
+            var win_o = window.innerWidth;    // 获得当前窗口的宽度（包含滚动条）
+            console.log(win_i);console.log(win_o);
+            if(win_o>win_i){
+
+                abs = (win_o - win_i)/2;    // 获得滚动条长度的一半
+            }
+            canvas.width = w * 2;    // 将画布宽&&高放大两倍
+            canvas.height = h * 2;
+            var context = canvas.getContext("2d");
+
+            // 【重要】关闭抗锯齿
+            context.mozImageSmoothingEnabled = false;
+            context.webkitImageSmoothingEnabled = false;
+            context.msImageSmoothingEnabled = false;
+            context.imageSmoothingEnabled = false;
+
+            context.scale(2, 2);
+            context.translate(-offsetLeft-abs,-offsetTop);
+            // 这里默认横向没有滚动条的情况，因为offset.left(),有无滚动条的时候存在差值，因此
+            // translate的时候，要把这个差值去掉
+            html2canvas(element).then(function(canvas) {
+                var contentWidth = canvas.width;
+                var contentHeight = canvas.height;
+                //一页pdf显示html页面生成的canvas高度;
+                var pageHeight = contentWidth / 592.28 * 841.89;
+                //未生成pdf的html页面高度
+                var leftHeight = contentHeight;
+                //页面偏移
+                var position = 10;
+                //a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
+                var imgWidth = 820.89;
+                var imgHeight = 560.28;
+
+                var pageData = canvas.toDataURL('image/jpeg', 1.0);
+
+                //l纵向 p横向
+                var pdf = new jsPDF('l', 'pt', 'a4');
+
+                //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
+                //当内容未超过pdf一页显示的范围，无需分页
+                if (leftHeight < pageHeight) {
+                    pdf.addImage(pageData, 'JPEG', 10, 10, imgWidth, imgHeight);
+                } else {    // 分页
+                    while(leftHeight > 0) {
+                        pdf.addImage(pageData, 'JPEG', 10, position, imgWidth, imgHeight);
+                        leftHeight -= pageHeight;
+                        position -= 841.89;
+                        //避免添加空白页
+                        if(leftHeight > 0) {
+                            pdf.addPage();
+                        }
+                    }
+                }
+                pdf.save("a.pdf");
+            });
+
+alert("ok");
+    }
 
 </script>
 
