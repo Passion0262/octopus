@@ -11,32 +11,10 @@ import java.util.List;
  */
 public interface SysUserRoleService {
 
+    /**
+     *  查询角色
+     */
     List<SysUserRole> listByUserId(long number);
-
-    /**
-     * 在teacher表中添加完管理员角色后，应同步将其添加到sys_user_role表中
-     * 此接口应放在teacher添加接口中，不可单独使用
-     * @param teaNumber 管理员号
-     * @return 添加成功与否
-     */
-    boolean addAdmin2Role(long teaNumber);
-
-    /**
-     * 在teacher表中添加完教师角色后，应同步将其添加到sys_user_role表中
-     * 此接口应放在teacher添加接口中，不可单独使用
-     * @param teaNumber 教师号
-     * @return 添加成功与否
-     */
-    boolean addTeacher2Role(long teaNumber);
-
-    /**
-     * 在student表中添加完管理员角色后，应同步将其添加到sys_user_role表中
-     * 此接口应放在user添加接口中，不可单独使用
-     * @param stuNumber 学生号
-     * @return 添加成功与否
-     */
-    boolean addStudent2Role(long stuNumber);
-
 
 
     /**
@@ -45,5 +23,15 @@ public interface SysUserRoleService {
      * @return 返回角色权限代码
      */
     int getRoleIdByUserId(long stuNumber);
+
+    /**
+     *  根据用户账号查询
+     */
+    SysUserRole getByUserId(long stuNumber);
+
+    /**
+     *  添加sysUserRole
+     */
+    boolean addUserRole(SysUserRole sysUserRole);
 
 }

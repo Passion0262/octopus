@@ -14,14 +14,17 @@ import java.util.List;
  */
 @Mapper
 public interface SysUserRoleMapper {
-    @Select("SELECT * FROM sys_user_role WHERE stu_number = #{stuNumber}")
-    List<SysUserRole> listByUserId(long stuNumber);
+    @Select("SELECT * FROM sys_user_role WHERE user_id = #{userId}")
+    List<SysUserRole> listByUserId(long userId);
 
-    @Select("SELECT role_id FROM sys_user_role WHERE stu_number = #{stuNumber}")
-    int getRoleByUserId(long stuNumber);
+    @Select("SELECT role_id FROM sys_user_role WHERE user_id = #{userId}")
+    int getRoleByUserId(long userId);
 
-    @Insert("INSERT INTO sys_user_role (stu_number,role_id) VALUES (#{number},#{role_id})")
-    boolean addRole(long number, int role_id);
+    @Select("SELECT * FROM sys_user_role WHERE user_id = #{userId}")
+    SysUserRole getByUserId(long userId);
+
+    @Insert("INSERT INTO sys_user_role (user_id,role_id,password) VALUES (#{userId},#{roleId},#{password})")
+    boolean insert(SysUserRole sysUserRole);
 
 }
 

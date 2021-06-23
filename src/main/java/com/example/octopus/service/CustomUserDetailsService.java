@@ -1,6 +1,5 @@
 package com.example.octopus.service;
 
-import com.example.octopus.entity.user.Student;
 import com.example.octopus.entity.user.SysRole;
 import com.example.octopus.entity.user.SysUserRole;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,16 +26,16 @@ public class CustomUserDetailsService implements UserDetailsService {
     private UserService userService;
 
     @Autowired
-    private SysRoleService roleService;
+    private SysRoleService sysRoleService;
 
     @Autowired
-    private SysUserRoleService userRoleService;
+    private SysUserRoleService sysUserRoleService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         // 从数据库中取出用户信息
-        Student user = userService.getStudentByStuNumber(Long.parseLong(username));
+        SysUserRole user = sysUserRoleService.getByUserId(Long.parseLong(username));
 
         // 判断用户是否存在
         if(user == null) {
@@ -44,13 +43,13 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
 
         // 添加权限
-        List<SysUserRole> userRoles = userRoleService.listByUserId(user.getStuNumber());
+        List<SysUserRole> userRoles = sysUserRoleService.listByUserId(user.getUserId());
         for (SysUserRole userRole : userRoles) {
-            SysRole role = roleService.findById(userRole.getRoleId());
+            SysRole role = sysRoleService.findById(userRole.getRoleId());
             authorities.add(new SimpleGrantedAuthority(role.getName()));
         }
 
         // 返回UserDetails实现类
-        return new User(String.valueOf(user.getStuNumber()), user.getPassword(), authorities);
+        return new User(String.valueOf(user.getUserId()), user.getPassword(), authorities);
     }
 }

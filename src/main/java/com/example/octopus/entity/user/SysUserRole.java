@@ -13,8 +13,10 @@ import java.io.Serializable;
 public class SysUserRole implements Serializable {
     static final long serialVersionUID = 1L;
 
-    private long stuNumber;
+    private long userId;
 
     private long roleId;
+
+    private String password;
 
 }
