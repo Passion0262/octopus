@@ -462,6 +462,44 @@ public class adminController {
         return new ModelAndView("redirect:/admin_student", "stumodel", model);
     }
 
+    //学校管理
+    @RequestMapping("/admin_school")
+    public String admin_school(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return "redirect:/login";
+        String teaName = cookieThings.getCookieUserName(request, cookieName);
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        model.addAttribute("username", teaName);
+        logger.info("进入学校管理");
+        if (teaNum == 1) {
+            //model.addAttribute("schools", );
+            model.addAttribute("role", "admin");
+        }
+        else{
+            //model.addAttribute("schools", );
+            model.addAttribute("role", "teacher");
+        }
+        return "admin_school";
+    }
+
+    //教师管理
+    @RequestMapping("/admin_teacher")
+    public String admin_teacher(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return "redirect:/login";
+        String teaName = cookieThings.getCookieUserName(request, cookieName);
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        model.addAttribute("username", teaName);
+        logger.info("进入学校管理");
+        if (teaNum == 1) {
+            //model.addAttribute("schools", );
+            model.addAttribute("role", "admin");
+        }
+        else{
+            //model.addAttribute("schools", );
+            model.addAttribute("role", "teacher");
+        }
+        return "admin_teacher";
+    }
+
     //开课计划管理
     @RequestMapping("/admin_course")
     public String admin_course(HttpServletRequest request, Model model) {
