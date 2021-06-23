@@ -28,6 +28,9 @@ public class adminController {
     private Logger logger = LoggerFactory.getLogger(adminController.class);
 
     @Autowired
+    SysUserRoleService sysUserRoleService;
+
+    @Autowired
     TeacherService teacherService;
 
     @Autowired
@@ -99,6 +102,7 @@ public class adminController {
         if (!cookieCheck(model, request)) return "redirect:/login";
         String teaName = cookieThings.getCookieUserName(request, cookieName);
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+
         
         model.addAttribute("username", teaName);
         model.addAttribute("userinfo", teacherService.getTeacherByTeaNumber(teaNum));
@@ -138,10 +142,15 @@ public class adminController {
         // 获取用户名及用户id的方法使用如下语句
         String teaName = cookieThings.getCookieUserName(request, cookieName);
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
+
         String role = "teacher";
-        if (teaNum == 1){
+        if (role_id == 1){
             role = "admin";
+            logger.info("管理员"+teaNum);
         }
+        else System.out.println("教师"+teaNum);
+
 
         try {
             logger.info("用户名：" + teaName);

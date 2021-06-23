@@ -29,4 +29,18 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
         return sysUserRoleMapper.getRoleByUserId(stuNumber);
     }
 
+    @Override
+    public boolean addAdmin2Role(long teaNumber){
+        return sysUserRoleMapper.addRole(teaNumber, 1);
+    }
+
+    @Override
+    public boolean addTeacher2Role(long teaNumber){
+        return sysUserRoleMapper.addRole(teaNumber, 3);
+    }
+
+    @Override
+    public boolean addStudent2Role(long stuNumber){
+        return sysUserRoleMapper.addRole(stuNumber, 2);
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.octopus.dao;
 
 import com.example.octopus.entity.user.SysUserRole;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -18,5 +19,9 @@ public interface SysUserRoleMapper {
 
     @Select("SELECT role_id FROM sys_user_role WHERE stu_number = #{stuNumber}")
     int getRoleByUserId(long stuNumber);
+
+    @Insert("INSERT INTO sys_user_role (stu_number,role_id) VALUES (#{number},#{role_id})")
+    boolean addRole(long number, int role_id);
+
 }
 
