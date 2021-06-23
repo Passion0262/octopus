@@ -6,7 +6,7 @@ import lombok.Data;
  * @author ：shadow
  * @date ：Created in 2021/5/22 1:11 下午
  * @modified By：
- * 实验任务分类
+ * 实验任务分类 experimentmissionclassify 表
  */
 @Data
 public class ExperimentMissionClassify {

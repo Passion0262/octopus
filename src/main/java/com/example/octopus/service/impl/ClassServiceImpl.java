@@ -43,4 +43,9 @@ public class ClassServiceImpl implements ClassService {
         return classMapper.deleteByClassName(className);
     }
 
+
+    @Override
+    public boolean updateClass(Class_ class_) {
+        return classMapper.updateClass(class_);
+    }
 }

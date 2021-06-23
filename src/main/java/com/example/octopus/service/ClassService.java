@@ -38,4 +38,11 @@ public interface ClassService {
      * @return 成功为true，失败为false
      */
     boolean deleteByClassName(String className);
+
+    /**
+     * 修改班级信息
+     * @param class_ 班级对象
+     * @return 成功为true
+     */
+    boolean updateClass(Class_ class_);
 }

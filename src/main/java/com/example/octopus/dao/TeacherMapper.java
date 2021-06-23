@@ -3,6 +3,7 @@ package com.example.octopus.dao;
 import com.example.octopus.entity.user.Teacher;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -27,5 +28,8 @@ public interface TeacherMapper {
      */
     @Select("SELECT * FROM teacher WHERE tea_number = #{teaNumber}")
     Teacher getByTeaNumber(long teaNumber);
+
+    @Update("UPDATE teacher SET password = #{newPassword} WHERE tea_number = #{teaNumber")
+    boolean updateTeacherPassword(long teaNumber, String newPassword);
 
 }

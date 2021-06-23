@@ -1,10 +1,7 @@
 package com.example.octopus.dao;
 
 import com.example.octopus.entity.user.Class_;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -51,5 +48,9 @@ public interface ClassMapper {
      */
     @Delete("DELETE FROM class_ WHERE class_name = #{className}")
     boolean deleteByClassName(String className);
+
+    @Update("UPDATE class_ SET (class_name, major, creator) VALUES (#{className},#{major},#{creator}) " +
+            "VALUES (#{className},#{major},#{creator},CURRENT_TIMESTAMP) WHERE id = #{id}")
+    boolean updateClass(Class_ class_);
 
 }

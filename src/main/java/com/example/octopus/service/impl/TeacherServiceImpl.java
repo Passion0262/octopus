@@ -21,4 +21,9 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherMapper.getByTeaNumber(teaNumber);
     }
 
+    @Override
+    public boolean resetPasswordByTeaNumber(long teaNumber, String newPassword){
+        return teacherMapper.updateTeacherPassword(teaNumber, newPassword);
+    }
+
 }

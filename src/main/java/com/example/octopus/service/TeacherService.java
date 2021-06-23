@@ -16,4 +16,12 @@ public interface TeacherService {
      */
     Teacher getTeacherByTeaNumber(long teaNumber);
 
+    /**
+     * 重置教师登录密码
+     * @param teaNumber 教师号
+     * @param newPassword 新密码
+     * @return 修改成功与否
+     */
+    boolean resetPasswordByTeaNumber(long teaNumber, String newPassword);
+
 }
