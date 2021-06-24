@@ -121,6 +121,8 @@ public class CookieTokenUtils {
             cookieMap.get(name).setValue("");
 
             System.out.println("删除了名为"+name+"的cookie");
+            System.out.println(cookieMap.get(name).getValue());
+            System.out.println(cookieMap.get(name).getMaxAge());
         }
     }
 

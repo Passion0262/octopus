@@ -12,6 +12,12 @@ import java.util.List;
 public interface StudentCourseService {
 
     /**
+     * 显示所有课程-学生信息
+     * @return 返回所有课程-学生列表
+     */
+    List<StudentCourse> listStudentCourses();
+
+    /**
      * 根据id返回student-course记录
      * @param id student-course表id
      * @return student-course实体类

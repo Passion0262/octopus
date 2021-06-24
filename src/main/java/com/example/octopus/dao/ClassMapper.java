@@ -49,6 +49,9 @@ public interface ClassMapper {
     @Delete("DELETE FROM class_ WHERE class_name = #{className}")
     boolean deleteByClassName(String className);
 
+    @Delete("DELETE FROM class_ WHERE id = #{classId}")
+    boolean deleteByClassId(long classId);
+
     @Update("UPDATE class_ SET class_name=#{className}, major_id=#{majorId}, creator=#{creator} WHERE id = #{id}")
     boolean updateClass(Class_ class_);
 

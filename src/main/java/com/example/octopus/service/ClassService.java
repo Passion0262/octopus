@@ -14,6 +14,7 @@ public interface ClassService {
 
     /**
      * 新增课程
+     *
      * @param class_ 课程实体
      * @return 成功为true，失败为false
      */
@@ -21,12 +22,14 @@ public interface ClassService {
 
     /**
      * 查询所有课程
+     *
      * @return class实体list
      */
     List<Class_> listClass_s();
 
     /**
      * 根据课程id查询课程
+     *
      * @param classId 课程id
      * @return 返回class_实体
      */
@@ -34,13 +37,23 @@ public interface ClassService {
 
     /**
      * 根据className删除班级
+     *
      * @param className 班级名称
      * @return 成功为true，失败为false
      */
     boolean deleteByClassName(String className);
 
     /**
+     * 根据classId删除班级
+     *
+     * @param classId 班级id
+     * @return 成功为true，失败为false
+     */
+    boolean deleteByClassId(long classId);
+
+    /**
      * 修改班级信息
+     *
      * @param class_ 班级对象
      * @return 成功为true
      */

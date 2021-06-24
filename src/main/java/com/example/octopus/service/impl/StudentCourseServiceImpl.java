@@ -37,6 +37,11 @@ public class StudentCourseServiceImpl implements StudentCourseService {
     TeacherCourseMapper teacherCourseMapper;
 
     @Override
+    public List<StudentCourse> listStudentCourses(){
+        return studentCourseMapper.listStudentCourses();
+    }
+
+    @Override
     public StudentCourse getById(long id) {
         return studentCourseMapper.getById(id);
     }

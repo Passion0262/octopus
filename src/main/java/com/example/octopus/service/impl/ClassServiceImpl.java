@@ -43,6 +43,10 @@ public class ClassServiceImpl implements ClassService {
         return classMapper.deleteByClassName(className);
     }
 
+    @Override
+    public boolean deleteByClassId(long classId){
+        return classMapper.deleteByClassId(classId);
+    }
 
     @Override
     public boolean updateClass(Class_ class_) {
