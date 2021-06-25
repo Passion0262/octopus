@@ -1,6 +1,7 @@
 package com.example.octopus.service.impl;
 
 import com.example.octopus.dao.StudentCourseMapper;
+import com.example.octopus.dao.SysUserRoleMapper;
 import com.example.octopus.dao.TeacherCourseMapper;
 import com.example.octopus.dao.UserMapper;
 import com.example.octopus.entity.user.Student;
@@ -28,6 +29,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     StudentCourseMapper studentCourseMapper;
 
+    @Autowired
+    SysUserRoleMapper sysUserRoleMapper;
+
     @Override
     public List<Student> listStudents() {
         return userMapper.listAllStudents();
@@ -38,12 +42,12 @@ public class UserServiceImpl implements UserService {
         List<Long> courseIdList = teacherCourseMapper.listCourseIdsByTeaNumber(teaNumber);
 
         ArrayList<Long> stuNumberList = new ArrayList<>();
-        for (long courseId:courseIdList) {
+        for (long courseId : courseIdList) {
             stuNumberList.addAll(studentCourseMapper.listStuNumbersByCourseId(courseId));
         }
 
         ArrayList<Student> studentList = new ArrayList<>();
-        for (long stuNumber:stuNumberList) {
+        for (long stuNumber : stuNumberList) {
             studentList.add(userMapper.getStudentByStuNumber(stuNumber));
         }
         return studentList;
@@ -59,19 +63,20 @@ public class UserServiceImpl implements UserService {
         return userMapper.getStudentByName(name);
     }
 
-    @Override
-    public Student login(long stuNumber, String password) {
-        return userMapper.getStudentByStuNumberAndPassword(stuNumber, password);
-    }
+//    @Override
+//    public Student login(long stuNumber, String password) {
+//        return userMapper.getStudentByStuNumberAndPassword(stuNumber, password);
+//    }
 
     @Override
     public boolean insertStudent(Student student) {
-        return userMapper.insertStudent(student);
+        return userMapper.insertStudent(student) && sysUserRoleMapper.updatePassword(student.getStuNumber(), student.getPassword());
     }
 
+    //todo 确认是否在user和teacher表中存储密码，（建议不做存储，密码仅保存在sysuserrole中），同时需确定这两个实例类和表属性是否对齐
     @Override
     public boolean updateStudent(Student student) {
-        return userMapper.updateStudent(student);
+        return userMapper.updateStudent(student) && sysUserRoleMapper.updatePassword(student.getStuNumber(), student.getPassword());
     }
 
     @Override
@@ -81,7 +86,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void resetPassword(long stuNumber) {
-        userMapper.resetPassword(stuNumber);
+        //userMapper.resetPassword(stuNumber);
+        sysUserRoleMapper.updatePassword(stuNumber, "000000");
     }
 
     @Override

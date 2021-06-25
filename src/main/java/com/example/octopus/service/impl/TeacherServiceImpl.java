@@ -1,5 +1,6 @@
 package com.example.octopus.service.impl;
 
+import com.example.octopus.dao.SysUserRoleMapper;
 import com.example.octopus.dao.TeacherMapper;
 import com.example.octopus.entity.user.Teacher;
 import com.example.octopus.service.TeacherService;
@@ -15,15 +16,17 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Autowired
     private TeacherMapper teacherMapper;
+    @Autowired
+    private SysUserRoleMapper sysUserRoleMapper;
 
     @Override
-    public Teacher getTeacherByTeaNumber(long teaNumber){
+    public Teacher getTeacherByTeaNumber(long teaNumber) {
         return teacherMapper.getByTeaNumber(teaNumber);
     }
 
     @Override
-    public boolean resetPasswordByTeaNumber(long teaNumber, String newPassword){
-        return teacherMapper.updateTeacherPassword(teaNumber, newPassword);
+    public boolean resetPasswordByTeaNumber(long teaNumber, String newPassword) {
+        return sysUserRoleMapper.updatePassword(teaNumber, newPassword);
     }
 
 }

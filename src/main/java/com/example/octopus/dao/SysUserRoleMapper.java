@@ -4,6 +4,7 @@ import com.example.octopus.entity.user.SysUserRole;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -25,6 +26,9 @@ public interface SysUserRoleMapper {
 
     @Insert("INSERT INTO sys_user_role (user_id,role_id,password) VALUES (#{userId},#{roleId},#{password})")
     boolean insert(SysUserRole sysUserRole);
+
+    @Update("UPDATE password = #{password} FROM sys_user_role WHERE user_id = #{userId}")
+    boolean updatePassword(long userId, String password);
 
 }
 

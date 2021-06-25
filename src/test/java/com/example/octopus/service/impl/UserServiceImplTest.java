@@ -39,11 +39,11 @@ class UserServiceImplTest {
         assertEquals("admin", stu.getName());
     }
 
-    @Test
-    void login() {
-        Student stu = userService.login(stuNumber, password);
-        assertEquals("12345678",stu.getPhoneNumber());
-    }
+//    @Test
+//    void login() {
+//        Student stu = userService.login(stuNumber, password);
+//        assertEquals("12345678",stu.getPhoneNumber());
+//    }
 
 //    @Test
 //    void register() {
