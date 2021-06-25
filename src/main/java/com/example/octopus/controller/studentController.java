@@ -9,10 +9,28 @@ import com.example.octopus.service.*;
 import com.example.octopus.utils.CookieTokenUtils;
 import com.example.octopus.utils.TokenCheckUtils;
 
+import java.io.*;
+import java.nio.charset.Charset;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.html.simpleparser.HTMLWorker;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.tool.xml.XMLWorker;
+import com.itextpdf.tool.xml.XMLWorkerHelper;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.tool.xml.html.Tags;
+import com.itextpdf.tool.xml.parser.XMLParser;
+import com.itextpdf.tool.xml.pipeline.css.CSSResolver;
+import com.itextpdf.tool.xml.pipeline.css.CssResolverPipeline;
+import com.itextpdf.tool.xml.pipeline.end.PdfWriterPipeline;
+import com.itextpdf.tool.xml.pipeline.html.HtmlPipeline;
+import com.itextpdf.tool.xml.pipeline.html.HtmlPipelineContext;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +48,8 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+
 
 @Controller
 public class studentController {
@@ -64,6 +84,8 @@ public class studentController {
 
     @Autowired
     VideoProgressService videoProgressService;
+    @Autowired
+    SubExperimentReportSaveService subExperimentReportSaveService;
 
 
     private final static String cookieName = "cookie_";
@@ -450,31 +472,40 @@ public class studentController {
     @RequestMapping("/experiment_machine/{id}")
     public String experiment_machine(@PathVariable("id")String id,Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-
+        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
 //        String stuname = (String) session.getAttribute("stuname");
 //        model.addAttribute("stuname", stuname);
 
-        logger.info("id:"+id);
+        logger.info("实验机id:"+id);
         Long sub_id = Long.parseLong(id);
-        logger.info("sub_id:"+sub_id);
+//        logger.info("sub_id:"+sub_id);
 
         SubExperiment subExperiment = subExperimentService.getById(sub_id);
-        logger.info("subExperiment:"+subExperiment);
+//        logger.info("subExperiment:"+subExperiment);
         model.addAttribute("subExperiment", subExperiment );
 
         Experiment experiment = experimentService.getExperimentById(subExperiment.getExperimentId());
-        logger.info("experiment:"+experiment);
+//        logger.info("experiment:"+experiment);
         model.addAttribute("experiment", experiment );
+
+        SubExperimentReportSave subsave = subExperimentReportSaveService.getLatest(sub_id,stuNum);
+//        logger.info("subsave:"+subsave);
+        String subcontent = "";
+        if(subsave != null){
+            subcontent = subsave.getContent();
+        }
+        logger.info("subcontent:"+subcontent);
+        model.addAttribute("subcontent", subcontent);
 
         // 这里要调整
         Video video = videoService.getVideoBySubExperimentId(sub_id);
-        logger.info("video:"+video);
+//        logger.info("video:"+video);
         if(video==null){
             model.addAttribute("isvideo", 0);
             model.addAttribute("videocourse", 0);
         }else{
             model.addAttribute("isvideo", 1);
-            logger.info("videocourse:"+video.getCourseId());
+//            logger.info("videocourse:"+video.getCourseId());
             model.addAttribute("videocourse", video.getCourseId());
         }
 
@@ -485,10 +516,11 @@ public class studentController {
 
     @RequestMapping("/sendImage")
     public String sendImag(Model model, HttpServletRequest request) {
-
+        String file = request.getParameter("file");
+        String dir = request.getParameter("dir");
         logger.info("fileupload:" + request.getParameter("file"));
         logger.info("fileupload:" + request.getParameter("dir"));
-        return "redirect:/experiment_machine";
+        return "success";
     }
 
 
@@ -504,18 +536,41 @@ public class studentController {
     @ResponseBody
     public void saveExperText(Model model, HttpServletRequest request) {
         Long experid = Long.parseLong(request.getParameter("experid"));
+        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         String text = request.getParameter("text");
         logger.info("experid:" + experid);
         logger.info("text:" + text);
+        SubExperimentReportSave sub = new SubExperimentReportSave();
+        sub.setSubExperimentId(experid);
+        sub.setStuNumber(stuNum);
+        sub.setContent(text);
+        subExperimentReportSaveService.insert(sub);
     }
 
     @PostMapping(value="/submitExperText")
     @ResponseBody
-    public void submitExperText(Model model, HttpServletRequest request) {
+    public void submitExperText(Model model, HttpServletRequest request) throws IOException, DocumentException {
         Long experid = Long.parseLong(request.getParameter("experid"));
         String text = request.getParameter("text");
         logger.info("experid:" + experid);
         logger.info("text:" + text);
+        String alltext = "<html><head></head><body>"+text+"</body></html>";
+
+        Document document = new Document(PageSize.A4);
+        PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream("/Users/wangxiang/Downloads/" + "createSamplePDF.pdf"));
+        document.open();
+//        ByteArrayInputStream bin = new ByteArrayInputStream(alltext.getBytes());
+//        XMLWorkerHelper.getInstance().parseXHtml(pdfWriter, document, bin, Charset.forName("UTF-8"));
+
+
+        HTMLWorker htmlWorker = new HTMLWorker(document);
+        htmlWorker.parse(new StringReader(text ));
+//        InputStream stream = new ByteArrayInputStream(text.toString().getBytes("UTF-8"));
+//        XMLWorkerHelper.getInstance().parseXHtml(pdfWriter, document, stream);
+//        XMLWorkerHelper worker = XMLWorkerHelper.getInstance();
+//        worker.parseXHtml(pdfWriter, document, new StringReader(text));
+        document.close();
+        pdfWriter.close();
     }
 
 
