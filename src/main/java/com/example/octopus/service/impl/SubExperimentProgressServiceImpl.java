@@ -1,8 +1,11 @@
 package com.example.octopus.service.impl;
 
+import com.example.octopus.dao.SysUserRoleMapper;
 import com.example.octopus.dao.experiment.SubExperimentProgressMapper;
+import com.example.octopus.entity.VOs.SubExperimentOperateTimeVO;
 import com.example.octopus.entity.experiment.SubExperimentProgress;
 import com.example.octopus.service.SubExperimentProgressService;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,8 @@ public class SubExperimentProgressServiceImpl implements SubExperimentProgressSe
 
     @Autowired
     SubExperimentProgressMapper subExperimentProgressMapper;
+    @Autowired
+    SysUserRoleMapper sysUserRoleMapper;
 
     @Override
     public SubExperimentProgress getById(long id) {
@@ -62,5 +67,13 @@ public class SubExperimentProgressServiceImpl implements SubExperimentProgressSe
     @Override
     public boolean delete(long id) {
         return subExperimentProgressMapper.delete(id);
+    }
+
+    @Override
+    public List<SubExperimentOperateTimeVO> getOperateTimeByRole(long teaNumber){
+        long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
+        if (role == 1) {
+            return subExperimentProgressMapper.getAllOperateTime();
+        } else return subExperimentProgressMapper.getOperateTimeByTeacherId(teaNumber);
     }
 }

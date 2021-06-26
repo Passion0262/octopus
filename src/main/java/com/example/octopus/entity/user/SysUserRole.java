@@ -19,4 +19,10 @@ public class SysUserRole implements Serializable {
 
     private String password;
 
+    public SysUserRole(long userId, long roleId, String password){
+        this.userId = userId;
+        this.roleId = roleId;
+        this.password = password;
+    }
+
 }

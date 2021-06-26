@@ -1,10 +1,7 @@
 package com.example.octopus.dao;
 
 import com.example.octopus.entity.user.SysUserRole;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -29,6 +26,12 @@ public interface SysUserRoleMapper {
 
     @Update("UPDATE password = #{password} FROM sys_user_role WHERE user_id = #{userId}")
     boolean updatePassword(long userId, String password);
+
+    @Update("UPDATE role_id = #{roleId} FROM sys_user_role WHERE user_id = #{userId}")
+    boolean updateRoleId(long userId, long roleId);
+
+    @Delete("DELETE FROM sys_user_role WHERE user_id = #{userId}")
+    boolean deleteUser(long userId);
 
 }
 

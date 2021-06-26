@@ -3,6 +3,8 @@ package com.example.octopus.service;
 import com.example.octopus.entity.user.Teacher;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author: Hao
  * @date: 2021/6/10 18:48
@@ -22,6 +24,34 @@ public interface TeacherService {
      * @param newPassword 新密码
      * @return 修改成功与否
      */
-    boolean resetPasswordByTeaNumber(long teaNumber, String newPassword);
+    boolean updatePasswordByTeaNumber(long teaNumber, String newPassword);
+
+    /**
+     * 获取所有的老师
+     * @return 返回所有老师的列表
+     */
+    List<Teacher> getAllTeachers();
+
+    /**
+     * 更新老师信息
+     * @param teacher 老师实体
+     * @return 更新成功与否
+     */
+    boolean updateTeacher(Teacher teacher);
+
+    /**
+     * 增加老师
+     * @param teacher 老师实体
+     * @return 成功与否
+     */
+    boolean addTeacher(Teacher teacher);
+
+    /**
+     * 删除老师
+     * @param teaNumber 老师号
+     * @return 成功与否
+     */
+    boolean deleteTeacher(long teaNumber);
+
 
 }

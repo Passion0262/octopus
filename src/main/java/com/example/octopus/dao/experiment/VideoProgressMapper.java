@@ -1,5 +1,6 @@
-package com.example.octopus.dao;
+package com.example.octopus.dao.experiment;
 
+import com.example.octopus.entity.VOs.VideoStudySummaryVO;
 import com.example.octopus.entity.experiment.VideoProgress;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -14,6 +15,9 @@ import java.util.List;
  */
 @Mapper
 public interface VideoProgressMapper {
+
+    @Select("SELECT * FROM video_progress")
+    List<VideoProgress> getAllVP();
 
     /**
      *  根据学生学号查询所有的videoProgress
@@ -41,5 +45,16 @@ public interface VideoProgressMapper {
 
     @Insert("INSERT INTO video_progress(video_id,stu_number,start_time,end_time,study_time,progress,last_video_progress) VALUES (#{videoId},#{stuNumber},#{startTime},#{endTime},#{studyTime},#{progress},#{lastVideoProgress})")
     boolean insertVideoProgress(VideoProgress videoProgress);
+
+    @Select("SELECT vp.*, s.name, class_.class_name, major.major_name, course.course_name  " +
+            "FROM video_progress vp, student s, class_, major, course, video " +
+            "WHERE vp.stu_number=s.stu_number and s.major_id=major.id and s.class_id=class_.id and vp.video_id=video.id and video.course_id=course.id")
+    List<VideoStudySummaryVO> getAllVideoStudySummary();
+
+
+    @Select("SELECT vp.*, s.name, class_.class_name, major.major_name, course.course_name " +
+            "FROM video_progress vp, student s, class_, major, course, video " +
+            "WHERE vp.stu_number=s.stu_number and s.major_id=major.id and s.class_id=class_.id and vp.video_id=video.id and video.course_id=course.id and course.tea_number=#{teaNumber}")
+    List<VideoStudySummaryVO> getVideoStudySummaryByTeacherId(long teaNumber);
 
 }
