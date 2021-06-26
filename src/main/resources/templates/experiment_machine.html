@@ -238,7 +238,7 @@
 
         $('#summernote').summernote({
             height : $('#machine1').height()-42,
-            maxHeight:null,
+            maxHeight:1000,
             focus: false,
             lang: 'zh-CN',
             dialogsFade: true,
@@ -263,12 +263,16 @@
         ],
             callbacks: {
                 //上传回调
-                onImageUpload: function (files) {
-                    alert(files);
-                    var type = $(this).data('type');
-                    $.each(files, function (i, item) {
-                        sendFile(item, type);
-                    });
+                onImageUpload: function (files, editor, $editable) {
+                    // alert(files);
+                    // var formData = new FormData();
+                    // // var type = $(this).data('type');
+                    // $.each(files, function (i, item) {
+                    //     // sendFile(item, type);
+                    //     formData.append('file',item);
+                    // });
+                    console.log(files);
+                    sendFile(files[0], editor, $editable);
                 },
                 //删除回调
                 onMediaDelete: function (target) {
@@ -286,19 +290,28 @@
 
 
 
-    function sendFile(file, type) {
+    function sendFile(files, editor, $editable) {
         alert("图片上传");
+        var data = new FormData();
+        data.append("file", files);
+        // alert(files[0]);
         $.ajax({
-            data: {
-                'file':file,
-                'dir':type,
-            },
+            data:data,
             type: "POST",
-            url: "/sendImage",
-
-            success: function (result) {
-                if (result == 'success') {
-                    $(".summernote").summernote('insertImage', result.url);
+            url: "/sendExperImage",
+            cache : false,
+            contentType : false,
+            processData : false,
+            dataType : "json",
+            success: function (data) {
+                console.log(data);
+                if (data.state == 'success') {
+                    // var imgNode = document.createElement("img");
+                    // imgNode.src = data.picurl;
+                    // $("#summernote").summernote('insertImage', "../../static/temp/d50e9a3e07e64031ae4c770611107527.png");
+                    $("#summernote").summernote('insertImage',"http://localhost:8080"+data.picurl);
+                }else{
+                    alert('上传失败2!');
                 }
             },
             error: function () {
@@ -310,6 +323,7 @@
 
     function deleteFile(target) {
         alert("图片删除");
+        console.log(targert);
         var picUrl = target.attr('src');
         $.ajax({
             data: { },

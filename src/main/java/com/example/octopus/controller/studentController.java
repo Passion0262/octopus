@@ -1,5 +1,6 @@
 package com.example.octopus.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.example.octopus.entity.dataset.Dataset;
 import com.example.octopus.entity.experiment.*;
 import com.example.octopus.entity.experiment.Module;
@@ -7,6 +8,7 @@ import com.example.octopus.entity.project.Project;
 import com.example.octopus.entity.user.Teacher;
 import com.example.octopus.service.*;
 import com.example.octopus.utils.CookieTokenUtils;
+import com.example.octopus.utils.PropertiesUtil;
 import com.example.octopus.utils.TokenCheckUtils;
 
 import java.io.*;
@@ -40,15 +42,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.example.octopus.entity.user.Student;
 import com.example.octopus.entity.user.Course;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.sql.Time;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
+import java.util.*;
 
 
 @Controller
@@ -91,6 +92,7 @@ public class studentController {
     private final static String cookieName = "cookie_";
 
     private CookieTokenUtils cookieThings = new CookieTokenUtils();
+    private PropertiesUtil propertiesUtil = new PropertiesUtil();
 
 
     private boolean cookieCheck(Model model, HttpServletRequest request) {
@@ -514,18 +516,72 @@ public class studentController {
 
     }
 
-    @RequestMapping("/sendImage")
-    public String sendImag(Model model, HttpServletRequest request) {
-        String file = request.getParameter("file");
-        String dir = request.getParameter("dir");
-        logger.info("fileupload:" + request.getParameter("file"));
-        logger.info("fileupload:" + request.getParameter("dir"));
-        return "success";
+
+
+    @RequestMapping(value = "sendExperImage", headers = ("content-type=multipart/*"), method = RequestMethod.POST)
+    @ResponseBody
+    public String sendExperImage(@RequestParam("file") MultipartFile file, Model model,HttpServletRequest request) throws Exception {
+        logger.info("图片上传");
+        try {
+            String path =propertiesUtil.getExpImageSavePath();
+            String fileName = UUID.randomUUID().toString().replace("-", "") + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+            logger.info("fileName:"+fileName);
+            File destFile = new File(path + "/" + fileName);
+            file.transferTo(destFile);
+//            FileUtils.copyInputStreamToFile(file.getInputStream(), destFile);
+            //上面代码是拷贝到本地的，但是因为感觉并不人性化，所以采取了上传到图片服务器的思路
+//            InputStream inputStream=file.getInputStream();
+
+//            String url = null;
+//            Boolean flag= FtpFileUtil.uploadFile(fileName,inputStream);
+//            if(flag){
+//                url = fileName;
+//            }
+
+//             String url = destFile.getAbsolutePath();
+//            logger.info("url:"+url);
+            for(int i = 0;i<50;i++){
+                if(destFile.exists()){
+                    Map<String,Object> params = new HashMap<>();
+                    params.put("state", "success");
+                    String exppic = propertiesUtil.getExpPicPath();
+                    params.put("picurl", exppic+fileName);
+                    return JSONArray.toJSON(params).toString();
+                }
+            }
+            Map<String,Object> params = new HashMap<>();
+            params.put("state", "fail");
+            params.put("picurl", "");
+            return JSONArray.toJSON(params).toString();
+        }catch (Exception e){
+            return  null;
+        }
+//        String file = request.getParameter("file");
+//        logger.info("fileupload:" + file);
+//        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+//        logger.info("图片上传");
+//        Date date = new Date();
+//        String parent = "/Users/wangxiang/IdeaProjects/octopus/src/main/resources/static";
+//        String filename = stuNum.toString()+date.toString();
+//        String suffix = ".jpg";
+//        String child = filename + suffix;
+//        File dest = new File(parent,child);
+////        file.transferTo(dest);
+//
+//        logger.info("url",child);
+//
+//        Map<String,Object> params = new HashMap<>();
+//        params.put("state", "success");
+//        params.put("url", "../../static/temp/"+child);
+//        return JSONArray.toJSON(params).toString();
+//       Exception String str = FileUpdate.uploadFile(file);
+//        Map<String,Object> params = new HashMap<>();
+//        logger.info("fileupload:" + request.getParameter("dir"));
     }
 
 
-    @RequestMapping("/deleteImage")
-    public String deleteImag(Model model, HttpServletRequest request) {
+    @RequestMapping("/deleteExpImage")
+    public String deleteExpImage(Model model, HttpServletRequest request) {
 
 //        logger.info("fileupload:" + request.getParameter("file"));
 //        logger.info("fileupload:" + request.getParameter("dir"));
@@ -538,12 +594,13 @@ public class studentController {
         Long experid = Long.parseLong(request.getParameter("experid"));
         Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         String text = request.getParameter("text");
-        logger.info("experid:" + experid);
-        logger.info("text:" + text);
+//        logger.info("experid:" + experid);
+//        logger.info("text:" + text);
         SubExperimentReportSave sub = new SubExperimentReportSave();
         sub.setSubExperimentId(experid);
         sub.setStuNumber(stuNum);
         sub.setContent(text);
+//        subExperimentReportSaveService.update(sub);
         subExperimentReportSaveService.insert(sub);
     }
 
