@@ -1,9 +1,7 @@
 package com.example.octopus.dao;
 
 import com.example.octopus.entity.user.Teacher;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -32,4 +30,17 @@ public interface TeacherMapper {
     @Update("UPDATE teacher SET password = #{newPassword} WHERE tea_number = #{teaNumber")
     boolean updateTeacherPassword(long teaNumber, String newPassword);
 
+    @Select("SELECT * FROM teacher")
+    List<Teacher> getAllTeachers();
+
+    @Update("UPDATE teacher SET name = #{name},major_code = #{majorCode},admin_rights = #{adminRights},phone = #{phone},school = #{school},login_number = #{loginNumber}, last_login_time = #{lastLoginTime}" +
+            "WHERE tea_number = #{teaNumber}")
+    boolean updateTeacher(Teacher teacher);
+
+    @Insert("INSERT INTO teacher (tea_number,name,major_code,admin_rights,phone,school,login_number,last_login_time) " +
+            "VALUES (#{teaNumber},#{name},#{majorCode},#{adminRights},#{phone},#{school},#{loginNumber},#{lastLoginTime})")
+    boolean addTeacher(Teacher teacher);
+
+    @Delete("DELETE FROM teacher WHERE tea_number=#{teaNumber}")
+    boolean deleteTeacher(long teaNumber);
 }

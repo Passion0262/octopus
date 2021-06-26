@@ -1,10 +1,7 @@
 package com.example.octopus.service;
 
+import com.example.octopus.entity.VOs.SubExperimentOperateTimeVO;
 import com.example.octopus.entity.experiment.SubExperimentProgress;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -61,5 +58,12 @@ public interface SubExperimentProgressService {
      *  删除子实验学习时间记录
      */
     boolean delete(long id);
+
+    /**
+     * 获取实验操作时长
+     * @param teaNumber 教师号，用于自动分辨管理员or教师
+     * @return 对管理员输出所有，对教师仅输出其所授课程的视频学习汇总情况
+     */
+    List<SubExperimentOperateTimeVO> getOperateTimeByRole(long teaNumber);
 
 }

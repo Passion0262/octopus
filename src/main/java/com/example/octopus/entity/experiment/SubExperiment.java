@@ -17,7 +17,7 @@ public class SubExperiment {
 
     private long moduleId;
 
-    private String name;
+    private String subExperimentName;
 
     private int number;
 

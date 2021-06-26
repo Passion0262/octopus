@@ -23,7 +23,7 @@ public class Course {
     private String courseName;
 
 //    @Column(nullable = false,columnDefinition = "varchar(30) comment '授课老师'")
-    private String teacher;
+    private long teaNumber;
 
 //    @Column(nullable = false,columnDefinition = "varchar(30) comment '分类'")
 //    private String classification;
