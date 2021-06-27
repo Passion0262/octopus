@@ -76,11 +76,11 @@
                         <h4 class="mb-4"><span th:text="${experiment.name}"></span>:&nbsp;&nbsp;&nbsp;<span th:text="${subExperiment.name}"></span></h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <button type="button" class="btn btn-outline-info waves-effect waves-light" th:onclick="showpdf()">文档模式</button>
+                                <button type="button" id="showpdfbtn" class="btn btn-outline-info waves-effect waves-light" th:onclick="showpdf()">文档模式</button>
                                 <span>&nbsp;&nbsp;&nbsp;</span>
-                                <button type="button" class="btn btn-outline-info waves-effect waves-light active" th:onclick="showm1()">虚拟机模式</button>
+                                <button type="button" id="showmachinebtn" class="btn btn-outline-info waves-effect waves-light active" th:onclick="showm1()">虚拟机模式</button>
                                 <span>&nbsp;&nbsp;&nbsp;</span>
-                                <button type="button" class="btn btn-outline-info waves-effect waves-light" th:onclick="">jupyter模式</button>
+                                <button type="button" id="showjupyterbtn" class="btn btn-outline-info waves-effect waves-light" th:onclick="">jupyter模式</button>
                                 <span>&nbsp;&nbsp;&nbsp;</span>
                                 <button type="button" class="btn btn-outline-dark waves-effect waves-light" th:onclick="location.href='/experiment_task_detail/'+[[${subExperiment.experimentId}]]">实验任务</button>
                                 <span>&nbsp;&nbsp;&nbsp;</span>
@@ -125,12 +125,12 @@
 
                                 <div class="tab-content  text-muted" id="tabtext" style="min-height: 300px;">
                                     <div class="tab-pane active" id="txt_task" role="tabpanel">
-                                        <embed src="../../static/images/showpic/demo1.pdf#zoom=50" type="application/pdf" />
+                                        <embed src="../../static/images/showpic/demo1.pdf#toolbar=0" type="application/pdf" width="100%" height="100%" />
                                 </div>
 
                                     <div class="tab-pane " id="txt_core" role="tabpanel">
 
-                                        <embed src="../../static/images/showpic/demo1.pdf#zoom=100" type="application/pdf" />
+                                        <embed src="../../static/images/showpic/demo1.pdf#zoom=100&toolbar=0" type="application/pdf" width="100%" height="100%" />
 
 
                                     </div>
@@ -142,7 +142,7 @@
                                             <button type="button"  class="btn btn-primary btn-rounded waves-effect waves-light" onclick="submittext()">提交</button>
                                         </div>
                                         </div>
-                                                <div  id="summernote"  >实验报告模板</div>
+                                                <div  id="summernote"></div>
                                     </div>
                                 </div>
 
@@ -228,17 +228,17 @@
     $(document).ready(function(){
         $('#follow_machine').css("height",$('#machine').height());
         $('#follow_machine1').css("height",$('#machine1').height());
+        $('.tab-pane').css("height",$('#machine1').height()-42);
 
         $(window).resize(function(){
             $('#follow_machine').css("height",$('#machine').height());
             $('#follow_machine1').css("height",$('#machine1').height());
-
+            $('.tab-pane').css("height",$('#machine1').height()-42);
         });
 
-
         $('#summernote').summernote({
-            height : $('#machine1').height()/2,
-            maxHeight:500,
+            height : $('#machine1').height()-42,
+            maxHeight:1000,
             focus: false,
             lang: 'zh-CN',
             dialogsFade: true,
@@ -263,11 +263,16 @@
         ],
             callbacks: {
                 //上传回调
-                onImageUpload: function (files) {
-                    var type = $(this).data('type');
-                    $.each(files, function (i, item) {
-                        sendFile(item, type);
-                    });
+                onImageUpload: function (files, editor, $editable) {
+                    // alert(files);
+                    // var formData = new FormData();
+                    // // var type = $(this).data('type');
+                    // $.each(files, function (i, item) {
+                    //     // sendFile(item, type);
+                    //     formData.append('file',item);
+                    // });
+                    console.log(files);
+                    sendFile(files[0], editor, $editable);
                 },
                 //删除回调
                 onMediaDelete: function (target) {
@@ -276,30 +281,37 @@
             }
 
         });
-
-
+        $("#summernote").summernote('code', [[${subcontent}]]);
+        // $("#summernote").summernote('insertText', [[${subcontent}]]);
+        // $("#summernote").summernote('code',[[${subcontent}]]);
 
     });
 
 
 
 
-    function sendFile(file, type) {
-        alert(file);
-        alert(type);
+    function sendFile(files, editor, $editable) {
+        alert("图片上传");
+        var data = new FormData();
+        data.append("file", files);
+        // alert(files[0]);
         $.ajax({
-            data: {
-                'file':file,
-                'dir':type,
-            },
+            data:data,
             type: "POST",
-            url: "/sendImage",
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function (result) {
-                if (result.success) {
-                    $(".summernote").summernote('insertImage', result.url);
+            url: "/sendExperImage",
+            cache : false,
+            contentType : false,
+            processData : false,
+            dataType : "json",
+            success: function (data) {
+                console.log(data);
+                if (data.state == 'success') {
+                    // var imgNode = document.createElement("img");
+                    // imgNode.src = data.picurl;
+                    // $("#summernote").summernote('insertImage', "../../static/temp/d50e9a3e07e64031ae4c770611107527.png");
+                    $("#summernote").summernote('insertImage',"http://localhost:8080"+data.picurl);
+                }else{
+                    alert('上传失败2!');
                 }
             },
             error: function () {
@@ -310,6 +322,8 @@
 
 
     function deleteFile(target) {
+        alert("图片删除");
+        console.log(targert);
         var picUrl = target.attr('src');
         $.ajax({
             data: { },
@@ -327,7 +341,7 @@
 
     function submittext(){
         var allstr = $('#summernote').summernote('code');
-        convertpdf();
+        // convertpdf();
         $.ajax({
             data: {
                 'experid':[[${subExperiment.id}]],
@@ -337,9 +351,10 @@
             url: "/submitExperText",
             processData: true,
             success: function () {
+                alert('提交成功!');
             },
             error: function () {
-                alert('提交成功!');
+                alert('提交失败!');
             }
         });
     }
@@ -355,9 +370,9 @@
             url: "/saveExperText",
             processData: true,
             success: function () {
+                alert('保存成功!');
             },
             error: function () {
-                alert('保存成功!');
             }
         });
 
@@ -366,10 +381,14 @@
     function showpdf(){
         $("#follow_machine").attr("class","col-md-12");
         $("#machine").attr("class","");
+        $("#showpdfbtn").addClass("active");
+        $("#showmachinebtn").removeClass("active");
     }
     function showm1(){
         $("#follow_machine").attr("class","col-md-4");
         $("#machine").attr("class","col-md-8");
+        $("#showmachinebtn").addClass("active");
+        $("#showpdfbtn").removeClass("active");
     }
 
     function convertpdf(){

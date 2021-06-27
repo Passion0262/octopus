@@ -74,7 +74,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 设置登陆页
                 .formLogin().loginPage("/login")
                 // 设置登陆成功页
-                .defaultSuccessUrl("/").permitAll()
+//                .defaultSuccessUrl("/").permitAll()
+                .successForwardUrl("/").permitAll()
                 //  登陆失败url
 //                .failureUrl("/login/error")
                 .authenticationDetailsSource(authenticationDetailsSource)

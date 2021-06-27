@@ -1,5 +1,6 @@
 package com.example.octopus.dao.experiment;
 
+import com.example.octopus.entity.VOs.SubExperimentOperateTimeVO;
 import com.example.octopus.entity.experiment.SubExperimentProgress;
 import org.apache.ibatis.annotations.*;
 
@@ -65,5 +66,19 @@ public interface SubExperimentProgressMapper {
      */
     @Delete("DELETE FROM sub_experiment_progress WHERE id = #{id}")
     boolean delete(long id);
+
+    /**
+     * VO 联表查询 获取所有实验操作时长记录
+     * @return VO列表
+     */
+    @Select("SELECT sep.*, s.name, class_.class_name, major.major_name, course.course_name, se.sub_experiment_name " +
+            "FROM sub_experiment_progress sep, student s, class_, major, course, sub_experiment se, course_experiment ce " +
+            "WHERE sep.stu_number=s.stu_number and s.major_id=major.id and s.class_id=class_.id and sep.sub_experiment_id=se.id and se.experiment_id=ce.experiment_id and ce.course_id=course.id")
+    List<SubExperimentOperateTimeVO> getAllOperateTime();
+
+    @Select("SELECT sep.*, s.name, class_.class_name, major.major_name, course.course_name, se.sub_experiment_name " +
+            "FROM sub_experiment_progress sep, student s, class_, major, course, sub_experiment se, course_experiment ce " +
+            "WHERE sep.stu_number=s.stu_number and s.major_id=major.id and s.class_id=class_.id and sep.sub_experiment_id=se.id and se.experiment_id=ce.experiment_id and ce.course_id=course.id and course.tea_number=#{teaNumber}")
+    List<SubExperimentOperateTimeVO> getOperateTimeByTeacherId(long teaNumber);
 
 }
