@@ -273,19 +273,32 @@
                                 url: "/reset_pwd_confirm",
                                 type: "post",
                                 data: content,
-                                success: function () {
-                                    document.getElementById("reset_success").innerHTML = "<div class=\"row justify-content-center\">\n" +
-                                        "                                                <div class=\"col-lg-6\"><div class=\"text-center\">\n" +
-                                        "                                                    <div class=\"mb-4\">\n" +
-                                        "                                                        <i class=\"mdi mdi-check-circle-outline text-success display-4\"></i>\n" +
-                                        "                                                    </div>\n" +
-                                        "                                                    <div>\n" +
-                                        "                                                        <h5>密码已重置</h5>\n" +
-                                        "                                                        <p class=\"text-muted\"><a href=\"admin_login\">跳转到登录页面</a></p>\n" +
-                                        "                                                    </div>\n" +
-                                        "                                                </div>\n" +
-                                        "                                                </div>\n" +
-                                        "                                            </div>";
+                                success: function (data) {
+                                    if(data.msg == "success"){
+                                        document.getElementById("reset_success").innerHTML = "<div class=\"row justify-content-center\">\n" +
+                                            "                                                <div class=\"col-lg-6\"><div class=\"text-center\">\n" +
+                                            "                                                    <div class=\"mb-4\">\n" +
+                                            "                                                        <i class=\"mdi mdi-check-circle-outline text-success display-4\"></i>\n" +
+                                            "                                                    </div>\n" +
+                                            "                                                    <div>\n" +
+                                            "                                                        <h5>密码已重置</h5>\n" +
+                                            "                                                        <p class=\"text-muted\"><a href=\"admin_login\">跳转到登录页面</a></p>\n" +
+                                            "                                                    </div>\n" +
+                                            "                                                </div>\n" +
+                                            "                                                </div>\n" +
+                                            "                                            </div>";
+                                    }
+                                    else{
+                                        document.getElementById("reset_success").innerHTML = "<div class=\"row justify-content-center\">\n" +
+                                            "                                                <div class=\"col-lg-6\"><div class=\"text-center\">\n" +
+                                            "                                                    <div>\n" +
+                                            "                                                        <h3>"+data.msg+"</h3>\n" +
+                                            "                                                        <p class=\"text-muted\"><a href=\"admin_reset_pwd\">重新设置</a></p>\n" +
+                                            "                                                    </div>\n" +
+                                            "                                                </div>\n" +
+                                            "                                                </div>\n" +
+                                            "                                            </div>";
+                                    }
                                 },
                                 error: function () {
                                     document.getElementById("reset_success").innerHTML = "<div class=\"row justify-content-center\">\n" +
