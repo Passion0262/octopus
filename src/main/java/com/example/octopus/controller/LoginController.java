@@ -1,6 +1,9 @@
 package com.example.octopus.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.security.sasl.AuthenticationException;
@@ -15,6 +18,8 @@ import java.io.IOException;
  */
 @Controller
 public class LoginController {
+
+    private Logger logger = LoggerFactory.getLogger(LoginController.class);
 //    @RequestMapping("/login/error")
 //    public void loginError(HttpServletRequest request, HttpServletResponse response) {
 //        response.setContentType("text/html;charset=utf-8");
@@ -26,5 +31,23 @@ public class LoginController {
 //            e.printStackTrace();
 //        }
 //    }
+        //重置密码
+        @PostMapping("/reset_pwd_confirm")
+        public String reset_pwd_confirm(HttpServletRequest request) {
+            String username = request.getParameter("username");
+            String phone = request.getParameter("phone");
+            String new_pwd = request.getParameter("new_pwd");
+            logger.info("用户名：" + username);
+            logger.info("手机号码：" + phone);
+            logger.info("新密码：" + new_pwd);
+            //重置密码
+            return "reset_pwd";
+        }
+
+        @RequestMapping("/reset_pwd")
+        public String reset_pwd() {
+
+            return "reset_pwd";
+        }
 
 }

@@ -93,16 +93,16 @@
                                             <div>
                                                 <form>
                                                     <div class="row" style="justify-content: center;align-items: center;">
+<!--                                                        <div class="col-lg-10">-->
+<!--                                                            <div class="form-group">-->
+<!--                                                                <label for="email">邮箱</label>-->
+<!--                                                                <input name="email" type="text" class="form-control" id="email">-->
+<!--                                                            </div>-->
+<!--                                                        </div>-->
                                                         <div class="col-lg-10">
                                                             <div class="form-group">
-                                                                <label for="email">邮箱</label>
-                                                                <input name="email" type="text" class="form-control" id="email">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-10">
-                                                            <div class="form-group">
-                                                                <label for="progress-phone">手机号</label>
-                                                                <input name="phonenumber" type="text" class="form-control" id="progress-phone">
+                                                                <label for="phone">手机号</label>
+                                                                <input name="phone" type="text" class="form-control" id="phone">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -115,9 +115,23 @@
                                                     <div class="row" style="justify-content: center;align-items: center;">
                                                         <div class="col-lg-10">
                                                             <div class="form-group">
-                                                                <label for="new-pwd">设置新密码</label>
-                                                                <input name="new_pwd" type="password" class="form-control" id="new-pwd">
+                                                                <label for="new_pwd">设置新密码</label>
+                                                                <input name="new_pwd" type="password" class="form-control" id="new_pwd">
                                                             </div>
+                                                        </div>
+                                                        <div class="col-lg-10">
+                                                            <div class="form-group">
+                                                                <label for="new_pwd_check">确认新密码</label>
+                                                                <input name="new_pwd_check" type="password" class="form-control" id="new_pwd_check" onchange="check()">
+                                                            </div>
+                                                        </div>
+                                                        <div id="alert" class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none;margin-top: 5px;padding: 5px;padding-left: 20px;">
+                                                            <i class="mdi mdi-block-helper mr-2">
+                                                                <span id="result_msg" style="padding-left: 10px;"></span>
+                                                            </i>
+                                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="padding: 5px;">
+                                                                <span aria-hidden="true">×</span>
+                                                            </button>
                                                         </div>
                                                     </div>
                                                 </form>
@@ -146,6 +160,7 @@
                                             <a href="#" id="next">下一步</a>
                                         </li>
                                     </ul>
+
                                 </div>
                             </div>
                         </div>
@@ -186,45 +201,108 @@
         <script src="static/js/app.js"></script>
 
         <script type="text/javascript" th:inline="javascript">
-            var content = {"username":'',"email":'', "phonenumber":'', "new_pwd":''};
+            var content = {"username":'', "phone":'', "new_pwd":'', "new_pwd_check": ''};
+            var isUsername = false;
+            var isPhone = false;
+            var isNewPwd = false;
+            var isCheck = false;
+
+            function check(){
+                var oNewPwd = document.getElementById("new_pwd");
+                var oNewPwdCheck = document.getElementById("new_pwd_check");
+                if(oNewPwdCheck.value != oNewPwd.value){
+                    document.getElementById("alert").style.display="";
+                    document.getElementById("result_msg").innerHTML = "密码不正确！";
+                }
+                else{
+                    document.getElementById("alert").style.display="none";
+                }
+            }
+
             document.getElementById("next").onclick = function() {
                 $("#progrss-wizard input").each(function () {
                     content[this.name] = this.value;
-                    //console.log(content);
+                    if(content["username"]){
+                        isUsername = true;
+                    }else{
+                        isUsername = false;
+                    }
+                    if(content["phone"]){
+                        isPhone = true;
+                    }else{
+                        isPhone = false;
+                    }
                     if(content["new_pwd"]){
-                        $.ajax({
-                            url: "/admin_reset_pwd_confirm",
-                            type: "post",
-                            data: content,
-                            success:function () {
-                                document.getElementById("reset_success").innerHTML="<div class=\"row justify-content-center\">\n" +
-                                    "                                                <div class=\"col-lg-6\"><div class=\"text-center\">\n" +
-                                    "                                                    <div class=\"mb-4\">\n" +
-                                    "                                                        <i class=\"mdi mdi-check-circle-outline text-success display-4\"></i>\n" +
-                                    "                                                    </div>\n" +
-                                    "                                                    <div>\n" +
-                                    "                                                        <h5>密码已重置</h5>\n" +
-                                    "                                                        <p class=\"text-muted\"><a href=\"admin_login\">跳转到登录页面</a></p>\n" +
-                                    "                                                    </div>\n" +
-                                    "                                                </div>\n" +
-                                    "                                                </div>\n" +
-                                    "                                            </div>";
-                            },
-                            error:function () {
-                                document.getElementById("reset_success").innerHTML="<div class=\"row justify-content-center\">\n" +
-                                    "                                                <div class=\"col-lg-6\"><div class=\"text-center\">\n" +
-                                    "                                                    <div>\n" +
-                                    "                                                        <h3>密码重置失败</h3>\n" +
-                                    "                                                        <p class=\"text-muted\"><a href=\"admin_reset_pwd\">重新设置</a></p>\n" +
-                                    "                                                    </div>\n" +
-                                    "                                                </div>\n" +
-                                    "                                                </div>\n" +
-                                    "                                            </div>";
-                                //alert("ajax send failed");
-                                //window.location.href="admin_reset_pwd";
-                                alert("重置失败");
-                            }
-                        })
+                        isNewPwd = true;
+                    }else{
+                        isNewPwd = false;
+                    }
+                    if(content["new_pwd_check"]){
+                        if(isNewPwd){
+                            if(content["new_pwd"] == content["new_pwd_check"])
+                                isCheck = true;
+                        }
+                    }else{
+                        isCheck = false;
+                    }
+                    if(isCheck){
+                        if(!isUsername){
+                            document.getElementById("reset_success").innerHTML="<div class=\"row justify-content-center\">\n" +
+                            "                                                <div class=\"col-lg-6\"><div class=\"text-center\">\n" +
+                            "                                                    <div>\n" +
+                            "                                                        <h3>用户名不能为空！</h3>\n" +
+                            "                                                        <p class=\"text-muted\"><a href=\"admin_reset_pwd\">重新设置</a></p>\n" +
+                            "                                                    </div>\n" +
+                            "                                                </div>\n" +
+                            "                                                </div>\n" +
+                            "                                            </div>";
+                        }
+                        else if(!isPhone){
+                            document.getElementById("reset_success").innerHTML="<div class=\"row justify-content-center\">\n" +
+                                "                                                <div class=\"col-lg-6\"><div class=\"text-center\">\n" +
+                                "                                                    <div>\n" +
+                                "                                                        <h3>手机号不能为空！</h3>\n" +
+                                "                                                        <p class=\"text-muted\"><a href=\"admin_reset_pwd\">重新设置</a></p>\n" +
+                                "                                                    </div>\n" +
+                                "                                                </div>\n" +
+                                "                                                </div>\n" +
+                                "                                            </div>";
+                        }
+                        else {
+                            $.ajax({
+                                url: "/reset_pwd_confirm",
+                                type: "post",
+                                data: content,
+                                success: function () {
+                                    document.getElementById("reset_success").innerHTML = "<div class=\"row justify-content-center\">\n" +
+                                        "                                                <div class=\"col-lg-6\"><div class=\"text-center\">\n" +
+                                        "                                                    <div class=\"mb-4\">\n" +
+                                        "                                                        <i class=\"mdi mdi-check-circle-outline text-success display-4\"></i>\n" +
+                                        "                                                    </div>\n" +
+                                        "                                                    <div>\n" +
+                                        "                                                        <h5>密码已重置</h5>\n" +
+                                        "                                                        <p class=\"text-muted\"><a href=\"admin_login\">跳转到登录页面</a></p>\n" +
+                                        "                                                    </div>\n" +
+                                        "                                                </div>\n" +
+                                        "                                                </div>\n" +
+                                        "                                            </div>";
+                                },
+                                error: function () {
+                                    document.getElementById("reset_success").innerHTML = "<div class=\"row justify-content-center\">\n" +
+                                        "                                                <div class=\"col-lg-6\"><div class=\"text-center\">\n" +
+                                        "                                                    <div>\n" +
+                                        "                                                        <h3>密码重置失败</h3>\n" +
+                                        "                                                        <p class=\"text-muted\"><a href=\"admin_reset_pwd\">重新设置</a></p>\n" +
+                                        "                                                    </div>\n" +
+                                        "                                                </div>\n" +
+                                        "                                                </div>\n" +
+                                        "                                            </div>";
+                                    //alert("ajax send failed");
+                                    //window.location.href="admin_reset_pwd";
+                                    alert("重置失败");
+                                }
+                            })
+                        }
                     }
                 })
             };
