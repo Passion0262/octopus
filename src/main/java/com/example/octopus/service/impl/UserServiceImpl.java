@@ -73,7 +73,6 @@ public class UserServiceImpl implements UserService {
         return userMapper.insertStudent(student) && sysUserRoleMapper.updatePassword(student.getStuNumber(), student.getPassword());
     }
 
-    //todo 确认是否在user和teacher表中存储密码，（建议不做存储，密码仅保存在sysuserrole中），同时需确定这两个实例类和表属性是否对齐
     @Override
     public boolean updateStudent(Student student) {
         return userMapper.updateStudent(student) && sysUserRoleMapper.updatePassword(student.getStuNumber(), student.getPassword());

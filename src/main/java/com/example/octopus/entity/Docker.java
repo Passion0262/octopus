@@ -11,13 +11,13 @@ import java.sql.Time;
  */
 @Data
 public class Docker {
-    private long id;  //容器id
-    private String name;  //容器名
+    private long dockerId;  //容器id
+    private String dockerName;  //容器名
     private Time runningTime;  //容器已开启时间
-    private int port;  //容器端口
-    private String status;  //容器状态
-    private long userNumber;  //使用者id
-    private String userName;  //使用者名
-    private String address;  //docker完整ip访问地址
+    private int dockerPort;  //容器端口
+    private String dockerStatus;  //容器状态
+    private long stuNumber;  //学生号
+    private String stuName;  //学生姓名
+    private String dockerAddress;  //docker完整ip访问地址
 
 }

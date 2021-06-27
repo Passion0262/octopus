@@ -86,7 +86,7 @@ public class DockerServiceImpl implements DockerService {
      */
     @Override
     public String getAddressByStuNumber(long stuNumber) {
-        return dockerMapper.getDockerByStuNum(stuNumber).getAddress();
+        return dockerMapper.getDockerByStuNum(stuNumber).getDockerAddress();
     }
 
     /**
@@ -97,7 +97,7 @@ public class DockerServiceImpl implements DockerService {
      */
     @Override
     public String getStatusByStuNumber(long stuNumber) {
-        return dockerMapper.getDockerByStuNum(stuNumber).getStatus();
+        return dockerMapper.getDockerByStuNum(stuNumber).getDockerStatus();
     }
 
     private static final int[] FORBIDDEN_PORTS = {8080, 3306};
