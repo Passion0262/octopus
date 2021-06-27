@@ -68,7 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 // 如果有允许匿名的url，填在下面
 //                .antMatchers().permitAll()
-                .antMatchers("/getVerifyCode").permitAll()
+                .antMatchers("/getVerifyCode","/reset_pwd").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 // 设置登陆页

@@ -47,4 +47,7 @@ public interface UserMapper {
     @Delete("DELETE FROM student WHERE stu_number=#{stuNumber}")
     boolean deleteByStuNumber(long stuNumber);
 
+    @Select("SELECT phone_number FROM student WHERE stu_number=#{stuNumber}")
+    String getPhoneByStuNumber(long stuNumber);
+
 }
