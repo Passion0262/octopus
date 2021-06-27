@@ -73,7 +73,7 @@
 
                 <div class="col-12">
                     <div class="page-title-box d-flex align-items-center justify-content-between" style="padding-bottom: 5px; padding-top: 5px;">
-                        <h4 class="mb-4"><span th:text="${experiment.name}"></span>:&nbsp;&nbsp;&nbsp;<span th:text="${subExperiment.name}"></span></h4>
+                        <h4 class="mb-4"><span th:text="${experiment.name}"></span>:&nbsp;&nbsp;&nbsp;<span th:text="${subExperiment.subExperimentName}"></span></h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <button type="button" id="showpdfbtn" class="btn btn-outline-info waves-effect waves-light" th:onclick="showpdf()">文档模式</button>
@@ -88,7 +88,7 @@
                                 <button type="button" disabled class="btn btn-outline-dark waves-effect waves-light" th:onclick="location.href='/course_video/'+[[${videocourse}]]">课程学习</button>
                                 </span>
                                 <span th:if="${isvideo}==1">
-                                <button type="button"  class="btn btn-outline-dark waves-effect waves-light" th:onclick="location.href='/course_video/'+[[${videocourse}]]+'/0'">课程学习</button>
+                                <button type="button"  class="btn btn-outline-dark waves-effect waves-light" th:onclick="location.href='/course_video/'+[[${videocourse}]]+'/'+[[${subExperiment.experimentId}]]">课程学习</button>
                                 </span>
                             </ol>
                         </div>
@@ -130,8 +130,9 @@
 
                                     <div class="tab-pane " id="txt_core" role="tabpanel">
 
-                                        <embed src="../../static/images/showpic/demo1.pdf#zoom=100&toolbar=0" type="application/pdf" width="100%" height="100%" />
-
+                                        <object data="../../static/images/showpic/demo1.pdf#toolbar=0" type="application/pdf" width="100%" height="100%">
+                                            　　<iframe src="../../static/images/showpic/demo1.pdf#toolbar=0" width="100%" height="100%" style="border: none;"></iframe>
+                                        </object>
 
                                     </div>
 
@@ -139,7 +140,12 @@
                                         <div style="height: 40px;padding:2px 5px;">
                                         <div  style="float: right;">
                                             <button type="button"  class="btn btn-primary btn-rounded waves-effect waves-light" onclick="savetext()">保存</button>
+                                            <span th:if="${isexpsubmit}==0">
                                             <button type="button"  class="btn btn-primary btn-rounded waves-effect waves-light" onclick="submittext()">提交</button>
+                                            </span>
+                                            <span th:if="${isexpsubmit}==1">
+                                                <button type="button"  class="btn btn-primary btn-rounded waves-effect waves-light disabled" onclick="submittext()">提交</button>
+                                            </span>
                                         </div>
                                         </div>
                                                 <div  id="summernote"></div>
@@ -264,15 +270,12 @@
             callbacks: {
                 //上传回调
                 onImageUpload: function (files, editor, $editable) {
-                    // alert(files);
-                    // var formData = new FormData();
-                    // // var type = $(this).data('type');
-                    // $.each(files, function (i, item) {
-                    //     // sendFile(item, type);
-                    //     formData.append('file',item);
-                    // });
+                    $.each(files, function (i, item) {
+                        console.log(item);
+                        sendFile(item, editor, $editable);
+                    });
                     console.log(files);
-                    sendFile(files[0], editor, $editable);
+                    // sendFile(files[0], editor, $editable);
                 },
                 //删除回调
                 onMediaDelete: function (target) {
@@ -323,12 +326,14 @@
 
     function deleteFile(target) {
         alert("图片删除");
-        console.log(targert);
+        console.log(target);
         var picUrl = target.attr('src');
         $.ajax({
-            data: { },
+            data: {
+                "picUrl":picUrl
+            },
             type: "POST",
-            url: "/deleteImage",
+            url: "/deleteExpImage",
             processData: true,
             success: function (result) {
             },
@@ -342,21 +347,25 @@
     function submittext(){
         var allstr = $('#summernote').summernote('code');
         // convertpdf();
-        $.ajax({
-            data: {
-                'experid':[[${subExperiment.id}]],
-                'text':allstr,
-            },
-            type: "POST",
-            url: "/submitExperText",
-            processData: true,
-            success: function () {
-                alert('提交成功!');
-            },
-            error: function () {
-                alert('提交失败!');
-            }
-        });
+        var sureconfirm = confirm("只能提交一次，是否确认提交?");
+        if(sureconfirm == true) {
+            $.ajax({
+                data: {
+                    'experid': [[${subExperiment.id}]],
+                    'text': allstr,
+                },
+                type: "POST",
+                url: "/submitExperText",
+                processData: true,
+                success: function () {
+                    alert('提交成功!');
+                },
+                error: function () {
+                    alert('提交失败!');
+                }
+            });
+
+        }
     }
 
     function savetext(){

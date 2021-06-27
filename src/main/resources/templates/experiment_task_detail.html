@@ -121,7 +121,7 @@
                 <div class="row" th:each="subExperiment:${subExperiments[moduleStat.index]}">
                 <div class="col-3"><img th:src="'../../'+${subExperiment.imagePath}" class="img-fluid"/></div>
                   <div class="col-6">
-                    <p class="card-text">任务<span th:text="${subExperiment.number}"></span>:&nbsp;&nbsp;&nbsp;<span th:text="${subExperiment.name}"></span></p>
+                    <p class="card-text">任务<span th:text="${subExperiment.number}"></span>:&nbsp;&nbsp;&nbsp;<span th:text="${subExperiment.subExperimentName}"></span></p>
 <!--                    <p class="card-text">操作时长</p>-->
                   </div>
                 <div class="col-3">

@@ -87,6 +87,8 @@ public class studentController {
     VideoProgressService videoProgressService;
     @Autowired
     SubExperimentReportSaveService subExperimentReportSaveService;
+    @Autowired
+    SubExperimentReportSubmitService subExperimentReportSubmitService;
 
 
     private final static String cookieName = "cookie_";
@@ -511,7 +513,12 @@ public class studentController {
             model.addAttribute("videocourse", video.getCourseId());
         }
 
-
+        SubExperimentReportSubmit issub = subExperimentReportSubmitService.getByStuNumberAndSubExperimentId(sub_id,stuNum);
+        if(issub == null){
+            model.addAttribute("isexpsubmit", 0);
+        }else{
+            model.addAttribute("isexpsubmit", 1);
+        }
         return "experiment_machine";
 
     }
@@ -521,11 +528,11 @@ public class studentController {
     @RequestMapping(value = "sendExperImage", headers = ("content-type=multipart/*"), method = RequestMethod.POST)
     @ResponseBody
     public String sendExperImage(@RequestParam("file") MultipartFile file, Model model,HttpServletRequest request) throws Exception {
-        logger.info("图片上传");
+//        logger.info("图片上传");
         try {
             String path =propertiesUtil.getExpImageSavePath();
-            String fileName = UUID.randomUUID().toString().replace("-", "") + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-            logger.info("fileName:"+fileName);
+            String fileName ="exp" +  UUID.randomUUID().toString().replace("-", "") + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+//            logger.info("fileName:"+fileName);
             File destFile = new File(path + "/" + fileName);
             file.transferTo(destFile);
 //            FileUtils.copyInputStreamToFile(file.getInputStream(), destFile);
@@ -580,12 +587,26 @@ public class studentController {
     }
 
 
-    @RequestMapping("/deleteExpImage")
-    public String deleteExpImage(Model model, HttpServletRequest request) {
+    @PostMapping(value = "/deleteExpImage")
+    @ResponseBody
+    public String deleteExpImage(HttpServletRequest request) {
 
-//        logger.info("fileupload:" + request.getParameter("file"));
-//        logger.info("fileupload:" + request.getParameter("dir"));
-        return "redirect:/experiment_machine";
+        String picUrl = request.getParameter("picUrl");
+        logger.info("deletepicUrl:" + picUrl);
+        String filename = picUrl.replace("http://localhost:8080/static/","");
+        String filepath = propertiesUtil.getExpImageSavePath();
+
+        File file = new File(filepath+filename);
+        Map<String,Object> params = new HashMap<>();
+        if (file.exists()) {
+            file.delete();
+            params.put("state", "success");
+//            System.out.println("===========删除成功=================");
+        } else {
+            params.put("state", "fail");
+//            System.out.println("===============删除失败==============");
+        }
+        return JSONArray.toJSON(params).toString();
     }
 
     @PostMapping(value="/saveExperText")
@@ -621,7 +642,7 @@ public class studentController {
 
 
         HTMLWorker htmlWorker = new HTMLWorker(document);
-        htmlWorker.parse(new StringReader(text ));
+        htmlWorker.parse(new StringReader(text));
 //        InputStream stream = new ByteArrayInputStream(text.toString().getBytes("UTF-8"));
 //        XMLWorkerHelper.getInstance().parseXHtml(pdfWriter, document, stream);
 //        XMLWorkerHelper worker = XMLWorkerHelper.getInstance();
