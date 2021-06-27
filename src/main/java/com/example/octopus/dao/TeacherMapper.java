@@ -27,9 +27,6 @@ public interface TeacherMapper {
     @Select("SELECT * FROM teacher WHERE tea_number = #{teaNumber}")
     Teacher getByTeaNumber(long teaNumber);
 
-    @Update("UPDATE teacher SET password = #{newPassword} WHERE tea_number = #{teaNumber")
-    boolean updateTeacherPassword(long teaNumber, String newPassword);
-
     @Select("SELECT * FROM teacher")
     List<Teacher> getAllTeachers();
 
@@ -43,4 +40,7 @@ public interface TeacherMapper {
 
     @Delete("DELETE FROM teacher WHERE tea_number=#{teaNumber}")
     boolean deleteTeacher(long teaNumber);
+
+    @Select("SELECT phone FROM teacher WHERE tea_number=#{teaNumber}")
+    String getPhoneByTeaNumber(long teaNumber);
 }
