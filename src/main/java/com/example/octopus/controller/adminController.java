@@ -9,7 +9,6 @@ import com.example.octopus.utils.UploadFileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.*;
 
 
@@ -94,14 +92,6 @@ public class adminController {
         return "redirect:/login";
     }
 
-//    //登录验证 跳转到首页
-//    @PostMapping("/admin_confirmlogin")
-//    public String admin_confirmlogin(@RequestParam("username") String username, @RequestParam("userpwd") String userpwd, HttpSession session) {
-//        logger.info("用户名：" + username);
-//        logger.info("密码：" + userpwd);
-//        session.setAttribute("user", username);
-//        return "redirect:/admin_index";
-//    }
 
     //个人资料
     @RequestMapping("/admin_userinfo")
@@ -110,25 +100,6 @@ public class adminController {
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         model.addAttribute("userinfo", teacherService.getTeacherByTeaNumber(teaNum));
         return "admin_userinfo";
-    }
-
-    //重置密码
-    @PostMapping("/admin_reset_pwd_confirm")
-    public String admin_reset_pwd_confirm(HttpServletRequest request) {
-        String username = request.getParameter("username");
-        String phonenumber = request.getParameter("phonenumber");
-        String new_pwd = request.getParameter("new_pwd");
-        logger.info("用户名：" + username);
-        logger.info("手机号码：" + phonenumber);
-        logger.info("新密码：" + new_pwd);
-        //重置密码
-        return "admin_reset_pwd";
-    }
-
-    @RequestMapping("/admin_reset_pwd")
-    public String admin_reset_pwd() {
-
-        return "admin_reset_pwd";
     }
 
 
