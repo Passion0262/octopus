@@ -251,7 +251,7 @@
                             "                                                <div class=\"col-lg-6\"><div class=\"text-center\">\n" +
                             "                                                    <div>\n" +
                             "                                                        <h3>用户名不能为空！</h3>\n" +
-                            "                                                        <p class=\"text-muted\"><a href=\"admin_reset_pwd\">重新设置</a></p>\n" +
+                            "                                                        <p class=\"text-muted\"><a href=\"reset_pwd\">重新设置</a></p>\n" +
                             "                                                    </div>\n" +
                             "                                                </div>\n" +
                             "                                                </div>\n" +
@@ -262,7 +262,7 @@
                                 "                                                <div class=\"col-lg-6\"><div class=\"text-center\">\n" +
                                 "                                                    <div>\n" +
                                 "                                                        <h3>手机号不能为空！</h3>\n" +
-                                "                                                        <p class=\"text-muted\"><a href=\"admin_reset_pwd\">重新设置</a></p>\n" +
+                                "                                                        <p class=\"text-muted\"><a href=\"reset_pwd\">重新设置</a></p>\n" +
                                 "                                                    </div>\n" +
                                 "                                                </div>\n" +
                                 "                                                </div>\n" +
@@ -282,7 +282,7 @@
                                             "                                                    </div>\n" +
                                             "                                                    <div>\n" +
                                             "                                                        <h5>密码已重置</h5>\n" +
-                                            "                                                        <p class=\"text-muted\"><a href=\"admin_login\">跳转到登录页面</a></p>\n" +
+                                            "                                                        <p class=\"text-muted\"><a href=\"login\">跳转到登录页面</a></p>\n" +
                                             "                                                    </div>\n" +
                                             "                                                </div>\n" +
                                             "                                                </div>\n" +
@@ -293,7 +293,7 @@
                                             "                                                <div class=\"col-lg-6\"><div class=\"text-center\">\n" +
                                             "                                                    <div>\n" +
                                             "                                                        <h3>"+data.msg+"</h3>\n" +
-                                            "                                                        <p class=\"text-muted\"><a href=\"admin_reset_pwd\">重新设置</a></p>\n" +
+                                            "                                                        <p class=\"text-muted\"><a href=\"reset_pwd\">重新设置</a></p>\n" +
                                             "                                                    </div>\n" +
                                             "                                                </div>\n" +
                                             "                                                </div>\n" +
@@ -305,7 +305,7 @@
                                         "                                                <div class=\"col-lg-6\"><div class=\"text-center\">\n" +
                                         "                                                    <div>\n" +
                                         "                                                        <h3>密码重置失败</h3>\n" +
-                                        "                                                        <p class=\"text-muted\"><a href=\"admin_reset_pwd\">重新设置</a></p>\n" +
+                                        "                                                        <p class=\"text-muted\"><a href=\"reset_pwd\">重新设置</a></p>\n" +
                                         "                                                    </div>\n" +
                                         "                                                </div>\n" +
                                         "                                                </div>\n" +
@@ -316,6 +316,17 @@
                                 }
                             })
                         }
+                    }
+                    else{
+                        document.getElementById("reset_success").innerHTML="<div class=\"row justify-content-center\">\n" +
+                            "                                                <div class=\"col-lg-6\"><div class=\"text-center\">\n" +
+                            "                                                    <div>\n" +
+                            "                                                        <h3>重置密码失败！</h3>\n" +
+                            "                                                        <p class=\"text-muted\"><a href=\"reset_pwd\">重新设置</a></p>\n" +
+                            "                                                    </div>\n" +
+                            "                                                </div>\n" +
+                            "                                                </div>\n" +
+                            "                                            </div>";
                     }
                 })
             };
