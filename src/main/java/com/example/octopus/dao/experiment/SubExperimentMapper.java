@@ -1,6 +1,8 @@
 package com.example.octopus.dao.experiment;
 
 import com.example.octopus.entity.experiment.SubExperiment;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -36,4 +38,16 @@ public interface SubExperimentMapper {
      */
     @Select("SELECT COUNT(*) FROM sub_experiment WHERE experiment_id = #{experimentId}")
     int getSubExperimentNumsByExperimentId(long experimentId);
+
+    /**
+     *  新增sub_experiment
+     */
+    @Insert("INSERT INTO sub_experiment (experiment_id,module_id,sub_experiment_name,number,image_path,expect_time,require_path,copyable) VALUES (#{experimentId},#{moduleId},#{subExperimentName},#{number},#{imagePath},#{expectTime},#{requirePath},#{copyable})")
+    boolean insert(SubExperiment subExperiment);
+
+    /**
+     *  删除sub_experiment
+     */
+    @Delete("DELETE FROM sub_experiment WHERE id = #{id}")
+    boolean deleteById(long id);
 }

@@ -47,4 +47,14 @@ public class SubExperimentServiceImpl implements SubExperimentService {
 //        long subExperimentId = videoSubExperimentMapper.getSubExperimentIdByVideoId(videoId);
         return getById(getSubExperimentIdByVideoId(videoId));
     }
+
+    @Override
+    public boolean insert(SubExperiment subExperiment) {
+        return subExperimentMapper.insert(subExperiment);
+    }
+
+    @Override
+    public boolean deleteById(long id) {
+        return subExperimentMapper.deleteById(id);
+    }
 }

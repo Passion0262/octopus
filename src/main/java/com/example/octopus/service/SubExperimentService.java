@@ -1,6 +1,8 @@
 package com.example.octopus.service;
 
 import com.example.octopus.entity.experiment.SubExperiment;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 
 import java.util.List;
 
@@ -40,5 +42,15 @@ public interface SubExperimentService {
      * 根据video查找对应的experiment
      */
     SubExperiment getSubExperimentByVideoId(long videoId);
+
+    /**
+     *  新增sub_experiment
+     */
+    boolean insert(SubExperiment subExperiment);
+
+    /**
+     *  删除sub_experiment
+     */
+    boolean deleteById(long id);
 
 }
