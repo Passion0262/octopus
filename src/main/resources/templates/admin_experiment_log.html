@@ -66,23 +66,19 @@
                                                     <th>操作总时长</th>
                                                     <th>首次操作时间</th>
                                                     <th>最近操作时间</th>
-                                                    <th>操作详细</th>
-                                                    <th>实验监控</th>
                                                 </tr>
                                             </thead>
                                             <tbody style="text-align: center;">
                                                 <tr th:each="log:${experiment_logs}">
-                                                    <td th:text="${log.stuNum}"></td>
-                                                    <td th:text="${log.stuName}"></td>
-                                                    <td th:text="${log.class}"></td>
-                                                    <td th:text="${log.major}"></td>
-                                                    <td th:text="${log.course}"></td>
-                                                    <td th:text="${log.experimentMission}"></td>
-                                                    <td th:text="${log.totalTime}"></td>
+                                                    <td th:text="${log.stuNumber}"></td>
+                                                    <td th:text="${log.name}"></td>
+                                                    <td th:text="${log.className}"></td>
+                                                    <td th:text="${log.majorName}"></td>
+                                                    <td th:text="${log.courseName}"></td>
+                                                    <td th:text="${log.subExperimentName}"></td>
                                                     <td th:text="${log.startTime}"></td>
-                                                    <td th:text="${log.lastTime}"></td>
-                                                    <td th:text="${log.detail}"></td>
-                                                    <td th:text="${log.monitor}"></td>
+                                                    <td th:text="${log.endTime}"></td>
+                                                    <td th:text="${log.validStudyTime}"></td>
                                                 </tr>
 <!--                                            <tr>-->
 <!--                                                <td>丁一</td>-->

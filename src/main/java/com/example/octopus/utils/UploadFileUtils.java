@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public class UploadFileUtils {
 
-    public static String upload(MultipartFile file, String path, String fileName) {
+    public static String upload(MultipartFile file, String path, String fileName, boolean cover) {
         String rootPath = System.getProperty("user.dir");
 
         //确定上传的文件名
@@ -23,13 +23,16 @@ public class UploadFileUtils {
 
         File dest = new File(realPath);
 
-        //判断文件父目录是否存在
+
+        //判断文件父目录是否存在覆盖
         if (!dest.getParentFile().exists()) {
             dest.getParentFile().mkdir();
         }
 
-        if (dest.exists()) {
-            return "exists";
+        if(!cover){
+            if (dest.exists()) {
+                return "exists";
+            }
         }
 
         try {

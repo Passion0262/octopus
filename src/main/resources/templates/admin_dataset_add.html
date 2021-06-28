@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <title>人工智能实验实训平台-后台管理</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--<meta content="Premium Multipurpose Admin & Dashboard Template" name="description" /> -->
+        <!--<meta content="Themesdesign" name="author" /> -->
+        <link rel="shortcut icon" href="static/images/favicon.png">
+        <!-- jquery.vectormap css -->
+        <link href="static/js/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
+        <!-- dropzone css -->
+        <link href="static/js/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
+        <!-- Bootstrap Css -->
+        <link href="static/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons css -->
+        <link href="static/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="static/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+    </head>
+
+    <body data-sidebar="light">
+        <!-- Begin page -->
+        <div id="layout-wrapper">
+
+            <div th:replace="commons::topbar(${datasetmodel.username})"></div>
+            <div th:replace="commons::leftSidebar(${datasetmodel.role})"></div>
+
+            <!-- Start right Content here -->
+            <div class="main-content">
+                <div class="page-content">
+                    <div class="container-fluid">
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                              <div class="page-title-box d-flex align-items-center justify-content-between">
+                                <h4 class="mb-0">增加数据集</h4>
+                              </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <form id="form" action="/add_dataset" method="post" th:object="${datasetmodel.dataset}" novalidate="" style="padding-left: 20px;">
+
+                                            <div class="form-group row">
+                                              <label for="add_name" class="col-md-2 col-form-label">数据集名称：</label>
+                                              <div class="col-md-10">
+                                                <input name="name" th:value="*{name}" class="form-control" type="text"  id="add_name">
+                                              </div>
+                                            </div>
+                                            <div class="form-group row">
+                                              <label for="add_description" class="col-md-2 col-form-label">描述：</label>
+                                              <div class="col-md-10">
+                                            <!--                                <input name="teacher" th:value="*{teacher}" class="form-control" id="add_teacher" type="text">-->
+                                                  <textarea id="add_description" name="description" th:value="*{description}" class="form-control"></textarea>
+                                              </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="add_datasetPath" class="col-md-2 col-form-label">数据集文件：</label>
+                                                <div class="col-md-10">
+                                                    <input name="" id="add_datasetPath" value="" class="form-control btn btn-light" type="file" accept="" style="background-color: white; border: 1px solid #ced4da;">
+                                                    <input name="downloadPath" id="datasetPath" th:value="*{downloadPath}" class="form-control btn btn-light" type="text" style="display: none">
+                                                    <div id="alert" class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none;margin-top: 5px;padding: 5px;padding-left: 20px;">
+                                                        <i class="mdi mdi-block-helper mr-2">
+                                                            <span id="result_msg" style="padding-left: 10px;"></span>
+                                                        </i>
+                                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="padding: 5px;">
+                                                            <span aria-hidden="true">×</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row" style="display: none">
+                                                <label for="add_size" class="col-md-2 col-form-label">数据集大小：</label>
+                                                <div class="col-md-10">
+                                                    <input name="size" th:value="*{size}" class="form-control" type="text"  id="add_size">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row" style="display: none">
+                                                <label for="add_fileFormat" class="col-md-2 col-form-label">数据集格式：</label>
+                                                <div class="col-md-10">
+                                                    <input name="fileFormat" th:value="*{fileFormat}" class="form-control" type="text"  id="add_fileFormat">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="add_imagePath" class="col-md-2 col-form-label">数据集图标：</label>
+                                                <div class="col-md-10">
+                                                    <input name="" id="add_imagePath" value="" class="form-control btn btn-light" type="file" accept="image/png, image/jpeg, image/jpg" style="background-color: white; border: 1px solid #ced4da;">
+                                                    <input name="imagePath" id="imagePath" th:value="*{imagePath}" class="form-control btn btn-light" type="text" style="display: none">
+                                                    <div id="alert1" class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none;margin-top: 5px;padding: 5px;padding-left: 20px;">
+                                                        <i class="mdi mdi-block-helper mr-2">
+                                                            <span id="result_msg1" style="padding-left: 10px;"></span>
+                                                        </i>
+                                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="padding: 5px;">
+                                                            <span aria-hidden="true">×</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="add_uploader" class="col-md-2 col-form-label">上传人员：</label>
+                                                <div class="col-md-10">
+                                                    <input name="uploader" th:value="${datasetmodel.username}" id="add_uploader" class="form-control" type="text" readonly style="border:none;">
+                                                </div>
+                                            </div>
+
+                                            <div class="row" style="display: block;text-align: center;">
+                                                <a href="admin_course" class="btn btn-light btn-rounded waves-effect waves-light">
+                                                    <i class="ri-close-line align-middle mr-2"></i>取消
+                                                </a>
+                                                <button type="button" onclick="uploadFile()" class="btn btn-success btn-rounded waves-effect waves-light" style="margin: 20px;">
+                                                    <i class="ri-check-line align-middle mr-2"></i>提交
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            <!-- container-fluid -->
+
+            <div th:replace="commons::footer"></div>
+            </div>
+            <!-- end main content-->
+        
+            <!-- END layout-wrapper -->
+        </div>
+    
+    
+    
+        <!-- JAVASCRIPT -->
+        <!-- jquery -->
+        <script src="static/js/libs/jquery/jquery.min.js"></script>
+        <!-- bootstrap/js -->
+        <script src="static/js/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- metismenu -->
+        <script src="static/js/libs/metismenu/metisMenu.min.js"></script>
+        <!-- simplebar -->
+        <script src="static/js/libs/simplebar/simplebar.min.js"></script>
+        <!-- node-waves -->
+        <script src="static/js/libs/node-waves/waves.min.js"></script>
+        <!-- admin-resources/jquery.vectormap -->
+        <script src="static/js/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
+        <script src="static/js/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-us-merc-en.js"></script>
+        <!-- bs-custom-file-input -->
+        <script src="static/js/libs/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+        <!-- dropzone -->
+        <script src="static/js/libs/dropzone/min/dropzone.min.js"></script>
+        <!-- js/pages/ -->
+        <script src="static/js/pages/form-element.init.js"></script>
+        <script src="static/js/app.js"></script>
+        
+        <script type="text/javascript" th:inline="javascript">
+
+            var datasetOk = false;
+            var imgOk = false;
+
+            function uploadFile(){
+                uploadImg();
+                uploadDataset();
+                //console.log(datasetOk);
+                //console.log(imgOk);
+                if(datasetOk && imgOk){
+                    submitForm();
+                }
+            }
+
+            function uploadDataset() {
+                var formData = new FormData();
+                formData.append('file', document.getElementById('add_datasetPath').files[0]);
+                $.ajax({
+                    async: false,
+                    type: 'POST',
+                    url: "/upload_dataset",
+                    dataType: 'json',
+                    data: formData,
+                    contentType:false,
+                    processData:false,
+                    success: function (data) {
+                        if(data.hasOwnProperty("relativePath")){
+                            document.getElementById("datasetPath").value = data.relativePath;
+                            document.getElementById("add_size").value = data.size;
+                            document.getElementById("add_fileFormat").value = data.fileFormat;
+                            datasetOk = true;
+                        }
+                        else {
+                            document.getElementById("alert").style.display="";
+                            document.getElementById("result_msg").innerHTML = data.result_msg;
+                            //console.log(data.result_msg);
+                        }
+                    },
+                    error: function (e) {
+                        alert("error");
+                    }
+                })
+            }
+
+            function uploadImg() {
+                var formData = new FormData();
+                formData.append('img', document.getElementById('add_imagePath').files[0]);
+                $.ajax({
+                    async: false,
+                    type: 'POST',
+                    url: "/upload_img",
+                    dataType: 'json',
+                    data: formData,
+                    contentType:false,//ajax上传图片需要添加
+                    processData:false,//ajax上传图片需要添加
+                    success: function (data) {
+                        if(data.hasOwnProperty("relativePath")){
+                            //console.log("上传图像成功！");
+                            //console.log(data.relativePath);
+                            document.getElementById("imagePath").value = data.relativePath;
+                            imgOk = true;
+                        }
+                        else {
+                            document.getElementById("alert1").style.display="";
+                            document.getElementById("result_msg1").innerHTML = data.result_msg;
+                            //console.log(data.result_msg);
+                        }
+                    },
+                    error: function (e) {
+                        alert("error");
+                    }
+                })
+            }
+
+            function submitForm(){
+                oForm = document.getElementById("form");
+                oForm.submit();
+            }
+
+        </script>
+    
+    
+    </body>
+
+</html>

@@ -159,8 +159,8 @@
                     success:function (data) {
                         console.log(data);
                         for(var i = 0;i < data.majors.length;i++){
-                            var option = $("<option></option>").text(data.majors[i]);
-                            option.attr("value", data.majors[i]);
+                            var option = $("<option></option>").text(data.majors[i].majorName);
+                            option.attr("value", data.majors[i].id);
                             //将option添加到select标签中
                             $("#add_major").append(option);
                         }
@@ -177,9 +177,9 @@
                     data: {"major": major},
                     success:function (data) {
                         console.log(data);
-                        for(var i = 0;i < data.classes.length;i++){
-                            var option = $("<option></option>").text(data.classes[i].className);
-                            option.attr("value", data.classes[i].id);
+                        for(var i = 0;i < data.class_.length;i++){
+                            var option = $("<option></option>").text(data.class_[i].className);
+                            option.attr("value", data.class_[i].id);
                             $("#add_class").append(option);
                         }
                     }
