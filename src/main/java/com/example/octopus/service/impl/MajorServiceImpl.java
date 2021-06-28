@@ -36,8 +36,8 @@ public class MajorServiceImpl implements MajorService {
 
     @Override
     public Major getByTeaNumber(long teaNumber) {
-        String majorCode = teacherMapper.getByTeaNumber(teaNumber).getMajorCode();
-        return majorMapper.getByMajorCode(majorCode);
+        long majorId = teacherMapper.getByTeaNumber(teaNumber).getMajorId();
+        return majorMapper.getById(majorId);
     }
 
     @Override

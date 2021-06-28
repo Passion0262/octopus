@@ -24,7 +24,7 @@ public interface ClassMapper {
      * 查找所有的班级
      * @return class_ list
      */
-    @Select("SELECT * FROM class_")
+    @Select("SELECT c.*, m.major_name FROM class_ c, major m WHERE c.major_id=m.id")
     List<Class_> listClass_s();
 
     /**
@@ -32,7 +32,7 @@ public interface ClassMapper {
      * @param id 班级id
      * @return class_实体
      */
-    @Select("SELECT * FROM class_ WHERE id = #{id}")
+    @Select("SELECT c.*, m.major_name FROM class_ c, major m WHERE c.id = #{id} and c.major_id=m.id")
     Class_ getById(long id);
 
     /**

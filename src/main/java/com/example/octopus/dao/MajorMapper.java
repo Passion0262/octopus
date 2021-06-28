@@ -23,13 +23,6 @@ public interface MajorMapper {
     List<Major> listMajors();
 
     /**
-     * 根据majorCode查找major
-     * @return Major实体
-     */
-    @Select("SELECT * FROM major WHERE major_code = #{majorCode}")
-    Major getByMajorCode(String majorCode);
-
-    /**
      * 根据id查找Major
      * @param id Major id
      * @return Major实体
