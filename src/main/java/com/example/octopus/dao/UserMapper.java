@@ -12,16 +12,16 @@ import java.util.List;
  */
 @Mapper
 public interface UserMapper {
-    @Select("SELECT * FROM student")
+    @Select("SELECT s.*, major_name, class_name FROM student s, major, class_ WHERE s.major_id=major.id and s.class_id=class_.id")
     List<Student> listAllStudents();
 
-    @Select("SELECT * FROM student WHERE class_name = #{className}")
+    @Select("SELECT s.*, major_name, class_name FROM student s, major, class_ WHERE s.class_name = #{className} and s.major_id=major.id and s.class_id=class_.id")
     List<Student> listByClassName(String className);
 
-    @Select("SELECT * FROM student WHERE stu_number = #{stuNumber}")
+    @Select("SELECT  s.*, major_name, class_name FROM student s, major, class_ WHERE stu_number = #{stuNumber} and s.major_id=major.id and s.class_id=class_.id")
     Student getStudentByStuNumber(long stuNumber);
 
-    @Select("SELECT * FROM student WHERE name = #{name}")
+    @Select("SELECT s.*, major_name, class_name FROM student s, major, class_ WHERE name = #{name} and s.major_id=major.id and s.class_id=class_.id")
     Student getStudentByName(String name);
 
 //    @Select("SELECT * FROM student WHERE stu_number = #{stuNumber} and password = #{password}")

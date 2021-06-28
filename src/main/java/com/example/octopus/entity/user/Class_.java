@@ -25,6 +25,8 @@ public class Class_ {
 //    @Column(nullable = false,columnDefinition = "varchar(20) comment '所属专业'")
     private long majorId;
 
+    private String majorName;  //专业名，不在class_表中
+
     private String school;
 
 //    @Column(nullable = false,columnDefinition = "varchar(20) comment '创建人员'")

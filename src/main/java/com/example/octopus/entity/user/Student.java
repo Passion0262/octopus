@@ -28,7 +28,11 @@ public class Student {
 
     private long majorId;
 
+    private String majorName;  //专业名，不在student表中
+
     private long classId;
+
+    private String className;  //班级名，不在student表中
 
     private String phoneNumber;
 
