@@ -35,4 +35,7 @@ public interface TeacherMapper {
 
     @Select("SELECT phone FROM teacher WHERE tea_number=#{teaNumber}")
     String getPhoneByTeaNumber(long teaNumber);
+
+    @Select("SELECT school FROM teacher WHERE tea_number=#{teaNumber}")
+    String getSchoolByTeaNumber(long teaNumber);
 }

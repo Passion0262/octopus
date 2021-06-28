@@ -1,11 +1,9 @@
 package com.example.octopus.service.impl;
 
-import com.example.octopus.dao.StudentCourseMapper;
-import com.example.octopus.dao.SysUserRoleMapper;
-import com.example.octopus.dao.TeacherCourseMapper;
-import com.example.octopus.dao.UserMapper;
+import com.example.octopus.dao.*;
 import com.example.octopus.entity.user.Student;
 import com.example.octopus.service.UserService;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +29,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     SysUserRoleMapper sysUserRoleMapper;
+
+    @Autowired
+    TeacherMapper teacherMapper;
 
     @Override
     public List<Student> listStudents() {
@@ -69,7 +70,8 @@ public class UserServiceImpl implements UserService {
 //    }
 
     @Override
-    public boolean insertStudent(Student student) {
+    public boolean insertStudent(Student student, long teaNumber) {
+        student.setSchool(teacherMapper.getSchoolByTeaNumber(teaNumber));
         return userMapper.insertStudent(student) && sysUserRoleMapper.updatePassword(student.getStuNumber(), student.getPassword());
     }
 

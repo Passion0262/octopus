@@ -18,7 +18,7 @@ public interface ClassService {
      * @param class_ 课程实体
      * @return 成功为true，失败为false
      */
-    boolean insertClass(Class_ class_);
+    boolean insertClass(Class_ class_, long teaNumber);
 
     /**
      * 查询所有课程
@@ -58,4 +58,26 @@ public interface ClassService {
      * @return 成功为true
      */
     boolean updateClass(Class_ class_);
+
+    /**
+     * 通过专业号列出所有该专业下所有班级
+     * @param majorId 专业号
+     * @return 班级实体列表
+     */
+    List<Class_> listClassesByMajorId(long majorId);
+
+    /**
+     * 通过用户号，列出用户所在学校的所有班级
+     * @param userId 用户号
+     * @return 班级实体列表
+     */
+    List<Class_> listSchoolClassesByUserId(long userId);
+
+    /**
+     * 通过用户号和专业号列出同学校专业的班级
+     * @param userId 用户号
+     * @param majorId 专业号
+     * @return 班级实体列表
+     */
+    List<Class_> listSchoolMajorClassesByUserId(long userId, long majorId);
 }

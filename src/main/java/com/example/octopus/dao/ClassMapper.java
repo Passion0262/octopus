@@ -17,7 +17,7 @@ public interface ClassMapper {
      * @param class_ 班级实体
      * @return 成功为true，失败为false
      */
-    @Insert("INSERT INTO class_(class_name, major_id, creator, create_time) VALUES (#{className},#{majorId},#{creator},CURRENT_TIMESTAMP)")
+    @Insert("INSERT INTO class_(class_name, major_id, school, creator, create_time) VALUES (#{className},#{majorId},#{school},#{creator},CURRENT_TIMESTAMP)")
     boolean insertClass(Class_ class_);
 
     /**
@@ -55,4 +55,12 @@ public interface ClassMapper {
     @Update("UPDATE class_ SET class_name=#{className}, major_id=#{majorId}, creator=#{creator} WHERE id = #{id}")
     boolean updateClass(Class_ class_);
 
+    @Select("SELECT c.*, m.major_name FROM class_ c, major m WHERE c.major_id=m.id and c.major_id=#{majorId}")
+    List<Class_> listClass_sByMajorId(long majorId);
+
+    @Select("SELECT c.*, m.major_name FROM class_ c, major m WHERE c.major_id=m.id and c.school=#{school}")
+    List<Class_> listSchoolClasses(String school);
+
+    @Select("SELECT c.*, m.major_name FROM class_ c, major m WHERE c.major_id=#{majorId} and c.school=#{school} and c.major_id=m.id")
+    List<Class_> listSchoolMajorClasses(String school, long majorId);
 }

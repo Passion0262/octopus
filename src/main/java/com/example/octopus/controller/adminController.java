@@ -276,7 +276,7 @@ public class adminController {
 
         logger.info("提交新增的class_: [{}]", class_);
         if (role_id == 1) {
-            classService.insertClass(class_);
+            classService.insertClass(class_, teaNum);
         }
         else{
             //todo 教师新增班级
@@ -370,8 +370,9 @@ public class adminController {
     @PostMapping("/add_student")
     public ModelAndView add_student(Student student, HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         logger.info("提交新增的student: [{}]", student);
-        userService.insertStudent(student);
+        userService.insertStudent(student, teaNum);
         return new ModelAndView("redirect:/admin_student");
     }
 
