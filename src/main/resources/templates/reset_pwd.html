@@ -274,7 +274,8 @@
                                 type: "post",
                                 data: content,
                                 success: function (data) {
-                                    if(data.msg == "success"){
+                                    alert(data.msg);
+                                    if(data.msg === "success"){
                                         document.getElementById("reset_success").innerHTML = "<div class=\"row justify-content-center\">\n" +
                                             "                                                <div class=\"col-lg-6\"><div class=\"text-center\">\n" +
                                             "                                                    <div class=\"mb-4\">\n" +
@@ -304,13 +305,12 @@
                                     document.getElementById("reset_success").innerHTML = "<div class=\"row justify-content-center\">\n" +
                                         "                                                <div class=\"col-lg-6\"><div class=\"text-center\">\n" +
                                         "                                                    <div>\n" +
-                                        "                                                        <h3>密码重置失败</h3>\n" +
+                                        "                                                        <h3>重置密码失败！</h3>\n" +
                                         "                                                        <p class=\"text-muted\"><a href=\"reset_pwd\">重新设置</a></p>\n" +
                                         "                                                    </div>\n" +
                                         "                                                </div>\n" +
                                         "                                                </div>\n" +
                                         "                                            </div>";
-                                    //alert("ajax send failed");
                                     //window.location.href="admin_reset_pwd";
                                     alert("重置失败");
                                 }

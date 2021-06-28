@@ -65,19 +65,22 @@
                                                     <th>学习时长</th>
                                                     <th>首次学习时间</th>
                                                     <th>末次学习时间</th>
-                                                    <th>超出学习时长</th>
+                                                    <th>学习进度</th>
+                                                    <th>上次视频进度</th>
                                                 </tr>
                                             </thead>
                                             <tbody style="text-align: center;">
                                                 <tr th:each="log:${video_logs}">
-                                                    <td th:text="${log.stuNum}"></td>
-                                                    <td th:text="${log.stuName}"></td>
-                                                    <td th:text="${log.class}"></td>
-                                                    <td th:text="${log.major}"></td>
-                                                    <td th:text="${log.course}"></td>
+                                                    <td th:text="${log.stuNumber}"></td>
+                                                    <td th:text="${log.name}"></td>
+                                                    <td th:text="${log.className}"></td>
+                                                    <td th:text="${log.majorName}"></td>
+                                                    <td th:text="${log.courseName}"></td>
+                                                    <td th:text="${log.studyTime}"></td>
                                                     <td th:text="${log.startTime}"></td>
                                                     <td th:text="${log.endTime}"></td>
-                                                    <td th:text="${log.overTime}"></td>
+                                                    <td th:text="${log.progress}"></td>
+                                                    <td th:text="${log.lastVideoProgress}"></td>
                                                 </tr>
 <!--                                            <tr>-->
 <!--                                                <td>10001</td>-->

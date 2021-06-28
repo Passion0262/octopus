@@ -27,85 +27,76 @@
     <body data-sidebar="light">
         <!-- Begin page -->
         <div id="layout-wrapper">
-            <div th:replace="commons::topbar(${username})"></div>
-            <div th:replace="commons::leftSidebar(${role})"></div>
+            <div th:replace="commons::topbar(${teachermodel.username})"></div>
+            <div th:replace="commons::leftSidebar(${teachermodel.role})"></div>
 
             <!-- Start right Content here -->
             <div class="main-content">
                 <div class="page-content">
                     <div class="container-fluid">
+                        <!-- start page title -->
                         <div class="row">
                             <div class="col-12">
-                                <div class="page-title-box d-flex align-items-center justify-content-between" id="page">
-                                    <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="#">学生管理</a></li>
-                                            <li class="breadcrumb-item active">学生管理</li>
-                                        </ol>
-                                    </div>
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="mb-0">增加教师</h4>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Start dynamic table -->
+                        <!-- end page title -->
                         <div class="row">
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="card-title"></h4>
-                                        <div>
-                                            <table id="datatable-buttons" class="table table-striped table-bordered table-centered" style="white-space:nowrap;">
-                                                <thead style="text-align: center;white-space:nowrap;">
-                                                <tr>
-                                                    <th class="sorting_disabled">操作</th>
-                                                    <th>编号</th>
-                                                    <th>学号</th>
-                                                    <th>姓名</th>
-                                                    <th>所属专业</th>
-                                                    <th>所属班级</th>
-                                                    <th>联系手机</th>
-                                                    <th>最近登录时间</th>
-                                                    <th>学习总时长</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody style="text-align: center;white-space:nowrap;">
-                                                    <tr th:each="students:${students}">
-                                                        <td>
-                                                            <div style="width:30px;"></div>
-                                                            <a th:href="@{admin_student_add}" class="add" style="color:#ff3d60" data-original-title="Add">
-                                                                <i class="mdi mdi-text-box-plus font-size-18"></i>
-                                                            </a>
-                                                            <a th:href="@{admin_student_edit(stuNumber=${students.stuNumber})}" class="edit" style="color:#1cbb8c" data-original-title="Edit">
-                                                                <i class="mdi mdi-pencil font-size-18"></i>
-                                                            </a>
-                                                            <a th:href="@{admin_student_delete(stuNumber=${students.stuNumber})}" class="delete" style="color:#505d69" data-original-title="Delete">
-                                                                <i class="mdi mdi-trash-can font-size-18"></i>
-                                                            </a>
-                                                        </td>
-                                                        <td th:text="${studentsStat.index+1}"></td>
-                                                        <td th:text="${students.stuNumber}"></td>
-                                                        <td th:text="${students.name}"></td>
-                                                        <td th:text="${students.majorNmae}"></td>
-                                                        <td th:text="${students.className}"></td>
-                                                        <td th:text="${students.phoneNumber}"></td>
-                                                        <td th:text="${students.lastLoginTime}"></td>
-                                                        <td th:text="${students.studyTime}"></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            <div style="display: block;text-align: right;">
-                                                <a th:href="@{admin_student_add}" class="add">
-                                                    <i class="mdi mdi-text-box-plus font-size-18" style="color:#ff3d60"></i>新增...
-                                                </a>
+                                        <form class="needs-validation" action="/add_teacher" method="post" th:object="${teamodel.teacher}" novalidate="" style="padding-left: 20px;">
+                                            <div class="form-group row">
+                                                <label for="add_stuNumber" class="col-md-2 col-form-label">学号：</label>
+                                                <div class="col-md-10">
+                                                    <input name="majorCode" th:value="*{teaNumber}" class="form-control" type="text"  id="add_stuNumber">
+                                                </div>
                                             </div>
+                                            <div class="form-group row">
+                                                <label for="add_teaName" class="col-md-2 col-form-label">姓名：</label>
+                                                <div class="col-md-10">
+                                                    <input name="teaName" th:value="*{teaName}" class="form-control" type="text" id="add_teaName">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="add_school" class="col-md-2 col-form-label">学校：</label>
+                                                <div class="col-md-10">
+                                                    <input name="school" th:value="*{school}" class="form-control" type="text" id="add_school">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="add_major" class="col-md-2 col-form-label">教授专业：</label>
+                                                <div class="col-md-10">
+                                                    <select name="majorId" th:value="*{majorId}" class="form-control" id="add_major">
+                                                        <option value="0" style="display: none;">请选择专业</option>
+                                                    </select>
+<!--                                                    <input name="major" th:value="*{major}" id="add_major" class="form-control" type="text" >-->
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="add_phone" class="col-md-2 col-form-label">联系手机：</label>
+                                                <div class="col-md-10">
+                                                    <input name="phone" th:value="*{phone}" id="add_phone" class="form-control" type="text">
+                                                </div>
+                                            </div>
+                                            <div class="row" style="display: block;text-align: center;">
+                                                <a href="admin_student" class="btn btn-light btn-rounded waves-effect waves-light">
+                                                    <i class="ri-close-line align-middle mr-2"></i>取消
+                                                </a>
+                                                <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light" style="margin: 20px;">
+                                                    <i class="ri-check-line align-middle mr-2"></i>提交
+                                                </button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- End dynamic table -->
 
                     </div>
-                    </div>
+
                 </div>
                 <!-- container-fluid -->
 
@@ -157,8 +148,24 @@
         <script src="static/js/app.js"></script>
 
         <script type="text/javascript" th:inline="javascript">
-
+            $(function () {
+                //发送请求获取所有的专业
+                $.ajax({
+                    type:"GET",
+                    url:"get_all_major",
+                    success:function (data) {
+                        console.log(data);
+                        for(var i = 0;i < data.majors.length;i++){
+                            var option = $("<option></option>").text(data.majors[i].majorName);
+                            option.attr("value", data.majors[i].id);
+                            //将option添加到select标签中
+                            $("#add_major").append(option);
+                        }
+                    }
+                })
+            })
         </script>
+
 
     </body>
 

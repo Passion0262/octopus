@@ -56,16 +56,15 @@
                                     <h4 class="card-title"></h4>
                                     <div>
                                         <table id="datatable-buttons" class="table table-striped table-bordered table-centered" style="white-space:nowrap;">
-                                            <thead style="text-align: center;">
+                                            <thead style="text-align: center;" th:if="${role} eq 'admin'">
                                                 <tr>
-                                                    <th class="sorting_disabled">操作</th>
                                                     <th>章节号</th>
                                                     <th>章节名</th>
                                                     <th>视频数量</th>
                                                 </tr>
                                             </thead>
                                             <tbody style="text-align: center;">
-                                                <td>
+                                                <td th:if="${role} eq 'admin'">
                                                     <div style="width:30px;"></div>
                                                     <a href="#" class="add" style="color:#ff3d60" data-original-title="Add">
                                                         <i class="mdi mdi-text-box-plus font-size-18"></i>

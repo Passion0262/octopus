@@ -65,7 +65,7 @@
                                                     <label for="edit_major" class="col-md-2 col-form-label">所属专业：</label>
                                                     <div class="col-md-10">
                                                         <select name="majorId" th:value="*{majorId}" class="form-control" id="edit_major" onchange="getClass()">
-                                                            <option value="0" style="display: none;" th:text="*{majorId}"></option>
+                                                            <option th:value="*{majorId}" style="display: none;" th:text="*{majorName}"></option>
 <!--                                                            <option th:each="majors:${stumodel.majors}" th:text="${majors.majorName}" th:value="${majors.majorName}"></option>-->
                                                         </select>
 <!--                                                        <input name="major" th:value="*{major}" id="edit_major" class="form-control" type="text" >-->
@@ -75,7 +75,7 @@
                                                     <label for="edit_class" class="col-md-2 col-form-label">所属班级：</label>
                                                     <div class="col-md-10">
                                                         <select id="edit_class" name="classId" th:value="*{classId}" class="form-control">
-                                                            <option value="0" style="display: none;" th:text="*{classId}"></option>
+                                                            <option th:value="*{classId}" style="display: none;" th:text="*{className}"></option>
                                                         </select>
 <!--                                                        <input name="className" th:value="*{className}" id="edit_className" class="form-control" type="text">-->
                                                     </div>
@@ -161,8 +161,8 @@
                         success:function (data) {
                             console.log(data);
                             for(var i = 0;i < data.majors.length;i++){
-                                var option = $("<option></option>").text(data.majors[i]);
-                                option.attr("value", data.majors[i]);
+                                var option = $("<option></option>").text(data.majors[i].majorName);
+                                option.attr("value", data.majors[i].id);
                                 //将option添加到select标签中
                                 $("#edit_major").append(option);
                             }
@@ -179,9 +179,9 @@
                         data: {"major": major},
                         success:function (data) {
                             console.log(data);
-                            for(var i = 0;i < data.classes.length;i++){
-                                var option = $("<option></option>").text(data.classes[i].className);
-                                option.attr("value", data.classes[i].id);
+                            for(var i = 0;i < data.class_.length;i++){
+                                var option = $("<option></option>").text(data.class_[i].className);
+                                option.attr("value", data.class_[i].id);
                                 $("#edit_class").append(option);
                             }
                         }

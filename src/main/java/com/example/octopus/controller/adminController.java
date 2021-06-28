@@ -1,6 +1,7 @@
 package com.example.octopus.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.example.octopus.entity.dataset.Dataset;
 import com.example.octopus.entity.user.*;
 import com.example.octopus.service.*;
 import com.example.octopus.utils.CookieTokenUtils;
@@ -49,6 +50,9 @@ public class adminController {
     ExperimentService experimentService;
 
     @Autowired
+    SubExperimentProgressService subExperimentProgressService;
+
+    @Autowired
     ProjectService projectService;
 
     @Autowired
@@ -56,6 +60,9 @@ public class adminController {
 
     @Autowired
     VideoService videoService;
+
+    @Autowired
+    VideoProgressService videoProgressService;
 
     @Autowired
     DockerService dockerService;
@@ -99,6 +106,7 @@ public class adminController {
         if (!cookieCheck(model, request)) return "redirect:/login";
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         model.addAttribute("userinfo", teacherService.getTeacherByTeaNumber(teaNum));
+        //System.out.println(teacherService.getTeacherByTeaNumber(teaNum));
         return "admin_userinfo";
     }
 
@@ -125,7 +133,7 @@ public class adminController {
         }
     }
 
-
+    //////////////////////////////////////////////////////////////////////////////////////////////
     //专业管理
     @RequestMapping("/admin_major")
     public String admin_major(HttpServletRequest request, Model model) {
@@ -149,7 +157,7 @@ public class adminController {
     public ModelAndView admin_major_add(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
-        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
+        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  //获取角色，管理员还是教师
         
         if (role_id == 1) {
             logger.info("进入admin_major_add，获取一个新Major()");
@@ -227,7 +235,7 @@ public class adminController {
         return new ModelAndView("redirect:/admin_major");
     }
 
-
+    //////////////////////////////////////////////////////////////////////////////////////////////
     //班级管理
     @RequestMapping("/admin_class")
     public String admin_class(HttpServletRequest request, Model model) {
@@ -266,13 +274,13 @@ public class adminController {
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
+        logger.info("提交新增的class_: [{}]", class_);
         if (role_id == 1) {
-            logger.info("提交新增的class_: [{}]", class_);
-            // todo class_.major = majorService.getMajorNameById(class_.major);
             classService.insertClass(class_);
         }
         else{
-            logger.info("[{}]没有新增班级权限！", teaName);
+            //todo 教师新增班级
+            //classService.insertClassByTea(class_);
         }
         return new ModelAndView("redirect:/admin_class");
     }
@@ -299,13 +307,12 @@ public class adminController {
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
+        logger.info("提交修改的class_: [{}]", class_);
         if (role_id == 1) {
-            logger.info("提交修改的class_: [{}]", class_);
-            // todo class_.major = majorService.getMajorNameById(class_.major);
             classService.updateClass(class_);
         }
         else{
-            logger.info("[{}]没有修改班级权限！", teaName);
+            classService.updateClass(class_);
         }
         return new ModelAndView("redirect:/admin_class");
     }
@@ -318,17 +325,18 @@ public class adminController {
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
+        long id = Long.parseLong(request.getParameter("id"));
+        logger.info("删除 class.id=" + id);
         if (role_id == 1) {
-            long id = Long.parseLong(request.getParameter("id"));
-            logger.info("删除 class.id=" + id);
             classService.deleteByClassId(id);
         }
         else{
-            logger.info("[{}]没有删除班级权限！", teaName);
+            classService.deleteByClassId(id);
         }
         return new ModelAndView("redirect:/admin_class");
     }
 
+    //////////////////////////////////////////////////////////////////////////////////////////////
     //学生管理
     @RequestMapping("/admin_student")
     public String admin_student(HttpServletRequest request, Model model) {
@@ -337,7 +345,7 @@ public class adminController {
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         logger.info("进入学生管理");
-
+        // todo 专业和班级的id、name
         if (role_id == 1) {
             model.addAttribute("students", userService.listStudents());
         }
@@ -393,33 +401,89 @@ public class adminController {
     @RequestMapping("/admin_student_delete")
     public ModelAndView admin_student_delete(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-        String stuNumber = request.getParameter("stuNumber");
+        long stuNumber = Long.parseLong(request.getParameter("stuNumber"));
         logger.info("删除 stuNumber=" + stuNumber);
 
         return new ModelAndView("redirect:/admin_student");
     }
 
+    //////////////////////////////////////////////////////////////////////////////////////////////
     //学校管理
-    @RequestMapping("/admin_school")
-    public String admin_school(HttpServletRequest request, Model model) {
-        if (!cookieCheck(model, request)) return "redirect:/login";
+//    @RequestMapping("/admin_school")
+//    public String admin_school(HttpServletRequest request, Model model) {
+//        if (!cookieCheck(model, request)) return "redirect:/login";
+//
+//        logger.info("进入学校管理");
+//        //model.addAttribute("schools", );
+//        return "admin_school";
+//    }
 
-        logger.info("进入学校管理");
-        //model.addAttribute("schools", );
-        return "admin_school";
-    }
 
+    //////////////////////////////////////////////////////////////////////////////////////////////
     //教师管理
     @RequestMapping("/admin_teacher")
     public String admin_teacher(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
         logger.info("进入学校管理");
-        System.out.println(sysUserRoleService.listByUserId(3));;
-        //model.addAttribute("teachers", sysUserRoleService.listByUserId());
+        model.addAttribute("teachers", teacherService.getAllTeachers());
+
         return "admin_teacher";
     }
 
+    //增加教师
+    @GetMapping("/admin_teacher_add")
+    public ModelAndView admin_teacher_add(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
+        logger.info("进入admin_teacher_add，获取一个新Teacher()");
+
+        model.addAttribute("teacher", new Teacher());
+        return new ModelAndView("admin_teacher_add", "teamodel", model);
+    }
+
+    @PostMapping("/add_teacher")
+    public ModelAndView add_teacher(Teacher teacher, HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+        logger.info("提交新增的teacher: [{}]", teacher);
+        teacherService.addTeacher(teacher);
+        return new ModelAndView("redirect:/admin_teacher");
+    }
+
+    //修改教师
+    @GetMapping("/admin_teacher_edit")
+    public ModelAndView admin_teacher_edit(HttpServletRequest request, Model model) {
+
+        long teaNumber = Long.parseLong(request.getParameter("teaNumber"));
+        logger.info("admin_teacher_edit，获取指定名字的Teacher(),teaNumber=" + teaNumber);
+        Teacher teacher = teacherService.getTeacherByTeaNumber(teaNumber);
+        model.addAttribute("teacher", teacher);
+
+        return new ModelAndView("admin_student_edit", "teamodel", model);
+    }
+
+    @PostMapping("/edit_teacher")
+    public ModelAndView edit_teacher(Teacher teacher, HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
+        logger.info("提交修改的teacher: [{}]", teacher);
+        teacherService.updateTeacher(teacher);
+
+        return new ModelAndView("redirect:/admin_teacher");
+    }
+
+    //删除教师
+    @RequestMapping("/admin_teacher_delete")
+    public ModelAndView admin_teacher_delete(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+        long teaNumber = Long.parseLong(request.getParameter("teaNumber"));
+        logger.info("删除 teaNumber=" + teaNumber);
+        teacherService.deleteTeacher(teaNumber);
+        return new ModelAndView("redirect:/admin_student");
+    }
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////
     //开课计划管理
     @RequestMapping("/admin_course")
     public String admin_course(HttpServletRequest request, Model model) {
@@ -487,6 +551,8 @@ public class adminController {
         return new ModelAndView("redirect:/admin_course");
     }
 
+
+    //////////////////////////////////////////////////////////////////////////////////////////////
     //学生开课计划管理
     @RequestMapping("/admin_course_student")
     public String admin_course_student(HttpServletRequest request, Model model) {
@@ -524,25 +590,24 @@ public class adminController {
         return new ModelAndView("redirect:/admin_course_student");
     }
 
-//    //修改学生开课计划
-//    @GetMapping("/admin_course_student_edit")
-//    public ModelAndView admin_course_student_edit(HttpServletRequest request, Model model){
-//        logger.info("进入admin_course_student_edit，获取指定名字的Student_Course()");
-//        long id = Long.parseLong(request.getParameter("id"));
-//        logger.info("id="+id);
-//        String user = request.getParameter("username");
-//        //查找对应数据
-//        model.addAttribute("username", user);
-//        model.addAttribute("course_student",new StudentCourse());
-//        return new ModelAndView("admin_course_student_edit","coursestudentmodel",model);
-//    }
-//
-//    @PostMapping("/edit_course_student")
-//    public ModelAndView edit_course_student(StudentCourse course_student){
-//        logger.info("提交修改的course_student: [{}]", course_student);
-//        //修改学生开课计划
-//        return new ModelAndView("redirect:/admin_course_student");
-//    }
+    //修改学生开课计划
+    @GetMapping("/admin_course_student_edit")
+    public ModelAndView admin_course_student_edit(HttpServletRequest request, Model model){
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
+        long id = Long.parseLong(request.getParameter("id"));
+        logger.info("进入admin_course_student_edit，获取指定名字的Student_Course(),id="+id);
+        model.addAttribute("course_student",studentcourseService.getById(id));
+
+        return new ModelAndView("admin_course_student_edit","coursestudentmodel",model);
+    }
+
+    @PostMapping("/edit_course_student")
+    public ModelAndView edit_course_student(StudentCourse course_student){
+        logger.info("提交修改的course_student: [{}]", course_student);
+        // todo 提交修改
+        return new ModelAndView("redirect:/admin_course_student");
+    }
 
     //删除学生开课计划
     @RequestMapping("/admin_course_student_delete")
@@ -555,24 +620,19 @@ public class adminController {
         return new ModelAndView("redirect:/admin_course_student");
     }
 
+
+    //////////////////////////////////////////////////////////////////////////////////////////////
     //视频学习汇总 仅展示
     @RequestMapping("/admin_video_log")
     public String admin_video_log(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
-        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
-
-        if(role_id == 1){
-
-            //model.addAttribute("video_logs", videoService.listVideoLogs());
-        }
-        else{
-
-            //model.addAttribute("video_logs", videoService.listVideoLogsByTeaNumber(teaNum));
-        }
+        model.addAttribute("video_logs", videoProgressService.getVideoStudySummaryByRole(teaNum));
         return "admin_video_log";
     }
 
+
+    //////////////////////////////////////////////////////////////////////////////////////////////
     //视频学习详情 仅展示
     @RequestMapping("/admin_video_log_details")
     public String admin_video_log_details(HttpServletRequest request, Model model) {
@@ -581,16 +641,16 @@ public class adminController {
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         if(role_id == 1){
-
             //model.addAttribute("video_log_details", videoService.listVideoLogDetails());
         }
         else{
-
             //model.addAttribute("video_log_details", videoService.listVideoLogDetailsByTeaNumber(teaNum));
         }
         return "admin_video_log_details";
     }
 
+
+    //////////////////////////////////////////////////////////////////////////////////////////////
     // 实验报告管理
     @RequestMapping("/admin_report")
     public String admin_report(HttpServletRequest request, Model model) {
@@ -599,12 +659,10 @@ public class adminController {
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         if(role_id == 1){
-
-            //model.addAttribute("reports", );
+            // todo 展示所有报告
         }
         else{
-
-            //model.addAttribute("reports", );
+            // todo 根据老师展示报告
         }
         return "admin_report";
     }
@@ -613,16 +671,7 @@ public class adminController {
     @RequestMapping("/admin_report_detail")
     public String admin_report_detail(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
-        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
-
-        if(role_id == 1){
-
-        }
-        else{
-
-        }
+        // todo 根据报告id返回报告
         model.addAttribute("pdf", "https://arxiv.org/pdf/1508.01006v1.pdf");
         return "admin_report_detail";
     }
@@ -638,25 +687,18 @@ public class adminController {
     }
 
 
+    //////////////////////////////////////////////////////////////////////////////////////////////
     //实验操作时长 仅展示
     @RequestMapping("/admin_experiment_log")
     public String admin_experiment_log(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
-        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
-
-        if(role_id == 1){
-
-            //model.addAttribute("experiment_logs", );
-        }
-        else{
-
-            //model.addAttribute("experiment_logs", );
-        }
+        model.addAttribute("experiment_logs", subExperimentProgressService.getOperateTimeByRole(teaNum));
         return "admin_experiment_log";
     }
 
+    //////////////////////////////////////////////////////////////////////////////////////////////
     // 实验机类型管理
     @RequestMapping("/admin_pc_type")
     public String admin_pc_type(HttpServletRequest request, Model model) {
@@ -676,6 +718,8 @@ public class adminController {
         return "admin_pc_type";
     }
 
+
+    //////////////////////////////////////////////////////////////////////////////////////////////
     // 实验机集群管理
     @RequestMapping("/admin_cluster")
     public String admin_cluster(HttpServletRequest request, Model model) {
@@ -693,6 +737,8 @@ public class adminController {
         return "admin_cluster";
     }
 
+
+    //////////////////////////////////////////////////////////////////////////////////////////////
     // 学生实验机管理
     @RequestMapping("/admin_student_pc")
     public String admin_student_pc(HttpServletRequest request, Model model) {
@@ -711,25 +757,29 @@ public class adminController {
         return "admin_student_pc";
     }
 
+
+    //////////////////////////////////////////////////////////////////////////////////////////////
     // 实验报告模板
-    @RequestMapping("/admin_report_template")
-    public String admin_report_template(HttpServletRequest request, Model model) {
-        if (!cookieCheck(model, request)) return "redirect:/login";
+//    @RequestMapping("/admin_report_template")
+//    public String admin_report_template(HttpServletRequest request, Model model) {
+//        if (!cookieCheck(model, request)) return "redirect:/login";
+//
+//        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+//        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
+//
+//        if(role_id == 1){
+//
+//            //model.addAttribute("report_template", );
+//        }
+//        else{
+//
+//            //model.addAttribute("report_template", );
+//        }
+//        return "admin_report_template";
+//    }
 
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
-        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
-        if(role_id == 1){
-
-            //model.addAttribute("report_template", );
-        }
-        else{
-
-            //model.addAttribute("report_template", );
-        }
-        return "admin_report_template";
-    }
-
+    //////////////////////////////////////////////////////////////////////////////////////////////
     // 视频管理
     @RequestMapping("/admin_video")
     public String admin_video(HttpServletRequest request, Model model) {
@@ -739,16 +789,15 @@ public class adminController {
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         if(role_id == 1){
-
             model.addAttribute("video", videoService.listVideos());
         }
         else{
-
             model.addAttribute("video", videoService.listVideos());
         }
         return "admin_video";
     }
 
+    //////////////////////////////////////////////////////////////////////////////////////////////
     // 视频分类管理
     @RequestMapping("/admin_video_class")
     public String admin_video_class(HttpServletRequest request, Model model) {
@@ -768,23 +817,67 @@ public class adminController {
         return "admin_video_class";
     }
 
+
+    //////////////////////////////////////////////////////////////////////////////////////////////
     //数据集管理
     @RequestMapping("/admin_dataset")
     public String admin_dataset(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
-        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
-
-        if(role_id == 1){
-            model.addAttribute("datasets", datasetService.listDatasets());
-        }
-        else{
-            model.addAttribute("datasets", datasetService.listDatasets());
-        }
+        model.addAttribute("datasets", datasetService.listDatasets());
         return "admin_dataset";
     }
 
+    //数据集增加
+    @GetMapping("/admin_dataset_add")
+    public ModelAndView admin_dataset_add(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+        logger.info("进入admin_dataset_add，获取一个新的Dataset()");
+        model.addAttribute("dataset", new Dataset());
+        return new ModelAndView("admin_dataset_add", "datasetmodel", model);
+    }
+
+    @PostMapping("/add_dataset")
+    public ModelAndView add_dataset(Dataset dataset, Model model, HttpServletRequest request) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
+        logger.info("提交新增的dataset: [{}]", dataset);
+        // todo 向数据库提交新增的dataset
+        return new ModelAndView("redirect:/admin_dataset");
+    }
+
+    //修改数据集
+    @GetMapping("/admin_dataset_edit")
+    public ModelAndView admin_dataset_edit(HttpServletRequest request, Model model){
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
+        long id = Long.parseLong(request.getParameter("id"));
+        logger.info("进入admin_dataset_edit，获取指定id的Dataset(),id="+id);
+
+        // todo 获取指定id的dataset
+
+        return new ModelAndView("admin_dataset_edit","datasetmodel",model);
+    }
+
+    @PostMapping("/edit_dataset")
+    public ModelAndView edit_dataset(StudentCourse dataset){
+        logger.info("提交修改的dataset: [{}]", dataset);
+        // todo 提交修改
+        return new ModelAndView("redirect:/admin_dataset");
+    }
+
+    //删除数据集
+    @RequestMapping("/admin_dataset_delete")
+    public ModelAndView admin_dataset_delete(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
+        long id = Long.parseLong(request.getParameter("id"));
+        logger.info("删除 dataset.id=" + id);
+        // todo 数据库删除对应数据
+        return new ModelAndView("redirect:/admin_dataset");
+    }
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////
     // 获取所有的专业
     @ResponseBody
     @RequestMapping("/get_all_major")
@@ -826,6 +919,8 @@ public class adminController {
                 target_dir = "course";
             } else if (url.contains("admin_userinfo")) {
                 target_dir = "userinfo";
+            } else if (url.contains("admin_dataset")) {
+                target_dir = "dataset";
             }
 
             //判断上传文件格式
@@ -840,11 +935,11 @@ public class adminController {
                 String suffixName = fileName.substring(fileName.lastIndexOf("."));
                 //重新生成文件名
                 fileName = UUID.randomUUID() + suffixName;
-                String result = UploadFileUtils.upload(img, localPath, fileName);
+                String result = UploadFileUtils.upload(img, localPath, fileName, false);
                 while (result.equals("exists")){
                     //重新生成文件名
                     fileName = UUID.randomUUID() + suffixName;
-                    result = UploadFileUtils.upload(img, localPath, fileName);
+                    result = UploadFileUtils.upload(img, localPath, fileName, false);
                 }
                 if (result.equals("true")) {
                     //文件存放的相对路径(一般存放在数据库用于img标签的src)
@@ -878,7 +973,6 @@ public class adminController {
 
         //判断上传文件格式
         String fileType = file.getContentType();
-        System.out.println(fileType);
         if (fileType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document") ||
                 fileType.equals("application/pdf") ||
                 fileType.equals("application/msword")) {
@@ -889,11 +983,11 @@ public class adminController {
             String fileName = file.getOriginalFilename();
             //获取文件后缀名
             String suffixName = fileName.substring(fileName.lastIndexOf("."));
-            String result = UploadFileUtils.upload(file, localPath, fileName);
+            String result = UploadFileUtils.upload(file, localPath, fileName, false);
             while (result.equals("exists")){
                 //重新生成文件名
                 fileName = UUID.randomUUID() + suffixName;
-                result = UploadFileUtils.upload(file, localPath, fileName);
+                result = UploadFileUtils.upload(file, localPath, fileName, false);
             }
             if (result.equals("true")) {
                 //文件存放的相对路径(一般存放在数据库用于img标签的src)
@@ -909,8 +1003,45 @@ public class adminController {
 
 
         root.put("result_msg", result_msg);
-
 //        JSON.toJSONString(root,SerializerFeature.DisableCircularReferenceDetect);
+        String root_json = JSON.toJSONString(root);
+        logger.info(root_json);
+        return root;
+    }
+
+
+    //上传数据集
+    @ResponseBody
+    @RequestMapping("/upload_dataset")
+    public Map datasetUpload(MultipartFile file, HttpServletRequest request) {
+        String result_msg = "";  //上传结果信息
+        Map<String, Object> root = new HashMap<String, Object>();
+
+        //判断上传文件格式
+        String fileType = file.getContentType();
+        if (fileType.equals("text/plain")) {
+            // 要上传的目标文件存放的绝对路径
+            final String localPath = "static\\dataset";
+            //获取文件名
+            String fileName = file.getOriginalFilename();
+            //获取文件后缀名
+            String suffixName = fileName.substring(fileName.lastIndexOf("."));
+
+            if (UploadFileUtils.upload(file, localPath, fileName, true) == "true") {
+                //文件存放的相对路径(一般存放在数据库用于img标签的src)
+                String relativePath = "static/dataset/" + fileName;
+                root.put("relativePath", relativePath);//前端根据是否存在该字段来判断上传是否成功
+                result_msg = "文件上传成功";
+                root.put("fileFormat", suffixName);
+                root.put("size", file.getSize());
+            } else {
+                result_msg = "文件上传失败";
+            }
+        } else {
+            result_msg = "文件格式不正确";
+        }
+        root.put("result_msg", result_msg);
+
         String root_json = JSON.toJSONString(root);
         logger.info(root_json);
         return root;

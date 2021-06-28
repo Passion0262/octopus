@@ -1,7 +1,9 @@
 package com.example.octopus.controller;
 
+import com.example.octopus.service.SysUserRoleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +37,9 @@ public class LoginController {
 //        }
 //  }
 
+    @Autowired
+    SysUserRoleService sysUserRoleService;
+
     //重置密码
     @RequestMapping("/reset_pwd")
     public String reset_pwd() {
@@ -43,19 +48,17 @@ public class LoginController {
     }
 
     @ResponseBody
-    @RequestMapping("/reset_pwd_confirm")
+    @PostMapping("/reset_pwd_confirm")
     public Map reset_pwd_confirm(HttpServletRequest request) {
-        String username = request.getParameter("username");
+        long username = Long.parseLong(request.getParameter("username"));
         String phone = request.getParameter("phone");
         String new_pwd = request.getParameter("new_pwd");
         logger.info("用户名：" + username);
         logger.info("手机号码：" + phone);
         logger.info("新密码：" + new_pwd);
         Map<String, Object> result = new HashMap<String, Object>();
-
-        //todo 重置密码
-
-        if(true){
+        //System.out.println(sysUserRoleService.updatePasswordByIdAndPhone(username, phone, new_pwd));
+        if(sysUserRoleService.updatePasswordByIdAndPhone(username, phone, new_pwd)){
             result.put("msg", "success");
         }
         else{
