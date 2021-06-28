@@ -19,26 +19,41 @@ import java.util.Set;
 @NoArgsConstructor
 public class Student {
 
-    private long stuNumber;
+	private long stuNumber;
 
-    private String name;
+	private String name;
 
-    // 数据库student表中不存储password，但为方便，在实体类中保留。对password进行操作时需要在implement中调用sysUserRoleMapper中的方法进行操作
-    private String password;
+	// 数据库student表中不存储password，但为方便，在实体类中保留。对password进行操作时需要在implement中调用sysUserRoleMapper中的方法进行操作
+	private String password;
 
-    private long majorId;
+	private long majorId;
 
-    private String majorName;  //专业名，不在student表中
+	private String majorName;  //专业名，不在student表中
 
-    private long classId;
+	private long classId;
 
-    private String className;  //班级名，不在student表中
+	private String school;
 
-    private String phoneNumber;
+	private String className;  //班级名，不在student表中
 
-    private int loginNumber;
+	private String phoneNumber;
 
-    private Date lastLoginTime;
+	private int loginNumber;
 
-    private Time studyTime;
+	private Date lastLoginTime;
+
+	private Time studyTime;
+
+	public Student(long stuNumber, String name, String password, long majorId, long classId, String phoneNumber, int loginNumber, Date lastLoginTime, Time studyTime) {
+		this.stuNumber = stuNumber;
+		this.name = name;
+		this.password = password;
+		this.majorId = majorId;
+		this.classId = classId;
+		this.phoneNumber = phoneNumber;
+		this.loginNumber = loginNumber;
+		this.lastLoginTime = lastLoginTime;
+		this.studyTime = studyTime;
+	}
+
 }

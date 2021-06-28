@@ -35,20 +35,12 @@ public interface UserService {
      */
     Student getStudentByName(String name);
 
-//    /**
-//     * 用于登陆时的验证
-//     * @param stuNumber 学生学号
-//     * @param password  学生密码
-//     * @return  返回学生实体
-//     */
-//    Student login(long stuNumber, String password);
-
     /**
      * 新增学生
      * @param student 学生实体
      * @return 成功为true，失败为false
      */
-    boolean insertStudent(Student student);
+    boolean insertStudent(Student student, long teaNumber);
 
     /**
      * 更新学生信息
