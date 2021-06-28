@@ -77,7 +77,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .defaultSuccessUrl("/").permitAll()
                 .successForwardUrl("/").permitAll()
                 //  登陆失败url
-//                .failureUrl("/login/error")
+                .failureUrl("/login/error")
                 .authenticationDetailsSource(authenticationDetailsSource)
 
 

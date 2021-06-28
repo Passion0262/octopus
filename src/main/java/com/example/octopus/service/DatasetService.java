@@ -23,4 +23,9 @@ public interface DatasetService {
      */
     Dataset getDatasetById(long id);
 
+    /**
+     *  数据集下载次数+1
+     */
+    boolean increaseDownloadNum(long id);
+
 }

@@ -27,4 +27,9 @@ public class DatasetServiceImpl implements DatasetService {
     public Dataset getDatasetById(long id) {
         return datasetMapper.getDatasetById(id);
     }
+
+    @Override
+    public boolean increaseDownloadNum(long id) {
+        return datasetMapper.updateDownloadNumById(id);
+    }
 }

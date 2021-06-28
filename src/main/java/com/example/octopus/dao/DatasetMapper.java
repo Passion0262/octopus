@@ -3,6 +3,7 @@ package com.example.octopus.dao;
 import com.example.octopus.entity.dataset.Dataset;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -27,4 +28,10 @@ public interface DatasetMapper {
      */
     @Select("SELECT * FROM dataset WHERE id = #{id}")
     Dataset getDatasetById(long id);
+
+    /**
+     *  下载次数+1
+     */
+    @Update("UPDATE dataset SET download_num = download_num+1 WHERE id = #{id}")
+    boolean updateDownloadNumById(long id);
 }
