@@ -24,10 +24,10 @@ public interface SysUserRoleMapper {
     @Insert("INSERT INTO sys_user_role (user_id,role_id,password) VALUES (#{userId},#{roleId},#{password})")
     boolean insert(SysUserRole sysUserRole);
 
-    @Update("UPDATE password = #{password} FROM sys_user_role WHERE user_id = #{userId}")
+    @Update("UPDATE sys_user_role SET password = #{password} WHERE user_id = #{userId}")
     boolean updatePassword(long userId, String password);
 
-    @Update("UPDATE role_id = #{roleId} FROM sys_user_role WHERE user_id = #{userId}")
+    @Update("UPDATE sys_user_role SET role_id = #{roleId} WHERE user_id = #{userId}")
     boolean updateRoleId(long userId, long roleId);
 
     @Delete("DELETE FROM sys_user_role WHERE user_id = #{userId}")
