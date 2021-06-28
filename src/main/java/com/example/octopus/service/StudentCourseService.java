@@ -64,6 +64,8 @@ public interface StudentCourseService {
      */
     boolean deleteStudentCourse(long stuNumber, long courseId);
 
+    boolean deleteStudentCourse(long studentCourseId);
+
     /**
      * 一整个班级的学生全部选课
      */
