@@ -45,4 +45,9 @@ class CourseMapperTest {
     void deleteCourseById() {
 //        courseMapper.deleteCourseById(7L);
     }
+
+	@Test
+	void testListCourses() {
+        System.out.println(courseMapper.listCourses());
+	}
 }

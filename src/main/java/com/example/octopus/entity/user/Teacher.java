@@ -14,7 +14,7 @@ public class Teacher {
 
     private long teaNumber;
 
-    private String name;
+    private String teaName;
 
     // 数据库teacher表中不存储password，但为方便，在实体类中保留。对password进行操作时需要在implement中调用sysUserRoleMapper中的方法进行操作
     private String password;

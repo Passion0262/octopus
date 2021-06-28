@@ -25,6 +25,8 @@ public class Course {
 //    @Column(nullable = false,columnDefinition = "varchar(30) comment '授课老师'")
     private long teaNumber;
 
+    private String teaName;
+
 //    @Column(nullable = false,columnDefinition = "varchar(30) comment '分类'")
 //    private String classification;
 

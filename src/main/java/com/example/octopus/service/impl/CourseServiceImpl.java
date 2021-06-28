@@ -54,12 +54,13 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> listCoursesByTeaNumber(long teaNumber) {
-        List<Course> courseList = new ArrayList<>();
-        List<Long> courseIdList = teacherCourseMapper.listCourseIdsByTeaNumber(teaNumber);
-        for (long id:courseIdList){
-            courseList.add(courseMapper.getCourseById(id));
-        }
-        return courseList;
+//        List<Course> courseList = new ArrayList<>();
+//        List<Long> courseIdList = teacherCourseMapper.listCourseIdsByTeaNumber(teaNumber);
+//        for (long id:courseIdList){
+//            courseList.add(courseMapper.getCourseById(id));
+//        }
+//        return courseList;
+        return courseMapper.listCoursesByTeaId(teaNumber);
     }
 
     @Override

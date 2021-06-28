@@ -130,8 +130,8 @@ public class studentController {
         } else {
             //身份为教师或管理员，进入后台系统
             Teacher tea = teacherService.getTeacherByTeaNumber(Long.parseLong(userNumber));
-            logger.info("当前登陆身份为：教师/管理员        欢迎您，" + userNumber + ":" + tea.getName());
-            cookieThings.setCookie(userNumber, tea.getName(), response, cookieName);
+            logger.info("当前登陆身份为：教师/管理员        欢迎您，" + userNumber + ":" + tea.getTeaName());
+            cookieThings.setCookie(userNumber, tea.getTeaName(), response, cookieName);
             return "redirect:/admin_index";
         }
     }

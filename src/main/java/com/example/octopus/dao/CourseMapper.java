@@ -26,6 +26,9 @@ public interface CourseMapper {
     @Select("SELECT * FROM course")
     List<Course> listCourses();
 
+    @Select("SELECT * FROM course WHERE tea_number=#{teaNumber}")
+    List<Course> listCoursesByTeaId(long teaNumber);
+
     /**
      * 根据课程id返回课程
      * @param id 课程id
@@ -40,7 +43,7 @@ public interface CourseMapper {
      * @param course  课程实体
      * @return 成功为true，失败为false
      */
-    @Insert("INSERT INTO course (course_name,tea_number,description,image_path,start_time,end_time,apply_time,num_allowed,num_participated,status) VALUES (#{courseName},#{teaNumber},#{description},#{imagePath},#{startTime},#{endTime},#{applyTime},#{numAllowed},#{numParticipated},#{status})")
+    @Insert("INSERT INTO course (course_name,tea_number,tea_name,description,image_path,start_time,end_time,apply_time,num_allowed,num_participated,status) VALUES (#{courseName},#{teaNumber},#{description},#{imagePath},#{startTime},#{endTime},#{applyTime},#{numAllowed},#{numParticipated},#{status})")
     boolean insertCourse(Course course);
 
     /**
@@ -48,7 +51,7 @@ public interface CourseMapper {
      * @param course  课程实体
      * @return 成功为true，失败为false
      */
-    @Update("Update course SET course_name = #{courseName},tea_number=#{teaNumber},description=#{description},image_path=#{imagePath},start_time=#{startTime},end_time=#{endTime},apply_time=#{applyTime},num_allowed=#{numAllowed},num_participated=#{numParticipated},status=#{status} WHERE id = #{id}")
+    @Update("Update course SET course_name = #{courseName},tea_number=#{teaNumber},tea_name=#{teaName},description=#{description},image_path=#{imagePath},start_time=#{startTime},end_time=#{endTime},apply_time=#{applyTime},num_allowed=#{numAllowed},num_participated=#{numParticipated},status=#{status} WHERE id = #{id}")
     boolean updateCourse(Course course);
 
     /**

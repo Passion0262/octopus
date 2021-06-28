@@ -13,59 +13,67 @@ import java.util.List;
  */
 public interface CourseService {
 
-    /**
-     * 根据课程id查询课程
-     * @param id 课程id
-     * @return 课程实体
-     */
-    Course getCourseById(long id);
+	/**
+	 * 根据课程id查询课程
+	 *
+	 * @param id 课程id
+	 * @return 课程实体
+	 */
+	Course getCourseById(long id);
 
-    /**
-     * 查询所有的课程
-     * @return  返回所有课程实体
-     */
-    List<Course> listCourses();
+	/**
+	 * 查询所有的课程
+	 *
+	 * @return 返回所有课程实体
+	 */
+	List<Course> listCourses();
 
-    /**
-     * 根据学生学号查询该学生选的课
-     * @param stuNumber 学号
-     * @return 课程list
-     */
-    List<Course> listCoursesByStuNumber(long stuNumber);
+	/**
+	 * 根据学生学号查询该学生选的课
+	 *
+	 * @param stuNumber 学号
+	 * @return 课程list
+	 */
+	List<Course> listCoursesByStuNumber(long stuNumber);
 
-    /**
-     * 根据教师编号查询该教师教授的课程list
-     * @param teaNumber 教师编号
-     * @return courseList
-     */
-    List<Course> listCoursesByTeaNumber(long teaNumber);
+	/**
+	 * 根据教师编号查询该教师教授的课程list
+	 *
+	 * @param teaNumber 教师编号
+	 * @return courseList
+	 */
+	List<Course> listCoursesByTeaNumber(long teaNumber);
 
-    /**
-     * 查询选课人数是否已达上限
-     * @param courseId 课程id
-     * @return 满了为true，没满为false
-     */
-    boolean isFull(long courseId);
+	/**
+	 * 查询选课人数是否已达上限
+	 *
+	 * @param courseId 课程id
+	 * @return 满了为true，没满为false
+	 */
+	boolean isFull(long courseId);
 
-    /**
-     * 新增课程
-     * @param course  课程实体
-     * @return 成功为true，失败为false
-     */
-    boolean insertCourse(Course course);
+	/**
+	 * 新增课程
+	 *
+	 * @param course 课程实体
+	 * @return 成功为true，失败为false
+	 */
+	boolean insertCourse(Course course);
 
-    /**
-     * 更新课程
-     * @param course 课程实体
-     * @return 是否成功更新
-     */
-    boolean updateCourse(Course course);
+	/**
+	 * 更新课程
+	 *
+	 * @param course 课程实体
+	 * @return 是否成功更新
+	 */
+	boolean updateCourse(Course course);
 
-    /**
-     * 根据courseid删除课程
-     * @param courseid 课程id
-     * @return 成功为true，失败为false
-     */
-    boolean deleteCourseById(long courseid);
+	/**
+	 * 根据courseid删除课程
+	 *
+	 * @param courseid 课程id
+	 * @return 成功为true，失败为false
+	 */
+	boolean deleteCourseById(long courseid);
 
 }
