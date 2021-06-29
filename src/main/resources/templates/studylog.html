@@ -99,45 +99,79 @@
             </div>
           </div>
         </div>
+
         <div class="row">
           <div class="col-12">
             <div class="card">
               <div class="card-body">
-                <h4 class="card-title"></h4>
+                <h4 class="card-title">课程视频</h4>
                 <div >
                   <table id="datatable-buttons" class="table table-striped table-bordered" style="overflow-x: scroll;">
                     <thead style="text-align: center;">
                     <tr>
 
                       <th>编号</th>
-                      <th>课程名称</th>
-                      <th>学习时长</th>
+                      <th>视频名称</th>
                       <th>开始学习时间</th>
                       <th>结束学习时间</th>
+                      <th>学习时长</th>
+                      <th>详细介绍</th>
+
+                    </tr>
+                    </thead>
+                    <tbody style="text-align: center" id = "videologdiv">
+                    <tr th:each="videopro:${videopros}">
+                      <td><span th:text="${videoproStat.index+1}"></span></td>
+                      <td><span th:text="${videos[videoproStat.index].name}"></span></td>
+                      <td><span th:text="${videopro.startTime}"></span></td>
+                      <td><span th:text="${videopro.endTime}"></span></td>
+                      <td><span th:text="${videopro.studyTime}"></span></td>
+                      <td><a href="studylog_detail">查看详情</a></td>
+                    </tr>
+
+                    </tbody>
+                  </table>
+                  <div class="row" style="float:right">
+                    <button>上一页</button>
+                    <span>2</span>
+                    <button>下一页</button>
+                    <div class="form-control-sm"></div>
+                    <button>跳转</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div><!-- end row -->
+
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">课程实验</h4>
+                <div >
+                  <table id="datatable-buttons" class="table table-striped table-bordered" style="overflow-x: scroll;">
+                    <thead style="text-align: center;">
+                    <tr>
+
+                      <th>编号</th>
+                      <th>实验名称</th>
+                      <th>开始学习时间</th>
+                      <th>结束学习时间</th>
+                      <th>学习时长</th>
                       <th>详细介绍</th>
 
                     </tr>
                     </thead>
                     <tbody style="text-align: center">
-                    <tr>
-                      <td>1</td>
-                      <td>hadoop大数据</td>
-                      <td>10分钟</td>
-                      <td>2021-5-19 18：00</td>
-                      <td>2021-5-19 18：10</td>
-                      <td><a href="studylog_detail">查看详情</a></td>
-
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>hadoop大数据</td>
-                      <td>10分钟</td>
-                      <td>2021-5-18 18：00</td>
-                      <td>2021-5-18 18：10</td>
-                      <td><a href="studylog_detail">查看详情</a></td>
-
-                    </tr>
-
+<!--                    <tr th:each="videopro:${videopros}">-->
+<!--                      <td><span th:text="${videoproStat.index+1}"></span></td>-->
+<!--                      <td><span th:text="${videos[videoproStat.index].name}"></span></td>-->
+<!--                      <td><span th:text="${videopro.startTime}"></span></td>-->
+<!--                      <td><span th:text="${videopro.endTime}"></span></td>-->
+<!--                      <td><span th:text="${videopro.studyTime}"></span></td>-->
+<!--                      <td><a href="studylog_detail">查看详情</a></td>-->
+<!--                    </tr>-->
 
                     </tbody>
                   </table>
@@ -145,12 +179,7 @@
               </div>
             </div>
           </div>
-        </div>
-
-
-
-      </div>
-    </div><!-- end row -->
+        </div><!-- end row -->
 
   </div><!-- container-fluid -->
 </div><!-- End Page-content -->

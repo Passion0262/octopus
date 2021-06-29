@@ -634,8 +634,10 @@ public class studentController {
         logger.info("text:" + text);
         String alltext = "<html><head></head><body>"+text+"</body></html>";
 
+        String savepath = propertiesUtil.getPdfSubmitPath();
+        String savepdfname = "exp"+UUID.randomUUID().toString().replace("-", "")+".pdf";
         Document document = new Document(PageSize.A4);
-        PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream("/Users/wangxiang/Downloads/" + "createSamplePDF.pdf"));
+        PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream(savepath + savepdfname));
         document.open();
 //        ByteArrayInputStream bin = new ByteArrayInputStream(alltext.getBytes());
 //        XMLWorkerHelper.getInstance().parseXHtml(pdfWriter, document, bin, Charset.forName("UTF-8"));
@@ -688,11 +690,23 @@ public class studentController {
     @RequestMapping("/studylog")
     public String studylog(Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
+        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        List<VideoProgress> videopros = videoProgressService.listByStuNumber(stuNum);
+        model.addAttribute("videopros",  videopros);
+        logger.info("videopros :" + videopros );
 
-//        String stuname = (String) session.getAttribute("stuname");
-//        model.addAttribute("stuname", stuname);
+        List<Video> videos = new ArrayList<>();
+        for (int i = 0; i < videopros.size(); i++) {
+            Video v = videoService.getById(videopros.get(i).getVideoId());
+            videos.add(v);
+        }
+        logger.info("videos:" + videos);
+        model.addAttribute("videos", videos);
+
         return "studylog";
     }
+
+
 
     @RequestMapping("/studylog_detail")
     public String studylog_detail(Model model, HttpServletRequest request) {
@@ -738,13 +752,19 @@ public class studentController {
     }
 
 
-//    @RequestMapping("/confirmlogin")
-//    public String confirmlogin(@RequestParam("username") String username, @RequestParam("userpwd") String userpwd,Model model) {
-////        System.out.println(username);
-////        System.out.println(userpwd);
-//        logger.info("username:" + username);
-//        logger.info("password" + userpwd);
-//        model.addAttribute("username", username);
-//        return "index";
-//    }
+    @PostMapping(value = "/datasetdownload")
+    @ResponseBody
+    public String datasetdownload(HttpServletRequest request) {
+
+        Long datasetid = Long.parseLong(request.getParameter("datasetid"));
+        logger.info("datasetid:" + datasetid);
+        datasetService.increaseDownloadNum(datasetid);
+        Dataset d = datasetService.getDatasetById(datasetid);
+        Map<String,Object> params = new HashMap<>();
+        logger.info("datasetnum:" + d.getDownloadNum());
+        params.put("num",d.getDownloadNum());
+        return JSONArray.toJSON(params).toString();
+
+    }
+
 }
