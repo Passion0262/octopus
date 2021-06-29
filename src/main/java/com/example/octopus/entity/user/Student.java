@@ -44,16 +44,13 @@ public class Student {
 
 	private Time studyTime;
 
-	public Student(long stuNumber, String name, String password, long majorId, long classId, String phoneNumber, int loginNumber, Date lastLoginTime, Time studyTime) {
+	public Student(long stuNumber, String name, String password, long majorId, long classId, String phoneNumber) {
 		this.stuNumber = stuNumber;
 		this.name = name;
 		this.password = password;
 		this.majorId = majorId;
 		this.classId = classId;
 		this.phoneNumber = phoneNumber;
-		this.loginNumber = loginNumber;
-		this.lastLoginTime = lastLoginTime;
-		this.studyTime = studyTime;
 	}
 
 }

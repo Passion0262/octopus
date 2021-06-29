@@ -24,13 +24,13 @@ public interface UserMapper {
     @Select("SELECT s.*, major_name, class_name FROM student s, major, class_ WHERE name = #{name} and s.major_id=major.id and s.class_id=class_.id")
     Student getStudentByName(String name);
 
-    @Insert("INSERT INTO student (stu_number,name,major,class_id,school,phone_number,login_number,last_login_time,study_time) VALUES (#{stuNumber},#{name},#{major},#{classId},#{school},#{phoneNumber},0,CURRENT_TIMESTAMP,0)")
+    @Insert("INSERT INTO student (stu_number,name,major_id,class_id,school,phone_number,login_number,last_login_time,study_time) VALUES (#{stuNumber},#{name},#{majorId},#{classId},#{school},#{phoneNumber},0,CURRENT_TIMESTAMP,0)")
     boolean insertStudent(Student student);
 
-    @Update("UPDATE student SET name=#{name},major_id=#{majorId},class_id=#{classId},school=#{school},phone_number=#{phoneNumber},login_number=#{loginNumber},last_login_time=#{lastLoginTime},study_time=#{studyTime} WHERE stu_number=#{stuNumber}")
+    @Update("UPDATE student SET name=#{name},major_id=#{majorId},class_id=#{classId},phone_number=#{phoneNumber},login_number=#{loginNumber},last_login_time=#{lastLoginTime},study_time=#{studyTime} WHERE stu_number=#{stuNumber}")
     boolean updateStudent(Student student);
 
-    @Update("UPDATE student SET login_number = login_number+1, last_login_time = CURRENT_TIMESTAMP where stu_number = #{stuNumber}")
+    @Update("UPDATE student SET login_number = login_number+1, last_login_time = CURRENT_TIMESTAMP WHERE stu_number = #{stuNumber}")
     boolean updateLoginInfoByStuNumber(long stuNumber);
 
     @Update("UPDATE student SET phone_number = #{phoneNumber} WHERE stu_number = #{stuNumber}")
@@ -44,5 +44,8 @@ public interface UserMapper {
 
     @Select("SELECT school FROM student WHERE stu_number=#{stuNumber}")
     String getSchoolById(long stuNumber);
+
+    @Update("update student set major_id =100 where stu_number=1")
+    boolean updateMajorId();
 
 }
