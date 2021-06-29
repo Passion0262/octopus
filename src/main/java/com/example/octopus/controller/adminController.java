@@ -110,6 +110,14 @@ public class adminController {
         return "admin_userinfo";
     }
 
+    @PostMapping("/edit_userinfo")
+    public ModelAndView edit_userinfo(Teacher teacher, HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+        System.out.println(teacher);
+        teacherService.updateTeacher(teacher);
+        return new ModelAndView("redirect:/admin_userinfo");
+    }
+
 
     //首页
     @RequestMapping("/admin_index")
@@ -522,9 +530,21 @@ public class adminController {
     @GetMapping("/admin_course_add")
     public ModelAndView admin_course_add(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+        String teaName = cookieThings.getCookieUserName(request, cookieName);
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         logger.info("进入admin_course_add，获取一个新Course()");
-        model.addAttribute("course", new Course());
+        if (role_id == 1){
+            model.addAttribute("course", new Course());
+        }
+        else{
+            // 教师账号只能给自己增加开课计划
+            Course course = new Course();
+            course.setTeaNumber(teaNum);
+            course.setTeaName(teaName);
+            model.addAttribute("course", course);
+        }
 
         return new ModelAndView("admin_course_add", "coursemodel", model);
     }
@@ -534,6 +554,10 @@ public class adminController {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
 
         logger.info("提交新增的course: [{}]", course);
+        if (course.getTeaName() == null){
+            // 如果只有账号没有姓名 则补充姓名
+            course.setTeaName(teacherService.getTeacherByTeaNumber(course.getTeaNumber()).getTeaName());
+        }
         courseService.insertCourse(course);
         return new ModelAndView("redirect:/admin_course");
     }
@@ -551,8 +575,11 @@ public class adminController {
     @PostMapping("/edit_course")
     public ModelAndView edit_course(Course course, Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-
         logger.info("提交修改的course: [{}]", course);
+        if (course.getTeaName() == null){
+            // 如果只有账号没有姓名 则补充姓名
+            course.setTeaName(teacherService.getTeacherByTeaNumber(course.getTeaNumber()).getTeaName());
+        }
         courseService.updateCourse(course);
         return new ModelAndView("redirect:/admin_course");
     }

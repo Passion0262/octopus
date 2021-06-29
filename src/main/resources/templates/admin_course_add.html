@@ -20,135 +20,123 @@
     </head>
 
     <body data-sidebar="light">
-          <!-- Begin page -->
-          <div id="layout-wrapper">
+        <!-- Begin page -->
+        <div id="layout-wrapper">
 
-              <div th:replace="commons::topbar(${coursemodel.username})"></div>
-              <div th:replace="commons::leftSidebar(${coursemodel.role})"></div>
-        
+            <div th:replace="commons::topbar(${coursemodel.username})"></div>
+            <div th:replace="commons::leftSidebar(${coursemodel.role})"></div>
+
             <!-- Start right Content here -->
             <div class="main-content">
-              <div class="page-content">
-                <div class="container-fluid">
-                  <!-- start page title -->
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="page-title-box d-flex align-items-center justify-content-between">
-                        <h4 class="mb-0">增加开课计划</h4>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- end page title -->
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="card">
-                        <div class="card-body">
-                          <form id="form" action="/add_course" method="post" th:object="${coursemodel.course}" novalidate="" style="padding-left: 20px;">
-<!--                            <div class="form-group row">-->
-<!--                              <label for="add_id" class="col-md-2 col-form-label">课程编号：</label>-->
-<!--                              <div class="col-md-10">-->
-<!--                                <input name="id" th:value="*{id}" class="form-control" type="text"  id="add_id" readonly>-->
-<!--                              </div>-->
-<!--                            </div>-->
-                            <div class="form-group row">
-                              <label for="add_courseName" class="col-md-2 col-form-label">课程名称：</label>
-                              <div class="col-md-10">
-                                <input name="courseName" th:value="*{courseName}" class="form-control" type="text"  id="add_courseName">
-                              </div>
+                <div class="page-content">
+                    <div class="container-fluid">
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="mb-0">增加开课计划</h4>
+                                </div>
                             </div>
-                            <div class="form-group row">
-                              <label for="add_teacher" class="col-md-2 col-form-label">授课老师：</label>
-                              <div class="col-md-10">
-                                <input name="teacher" th:value="*{teacher}" class="form-control" id="add_teacher" type="text">
-                              </div>
-                            </div>
-<!--                            <div class="form-group row">-->
-<!--                              <label for="add_classification" class="col-md-2 col-form-label">分类：</label>-->
-<!--                              <div class="col-md-10">-->
-<!--                                <input name="classification" th:value="*{classification}" id="add_classification" class="form-control" type="text">-->
-<!--                              </div>-->
-<!--                            </div>-->
-                            <div class="form-group row">
-                              <label for="add_description" class="col-md-2 col-form-label">课程简介：</label>
-                              <div class="col-md-10">
-                                <input name="description" th:value="*{description}" id="add_description" class="form-control" type="text">
-                              </div>
-                            </div>
-                            <div class="form-group row">
-                              <label for="add_imagePath" class="col-md-2 col-form-label">课程图标：</label>
-                              <div class="col-md-10">
-                                  <input name="" id="add_imagePath" value="" class="form-control btn btn-light" type="file" accept="image/png, image/jpeg, image/jpg" style="background-color: white; border: 1px solid #ced4da;">
-                                  <input name="imagePath" id="imagePath" th:value="*{imagePath}" class="form-control btn btn-light" type="text" style="display: none">
-                                  <div id="alert" class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none;margin-top: 5px;padding: 5px;padding-left: 20px;">
-                                      <i class="mdi mdi-block-helper mr-2">
-                                          <span id="result_msg" style="padding-left: 10px;"></span>
-                                      </i>
-                                      <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="padding: 5px;">
-                                          <span aria-hidden="true">×</span>
-                                      </button>
-                                  </div>
-                              </div>
-
-                            </div>
-                            <div class="form-group row">
-                              <label for="add_startTime" class="col-md-2 col-form-label">授课开始日期：</label>
-                              <div class="col-md-10">
-                                <input name="startTime" th:value="*{startTime}" id="add_startTime" class="form-control" type="date">
-                              </div>
-                            </div>
-                            <div class="form-group row">
-                              <label for="add_endTime" class="col-md-2 col-form-label">授课结束日期：</label>
-                              <div class="col-md-10">
-                                <input name="endTime"  th:value="*{endTime}" id="add_endTime" class="form-control" type="date">
-                              </div>
-                            </div>
-                            <div class="form-group row">
-                              <label for="add_applyTime" class="col-md-2 col-form-label">开通申请时间：</label>
-                              <div class="col-md-10">
-                                <input name="applyTime" th:value="*{applyTime}" id="add_applyTime" class="form-control" type="date">
-                              </div>
-                            </div>
-                            <div class="form-group row">
-                              <label for="add_numAllowed" class="col-md-2 col-form-label">允许参加人数：</label>
-                              <div class="col-md-10">
-                                <input name="numAllowed" th:value="*{numAllowed}" id="add_numAllowed" class="form-control" type="text">
-                              </div>
-                            </div>
-                            <div class="form-group row">
-                              <label class="col-md-2 col-form-label">状态：</label>
-                              <div class="col-md-10">
-                                <select class="form-control" name="status">
-                                  <option value="有效">有效</option>
-                                  <option value="无效">无效</option>
-                                </select>
-<!--                                <input name="status" th:value="*{status}" id="add_status" class="form-control" type="text">-->
-                              </div>
-                            </div>
-                              <div class="row" style="display: block;text-align: center;">
-                                  <a href="admin_course" class="btn btn-light btn-rounded waves-effect waves-light">
-                                      <i class="ri-close-line align-middle mr-2"></i>取消
-                                  </a>
-                                  <button type="button" onclick="uploadImg()" class="btn btn-success btn-rounded waves-effect waves-light" style="margin: 20px;">
-                                      <i class="ri-check-line align-middle mr-2"></i>提交
-                                  </button>
-                              </div>
-                          </form>
                         </div>
-                      </div>
+                        <!-- end page title -->
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <form id="form" action="/add_course" method="post" th:object="${coursemodel.course}" novalidate="" style="padding-left: 20px;">
+
+                                            <div class="form-group row">
+                                                <label for="add_courseName" class="col-md-2 col-form-label">课程名称：</label>
+                                                <div class="col-md-10">
+                                                    <input name="courseName" th:value="*{courseName}" class="form-control" type="text"  id="add_courseName">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="add_teacher" class="col-md-2 col-form-label">授课老师账号：</label>
+                                                <div class="col-md-10">
+                                                    <input name="teaNumber" th:value="*{teaNumber}"  class="form-control" id="add_teacher" type="text">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="add_description" class="col-md-2 col-form-label">课程简介：</label>
+                                                <div class="col-md-10">
+                                                    <input name="description" th:value="*{description}" id="add_description" class="form-control" type="text">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="add_imagePath" class="col-md-2 col-form-label">课程图标：</label>
+                                                <div class="col-md-10">
+                                                    <input name="" id="add_imagePath" value="" class="form-control btn btn-light" type="file" accept="image/png, image/jpeg, image/jpg" style="background-color: white; border: 1px solid #ced4da;">
+                                                    <input name="imagePath" id="imagePath" th:value="*{imagePath}" class="form-control btn btn-light" type="text" style="display: none">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="add_startTime" class="col-md-2 col-form-label">授课开始日期：</label>
+                                                <div class="col-md-10">
+                                                    <input name="startTime" th:value="*{startTime}" id="add_startTime" class="form-control" type="date">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="add_endTime" class="col-md-2 col-form-label">授课结束日期：</label>
+                                                <div class="col-md-10">
+                                                    <input name="endTime"  th:value="*{endTime}" id="add_endTime" class="form-control" type="date">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="add_applyTime" class="col-md-2 col-form-label">开通申请日期：</label>
+                                                <div class="col-md-10">
+                                                    <input name="applyTime" th:value="*{applyTime}" id="add_applyTime" class="form-control" type="date">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="add_numAllowed" class="col-md-2 col-form-label">允许参加人数：</label>
+                                                <div class="col-md-10">
+                                                    <input name="numAllowed" th:value="*{numAllowed}" id="add_numAllowed" class="form-control" type="text">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-2 col-form-label">状态：</label>
+                                                <div class="col-md-10">
+                                                    <select class="form-control" name="status">
+                                                        <option value="有效">有效</option>
+                                                        <option value="无效">无效</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div id="alert" class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none;margin-top: 5px;padding: 5px;padding-left: 20px;">
+                                                <i class="mdi mdi-block-helper mr-2">
+                                                    <span id="result_msg" style="padding-left: 10px;"></span>
+                                                </i>
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="padding: 5px;">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
+                                            <div class="row" style="display: block;text-align: center;">
+                                                <a href="admin_course" class="btn btn-light btn-rounded waves-effect waves-light">
+                                                    <i class="ri-close-line align-middle mr-2"></i>取消
+                                                </a>
+                                                <button type="button" onclick="submitForm()" class="btn btn-success btn-rounded waves-effect waves-light" style="margin: 20px;">
+                                                    <i class="ri-check-line align-middle mr-2"></i>提交
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-                  </div>
-        
+
                 </div>
-        
-              </div>
-              <!-- container-fluid -->
+
 
                 <div th:replace="commons::footer"></div>
             </div>
             <!-- end main content-->
-        
-            <!-- END layout-wrapper -->
-          </div>
+
+
+        </div>
     
     
     
@@ -176,8 +164,19 @@
         
         <script type="text/javascript" th:inline="javascript">
 
+            var oCourseName = document.getElementById("add_courseName");
+            var oTeaNumber = document.getElementById("add_teacher");
+            var oStartTime = document.getElementById("add_startTime");
+            var oEndTime = document.getElementById("add_endTime");
+            var oApplyTime = document.getElementById("add_applyTime");
+
             function uploadImg() {
                 var formData = new FormData();
+                if (document.getElementById('add_imagePath').files.length == 0){
+                    document.getElementById("alert").style.display="";
+                    document.getElementById("result_msg").innerHTML = "请上传课程图标！";
+                    return false;
+                }
                 formData.append('img', document.getElementById('add_imagePath').files[0]);
                 $.ajax({
                     async: false,
@@ -189,27 +188,87 @@
                     processData:false,//ajax上传图片需要添加
                     success: function (data) {
                         if(data.hasOwnProperty("relativePath")){
-                            // console.log("上传图像成功！");
+                            console.log("上传图像成功！");
                             // console.log(data.relativePath);
                             document.getElementById("imagePath").value = data.relativePath;
-                            submitForm();
+                            return true;
                         }
                         else {
                             document.getElementById("alert").style.display="";
                             document.getElementById("result_msg").innerHTML = data.result_msg;
                             console.log(data.result_msg);
+                            return false;
                         }
                     },
                     error: function (e) {
-                        alert("error");
+                        document.getElementById("alert").style.display="";
+                        document.getElementById("result_msg").innerHTML = "上传图像失败！";
+                        console.log(data.result_msg);
+                        return false;
                     }
                 })
             }
 
-            function submitForm(){
-                oForm = document.getElementById("form");
-                oForm.submit();
+            function checkForm(){
+                if (!oCourseName.value){
+                    document.getElementById("alert").style.display="";
+                    document.getElementById("result_msg").innerHTML = "请填写课程名称！";
+                    return false;
+                }
+                if (oTeaNumber.value === "0"){
+                    document.getElementById("alert").style.display="";
+                    document.getElementById("result_msg").innerHTML = "请填写授课教师账号！";
+                    return false;
+                }
+                var start = new Date(oStartTime.value.replace("-","/"));
+                var end = new Date(oEndTime.value.replace("-","/"));
+                var apply = new Date(oApplyTime.value.replace("-","/"));
+                if (end < start){
+                    document.getElementById("alert").style.display="";
+                    document.getElementById("result_msg").innerHTML = "授课结束日期不能早于授课开始日期！";
+                    return false;
+                }
+                if (apply < start){
+                    document.getElementById("alert").style.display="";
+                    document.getElementById("result_msg").innerHTML = "开通申请日期不能早于授课开始日期！";
+                    return false;
+                }
+                if (apply > end){
+                    document.getElementById("alert").style.display="";
+                    document.getElementById("result_msg").innerHTML = "开通申请日期不能晚于授课结束日期！";
+                    return false;
+                }
+
+                if (uploadImg() == false){
+                    return false;
+                }
+                console.log("check form finish");
+                return true;
             }
+
+            function submitForm(){
+                console.log("check form start");
+                if (checkForm()){
+                    //console.log("submit form");
+                    oForm = document.getElementById("form");
+                    oForm.submit();
+                }
+            }
+
+            $(function() {
+                if ([[${coursemodel.role}]] === "teacher"){
+                    $("#add_teacher").attr("readonly",true);
+                }
+
+                var time = new Date();
+                var day = ("0" + time.getDate()).slice(-2);
+                var month = ("0" + (time.getMonth() + 1)).slice(-2);
+                var today = time.getFullYear() + "-" + (month) + "-" + (day);
+
+                oStartTime.value = today;
+                oEndTime.value = today;
+                oApplyTime.value = today;
+            })
 
         </script>
     
