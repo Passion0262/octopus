@@ -48,7 +48,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <form class="needs-validation" action="/edit_major" method="post" th:object="${majormodel.major}" novalidate="" style="padding-left: 20px;">
+                                    <form id="form" class="needs-validation" action="/edit_major" method="post" th:object="${majormodel.major}" novalidate="" style="padding-left: 20px;">
                                         <div class="form-group row">
                                             <label for="edit_major_id" class="col-md-2 col-form-label">专业编号：</label>
                                             <div class="col-md-10">
@@ -79,11 +79,19 @@
                                                 <input name="createTime" th:value="*{createTime}" id="edit_create_time" class="form-control" type="text" readonly style="border:none;">
                                             </div>
                                         </div>
+                                        <div id="alert" class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none;margin-top: 5px;padding: 5px;padding-left: 20px;">
+                                            <i class="mdi mdi-block-helper mr-2">
+                                                <span id="result_msg" style="padding-left: 10px;"></span>
+                                            </i>
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="padding: 5px;">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
                                         <div class="row" style="display: block;text-align: center;">
                                             <a href="admin_major" class="btn btn-light btn-rounded waves-effect waves-light">
                                                 <i class="ri-close-line align-middle mr-2"></i>取消
                                             </a>
-                                            <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light" style="margin: 20px;">
+                                            <button type="button" onclick="submitForm()" class="btn btn-success btn-rounded waves-effect waves-light" style="margin: 20px;">
                                                 <i class="ri-check-line align-middle mr-2"></i>提交
                                             </button>
                                         </div>
@@ -127,17 +135,28 @@
     <script src="static/js/pages/form-element.init.js"></script>
     <script src="static/js/app.js"></script>
     <script type="text/javascript" th:inline="javascript">
-        // window.onload = function() {
-        //     var oTime = document.getElementById("add_create_time");
-        //     setInterval(function() {
-        //         var time = new Date();  // 程序计时的月从0开始取值后+1
-        //         var m = time.getMonth() + 1;
-        //         var t = time.getFullYear() + "-" + m + "-"
-        //             + time.getDate() + " " + time.getHours() + ":"
-        //             + time.getMinutes() + ":" + time.getSeconds();
-        //         oTime.value = t;
-        //     }, 1000);
-        // };
+        function checkForm(){
+            var oMajorCode = document.getElementById("edit_majorCode");
+            var oMajorName = document.getElementById("edit_major_name");
+            if (!oMajorCode.value){
+                document.getElementById("alert").style.display="";
+                document.getElementById("result_msg").innerHTML = "请填写专业代码！";
+                return false;
+            }
+            if (!oMajorName.value){
+                document.getElementById("alert").style.display="";
+                document.getElementById("result_msg").innerHTML = "请填写专业名称！";
+                return false;
+            }
+            return true;
+        }
+
+        function submitForm(){
+            if (checkForm()){
+                oForm = document.getElementById("form");
+                oForm.submit();
+            }
+        }
     </script>
 
 

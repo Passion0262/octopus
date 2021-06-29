@@ -158,7 +158,8 @@ public class adminController {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  //获取角色，管理员还是教师
-        
+
+        // 只有管理员可以增加专业
         if (role_id == 1) {
             logger.info("进入admin_major_add，获取一个新Major()");
             model.addAttribute("major", new Major());
@@ -191,9 +192,10 @@ public class adminController {
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
+        // 只有管理员可以修改专业
         if (role_id == 1) {
             long id = Long.parseLong(request.getParameter("id"));
-            logger.info("进入admin_major_edit，获取指定编号的Major(),id=" + id);
+            logger.info("进入admin_major_edit，获取指定编号的Major(),id=[{}]", id);
             model.addAttribute("major", majorService.getById(id));
         }
         return new ModelAndView("admin_major_edit", "majormodel", model);
@@ -224,9 +226,10 @@ public class adminController {
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
+        // todo 删除专业涉及到相关班级、学生、教师
+        long id = Long.parseLong(request.getParameter("id"));
+        logger.info("删除专业 id=[{}]", id);
         if (role_id == 1){
-            long id = Long.parseLong(request.getParameter("id"));
-            logger.info("删除专业 id=[{}]", id);
             majorService.deleteById(id);
         }
         else{
@@ -270,18 +273,12 @@ public class adminController {
     @PostMapping("/add_class")
     public ModelAndView add_class(Class_ class_, Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-        String teaName = cookieThings.getCookieUserName(request, cookieName);
+
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
-        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         logger.info("提交新增的class_: [{}]", class_);
-        if (role_id == 1) {
-            classService.insertClass(class_, teaNum);
-        }
-        else{
-            //todo 教师新增班级
-            //classService.insertClassByTea(class_);
-        }
+        classService.insertClass(class_, teaNum);
+
         return new ModelAndView("redirect:/admin_class");
     }
 
@@ -292,28 +289,19 @@ public class adminController {
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
-        if (role_id == 1) {
-            long id = Long.parseLong(request.getParameter("id"));
-            logger.info("admin_class_edit，获取指定id的Class_(), class.id=", id);
-            model.addAttribute("class", classService.getClass_Byid(id));
-        }
+        long id = Long.parseLong(request.getParameter("id"));
+        logger.info("admin_class_edit，获取指定id的Class_(), class.id=[{}]", id);
+
+        model.addAttribute("class", classService.getClass_Byid(id));
+
         return new ModelAndView("admin_class_edit", "classmodel", model);
     }
 
     @PostMapping("/edit_class")
     public ModelAndView edit_class(Class_ class_, Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-        String teaName = cookieThings.getCookieUserName(request, cookieName);
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
-        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
-
         logger.info("提交修改的class_: [{}]", class_);
-        if (role_id == 1) {
-            classService.updateClass(class_);
-        }
-        else{
-            classService.updateClass(class_);
-        }
+        classService.updateClass(class_);
         return new ModelAndView("redirect:/admin_class");
     }
 
@@ -326,13 +314,10 @@ public class adminController {
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         long id = Long.parseLong(request.getParameter("id"));
-        logger.info("删除 class.id=" + id);
-        if (role_id == 1) {
-            classService.deleteByClassId(id);
-        }
-        else{
-            classService.deleteByClassId(id);
-        }
+        logger.info("删除 class.id=[{}]", id);
+        // todo 删除班级涉及到相关学生
+        classService.deleteByClassId(id);
+
         return new ModelAndView("redirect:/admin_class");
     }
 
@@ -345,7 +330,6 @@ public class adminController {
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         logger.info("进入学生管理");
-        // todo 专业和班级的id、name
         if (role_id == 1) {
             model.addAttribute("students", userService.listStudents());
         }
@@ -379,9 +363,9 @@ public class adminController {
     //修改学生
     @GetMapping("/admin_student_edit")
     public ModelAndView admin_student_edit(HttpServletRequest request, Model model) {
-
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
         long stuNumber = Long.parseLong(request.getParameter("stuNumber"));
-        logger.info("admin_student_edit，获取指定名字的Student(),stuNumber=" + stuNumber);
+        logger.info("admin_student_edit，获取指定名字的Student(),stuNumber=[{}]", stuNumber);
         Student student = userService.getStudentByStuNumber(stuNumber);
         model.addAttribute("student", student);
 
@@ -403,7 +387,7 @@ public class adminController {
     public ModelAndView admin_student_delete(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
         long stuNumber = Long.parseLong(request.getParameter("stuNumber"));
-        logger.info("删除 stuNumber=" + stuNumber);
+        logger.info("删除 stuNumber=[{}]", stuNumber);
 
         return new ModelAndView("redirect:/admin_student");
     }
@@ -425,10 +409,16 @@ public class adminController {
     @RequestMapping("/admin_teacher")
     public String admin_teacher(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-
-        logger.info("进入学校管理");
-        model.addAttribute("teachers", teacherService.getAllTeachers());
-
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
+        // 只有管理员能够进入教师管理
+        if (role_id == 1) {
+            logger.info("进入教师管理");
+            model.addAttribute("teachers", teacherService.getAllTeachers());
+        }
+        else{
+            return "redirect:/login";
+        }
         return "admin_teacher";
     }
 
@@ -436,40 +426,62 @@ public class adminController {
     @GetMapping("/admin_teacher_add")
     public ModelAndView admin_teacher_add(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-
-        logger.info("进入admin_teacher_add，获取一个新Teacher()");
-
-        model.addAttribute("teacher", new Teacher());
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
+        // 只有管理员能够增加教师
+        if (role_id == 1) {
+            logger.info("进入admin_teacher_add，获取一个新Teacher()");
+            model.addAttribute("teacher", new Teacher());
+        }
+        else{
+            new ModelAndView("redirect:/login");
+        }
         return new ModelAndView("admin_teacher_add", "teamodel", model);
     }
 
     @PostMapping("/add_teacher")
     public ModelAndView add_teacher(Teacher teacher, HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-        logger.info("提交新增的teacher: [{}]", teacher);
-        teacherService.addTeacher(teacher);
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
+        // 只有管理员能够增加教师
+        if (role_id == 1) {
+            logger.info("提交新增的teacher: [{}]", teacher);
+            teacherService.addTeacher(teacher);
+        }
         return new ModelAndView("redirect:/admin_teacher");
     }
 
     //修改教师
     @GetMapping("/admin_teacher_edit")
     public ModelAndView admin_teacher_edit(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
-        long teaNumber = Long.parseLong(request.getParameter("teaNumber"));
-        logger.info("admin_teacher_edit，获取指定名字的Teacher(),teaNumber=" + teaNumber);
-        Teacher teacher = teacherService.getTeacherByTeaNumber(teaNumber);
-        model.addAttribute("teacher", teacher);
+        if (role_id == 1) {
+            long teaNumber = Long.parseLong(request.getParameter("teaNumber"));
+            logger.info("admin_teacher_edit，获取指定名字的Teacher(),teaNumber=[{}]", teaNumber);
+            Teacher teacher = teacherService.getTeacherByTeaNumber(teaNumber);
+            model.addAttribute("teacher", teacher);
+        }
+        else{
+            new ModelAndView("redirect:/login");
+        }
 
-        return new ModelAndView("admin_student_edit", "teamodel", model);
+        return new ModelAndView("admin_teacher_edit", "teamodel", model);
     }
 
     @PostMapping("/edit_teacher")
     public ModelAndView edit_teacher(Teacher teacher, HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
-        logger.info("提交修改的teacher: [{}]", teacher);
-        teacherService.updateTeacher(teacher);
-
+        if (role_id == 1) {
+            logger.info("提交修改的teacher: [{}]", teacher);
+            teacherService.updateTeacher(teacher);
+        }
         return new ModelAndView("redirect:/admin_teacher");
     }
 
@@ -477,10 +489,14 @@ public class adminController {
     @RequestMapping("/admin_teacher_delete")
     public ModelAndView admin_teacher_delete(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-        long teaNumber = Long.parseLong(request.getParameter("teaNumber"));
-        logger.info("删除 teaNumber=" + teaNumber);
-        teacherService.deleteTeacher(teaNumber);
-        return new ModelAndView("redirect:/admin_student");
+        long teaNum = Long.parseLong(request.getParameter("teaNumber"));
+        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
+
+        if (role_id == 1) {
+            logger.info("删除 teaNumber=[{}]", teaNum);
+            teacherService.deleteTeacher(teaNum);
+        }
+        return new ModelAndView("redirect:/admin_teacher");
     }
 
 
@@ -893,9 +909,19 @@ public class adminController {
     @ResponseBody
     @RequestMapping("/get_class_by_major")
     public Map get_class_by_major(HttpServletRequest request) {
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
         Map<String, Object> classes = new HashMap<String, Object>();
         Long majorId = Long.parseLong(request.getParameter("major"));
-        // todo classes.put(classes.put(classService.getClassByMajor()));
+        logger.info("获取专业id=[{}]下的班级", majorId);
+        if (role_id == 1){
+            // 管理员返回所有班级
+            classes.put("class_", classService.listClassesByMajorId(majorId));
+        }
+        else{
+            // 教师只返回自己学校的班级
+            classes.put("class_", classService.listSchoolMajorClassesByUserId(teaNum, majorId));
+        }
         return classes;
     }
 

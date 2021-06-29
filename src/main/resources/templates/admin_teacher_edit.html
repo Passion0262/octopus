@@ -27,8 +27,8 @@
     <body data-sidebar="light">
         <!-- Begin page -->
         <div id="layout-wrapper">
-            <div th:replace="commons::topbar(${teachermodel.username})"></div>
-            <div th:replace="commons::leftSidebar(${teachermodel.role})"></div>
+            <div th:replace="commons::topbar(${teamodel.username})"></div>
+            <div th:replace="commons::leftSidebar(${teamodel.role})"></div>
 
             <!-- Start right Content here -->
             <div class="main-content">
@@ -47,11 +47,12 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <form class="needs-validation" action="/edit_teacher" method="post" th:object="${teamodel.teacher}" novalidate="" style="pediting-left: 20px;">
+                                        <form id="form" class="needs-validation" action="/edit_teacher" method="post" th:object="${teamodel.teacher}" novalidate="" style="pediting-left: 20px;">
+
                                             <div class="form-group row">
-                                                <label for="edit_stuNumber" class="col-md-2 col-form-label">学号：</label>
+                                                <label for="edit_teaNumber" class="col-md-2 col-form-label">账号：</label>
                                                 <div class="col-md-10">
-                                                    <input name="majorCode" th:value="*{teaNumber}" class="form-control" type="text"  id="edit_stuNumber">
+                                                    <input name="teaNumber" th:value="*{teaNumber}" class="form-control" type="text"  id="edit_teaNumber">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -70,9 +71,8 @@
                                                 <label for="edit_major" class="col-md-2 col-form-label">教授专业：</label>
                                                 <div class="col-md-10">
                                                     <select name="majorId" th:value="*{majorId}" class="form-control" id="edit_major">
-                                                        <option value="0" style="display: none;" th:text="*{majorId}"></option>
+                                                        <option th:value="majorId" style="display: none;" th:text="*{majorName}"></option>
                                                     </select>
-<!--                                                    <input name="major" th:value="*{major}" id="edit_major" class="form-control" type="text" >-->
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -81,11 +81,19 @@
                                                     <input name="phone" th:value="*{phone}" id="edit_phone" class="form-control" type="text">
                                                 </div>
                                             </div>
+                                            <div id="alert" class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none;margin-top: 5px;padding: 5px;padding-left: 20px;">
+                                                <i class="mdi mdi-block-helper mr-2">
+                                                    <span id="result_msg" style="padding-left: 10px;"></span>
+                                                </i>
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="padding: 5px;">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
                                             <div class="row" style="display: block;text-align: center;">
-                                                <a href="admin_student" class="btn btn-light btn-rounded waves-effect waves-light">
+                                                <a href="admin_teacher" class="btn btn-light btn-rounded waves-effect waves-light">
                                                     <i class="ri-close-line align-middle mr-2"></i>取消
                                                 </a>
-                                                <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light" style="margin: 20px;">
+                                                <button type="button" onclick="submitForm()" class="btn btn-success btn-rounded waves-effect waves-light" style="margin: 20px;">
                                                     <i class="ri-check-line align-middle mr-2"></i>提交
                                                 </button>
                                             </div>
@@ -154,16 +162,45 @@
                     type:"GET",
                     url:"get_all_major",
                     success:function (data) {
-                        console.log(data);
+                        //console.log(data);
                         for(var i = 0;i < data.majors.length;i++){
                             var option = $("<option></option>").text(data.majors[i].majorName);
                             option.attr("value", data.majors[i].id);
                             //将option添加到select标签中
-                            $("#add_major").append(option);
+                            $("#edit_major").append(option);
                         }
                     }
                 })
             })
+
+            function checkForm(){
+                var oTeaNumber = document.getElementById("edit_teaNumber");
+                var oTeaName = document.getElementById("edit_teaName");
+                var oSchool = document.getElementById("edit_school");
+                if (!oTeaNumber.value){
+                    document.getElementById("alert").style.display="";
+                    document.getElementById("result_msg").innerHTML = "请填写账号！";
+                    return false;
+                }
+                if (!oTeaName.value){
+                    document.getElementById("alert").style.display="";
+                    document.getElementById("result_msg").innerHTML = "请填写姓名！";
+                    return false;
+                }
+                if (!oSchool.value){
+                    document.getElementById("alert").style.display="";
+                    document.getElementById("result_msg").innerHTML = "请填写学校！";
+                    return false;
+                }
+                return true;
+            }
+
+            function submitForm(){
+                if (checkForm()){
+                    oForm = document.getElementById("form");
+                    oForm.submit();
+                }
+            }
         </script>
 
 

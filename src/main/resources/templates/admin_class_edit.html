@@ -48,11 +48,11 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <form class="needs-validation" action="/edit_class" method="post" th:object="${classmodel.class}" novalidate="" style="padding-left: 20px;">
+                                    <form id="form" class="needs-validation" action="/edit_class" method="post" th:object="${classmodel.class}" novalidate="" style="pediting-left: 20px;">
                                         <div class="form-group row">
-                                            <label for="edit_id" class="col-md-2 col-form-label">班级编号：</label>
+                                            <label for="edit_class_id" class="col-md-2 col-form-label">班级编号：</label>
                                             <div class="col-md-10">
-                                                <input name="id" th:value="*{id}" class="form-control" type="text"  id="edit_id" readonly>
+                                                <input name="id" th:value="*{id}" class="form-control" type="text" id="edit_class_id" readonly style="border:none;">
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -65,30 +65,29 @@
                                             <label for="edit_major" class="col-md-2 col-form-label">所属专业：</label>
                                             <div class="col-md-10">
                                                 <select name="majorId" th:value="*{majorId}" class="form-control" id="edit_major">
-                                                    <option th:value="*{majorId}" style="display: none;" th:text="*{majorId}"></option>
-<!--                                                    <option th:each="majors:${classmodel.majors}" th:text="${majors.majorName}" th:value="${majors.majorName}"></option>-->
+                                                    <option th:value="*{majorId}" style="display: none;" th:text="*{majorName}"></option>      
                                                 </select>
-<!--                                                <input name="major" th:value="*{major}" class="form-control" type="text" id="edit_major">-->
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="edit_creator" class="col-md-2 col-form-label">创建人员：</label>
                                             <div class="col-md-10">
-                                                <input name="creator" th:value="*{creator}" id="edit_creator" class="form-control" type="text" style="border:none;" readonly>
+                                                <input name="creator" th:value="${classmodel.username}" id="edit_creator" class="form-control" type="text" style="border:none;" readonly>
                                             </div>
                                         </div>
-                                        <div class="form-group row">
-                                            <label for="edit_createTime" class="col-md-2 col-form-label">创建时间：</label>
-                                            <div class="col-md-10">
-                                                <input class="form-control" type="text" th:value="*{createTime}" id="edit_createTime" style="border:none;" readonly>
-                                            </div>
+                                        <div id="alert" class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none;margin-top: 5px;pediting: 5px;pediting-left: 20px;">
+                                            <i class="mdi mdi-block-helper mr-2">
+                                                <span id="result_msg" style="pediting-left: 10px;"></span>
+                                            </i>
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="pediting: 5px;">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
                                         </div>
-
                                         <div class="row" style="display: block;text-align: center;">
                                             <a href="admin_class" class="btn btn-light btn-rounded waves-effect waves-light">
                                                 <i class="ri-close-line align-middle mr-2"></i>取消
                                             </a>
-                                            <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light" style="margin: 20px;">
+                                            <button type="button" onclick="submitForm()" class="btn btn-success btn-rounded waves-effect waves-light" style="margin: 20px;">
                                                 <i class="ri-check-line align-middle mr-2"></i>提交
                                             </button>
                                         </div>
@@ -151,13 +150,31 @@
     <script src="static/js/app.js"></script>
 
     <script type="text/javascript" th:inline="javascript">
+        function checkMajor(){
+            var oMajor = document.getElementById("edit_major");
+            var oClass = document.getElementById("edit_className");
+            if (!oClass.value){
+                document.getElementById("alert").style.display="";
+                document.getElementById("result_msg").innerHTML = "请填写班级名称！";
+                return false;
+            }
+            return true;
+        }
+
+        function submitForm(){
+            if (checkMajor()){
+                oForm = document.getElementById("form");
+                oForm.submit();
+            }
+        }
+
         $(function () {
             //发送请求获取所有的专业
             $.ajax({
                 type:"GET",
                 url:"get_all_major",
                 success:function (data) {
-                    console.log(data);
+                    //console.log(data);
                     for(var i = 0;i < data.majors.length;i++){
                         var option = $("<option></option>").text(data.majors[i].majorName);
                         option.attr("value", data.majors[i].id);
