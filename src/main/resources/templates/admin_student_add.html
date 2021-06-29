@@ -47,11 +47,11 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <form class="needs-validation" action="/add_student" method="post" th:object="${stumodel.student}" novalidate="" style="padding-left: 20px;">
+                                        <form id="form" class="needs-validation" action="/add_student" method="post" th:object="${stumodel.student}" novalidate="" style="padding-left: 20px;">
                                             <div class="form-group row">
                                                 <label for="add_stuNumber" class="col-md-2 col-form-label">学号：</label>
                                                 <div class="col-md-10">
-                                                    <input name="majorCode" th:value="*{stuNumber}" class="form-control" type="text"  id="add_stuNumber">
+                                                    <input name="stuNumber" th:value="*{stuNumber}" class="form-control" type="text"  id="add_stuNumber">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -66,7 +66,6 @@
                                                     <select name="majorId" th:value="*{majorId}" class="form-control" id="add_major" onchange="getClass()">
                                                         <option value="0" style="display: none;">请选择专业</option>
                                                     </select>
-<!--                                                    <input name="major" th:value="*{major}" id="add_major" class="form-control" type="text" >-->
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -75,7 +74,6 @@
                                                     <select id="add_class" name="classId" th:value="*{classId}" class="form-control">
                                                         <option value="0" style="display: none;">请选择班级</option>
                                                     </select>
-<!--                                                    <input name="className" th:value="*{className}" id="add_className" class="form-control" type="text">-->
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -84,11 +82,19 @@
                                                     <input name="phoneNumber" th:value="*{phoneNumber}" id="add_phoneNumber" class="form-control" type="text">
                                                 </div>
                                             </div>
+                                            <div id="alert" class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none;margin-top: 5px;padding: 5px;padding-left: 20px;">
+                                                <i class="mdi mdi-block-helper mr-2">
+                                                    <span id="result_msg" style="padding-left: 10px;"></span>
+                                                </i>
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="padding: 5px;">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
                                             <div class="row" style="display: block;text-align: center;">
                                                 <a href="admin_student" class="btn btn-light btn-rounded waves-effect waves-light">
                                                     <i class="ri-close-line align-middle mr-2"></i>取消
                                                 </a>
-                                                <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light" style="margin: 20px;">
+                                                <button type="button" onclick="submitForm()" class="btn btn-success btn-rounded waves-effect waves-light" style="margin: 20px;">
                                                     <i class="ri-check-line align-middle mr-2"></i>提交
                                                 </button>
                                             </div>
@@ -169,14 +175,14 @@
             })
 
             function getClass(){
-                var major = $("#add_major").val();
-                console.log("专业: "+major);
+                var major = document.getElementById("add_major").value;
+                //console.log("专业: "+major);
                 $.ajax({
                     type:"GET",
                     url:"get_class_by_major",
                     data: {"major": major},
                     success:function (data) {
-                        console.log(data);
+                        //console.log(data);
                         for(var i = 0;i < data.class_.length;i++){
                             var option = $("<option></option>").text(data.class_[i].className);
                             option.attr("value", data.class_[i].id);
@@ -184,6 +190,29 @@
                         }
                     }
                 })
+            }
+
+            function checkForm(){
+                var oStuNumber = document.getElementById("add_stuNumber");
+                var oStuName = document.getElementById("add_stuName");
+                if (!oStuNumber.value){
+                    document.getElementById("alert").style.display="";
+                    document.getElementById("result_msg").innerHTML = "请填写学号！";
+                    return false;
+                }
+                if (!oStuName.value){
+                    document.getElementById("alert").style.display="";
+                    document.getElementById("result_msg").innerHTML = "请填写姓名！";
+                    return false;
+                }
+                return true;
+            }
+
+            function submitForm(){
+                if (checkForm()){
+                    oForm = document.getElementById("form");
+                    oForm.submit();
+                }
             }
 
         </script>

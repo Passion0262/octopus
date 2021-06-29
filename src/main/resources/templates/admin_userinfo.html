@@ -40,7 +40,7 @@
                         <div class="col-xl-8">
                             <div class="card">
                                 <div class="card-body">
-                                    <form class="needs-validation" novalidate="" th:object="${userinfo}">
+                                    <form class="needs-validation" novalidate="" th:object="${userinfo}" onsubmit="checkMajor()">
                                         <div class="form-group row">
                                             <label for="teaNumber" class="col-md-2 col-form-label">账号：</label>
                                             <div class="col-md-10">
@@ -72,20 +72,21 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="majorCode" class="col-md-2 col-form-label">教授专业代码：</label>
+                                            <label for="major" class="col-md-2 col-form-label">教授专业代码：</label>
                                             <div class="col-md-10">
-                                                <input name="majorCode" class="form-control" type="text" th:value="*{majorCode}" id="majorCode">
+                                                <select name="majorId" th:value="*{majorId}" class="form-control" id="major">
+                                                    <option th:value="*{majorId}" style="display: none;" th:text="*{majorName}"></option>
+                                                </select>
+                                                <div id="alert" class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none;margin-top: 5px;padding: 5px;padding-left: 20px;">
+                                                    <i class="mdi mdi-block-helper mr-2">
+                                                        <span id="result_msg" style="padding-left: 10px;"></span>
+                                                    </i>
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="padding: 5px;">
+                                                        <span aria-hidden="true">×</span>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
-<!--                                        <div class="form-group row">-->
-<!--                                            <label class="col-md-2 col-form-label">所在学校：</label>-->
-<!--                                            <div class="col-md-10">-->
-<!--                                                <select class="form-control" name="org">-->
-<!--                                                    <option value="0">江南大学</option>-->
-<!--                                                    <option value="1">无锡职业学院</option>-->
-<!--                                                </select>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
                                         <div class="row" style="display: block;text-align: center;">
                                             <a href="admin_student" class="btn btn-light btn-rounded waves-effect waves-light">
                                                 <i class="ri-close-line align-middle mr-2"></i>取消
@@ -147,6 +148,37 @@
     <script src="static/js/pages/form-wizard.init.js"></script>
     <!-- app.js -->
     <script src="static/js/app.js"></script>
+
+    <script type="text/javascript" th:inline="javascript">
+        $(function () {
+            //发送请求获取所有的专业
+            $.ajax({
+                type:"GET",
+                url:"get_all_major",
+                success:function (data) {
+                    console.log(data);
+                    for(var i = 0;i < data.majors.length;i++){
+                        var option = $("<option></option>").text(data.majors[i].majorName);
+                        option.attr("value", data.majors[i].id);
+                        //将option添加到select标签中
+                        $("#major").append(option);
+                    }
+                }
+            })
+        })
+
+        function checkMajor(){
+            var oMajor = document.getElementById("major");
+            if (oMajor.value == "0"){
+                document.getElementById("alert").style.display="";
+                document.getElementById("result_msg").innerHTML = "请选择专业！";
+                return false;
+            }
+            return true;
+        }
+
+
+    </script>
 
 </body>
 </html>

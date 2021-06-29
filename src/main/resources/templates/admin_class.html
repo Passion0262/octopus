@@ -24,7 +24,7 @@
         <link href="static/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
     </head>
 
-    <body data-sidebar="light">
+    <body data-sidebar="light" onload="load()">
         <!-- Begin page -->
         <div id="layout-wrapper">
 
@@ -59,7 +59,7 @@
                                                 <thead style="text-align: center;white-space:nowrap;">
                                                 <tr>
                                                     <th class="sorting_disabled">操作</th>
-                                                    <th>班级编号</th>
+                                                    <th id="sort">班级编号</th>
                                                     <th>班级名称</th>
                                                     <th>所属专业</th>
                                                     <th>所属学校</th>
@@ -83,7 +83,7 @@
                                                         </td>
                                                         <td th:text="${class.id}"></td>
                                                         <td th:text="${class.className}"></td>
-                                                        <td th:text="${class.majorId}"></td>
+                                                        <td th:text="${class.majorName}"></td>
                                                         <td th:text="${class.school}"></td>
                                                         <td th:text="${class.creator}"></td>
                                                         <td th:text="${class.createTime}"></td>
@@ -153,6 +153,12 @@
         <script src="static/js/pages/datatables.init.js"></script>
         <script src="static/js/pages/dashboard.init.js"></script>
         <script src="static/js/app.js"></script>
+
+        <script type="text/javascript" th:inline="javascript">
+            function load(){
+                document.getElementById("sort").click();
+            }
+        </script>
 
 
     </body>
