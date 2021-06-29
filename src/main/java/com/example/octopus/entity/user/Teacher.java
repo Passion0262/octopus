@@ -4,6 +4,8 @@ import lombok.Data;
 
 import java.lang.reflect.Field;
 import java.sql.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author: Hao
@@ -47,25 +49,27 @@ public class Teacher {
 		this.school = school;
 	}
 
+	public Teacher mergeUpdate(Teacher old, Teacher b) {
+		try {
+			return compare(old, b);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return b;
+	}
 
-//	public Teacher mergeUpdateTea(Teacher orginTea, Teacher newTea) throws IllegalAccessException {
-//		Class orginTeaClass = orginTea.getClass();
-//		Class newTeaClass = newTea.getClass();
-//		Field[] orginFields = orginTeaClass.getDeclaredFields();
-//		Field[] newFields = newTeaClass.getDeclaredFields();
-//
-//		for (int i = 0; i < newFields.length; i++) {
-//			Field orginF = orginFields[i];
-//			Field newF = newFields[i];
-//            orginF.setAccessible(true);
-//            newF.setAccessible(true);
-//            if (newF.get(newTea)==null){
-//                newF.s
-//            }
-//
-//            System.out.println("属性名:" + f.getName() + " 属性值:" + f.get(t));
-//		}
-//
-//		return newTea;
-//	}
+
+	public static <T> T compare(T old, T Obj2) throws Exception {
+		Field[] fs = old.getClass().getDeclaredFields();
+		for (Field f : fs) {
+			f.setAccessible(true);
+			Object v1 = f.get(old);
+			Object v2 = f.get(Obj2);
+
+			if (v2 == null) f.set(Obj2, v1);
+
+		}
+		return Obj2;
+	}
+
 }
