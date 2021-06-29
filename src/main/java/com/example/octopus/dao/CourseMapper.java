@@ -43,7 +43,7 @@ public interface CourseMapper {
      * @param course  课程实体
      * @return 成功为true，失败为false
      */
-    @Insert("INSERT INTO course (course_name,tea_number,tea_name,description,image_path,start_time,end_time,apply_time,num_allowed,num_participated,status) VALUES (#{courseName},#{teaNumber},#{description},#{imagePath},#{startTime},#{endTime},#{applyTime},#{numAllowed},#{numParticipated},#{status})")
+    @Insert("INSERT INTO course (course_name,tea_number,tea_name,description,image_path,start_time,end_time,apply_time,num_allowed,num_participated,status) VALUES (#{courseName},#{teaNumber},#{teaName},#{description},#{imagePath},#{startTime},#{endTime},#{applyTime},#{numAllowed},#{numParticipated},#{status})")
     boolean insertCourse(Course course);
 
     /**
