@@ -48,66 +48,27 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <form class="needs-validation" action="/edit_course_student" method="post" th:object="${coursestudentmodel.course_student}" novalidate="" style="padding-left: 20px;">
+                                    <form id="form" action="/edit_course_student" method="post" class="needs-validation" th:object="${coursestudentmodel.course_student}" novalidate="" style="pediting-left: 20px;">
                                         <div class="form-group row">
-                                            <label for="edit_id" class="col-md-2 col-form-label">编号：</label>
+                                            <label for="edit_courseId" class="col-md-2 col-form-label">开课计划：</label>
                                             <div class="col-md-10">
-                                                <input name="id" th:value="*{id}" id="edit_id" class="form-control" type="text">
+<!--                                                <input name="courseId" th:value="*{courseId}" id="edit_courseId" class="form-control" type="text">-->
+                                                <select name="courseId" th:value="*{courseId}" class="form-control" id="edit_courseId">
+                                                    <option th:value="*{courseId}" th:text="*{courseName}" style="display: none;"></option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="edit_courseName" class="col-md-2 col-form-label">开课计划名称：</label>
+                                            <label for="edit_stuNumber" class="col-md-2 col-form-label">学生学号：</label>
                                             <div class="col-md-10">
-                                                <input name="courseName" th:value="*{courseName}" id="edit_courseName" class="form-control" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="edit_teacher" class="col-md-2 col-form-label">授课老师：</label>
-                                            <div class="col-md-10">
-                                                <input name="teacher" th:value="*{teacher}" id="edit_teacher" class="form-control" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="edit_stuName" class="col-md-2 col-form-label">学生姓名：</label>
-                                            <div class="col-md-10">
-                                                <input name="stuName" th:value="*{stuName}" id="edit_stuName" class="form-control" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="edit_stuMajor" class="col-md-2 col-form-label">学生专业：</label>
-                                            <div class="col-md-10">
-                                                <input name="stuMajor" th:value="*{stuMajor}" id="edit_stuMajor" class="form-control" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="edit_stuClass" class="col-md-2 col-form-label">学生班级：</label>
-                                            <div class="col-md-10">
-                                                <input name="stuClass" th:value="*{stuClass}" id="edit_stuClass" class="form-control" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="edit_applyTime" class="col-md-2 col-form-label">申请时间：</label>
-                                            <div class="col-md-10">
-                                                <input name="applyTime" th:value="*{applyTime}" id="edit_applyTime" class="form-control" type="text" readonly style="border: none;">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="edit_auditor" class="col-md-2 col-form-label">审核人员：</label>
-                                            <div class="col-md-10">
-                                                <input name="auditor" th:value="*{auditor}" id="edit_auditor" class="form-control" type="text" readonly style="border: none;">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="edit_auditTime" class="col-md-2 col-form-label">审核时间：</label>
-                                            <div class="col-md-10">
-                                                <input name="auditTime" th:value="*{auditTime}" id="edit_auditTime" class="form-control" type="text" readonly style="border: none;">
+                                                <input name="stuNumber" th:value="*{stuNumber}" id="edit_stuNumber" class="form-control" type="text">
                                             </div>
                                         </div>
                                         <div class="row" style="display: block;text-align: center;">
                                             <a href="admin_course_student" class="btn btn-light btn-rounded waves-effect waves-light">
                                                 <i class="ri-close-line align-middle mr-2"></i>取消
                                             </a>
-                                            <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light" style="margin: 20px;">
+                                            <button type="button" onclick="submitForm()" class="btn btn-success btn-rounded waves-effect waves-light" style="margin: 20px;">
                                                 <i class="ri-check-line align-middle mr-2"></i>提交
                                             </button>
                                         </div>
@@ -170,7 +131,47 @@
     <script src="static/js/app.js"></script>
 
     <script type="text/javascript" th:inline="javascript">
+        $(function () {
+            //发送请求获取所有的开课计划
+            $.ajax({
+                type:"GET",
+                url:"get_all_course",
+                success:function (data) {
+                    console.log(data);
+                    for(var i = 0;i < data.courses.length;i++){
+                        var option = $("<option></option>").text(data.courses[i].courseName);
+                        option.attr("value", data.courses[i].id);
+                        //将option添加到select标签中
+                        $("#edit_courseId").append(option);
+                    }
+                }
+            })
+        })
 
+        function checkForm(){
+            var oStuNumber = document.getElementById("edit_stuNumber");
+            var oCourse = document.getElementById("edit_courseId");
+            if (!oStuNumber.value){
+                document.getElementById("alert").style.display="";
+                document.getElementById("result_msg").innerHTML = "请填写学生学号！";
+                return false;
+            }
+            if (oCourse.value == "0"){
+                document.getElementById("alert").style.display="";
+                document.getElementById("result_msg").innerHTML = "请选择开课计划！";
+                return false;
+            }
+            return true;
+        }
+
+        function submitForm(){
+            //console.log("check form start");
+            if (checkForm()){
+                //console.log("submit form");
+                oForm = document.getElementById("form");
+                oForm.submit();
+            }
+        }
     </script>
 
 
