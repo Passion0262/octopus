@@ -6,11 +6,11 @@ import java.sql.Date;
 @Data
 public class Module {
 
-    private long id;
+    private long moduleId;
 
-    private String name;
+    private int moduleNumber;
 
-    private int number;
+    private String moduleName;
 
     private long experimentId;
 

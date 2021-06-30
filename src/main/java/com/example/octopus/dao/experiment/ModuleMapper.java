@@ -19,7 +19,7 @@ public interface ModuleMapper {
      * @param experimentId 实验id
      * @return module list
      */
-    @Select(("SELECT * FROM module where experiment_id = #{experimentId} order by number" ))
+    @Select(("SELECT * FROM module where experiment_id = #{experimentId} order by module_number" ))
     List<Module> listModulesByExperimentId(long experimentId) ;
 
 }

@@ -315,7 +315,7 @@ public class studentController {
 
         for (int i=0;i<chapters.size();i++){
 //            logger.info("chaptersid:" + chapters.get(i).getId());
-            List<Video> video = videoService.listVideosByChapterId(chapters.get(i).getId());
+            List<Video> video = videoService.listVideosByChapterId(chapters.get(i).getChapterId());
             videos.add(video);
 
             List<VideoProgress> videopro = new ArrayList<>();
@@ -460,8 +460,8 @@ public class studentController {
 
         List<List<SubExperiment>> subExperiments = new ArrayList<>();
         for (int i = 0; i < modules.size(); i++) {
-            logger.info("experiment——module-sub:" + modules.get(i).getId());
-            List<SubExperiment> subExperiment = subExperimentService.listSubExperimentsByModuleId(modules.get(i).getId());
+            logger.info("experiment——module-sub:" + modules.get(i).getModuleId());
+            List<SubExperiment> subExperiment = subExperimentService.listSubExperimentsByModuleId(modules.get(i).getModuleId());
             subExperiments.add(subExperiment);
         }
         logger.info("subExperiments:" + subExperiments);
