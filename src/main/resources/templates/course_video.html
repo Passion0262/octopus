@@ -325,7 +325,7 @@
     function aa(duration){
       learntime = learntime+1;
       var alreadytime  = alreadypro/100*duration;
-      if(alreadytime+learntime<duration){
+      if(alreadytime+learntime<=duration){
         pro = Math.floor(((alreadytime+learntime)/duration)*100);
       }
       console.log('pro',pro);
