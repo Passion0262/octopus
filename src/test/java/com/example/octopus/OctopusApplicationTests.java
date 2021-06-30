@@ -3,6 +3,9 @@ package com.example.octopus;
 import com.example.octopus.dao.ClassMapper;
 import com.example.octopus.dao.TeacherMapper;
 import com.example.octopus.dao.UserMapper;
+import com.example.octopus.dao.experiment.ChapterMapper;
+import com.example.octopus.dao.experiment.ModuleMapper;
+import com.example.octopus.entity.user.Major;
 import com.example.octopus.entity.user.Student;
 import com.example.octopus.entity.user.Teacher;
 import com.example.octopus.service.*;
@@ -13,6 +16,8 @@ import com.jcraft.jsch.SftpException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Map;
 
 @SpringBootTest
 class OctopusApplicationTests {
@@ -40,19 +45,23 @@ class OctopusApplicationTests {
 	UserService userService;
 	@Autowired
 	TeacherService tea;
+	@Autowired
+	MajorService majorService;
 
+	@Autowired
+	ModuleMapper moduleMapper;
+	@Autowired
+	ChapterMapper chapterMapper;
 	@Test
 	void interfaceTest() {
 
-        Teacher teacher = new Teacher(6, "LuBenwei", "lbwnb", 7, false, "33333333333", "卢本伟广场学院");
-		System.out.println(tea.updateTeacher(teacher));
+//		System.out.println(studentCourseService.insertStudentCourse(3L,1L));
+		System.out.println(studentCourseService.listStudentCoursesByStuNumber(2));
 	}
 
 
 	@Test
 	void dockerTest() throws JSchException, SftpException {
-//        System.out.println(dockerService.getDockerList());
-//        dockerService.findDockerById(111);
 		dockerService.createNewDocker(2);
 		ShellUtils shellUtils = new ShellUtils();
 
