@@ -58,7 +58,7 @@
                                                 <thead style="text-align: center;">
                                                 <tr>
                                                     <th>操作</th>
-                                                    <th id="sort">开课计划编号</th>
+                                                    <th id="sort">编号</th>
                                                     <th>开课计划名称</th>
                                                     <th>授课老师</th>
 <!--                                                    <th>课程分类</th>-->
@@ -94,7 +94,7 @@
                                                             <i class="mdi mdi-trash-can font-size-18"></i>
                                                         </a>
                                                     </td>
-                                                    <td th:text="${course.id}"></td>
+                                                    <td th:text="${courseStat.index+1}"></td>
                                                     <td th:text="${course.courseName}"></td>
                                                     <td th:text="${course.teaName}"></td>
 <!--                                                    <td th:text="${course.classification}"></td>-->

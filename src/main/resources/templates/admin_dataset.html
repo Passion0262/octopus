@@ -57,7 +57,7 @@
                                         <thead style="text-align: center;">
                                         <tr>
                                             <th class="sorting_disabled" >操作</th>
-                                            <th>数据集编号</th>
+                                            <th>编号</th>
                                             <th>数据集名称</th>
                                             <th>数据集描述</th>
                                             <th>上传人员</th>
@@ -81,7 +81,7 @@
                                                     <i class="mdi mdi-trash-can font-size-18"></i>
                                                 </a>
                                             </td>
-                                            <td th:text="${dataset.id}"></td>
+                                            <td th:text="${datasetStat.index+1}"></td>
                                             <td th:text="${dataset.name}"></td>
                                             <td th:text="${dataset.description}"></td>
                                             <td th:text="${dataset.uploader}"></td>
