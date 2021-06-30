@@ -34,7 +34,7 @@
                         <div class="row">
                             <div class="col-12">
                               <div class="page-title-box d-flex align-items-center justify-content-between">
-                                <h4 class="mb-0">增加数据集</h4>
+                                <h4 class="mb-0">修改数据集</h4>
                               </div>
                             </div>
                         </div>
@@ -44,60 +44,60 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <form id="form" action="/add_dataset" method="post" th:object="${datasetmodel.dataset}" novalidate="" style="padding-left: 20px;">
+                                        <form id="form" action="/edit_dataset" method="post" th:object="${datasetmodel.dataset}" novalidate="" style="pediting-left: 20px;">
 
                                             <div class="form-group row">
-                                              <label for="add_name" class="col-md-2 col-form-label">数据集名称：</label>
+                                              <label for="edit_name" class="col-md-2 col-form-label">数据集名称：</label>
                                               <div class="col-md-10">
-                                                <input name="name" th:value="*{name}" class="form-control" type="text"  id="add_name">
+                                                <input name="name" th:value="*{name}" class="form-control" type="text"  id="edit_name">
                                               </div>
                                             </div>
                                             <div class="form-group row">
-                                              <label for="add_description" class="col-md-2 col-form-label">描述：</label>
+                                              <label for="edit_description" class="col-md-2 col-form-label">描述：</label>
                                               <div class="col-md-10">
-                                            <!--                                <input name="teacher" th:value="*{teacher}" class="form-control" id="add_teacher" type="text">-->
-                                                  <textarea id="add_description" name="description" th:value="*{description}" class="form-control"></textarea>
+                                            <!--                                <input name="teacher" th:value="*{teacher}" class="form-control" id="edit_teacher" type="text">-->
+                                                  <textarea id="edit_description" name="description" th:value="*{description}" class="form-control"></textarea>
                                               </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="add_datasetPath" class="col-md-2 col-form-label">数据集文件：</label>
+                                                <label for="edit_datasetPath" class="col-md-2 col-form-label">数据集文件：</label>
                                                 <div class="col-md-10">
-                                                    <input name="" id="add_datasetPath" value="" class="form-control btn btn-light" type="file" accept="" style="background-color: white; border: 1px solid #ced4da;">
+                                                    <input name="" id="edit_datasetPath" value="" onchange="checkDataset()" class="form-control btn btn-light" type="file" accept="" style="background-color: white; border: 1px solid #ced4da;">
                                                     <input name="downloadPath" id="datasetPath" th:value="*{downloadPath}" class="form-control btn btn-light" type="text" style="display: none">
 
                                                 </div>
                                             </div>
                                             <div class="form-group row" style="display: none">
-                                                <label for="add_size" class="col-md-2 col-form-label">数据集大小：</label>
+                                                <label for="edit_size" class="col-md-2 col-form-label">数据集大小：</label>
                                                 <div class="col-md-10">
-                                                    <input name="size" th:value="*{size}" class="form-control" type="text"  id="add_size">
+                                                    <input name="size" th:value="*{size}" class="form-control" type="text"  id="edit_size">
                                                 </div>
                                             </div>
                                             <div class="form-group row" style="display: none">
-                                                <label for="add_fileFormat" class="col-md-2 col-form-label">数据集格式：</label>
+                                                <label for="edit_fileFormat" class="col-md-2 col-form-label">数据集格式：</label>
                                                 <div class="col-md-10">
-                                                    <input name="fileFormat" th:value="*{fileFormat}" class="form-control" type="text"  id="add_fileFormat">
+                                                    <input name="fileFormat" th:value="*{fileFormat}" class="form-control" type="text"  id="edit_fileFormat">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="add_imagePath" class="col-md-2 col-form-label">数据集图标：</label>
+                                                <label for="edit_imagePath" class="col-md-2 col-form-label">数据集图标：</label>
                                                 <div class="col-md-10">
-                                                    <input name="" id="add_imagePath" value="" class="form-control btn btn-light" type="file" accept="image/png, image/jpeg, image/jpg" style="background-color: white; border: 1px solid #ced4da;">
+                                                    <input name="" id="edit_imagePath" value="" onchange="checkImg()" class="form-control btn btn-light" type="file" accept="image/png, image/jpeg, image/jpg" style="background-color: white; border: 1px solid #ced4da;">
                                                     <input name="imagePath" id="imagePath" th:value="*{imagePath}" class="form-control btn btn-light" type="text" style="display: none">
                                                 </div>
                                             </div>
 
                                             <div class="form-group row">
-                                                <label for="add_uploader" class="col-md-2 col-form-label">上传人员：</label>
+                                                <label for="edit_uploader" class="col-md-2 col-form-label">上传人员：</label>
                                                 <div class="col-md-10">
-                                                    <input name="uploader" th:value="${datasetmodel.username}" id="add_uploader" class="form-control" type="text" readonly style="border:none;">
+                                                    <input name="uploader" th:value="${datasetmodel.username}" id="edit_uploader" class="form-control" type="text" readonly style="border:none;">
                                                 </div>
                                             </div>
-                                            <div id="alert" class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none;margin-top: 5px;padding: 5px;padding-left: 20px;">
+                                            <div id="alert" class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none;margin-top: 5px;pediting: 5px;pediting-left: 20px;">
                                                 <i class="mdi mdi-block-helper mr-2">
-                                                    <span id="result_msg" style="padding-left: 10px;"></span>
+                                                    <span id="result_msg" style="pediting-left: 10px;"></span>
                                                 </i>
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="padding: 5px;">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="pediting: 5px;">
                                                     <span aria-hidden="true">×</span>
                                                 </button>
                                             </div>
@@ -156,9 +156,26 @@
             var imgOk = false;
             var datasetOk = false;
 
-            function uploadDataset() {
+            var changeImg = false;
+            function checkImg(){
+                console.log("更换图片");
+                //检查是否更换图片
+                if(!changeImg){
+                    changeImg = true;
+                }
+            }
+            var changeDataset = false;
+            function checkDataset(){
+                console.log("更换图片");
+                //检查是否更换图片
+                if(!changeDataset){
+                    changeDataset = true;
+                }
+            }
+
+            function uploeditataset() {
                 var formData = new FormData();
-                formData.append('file', document.getElementById('add_datasetPath').files[0]);
+                formData.append('file', document.getElementById('edit_datasetPath').files[0]);
                 $.ajax({
                     async: false,
                     type: 'POST',
@@ -170,8 +187,8 @@
                     success: function (data) {
                         if(data.hasOwnProperty("relativePath")){
                             document.getElementById("datasetPath").value = data.relativePath;
-                            document.getElementById("add_size").value = data.size;
-                            document.getElementById("add_fileFormat").value = data.fileFormat;
+                            document.getElementById("edit_size").value = data.size;
+                            document.getElementById("edit_fileFormat").value = data.fileFormat;
                             console.log("上传文件成功");
                             datasetOk = true;
                         }
@@ -189,7 +206,7 @@
 
             function uploadImg() {
                 var formData = new FormData();
-                formData.append('img', document.getElementById('add_imagePath').files[0]);
+                formData.append('img', document.getElementById('edit_imagePath').files[0]);
                 $.ajax({
                     async: false,
                     type: 'POST',
@@ -219,28 +236,32 @@
             }
 
             function checkForm(){
-                var oName = document.getElementById("add_name");
+                var oName = document.getElementById("edit_name");
                 if(!oName.value){
                     document.getElementById("alert").style.display="";
                     document.getElementById("result_msg").innerHTML = "请填写数据集名称！";
                     return false;
                 }
 
-                if (document.getElementById('add_datasetPath').files.length == 0){
-                    document.getElementById("alert").style.display="";
-                    document.getElementById("result_msg").innerHTML = "请上传数据集文件！";
-                    return false;
+                if (changeDataset){
+                    if (document.getElementById('add_datasetPath').files.length == 0) {
+                        document.getElementById("alert").style.display = "";
+                        document.getElementById("result_msg").innerHTML = "请上传数据集文件！";
+                        return false;
+                    }
+                    uploadDataset();
+                    if (!datasetOk) return false;
                 }
 
-                if (document.getElementById('add_imagePath').files.length == 0){
-                    document.getElementById("alert").style.display="";
-                    document.getElementById("result_msg").innerHTML = "请上传数据集图标！";
-                    return false;
+                if(changeImg) {
+                    if (document.getElementById('add_imagePath').files.length == 0) {
+                        document.getElementById("alert").style.display = "";
+                        document.getElementById("result_msg").innerHTML = "请上传数据集图标！";
+                        return false;
+                    }
+                    uploadImg();
+                    if (!imgOk) return false;
                 }
-                uploadImg();
-                if(!imgOk) return false;
-                uploadDataset();
-                if(!datasetOk) return false;
 
                 return true;
             }

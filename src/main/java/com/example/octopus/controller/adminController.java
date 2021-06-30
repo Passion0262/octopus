@@ -607,9 +607,9 @@ public class adminController {
         logger.info("进入学生开课计划管理");
         if(role_id == 1){
             model.addAttribute("course_students", studentcourseService.listStudentCourses());
-            //System.out.println(studentcourseService.listStudentCourses());
         }
         else{
+            // todo 目前无法返回list
             model.addAttribute("course_students", studentcourseService.listStudentCoursesByTeaNumber(teaNum));
         }
         return "admin_course_student";
@@ -635,6 +635,7 @@ public class adminController {
         Student stu = userService.getStudentByStuNumber(course_student.getStuNumber());
 
         course_student.setCourseName(course.getCourseName());
+        //course_student.setTeaName(course.getTeaName());
         course_student.setStuName(stu.getName());
         course_student.setStuMajor(stu.getMajorName());
         course_student.setStuClass(stu.getClassName());
@@ -650,7 +651,7 @@ public class adminController {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
 
         long id = Long.parseLong(request.getParameter("id"));
-        logger.info("进入admin_course_student_edit，获取指定名字的Student_Course(),id="+id);
+        logger.info("进入admin_course_student_edit，获取指定名字的Student_Course(),id=[{}]", id);
         model.addAttribute("course_student",studentcourseService.getById(id));
 
         return new ModelAndView("admin_course_student_edit","coursestudentmodel",model);
@@ -680,7 +681,7 @@ public class adminController {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
 
         long id = Long.parseLong(request.getParameter("id"));
-        logger.info("删除 id=", id);
+        logger.info("删除 id=[{}]", id);
         studentcourseService.deleteStudentCourse(id);
         return new ModelAndView("redirect:/admin_course_student");
     }
@@ -916,9 +917,9 @@ public class adminController {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
 
         long id = Long.parseLong(request.getParameter("id"));
-        logger.info("进入admin_dataset_edit，获取指定id的Dataset(),id="+id);
+        logger.info("进入admin_dataset_edit，获取指定id的Dataset(),id=[{}]", id);
 
-        // todo 获取指定id的dataset
+        model.addAttribute("dataset", datasetService.getDatasetById(id));
 
         return new ModelAndView("admin_dataset_edit","datasetmodel",model);
     }
@@ -936,7 +937,7 @@ public class adminController {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
 
         long id = Long.parseLong(request.getParameter("id"));
-        logger.info("删除 dataset.id=" + id);
+        logger.info("删除 dataset.id=[{}]", id);
         // todo 数据库删除对应数据
         return new ModelAndView("redirect:/admin_dataset");
     }
@@ -990,6 +991,17 @@ public class adminController {
         }
         course.put("courses", courses);
         return course;
+    }
+
+    // 下载数据集，下载次数+1
+    @ResponseBody
+    @RequestMapping("/download_dataset")
+    public String download_dataset(HttpServletRequest request) {
+
+        Long id = Long.parseLong(request.getParameter("id"));
+        logger.info("数据集下载，id=[{}]", id);
+        datasetService.increaseDownloadNum(id);
+        return "";
     }
 
 
