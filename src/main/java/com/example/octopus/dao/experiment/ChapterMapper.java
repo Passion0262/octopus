@@ -15,6 +15,6 @@ public interface ChapterMapper {
      * @param courseId 课程id
      * @return chapter list
      */
-    @Select(("SELECT * FROM chapter where course_id = #{courseId} order by number" ))
+    @Select("SELECT * FROM chapter where course_id = #{courseId} order by chapter_number")
     List<Chapter> listChaptersByCourseId(long courseId) ;
 }

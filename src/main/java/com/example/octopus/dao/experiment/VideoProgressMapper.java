@@ -22,7 +22,7 @@ public interface VideoProgressMapper {
     /**
      *  根据学生学号查询所有的videoProgress
      */
-    @Select("SELECT * FROM video_progress WHERE stu_number = #{stuNumber}")
+    @Select("SELECT * FROM video_progress WHERE stu_number = #{stuNumber} order by end_time")
     List<VideoProgress> listByStuNumber(long stuNumber);
 
     /**

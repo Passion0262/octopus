@@ -16,6 +16,7 @@ public class Video {
 
     private long chapterId;
 
+
     private long courseId;
 
 }

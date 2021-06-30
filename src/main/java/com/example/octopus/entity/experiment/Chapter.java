@@ -5,11 +5,11 @@ import java.sql.Date;
 
 @Data
 public class Chapter {
-    private long id;
+    private long chapterId;
 
-    private int number;
+    private int chapterNumber;
 
-    private String name;
+    private String chapterName;
 
     private long courseId;
 

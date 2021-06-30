@@ -42,7 +42,9 @@ public class TeacherServiceImpl implements TeacherService {
 	@Override
 	public boolean updateTeacher(Teacher teacher) {
 		long roleId = teacher.getAdminRights() ? 1 : 3;
-		return teacherMapper.updateTeacher(teacher) && sysUserRoleMapper.updateRoleId(teacher.getTeaNumber(), roleId)
+		Teacher old = teacherMapper.getByTeaNumber(teacher.getTeaNumber());
+		Teacher t = old.mergeUpdate(old, teacher);
+		return teacherMapper.updateTeacher(t) && sysUserRoleMapper.updateRoleId(teacher.getTeaNumber(), roleId)
                 && sysUserRoleMapper.updatePassword(teacher.getTeaNumber(), teacher.getPassword());
 	}
 

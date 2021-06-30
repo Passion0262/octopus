@@ -30,4 +30,9 @@ class SysUserRoleMapperTest {
         List<SysUserRole> list = sysUserRoleMapper.listByUserId(stuNumber);
         assertEquals(list.get(0).getRoleId(),1);
     }
+
+	@Test
+	void updateRoleId() {
+		System.out.println(sysUserRoleMapper.updateRoleId(1, 3));
+	}
 }

@@ -22,12 +22,12 @@ public interface TeacherMapper {
     @Select("SELECT t.*, major_name FROM teacher t, major m WHERE t.major_id=m.id")
     List<Teacher> getAllTeachers();
 
-    @Update("UPDATE teacher SET name = #{name},major_id = #{majorId},admin_rights = #{adminRights},phone = #{phone},school = #{school},login_number = #{loginNumber}, last_login_time = #{lastLoginTime}" +
+    @Update("UPDATE teacher SET tea_name = #{teaName},major_id = #{majorId},admin_rights = #{adminRights},phone = #{phone},school = #{school},login_number = #{loginNumber}, last_login_time = #{lastLoginTime} " +
             "WHERE tea_number = #{teaNumber}")
     boolean updateTeacher(Teacher teacher);
 
-    @Insert("INSERT INTO teacher (tea_number,name,major_id,admin_rights,phone,school,login_number,last_login_time) " +
-            "VALUES (#{teaNumber},#{name},#{majorId},#{adminRights},#{phone},#{school},#{loginNumber},#{lastLoginTime})")
+    @Insert("INSERT INTO teacher (tea_number,tea_name,major_id,admin_rights,phone,school,login_number,last_login_time) " +
+            "VALUES (#{teaNumber},#{teaName},#{majorId},#{adminRights},#{phone},#{school},0,CURRENT_TIMESTAMP)")
     boolean addTeacher(Teacher teacher);
 
     @Delete("DELETE FROM teacher WHERE tea_number=#{teaNumber}")

@@ -123,8 +123,12 @@
                     <th>下载次数</th><td><span th:text="${dataset.downloadNum}"></span></td>
                     <th>下载</th>
                     <td>
-                      <button type="button" class="btn btn-success  waves-effect waves-light" id="">下载</button>
-                      <!--                    <button type="button" class="btn btn-danger btn-rounded waves-effect waves-light">取消课程</button>-->
+                      <button type="button" class="btn btn-success  waves-effect waves-light" id="" onclick="downloadfile()">
+                        <a style="text-decoration: none; text-decoration-color: #FFFFFF;" th:href ="${dataset.downloadPath}" th:download="${dataset.name}">
+                          下载
+                        </a>
+                      </button>
+
                     </td>
                   </tr>
 
@@ -190,6 +194,27 @@
 <script src="../../static/js/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
 
 <script src="../../static/js/app.js"></script>
+
+
+<script th:inline="javascript" type="text/javascript">
+  function downloadfile(){
+    // window.open([[${dataset.downloadPath}]]);
+    $.ajax({
+      data:{
+        'datasetid':[[${dataset.id}]]
+      },
+      type: "POST",
+      url: "/datasetdownload",
+      dataType : "json",
+      success: function (result) {
+        console.log(result);
+      },
+      error: function () {
+      }
+    });
+  }
+</script>
+
 </body>
 
 </html>

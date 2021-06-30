@@ -2,6 +2,7 @@ package com.example.octopus.service.impl;
 
 import com.example.octopus.dao.*;
 import com.example.octopus.entity.user.Student;
+import com.example.octopus.entity.user.SysUserRole;
 import com.example.octopus.service.UserService;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +73,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean insertStudent(Student student, long teaNumber) {
         student.setSchool(teacherMapper.getSchoolByTeaNumber(teaNumber));
-        return userMapper.insertStudent(student) && sysUserRoleMapper.updatePassword(student.getStuNumber(), student.getPassword());
+        SysUserRole sysUserRole = new SysUserRole(student.getStuNumber(), 2,  student.getPassword());
+        return userMapper.insertStudent(student) && sysUserRoleMapper.insert(sysUserRole);
     }
 
     @Override
