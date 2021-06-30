@@ -48,66 +48,35 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <form class="needs-validation" action="/add_course_student" method="post" th:object="${coursestudentmodel.course_student}" novalidate="" style="padding-left: 20px;">
+                                    <form id="form" action="/add_course_student" method="post" class="needs-validation" th:object="${coursestudentmodel.course_student}" novalidate="" style="padding-left: 20px;">
                                         <div class="form-group row">
-                                            <label for="add_id" class="col-md-2 col-form-label">编号：</label>
+                                            <label for="add_courseId" class="col-md-2 col-form-label">开课计划：</label>
                                             <div class="col-md-10">
-                                                <input name="id" th:value="*{id}" id="add_id" class="form-control" type="text">
+<!--                                                <input name="courseId" th:value="*{courseId}" id="add_courseId" class="form-control" type="text">-->
+                                                <select name="courseId" th:value="*{courseId}" class="form-control" id="add_courseId">
+                                                    <option value="0" style="display: none;">请选择开课计划</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="add_courseName" class="col-md-2 col-form-label">开课计划名称：</label>
+                                            <label for="add_stuNumber" class="col-md-2 col-form-label">学生学号：</label>
                                             <div class="col-md-10">
-                                                <input name="courseName" th:value="*{courseName}" id="add_courseName" class="form-control" type="text">
+                                                <input name="stuNumber" th:value="*{stuNumber}" id="add_stuNumber" class="form-control" type="text">
                                             </div>
                                         </div>
-                                        <div class="form-group row">
-                                            <label for="add_teacher" class="col-md-2 col-form-label">授课老师：</label>
-                                            <div class="col-md-10">
-                                                <input name="teacher" th:value="*{teacher}" id="add_teacher" class="form-control" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="add_stuName" class="col-md-2 col-form-label">学生姓名：</label>
-                                            <div class="col-md-10">
-                                                <input name="stuName" th:value="*{stuName}" id="add_stuName" class="form-control" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="add_stuMajor" class="col-md-2 col-form-label">学生专业：</label>
-                                            <div class="col-md-10">
-                                                <input name="stuMajor" th:value="*{stuMajor}" id="add_stuMajor" class="form-control" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="add_stuClass" class="col-md-2 col-form-label">学生班级：</label>
-                                            <div class="col-md-10">
-                                                <input name="stuClass" th:value="*{stuClass}" id="add_stuClass" class="form-control" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="add_applyTime" class="col-md-2 col-form-label">申请时间：</label>
-                                            <div class="col-md-10">
-                                                <input name="applyTime" value="" id="add_applyTime" class="form-control" type="text" readonly style="border: none;">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="add_auditor" class="col-md-2 col-form-label">审核人员：</label>
-                                            <div class="col-md-10">
-                                                <input name="auditor" th:value="${coursestudentmodel.username}" id="add_auditor" class="form-control" type="text" readonly style="border: none;">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="add_auditTime" class="col-md-2 col-form-label">审核时间：</label>
-                                            <div class="col-md-10">
-                                                <input name="auditTime" value="" id="add_auditTime" class="form-control" type="text" readonly style="border: none;">
-                                            </div>
+                                        <div id="alert" class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none;margin-top: 5px;padding: 5px;padding-left: 20px;">
+                                            <i class="mdi mdi-block-helper mr-2">
+                                                <span id="result_msg" style="padding-left: 10px;"></span>
+                                            </i>
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="padding: 5px;">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
                                         </div>
                                         <div class="row" style="display: block;text-align: center;">
                                             <a href="admin_course_student" class="btn btn-light btn-rounded waves-effect waves-light">
                                                 <i class="ri-close-line align-middle mr-2"></i>取消
                                             </a>
-                                            <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light" style="margin: 20px;">
+                                            <button type="button" onclick="submitForm()" class="btn btn-success btn-rounded waves-effect waves-light" style="margin: 20px;">
                                                 <i class="ri-check-line align-middle mr-2"></i>提交
                                             </button>
                                         </div>
@@ -170,19 +139,48 @@
     <script src="static/js/app.js"></script>
 
     <script type="text/javascript" th:inline="javascript">
-        window.onload = function() {
-          var applyTime = document.getElementById("add_applyTime");
-          var auditTime = document.getElementById("add_auditTime");
-          setInterval(function() {
-            var time = new Date();  // 程序计时的月从0开始取值后+1
-            var m = time.getMonth() + 1;
-            var t = time.getFullYear() + "-" + m + "-"
-                    + time.getDate() + " " + time.getHours() + ":"
-                    + time.getMinutes() + ":" + time.getSeconds();
-            applyTime.value = t;
-            auditTime.value = t;
-          }, 1000);
-        };
+        $(function () {
+            //发送请求获取所有的开课计划
+            $.ajax({
+                type:"GET",
+                url:"get_all_course",
+                success:function (data) {
+                    console.log(data);
+                    for(var i = 0;i < data.courses.length;i++){
+                        var option = $("<option></option>").text(data.courses[i].courseName);
+                        option.attr("value", data.courses[i].id);
+                        //将option添加到select标签中
+                        $("#add_courseId").append(option);
+                    }
+                }
+            })
+        })
+
+        function checkForm(){
+            var oStuNumber = document.getElementById("add_stuNumber");
+            var oCourse = document.getElementById("add_courseId");
+            if (!oStuNumber.value){
+                document.getElementById("alert").style.display="";
+                document.getElementById("result_msg").innerHTML = "请填写学生学号！";
+                return false;
+            }
+            if (oCourse.value == "0"){
+                document.getElementById("alert").style.display="";
+                document.getElementById("result_msg").innerHTML = "请选择开课计划！";
+                return false;
+            }
+            return true;
+        }
+
+        function submitForm(){
+            //console.log("check form start");
+            if (checkForm()){
+                //console.log("submit form");
+                oForm = document.getElementById("form");
+                oForm.submit();
+            }
+        }
+
     </script>
 
 

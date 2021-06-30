@@ -11,9 +11,11 @@ $(document).ready(function(){
 		scrollY:"400px",
 		scrollCollapse:!0,
 		lengthChange:!1,
+		//pagingType:"full_numbers",
 		drawCallback:function(){
 			$(".dataTables_paginate > .pagination").addClass("pagination-rounded")
 		},
+		paginate: false,
 		buttons:["copy","excel","pdf","csv","colvis"]
 	});
 	a.buttons().container().appendTo("#datatable-buttons_wrapper .col-md-6:eq(0)"),
@@ -33,12 +35,7 @@ $(document).ready(function(){
 		}),
 		$("#key-datatable").DataTable({
 			keys:!0,
-			language:{
-				paginate:{
-					previous:"<i class='mdi mdi-chevron-left'>",
-					next:"<i class='mdi mdi-chevron-right'>"
-				}
-			},
+			pagingType:"full_numbers",
 			drawCallback:function(){
 				$(".dataTables_paginate > .pagination").addClass("pagination-rounded")
 			}

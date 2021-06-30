@@ -58,7 +58,7 @@
                                                 <thead style="text-align: center;white-space:nowrap;">
                                                 <tr>
                                                     <th class="sorting_disabled">操作</th>
-                                                    <th>教师编号</th>
+                                                    <th>编号</th>
                                                     <th>教师姓名</th>
                                                     <th>所属学校</th>
                                                     <th>教授专业</th>
@@ -81,7 +81,8 @@
                                                             <i class="mdi mdi-trash-can font-size-18"></i>
                                                         </a>
                                                     </td>
-                                                    <td th:text="${teachers.teaNumber}"></td>
+<!--                                                    <td th:text="${teachers.teaNumber}"></td>-->
+                                                    <td th:text="${teachersStat.index+1}"></td>
                                                     <td th:text="${teachers.teaName}"></td>
                                                     <td th:text="${teachers.school}"></td>
                                                     <td th:text="${teachers.majorName}"></td>

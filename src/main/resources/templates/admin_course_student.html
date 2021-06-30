@@ -60,7 +60,8 @@
                                             <th class="sorting_disabled">操作</th>
                                             <th>编号</th>
                                             <th>开课计划名称</th>
-                                            <th>授课老师</th>
+<!--                                            <th>授课老师</th>-->
+                                            <th>学生学号</th>
                                             <th>学生姓名</th>
                                             <th>学生专业</th>
                                             <th>学生班级</th>
@@ -73,19 +74,20 @@
                                         <tr th:each="course_student:${course_students}">
                                             <td>
                                                 <div style="width:30px;"></div>
-                                                <a th:href="@{admin_course_student_add(username=${username})}" class="add" style="color:#ff3d60" data-original-title="Add">
+                                                <a th:href="@{admin_course_student_add}" class="add" style="color:#ff3d60" data-original-title="Add">
                                                     <i class="mdi mdi-text-box-plus font-size-18"></i>
                                                 </a>
-<!--                                                <a th:href="@{admin_course_student_edit(username=${username},id=${course_student.id})}" class="edit" style="color:#1cbb8c" data-original-title="Edit">-->
-<!--                                                    <i class="mdi mdi-pencil font-size-18"></i>-->
-<!--                                                </a>-->
+                                                <a th:href="@{admin_course_student_edit(id=${course_student.id})}" class="edit" style="color:#1cbb8c" data-original-title="Edit">
+                                                    <i class="mdi mdi-pencil font-size-18"></i>
+                                                </a>
                                                 <a th:href="@{admin_course_student_delete(id=${course_student.id})}" class="delete" style="color:#505d69" data-original-title="Delete">
                                                     <i class="mdi mdi-trash-can font-size-18"></i>
                                                 </a>
                                             </td>
-                                            <td th:text="${course_student.id}"></td>
+                                            <td th:text="${course_studentStat.index+1}"></td>
                                             <td th:text="${course_student.courseName}"></td>
-                                            <td th:text="${course_student.teacher}"></td>
+<!--                                            <td th:text="${course_student.teacher}"></td>-->
+                                            <td th:text="${course_student.stuNumber}"></td>
                                             <td th:text="${course_student.stuName}"></td>
                                             <td th:text="${course_student.stuMajor}"></td>
                                             <td th:text="${course_student.stuClass}"></td>
@@ -96,7 +98,7 @@
                                         </tbody>
                                     </table>
                                     <div style="display: block;text-align: right;">
-                                        <a th:href="@{admin_course_student_add(username=${username})}" class="add">
+                                        <a th:href="@{admin_course_student_add}" class="add">
                                             <i class="mdi mdi-text-box-plus font-size-18" style="color:#ff3d60"></i>新增...
                                         </a>
                                     </div>
@@ -156,7 +158,6 @@
 <script src="static/js/libs/pdfmake/build/vfs_fonts.js"></script>
 <!-- js/pages/ -->
 <script src="static/js/pages/datatables.init.js"></script>
-<script src="static/js/pages/dashboard.init.js"></script>
 <script src="static/js/app.js"></script>
 
 

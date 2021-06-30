@@ -59,7 +59,7 @@
                                                 <thead style="text-align: center;white-space:nowrap;">
                                                 <tr>
                                                     <th class="sorting_disabled">操作</th>
-                                                    <th id="sort">班级编号</th>
+                                                    <th id="sort">编号</th>
                                                     <th>班级名称</th>
                                                     <th>所属专业</th>
                                                     <th>所属学校</th>
@@ -81,7 +81,7 @@
                                                                 <i class="mdi mdi-trash-can font-size-18"></i>
                                                             </a>
                                                         </td>
-                                                        <td th:text="${class.id}"></td>
+                                                        <td th:text="${classStat.index+1}"></td>
                                                         <td th:text="${class.className}"></td>
                                                         <td th:text="${class.majorName}"></td>
                                                         <td th:text="${class.school}"></td>

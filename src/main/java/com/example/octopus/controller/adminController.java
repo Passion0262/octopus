@@ -606,7 +606,8 @@ public class adminController {
 
         logger.info("进入学生开课计划管理");
         if(role_id == 1){
-            model.addAttribute("courses_students", studentcourseService.listStudentCourses());
+            model.addAttribute("course_students", studentcourseService.listStudentCourses());
+            //System.out.println(studentcourseService.listStudentCourses());
         }
         else{
             model.addAttribute("course_students", studentcourseService.listStudentCoursesByTeaNumber(teaNum));
@@ -629,8 +630,17 @@ public class adminController {
     public ModelAndView add_course_student(StudentCourse course_student, Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
 
+        // 补充信息
+        Course course = courseService.getCourseById(course_student.getCourseId());
+        Student stu = userService.getStudentByStuNumber(course_student.getStuNumber());
+
+        course_student.setCourseName(course.getCourseName());
+        course_student.setStuName(stu.getName());
+        course_student.setStuMajor(stu.getMajorName());
+        course_student.setStuClass(stu.getClassName());
+
         logger.info("提交新增的course_student: [{}]", course_student);
-        // todo 向数据库提交新增的course_student
+        studentcourseService.insertStudentCourse(course_student);
         return new ModelAndView("redirect:/admin_course_student");
     }
 
@@ -648,8 +658,19 @@ public class adminController {
 
     @PostMapping("/edit_course_student")
     public ModelAndView edit_course_student(StudentCourse course_student){
+
+        // 补充信息
+        Course course = courseService.getCourseById(course_student.getCourseId());
+        Student stu = userService.getStudentByStuNumber(course_student.getStuNumber());
+
+        course_student.setCourseName(course.getCourseName());
+        //course_student.setTeaName(course.getTeaName());
+        course_student.setStuName(stu.getName());
+        course_student.setStuMajor(stu.getMajorName());
+        course_student.setStuClass(stu.getClassName());
+
         logger.info("提交修改的course_student: [{}]", course_student);
-        // todo 提交修改
+        studentcourseService.insertStudentCourse(course_student);
         return new ModelAndView("redirect:/admin_course_student");
     }
 
@@ -658,9 +679,9 @@ public class adminController {
     public ModelAndView admin_course_student_delete(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
 
-        long courseId = Long.parseLong(request.getParameter("id"));
-        logger.info("删除 courseId=" + courseId);
-        // todo 数据库删除对应数据
+        long id = Long.parseLong(request.getParameter("id"));
+        logger.info("删除 id=", id);
+        studentcourseService.deleteStudentCourse(id);
         return new ModelAndView("redirect:/admin_course_student");
     }
 
@@ -952,6 +973,27 @@ public class adminController {
         return classes;
     }
 
+    // 获取所有的课程
+    @ResponseBody
+    @RequestMapping("/get_all_course")
+    public Map get_all_course(HttpServletRequest request) {
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
+
+        Map<String, Object> course = new HashMap<String, Object>();
+        List<Course> courses = new ArrayList<Course>();
+        if (role_id == 1) {
+            courses = courseService.listCourses();
+        }
+        else{
+            courses = courseService.listCoursesByTeaNumber(teaNum);
+        }
+        course.put("courses", courses);
+        return course;
+    }
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////
     //上传图片
     @ResponseBody
     @RequestMapping("/upload_img")
