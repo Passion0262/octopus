@@ -21,6 +21,16 @@ public interface VideoProgressService {
      */
     List<VideoProgress> listByCourseIdAndStuNumber(long courseId, long stuNumber);
 
+
+    /**
+     * 计算学生该课程一共的视频学习时间
+     *
+     * @param courseId 课程id
+     * @param stuNumber 学号
+     * @return 学习时间（单位：秒）
+     */
+    int getStudyTimeByCourseIdAndStuNumber(long courseId, long stuNumber);
+
     /**
      *  根据id查找videoProgress
      */
@@ -47,4 +57,10 @@ public interface VideoProgressService {
      * @return 对管理员输出所有，对教师仅输出其所授课程的视频学习汇总情况
      */
     List<VideoStudySummaryVO> getVideoStudySummaryByRole(long teaNumber);
+
+    /**
+     * 计算学生在课程的进度
+     * 该课程下学生的进度总和除以总进度总和
+     */
+    double getCourseProgress(long courseId, long stuNumber);
 }

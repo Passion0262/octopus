@@ -1,6 +1,5 @@
 package com.example.octopus.dao.experiment;
 
-import com.example.octopus.dao.experiment.VideoProgressMapper;
 import com.example.octopus.entity.VOs.VideoStudySummaryVO;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +18,8 @@ class VideoProgressMapperTest {
 
     @Test
     void getByVideoIdAndStuNumber() {
-    }
+		System.out.println(videoProgressMapper.getByVideoIdAndStuNumber(1L, 2L));
+	}
 
 	@Test
 	void getVideoStudySummaryByTeaId() {
@@ -35,4 +35,10 @@ class VideoProgressMapperTest {
 	void getVideoStudySummaryByTeacherId() {
 		System.out.println(videoProgressMapper.getVideoStudySummaryByTeacherId(3));
 	}
+
+	@Test
+	void getFinishedVideoIdsByStuNumber() {
+		System.out.println(videoProgressMapper.getFinishedVideoIdsByStuNumber(2));
+	}
+
 }

@@ -1,6 +1,8 @@
 package com.example.octopus.entity.user;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.lang.reflect.Field;
 import java.sql.Date;
@@ -13,6 +15,8 @@ import java.util.Map;
  * 教师及管理员表（通过Boolean adminRights标记）
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Teacher {
 
 	private long teaNumber;
@@ -36,8 +40,6 @@ public class Teacher {
 
 	private Date lastLoginTime;
 
-	public Teacher() {
-	}
 
 	public Teacher(long teaNumber, String teaName, String password, long majorId, Boolean adminRights, String phone, String school) {
 		this.teaNumber = teaNumber;
