@@ -139,9 +139,9 @@
                 <div id="accordion" class="custom-accordion categories-accordion mb-3">
 
                   <div class="categories-group-card" th:each="chapter:${chapters}">
-                    <a th:id ="'aa'+${chapter.number}" th:href="'#collapse'+${chapter.number}" class="categories-group-list collapsed" data-toggle="collapse" aria-expanded="false" th:aria-controls="'collapse'+${chapter.number}">
-                      <i class="font-size-16 align-middle mr-2"></i>章节<span th:text="${chapter.number}"></span>:&nbsp;&nbsp;&nbsp;<span th:text="${chapter.name}"></span><i class="mdi mdi-minus float-right accor-plus-icon"></i></a>
-                    <div th:id="'collapse'+${chapter.number}" class="collapse" data-parent="#accordion" style="">
+                    <a th:id ="'aa'+${chapter.chapterNumber}" th:href="'#collapse'+${chapter.chapterNumber}" class="categories-group-list collapsed" data-toggle="collapse" aria-expanded="false" th:aria-controls="'collapse'+${chapter.chapterNumber}">
+                      <i class="font-size-16 align-middle mr-2"></i>章节<span th:text="${chapter.chapterNumber}"></span>:&nbsp;&nbsp;&nbsp;<span th:text="${chapter.chapterName}"></span><i class="mdi mdi-minus float-right accor-plus-icon"></i></a>
+                    <div th:id="'collapse'+${chapter.chapterNumber}" class="collapse" data-parent="#accordion" style="">
                       <div>
                         <ul class="list-unstyled categories-list mb-0">
 
@@ -326,7 +326,7 @@
       learntime = learntime+1;
       var alreadytime  = alreadypro/100*duration;
       if(alreadytime+learntime<=duration){
-        pro = Math.floor(((alreadytime+learntime)/duration)*100);
+        pro = Math.floor((alreadytime+learntime)/duration)*100;
       }
       console.log('pro',pro);
       if(pro<=100) changebar(pro);

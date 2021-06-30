@@ -703,17 +703,32 @@ public class studentController {
         logger.info("videos:" + videos);
         model.addAttribute("videos", videos);
 
+
+
+        model.addAttribute("experpros", null);
+
         return "studylog";
     }
 
 
 
-    @RequestMapping("/studylog_detail")
-    public String studylog_detail(Model model, HttpServletRequest request) {
+    @RequestMapping("/studylog_detail/{id}")
+    public String studylog_detail(@PathVariable(value = "id") String id,Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
+        long cour_id = Long.parseLong(id);
+        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        Course course = courseService.getCourseById(cour_id);
+        model.addAttribute("course",  course);
+        logger.info("course:" + course );
 
-//        String stuname = (String) session.getAttribute("stuname");
-//        model.addAttribute("stuname", stuname);
+        List<VideoProgress> videopro = videoProgressService.listByCourseIdAndStuNumber(cour_id,stuNum);
+        Integer videoprosnum = videopro.size();
+        model.addAttribute("videopro",  videopro);
+        logger.info("videopro:" + videopro );
+        model.addAttribute("videoprosnum",  videoprosnum);
+        logger.info("videoprosnum:" + videoprosnum );
+
+
         return "studylog_detail";
     }
 
