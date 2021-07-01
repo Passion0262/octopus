@@ -81,11 +81,15 @@ public class adminController {
             model.addAttribute("username", tokenCheck.getUserName());
             if (role_id == 1){
                 model.addAttribute("role", "admin");
+                return true;
+            }
+            else if (role_id == 3){
+                model.addAttribute("role", "teacher");
+                return true;
             }
             else{
-                model.addAttribute("role", "teacher");
+                return false;
             }
-            return true;
         } else {
             logger.info(tokenCheck.getErrorType() + "  需要重新登录!");
             return false;
