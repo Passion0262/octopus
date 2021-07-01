@@ -3,6 +3,7 @@ package com.example.octopus.entity.project;
 import lombok.Data;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  * @author ：shadow
@@ -14,23 +15,16 @@ import java.sql.Date;
 public class Project {
     private long id;    //项目编号
 
-//    @Column(nullable = false)
     private String name;    //项目名称
 
-//    @Column(nullable = false)
     private String description;     //项目简介
 
-//    @Column(nullable = false)
     private String imagePath;  //项目简图地址
 
-//    @Column(nullable = false)
     private String status;  //项目状态
-
-//    @Column(nullable = false)
-//    private String sortValue; //排序值
 
     private String creator; //创建人员
 
-    private Date createTime;  //创建时间
+    private Timestamp createTime;  //创建时间
 
 }

@@ -59,7 +59,10 @@ public class VideoProgressServiceImpl implements VideoProgressService {
 		List<Long> videoIdList = videoMapper.listVideoIdsByCourseId(courseId);
 		int total_time = 0;
 		for (long videoId : videoIdList) {
-			total_time += videoProgressMapper.getLatestByVideoIdAndStuNumber(videoId, stuNumber).getStudyTime();
+			Integer cur_time = videoProgressMapper.countStudyTime(videoId,stuNumber);
+			if (cur_time!=null){
+				total_time += cur_time;
+			}
 		}
 		return total_time;
 	}
