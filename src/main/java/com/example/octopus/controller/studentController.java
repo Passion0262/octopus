@@ -496,7 +496,7 @@ public class studentController {
 //        logger.info("sub_id:"+sub_id);
 
         SubExperiment subExperiment = subExperimentService.getById(sub_id);
-//        logger.info("subExperiment:"+subExperiment);
+        logger.info("subExperiment:"+subExperiment);
         model.addAttribute("subExperiment", subExperiment );
 
         Experiment experiment = experimentService.getExperimentById(subExperiment.getExperimentId());
@@ -527,9 +527,12 @@ public class studentController {
         SubExperimentReportSubmit issub = subExperimentReportSubmitService.getByStuNumberAndSubExperimentId(sub_id,stuNum);
         if(issub == null){
             model.addAttribute("isexpsubmit", 0);
+            logger.info("isexpsubmit:0");
         }else{
             model.addAttribute("isexpsubmit", 1);
+            logger.info("isexpsubmit:1");
         }
+
         return "experiment_machine";
 
     }
@@ -640,6 +643,7 @@ public class studentController {
     @ResponseBody
     public void submitExperText(Model model, HttpServletRequest request) throws IOException, DocumentException {
         Long experid = Long.parseLong(request.getParameter("experid"));
+        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
         String text = request.getParameter("text");
         logger.info("experid:" + experid);
         logger.info("text:" + text);
@@ -662,6 +666,13 @@ public class studentController {
 //        worker.parseXHtml(pdfWriter, document, new StringReader(text));
         document.close();
         pdfWriter.close();
+
+        SubExperimentReportSubmit subexpsub = new SubExperimentReportSubmit();
+        subexpsub.setSubExperimentId(experid);
+        subexpsub.setReportPath("http://localhost:8080/static/"+savepdfname);
+        subexpsub.setStuNumber(stuNum);
+        subExperimentReportSubmitService.insert(subexpsub);
+
     }
 
 
