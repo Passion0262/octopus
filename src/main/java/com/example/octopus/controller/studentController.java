@@ -126,12 +126,14 @@ public class studentController {
             Student stu = userService.getStudentByStuNumber(Long.parseLong(userNumber));
             logger.info("当前登陆身份为：学生        欢迎您，" + userNumber + ":" + stu.getName());
             cookieThings.setCookie(userNumber, stu.getName(), response, cookieName);
+            userService.updateLoginInfo(Long.parseLong(userNumber));
             return "redirect:/index";
         } else {
             //身份为教师或管理员，进入后台系统
             Teacher tea = teacherService.getTeacherByTeaNumber(Long.parseLong(userNumber));
             logger.info("当前登陆身份为：教师/管理员        欢迎您，" + userNumber + ":" + tea.getTeaName());
             cookieThings.setCookie(userNumber, tea.getTeaName(), response, cookieName);
+            teacherService.updateLoginInfo(Long.parseLong(userNumber));
             return "redirect:/admin_index";
         }
     }
@@ -281,6 +283,15 @@ public class studentController {
         model.addAttribute("mycourses", mycourses);
 
         //这里要计算完成了多少个视频 算百分比
+
+        List<Integer> pros = new ArrayList<>();
+        for (int i=0;i<mycourses.size();i++) {
+            double pro =  videoProgressService.getCourseProgress(mycourses.get(i).getId(),stuNum);
+            pros.add((int)(pro*100));
+        }
+        logger.info("pros:" + pros);
+        model.addAttribute("pros", pros);
+
 
         return "mycourse";
     }
@@ -721,12 +732,27 @@ public class studentController {
         model.addAttribute("course",  course);
         logger.info("course:" + course );
 
-        List<VideoProgress> videopro = videoProgressService.listByCourseIdAndStuNumber(cour_id,stuNum);
-        Integer videoprosnum = videopro.size();
-        model.addAttribute("videopro",  videopro);
-        logger.info("videopro:" + videopro );
+
+        List<VideoProgress> videopros = videoProgressService.listByCourseIdAndStuNumber(cour_id,stuNum);
+        Integer videoprosnum = videopros.size();
+        int videoprostudynum = videoProgressService.getStudyTimeByCourseIdAndStuNumber(cour_id,stuNum);
+        model.addAttribute("videopros",  videopros);
+        logger.info("videopros:" + videopros );
         model.addAttribute("videoprosnum",  videoprosnum);
         logger.info("videoprosnum:" + videoprosnum );
+        model.addAttribute("videoprostudynum",  videoprostudynum);
+        logger.info("videoprostudynum:" +videoprostudynum );
+
+        List<Video> videos = new ArrayList<>();
+        for (int i = 0; i < videopros.size(); i++) {
+            Video v = videoService.getById(videopros.get(i).getVideoId());
+            videos.add(v);
+        }
+        logger.info("videos:" + videos);
+        model.addAttribute("videos", videos);
+
+
+        model.addAttribute("experpros", null);
 
 
         return "studylog_detail";

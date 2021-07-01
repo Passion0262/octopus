@@ -26,6 +26,9 @@ public interface TeacherMapper {
             "WHERE tea_number = #{teaNumber}")
     boolean updateTeacher(Teacher teacher);
 
+    @Update("UPDATE teacher SET login_number = login_number+1, last_login_time = CURRENT_TIMESTAMP WHERE tea_number = #{teaNumber}")
+    boolean updateLoginInfoByTeaNumber(long teaNumber);
+
     @Insert("INSERT INTO teacher (tea_number,tea_name,major_id,admin_rights,phone,school,login_number,last_login_time) " +
             "VALUES (#{teaNumber},#{teaName},#{majorId},#{adminRights},#{phone},#{school},0,CURRENT_TIMESTAMP)")
     boolean addTeacher(Teacher teacher);
