@@ -64,6 +64,7 @@
                                                     <th>所属学校</th>
                                                     <th>教授专业</th>
                                                     <th>联系手机</th>
+                                                    <th>管理员权限</th>
                                                     <th>登录次数</th>
                                                     <th>最近登录时间</th>
                                                 </tr>
@@ -89,6 +90,9 @@
                                                     <td th:text="${teachers.school}"></td>
                                                     <td th:text="${teachers.majorName}"></td>
                                                     <td th:text="${teachers.phone}"></td>
+                                                    <td>
+                                                        <div th:text="${teachers.adminRights==false?'No':'Yes'}" th:class="${teachers.adminRights==false?'badge badge-soft-warning':'badge badge-soft-success'}" style="font-size: 13px"></div>
+                                                    </td>
                                                     <td th:text="${teachers.loginNumber}"></td>
                                                     <td th:text="${teachers.lastLoginTime}"></td>
                                                 </tr>

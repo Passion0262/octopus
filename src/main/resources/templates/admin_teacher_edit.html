@@ -56,6 +56,12 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
+                                                <label for="edit_password" class="col-md-2 col-form-label">密码：</label>
+                                                <div class="col-md-10">
+                                                    <input name="password" th:value="*{password}" class="form-control" type="password" id="edit_password">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
                                                 <label for="edit_teaName" class="col-md-2 col-form-label">姓名：</label>
                                                 <div class="col-md-10">
                                                     <input name="teaName" th:value="*{teaName}" class="form-control" type="text" id="edit_teaName">
@@ -79,6 +85,14 @@
                                                 <label for="edit_phone" class="col-md-2 col-form-label">联系手机：</label>
                                                 <div class="col-md-10">
                                                     <input name="phone" th:value="*{phone}" id="edit_phone" class="form-control" type="text">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-2 col-form-label">管理员权限：</label>
+                                                <div class="col-md-10 custom-switch " style="display: flex; align-items: center; padding-top: 10px; padding-left: 10px;">
+                                                    <input type="checkbox" id="switch" switch="success" th:checked="*{adminRights}" class="form-control">
+                                                    <label for="switch" data-on-label="Yes" data-off-label="No"></label>
+                                                    <input name="adminRights" th:value="*{adminRights}" id="adminRights" class="form-control" type="text" style="display: none;">
                                                 </div>
                                             </div>
                                             <div id="alert" class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none;margin-top: 5px;padding: 5px;padding-left: 20px;">
@@ -175,11 +189,17 @@
 
             function checkForm(){
                 var oTeaNumber = document.getElementById("edit_teaNumber");
+                var oPwd = document.getElementById("edit_password");
                 var oTeaName = document.getElementById("edit_teaName");
                 var oSchool = document.getElementById("edit_school");
                 if (!oTeaNumber.value){
                     document.getElementById("alert").style.display="";
                     document.getElementById("result_msg").innerHTML = "请填写账号！";
+                    return false;
+                }
+                if (!oPwd.value){
+                    document.getElementById("alert").style.display="";
+                    document.getElementById("result_msg").innerHTML = "请填写密码！";
                     return false;
                 }
                 if (!oTeaName.value){
@@ -192,7 +212,17 @@
                     document.getElementById("result_msg").innerHTML = "请填写学校！";
                     return false;
                 }
+                getAdminRights();
                 return true;
+            }
+
+            function getAdminRights(){
+                if(document.getElementById("switch").checked){
+                    document.getElementById("adminRights").value = true;
+                }
+                else{
+                    document.getElementById("adminRights").value = false;
+                }
             }
 
             function submitForm(){
