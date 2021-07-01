@@ -41,9 +41,9 @@ public class TeacherServiceImpl implements TeacherService {
 
 	@Override
 	public boolean updateTeacher(Teacher teacher) {
-		long roleId = teacher.getAdminRights() ? 1 : 3;
 		Teacher old = teacherMapper.getByTeaNumber(teacher.getTeaNumber());
 		Teacher t = old.mergeUpdate(old, teacher);
+		long roleId = t.getAdminRights() ? 1 : 3;
 		return teacherMapper.updateTeacher(t) && sysUserRoleMapper.updateRoleId(teacher.getTeaNumber(), roleId)
                 && sysUserRoleMapper.updatePassword(teacher.getTeaNumber(), teacher.getPassword());
 	}
@@ -51,6 +51,9 @@ public class TeacherServiceImpl implements TeacherService {
 	@Override
 	public boolean addTeacher(Teacher teacher) {
         long roleId = teacher.getAdminRights() ? 1 : 3;
+        //如无密码，则设置初始密码为123
+        if(teacher.getPassword()==null)
+        	teacher.setPassword("123");
 		SysUserRole sysUserRole = new SysUserRole(teacher.getTeaNumber(), roleId, teacher.getPassword());
 		return teacherMapper.addTeacher(teacher) && sysUserRoleMapper.insert(sysUserRole);
 	}
