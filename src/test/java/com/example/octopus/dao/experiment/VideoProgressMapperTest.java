@@ -41,4 +41,8 @@ class VideoProgressMapperTest {
 		System.out.println(videoProgressMapper.getFinishedVideoIdsByStuNumber(2));
 	}
 
+    @Test
+    void countStudyTime() {
+		System.out.println(videoProgressMapper.countStudyTime(55, 2));
+	}
 }
