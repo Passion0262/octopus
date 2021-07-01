@@ -126,12 +126,14 @@ public class studentController {
             Student stu = userService.getStudentByStuNumber(Long.parseLong(userNumber));
             logger.info("当前登陆身份为：学生        欢迎您，" + userNumber + ":" + stu.getName());
             cookieThings.setCookie(userNumber, stu.getName(), response, cookieName);
+            userService.updateLoginInfo(Long.parseLong(userNumber));
             return "redirect:/index";
         } else {
             //身份为教师或管理员，进入后台系统
             Teacher tea = teacherService.getTeacherByTeaNumber(Long.parseLong(userNumber));
             logger.info("当前登陆身份为：教师/管理员        欢迎您，" + userNumber + ":" + tea.getTeaName());
             cookieThings.setCookie(userNumber, tea.getTeaName(), response, cookieName);
+            teacherService.updateLoginInfo(Long.parseLong(userNumber));
             return "redirect:/admin_index";
         }
     }

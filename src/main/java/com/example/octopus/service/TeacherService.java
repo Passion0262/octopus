@@ -40,6 +40,13 @@ public interface TeacherService {
     boolean updateTeacher(Teacher teacher);
 
     /**
+     * 更新最近登陆时间和登录次数
+     * @param teaNumber 教师号
+     * @return 成功与否
+     */
+    boolean updateLoginInfo(long teaNumber);
+
+    /**
      * 增加老师
      * @param teacher 老师实体
      * @return 成功与否

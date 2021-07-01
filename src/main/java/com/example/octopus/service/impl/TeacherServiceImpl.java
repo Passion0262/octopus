@@ -49,6 +49,11 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	@Override
+	public boolean updateLoginInfo(long teaNumber){
+		return teacherMapper.updateLoginInfoByTeaNumber(teaNumber);
+	}
+
+	@Override
 	public boolean addTeacher(Teacher teacher) {
         long roleId = teacher.getAdminRights() ? 1 : 3;
         //如无密码，则设置初始密码为123
