@@ -18,7 +18,7 @@ class VideoProgressMapperTest {
 
     @Test
     void getByVideoIdAndStuNumber() {
-		System.out.println(videoProgressMapper.getByVideoIdAndStuNumber(1L, 2L));
+		System.out.println(videoProgressMapper.getLatestByVideoIdAndStuNumber(1L, 2L));
 	}
 
 	@Test

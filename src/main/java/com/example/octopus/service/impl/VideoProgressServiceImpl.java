@@ -39,7 +39,17 @@ public class VideoProgressServiceImpl implements VideoProgressService {
 		List<Long> videoIdList = videoMapper.listVideoIdsByCourseId(courseId);
 		List<VideoProgress> videoProgressList = new ArrayList<>();
 		for (long videoId : videoIdList) {
-			videoProgressList.add(videoProgressMapper.getByVideoIdAndStuNumber(videoId,stuNumber));
+			videoProgressList.addAll(videoProgressMapper.listByStuNumberAndStuNumber(videoId,stuNumber));
+		}
+		return videoProgressList;
+	}
+
+	@Override
+	public List<VideoProgress> listLatestByCourseIdAndStuNumber(long courseId, long stuNumber) {
+		List<Long> videoIdList = videoMapper.listVideoIdsByCourseId(courseId);
+		List<VideoProgress> videoProgressList = new ArrayList<>();
+		for (long videoId : videoIdList) {
+			videoProgressList.add(videoProgressMapper.getLatestByVideoIdAndStuNumber(videoId,stuNumber));
 		}
 		return videoProgressList;
 	}
@@ -49,7 +59,7 @@ public class VideoProgressServiceImpl implements VideoProgressService {
 		List<Long> videoIdList = videoMapper.listVideoIdsByCourseId(courseId);
 		int total_time = 0;
 		for (long videoId : videoIdList) {
-			total_time += videoProgressMapper.getByVideoIdAndStuNumber(videoId, stuNumber).getStudyTime();
+			total_time += videoProgressMapper.getLatestByVideoIdAndStuNumber(videoId, stuNumber).getStudyTime();
 		}
 		return total_time;
 	}
@@ -61,7 +71,7 @@ public class VideoProgressServiceImpl implements VideoProgressService {
 
 	@Override
 	public VideoProgress getByVideoIdAndStuNumber(long videoId, long stuNumber) {
-		return videoProgressMapper.getByVideoIdAndStuNumber(videoId, stuNumber);
+		return videoProgressMapper.getLatestByVideoIdAndStuNumber(videoId, stuNumber);
 	}
 
 	@Override
@@ -85,10 +95,13 @@ public class VideoProgressServiceImpl implements VideoProgressService {
 	@Override
 	public double getCourseProgress(long courseId, long stuNumber) {
 		List<Long> videoIdList = videoMapper.listVideoIdsByCourseId(courseId);
+		if (videoIdList.size()==0){
+			return 0.0;
+		}
 		double stu_progress = 0;		//学生学习进度
 		double course_progress = videoIdList.size()*100; 	//课程进度总和
 		for (long videoId : videoIdList) {
-			VideoProgress vp = videoProgressMapper.getByVideoIdAndStuNumber(videoId,stuNumber);
+			VideoProgress vp = videoProgressMapper.getLatestByVideoIdAndStuNumber(videoId,stuNumber);
 			if (vp!=null){
 				stu_progress += vp.getProgress();
 			}

@@ -26,6 +26,12 @@ public interface VideoProgressMapper {
     List<VideoProgress> listByStuNumber(long stuNumber);
 
     /**
+     *  根据学生学号和videoId查询所有的videoProgress
+     */
+    @Select("SELECT * FROM video_progress WHERE stu_number = #{stuNumber} AND video_id = #{videoId} order by end_time desc")
+    List<VideoProgress> listByStuNumberAndStuNumber(long videoId, long stuNumber);
+
+    /**
      *  根据id查找videoProgress
      */
     @Select("SELECT * FROM video_progress WHERE id = #{id}")
@@ -36,7 +42,7 @@ public interface VideoProgressMapper {
      */
     @Select("SELECT * FROM video_progress WHERE video_id = #{videoId} AND stu_number = #{stuNumber} AND end_time=" +
             "(SELECT MAX(end_time) FROM video_progress WHERE video_id=#{videoId} AND stu_number = #{stuNumber})")
-    VideoProgress getByVideoIdAndStuNumber(long videoId, long stuNumber);
+    VideoProgress getLatestByVideoIdAndStuNumber(long videoId, long stuNumber);
 
     /**
      *  更新videoProgress

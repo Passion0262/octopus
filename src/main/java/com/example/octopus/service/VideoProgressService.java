@@ -17,9 +17,14 @@ public interface VideoProgressService {
     List<VideoProgress> listByStuNumber(long stuNumber);
 
     /**
-     *  根据课程id和学生学号查询所有的videoProgress
+     *  查询该学生在该课程所有学习记录
      */
     List<VideoProgress> listByCourseIdAndStuNumber(long courseId, long stuNumber);
+
+    /**
+     *  根据课程id和学生学号查询所有的最新的videoProgress
+     */
+    List<VideoProgress> listLatestByCourseIdAndStuNumber(long courseId, long stuNumber);
 
 
     /**
@@ -37,7 +42,7 @@ public interface VideoProgressService {
     VideoProgress getById(long id);
 
     /**
-     *  根据videoId和学生id查询videoProgress
+     *  根据videoId和学生id查询最新的videoProgress
      */
     VideoProgress getByVideoIdAndStuNumber(long videoId, long stuNumber);
 
