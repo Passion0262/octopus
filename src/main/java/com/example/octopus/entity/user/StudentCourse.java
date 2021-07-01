@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 
 /**
  * @author ：shadow
@@ -23,12 +24,26 @@ public class StudentCourse {
 
     private String courseName;
 
+    private long teaNumber;  //教师号，不在student_course表中
+
+    private String teaName;  //教师名，不在student_course表中
+
     private String stuName;
 
     private String stuMajor;
 
     private String stuClass;
 
-    private Time applyTime;
+    private Timestamp applyTime;
 
+    public StudentCourse(long id, long stuNumber, long courseId, String courseName, String stuName, String stuMajor, String stuClass, Timestamp applyTime) {
+        this.id = id;
+        this.stuNumber = stuNumber;
+        this.courseId = courseId;
+        this.courseName = courseName;
+        this.stuName = stuName;
+        this.stuMajor = stuMajor;
+        this.stuClass = stuClass;
+        this.applyTime = applyTime;
+    }
 }

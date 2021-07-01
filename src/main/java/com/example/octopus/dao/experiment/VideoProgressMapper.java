@@ -22,8 +22,14 @@ public interface VideoProgressMapper {
     /**
      *  根据学生学号查询所有的videoProgress
      */
-    @Select("SELECT * FROM video_progress WHERE stu_number = #{stuNumber} order by end_time")
+    @Select("SELECT * FROM video_progress WHERE stu_number = #{stuNumber} order by end_time desc")
     List<VideoProgress> listByStuNumber(long stuNumber);
+
+    /**
+     *  根据学生学号和videoId查询所有的videoProgress
+     */
+    @Select("SELECT * FROM video_progress WHERE stu_number = #{stuNumber} AND video_id = #{videoId} order by end_time desc")
+    List<VideoProgress> listByStuNumberAndStuNumber(long videoId, long stuNumber);
 
     /**
      *  根据id查找videoProgress
@@ -32,10 +38,11 @@ public interface VideoProgressMapper {
     VideoProgress getById(long id);
 
     /**
-     *  根据videoId和学生id查询videoProgress
+     *  根据videoId和学生id查询最新的videoProgress
      */
-    @Select("SELECT * FROM video_progress WHERE video_id = #{videoId} AND stu_number = #{stuNumber} ORDER BY end_time desc LIMIT 1")
-    VideoProgress getByVideoIdAndStuNumber(long videoId, long stuNumber);
+    @Select("SELECT * FROM video_progress WHERE video_id = #{videoId} AND stu_number = #{stuNumber} AND end_time=" +
+            "(SELECT MAX(end_time) FROM video_progress WHERE video_id=#{videoId} AND stu_number = #{stuNumber})")
+    VideoProgress getLatestByVideoIdAndStuNumber(long videoId, long stuNumber);
 
     /**
      *  更新videoProgress
@@ -56,5 +63,8 @@ public interface VideoProgressMapper {
             "FROM video_progress vp, student s, class_, major, course, video " +
             "WHERE vp.stu_number=s.stu_number and s.major_id=major.id and s.class_id=class_.id and vp.video_id=video.id and video.course_id=course.id and course.tea_number=#{teaNumber}")
     List<VideoStudySummaryVO> getVideoStudySummaryByTeacherId(long teaNumber);
+
+    @Select("SELECT video_id FROM video_progress WHERE progress=100 AND stu_number = #{stuNumber}")
+    List<Long> getFinishedVideoIdsByStuNumber(long stuNumber);
 
 }

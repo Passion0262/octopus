@@ -53,12 +53,19 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 
 	@Override
 	public List<StudentCourse> listStudentCoursesByTeaNumber(long teaNumber) {
-		ArrayList<StudentCourse> studentCourseList = new ArrayList<>();
-		List<Long> courseIdList = teacherCourseMapper.listCourseIdsByTeaNumber(teaNumber);
-		for (long courseId : courseIdList) {
-			studentCourseList.addAll(studentCourseMapper.listByCourseId(courseId));
-		}
-		return studentCourseList;
+		return studentCourseMapper.listByTeacherId(teaNumber);
+//		ArrayList<StudentCourse> studentCourseList = new ArrayList<>();
+//		List<Long> courseIdList = teacherCourseMapper.listCourseIdsByTeaNumber(teaNumber);
+//		System.out.println(courseIdList);
+//		for (long courseId : courseIdList) {
+//			studentCourseList.addAll(studentCourseMapper.listByCourseId(courseId));
+//		}
+//		return studentCourseList;
+	}
+
+	@Override
+	public List<StudentCourse> listStudentCoursesByStuNumber(long stuNumber){
+		return studentCourseMapper.listByStudentId(stuNumber);
 	}
 
 	@Override

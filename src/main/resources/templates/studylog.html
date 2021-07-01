@@ -106,7 +106,7 @@
               <div class="card-body">
                 <h4 class="card-title">课程视频</h4>
                 <div >
-                  <table id="datatable-buttons" class="table table-striped table-bordered" style="overflow-x: scroll;">
+                  <table  class="table table-striped table-bordered" style="overflow-x: scroll;">
                     <thead style="text-align: center;">
                     <tr>
 
@@ -120,29 +120,33 @@
                     </tr>
                     </thead>
                     <tbody style="text-align: center" id = "videologdiv">
-                    <tr th:each="videopro:${videopros}">
-                      <td><span th:text="${videoproStat.index+1}"></span></td>
-                      <td><span th:text="${videos[videoproStat.index].name}"></span></td>
-                      <td><span th:text="${videopro.startTime}"></span></td>
-                      <td><span th:text="${videopro.endTime}"></span></td>
-                      <td><span th:text="${videopro.studyTime}"></span></td>
-                      <td><a href="studylog_detail">查看详情</a></td>
-                    </tr>
-
+                      <tr>
+                        <td colspan="6"><span>暂无学习记录</span></td>
+                      </tr>
+<!--                    <tr th:each="videopro:${videopros}">-->
+<!--                      <span th:if="${videoproStat.index}<10" >-->
+<!--                      <td><span th:text="${videoproStat.index+1}"></span></td>-->
+<!--                      <td><span th:text="${videos[videoproStat.index].name}"></span></td>-->
+<!--                      <td><span th:text="${#dates.format(videopro.startTime,'yyy-MM-dd HH:mm:ss')}"></span></td>-->
+<!--                      <td><span th:text="${#dates.format(videopro.endTime,'yyy-MM-dd HH:mm:ss')}"></span></td>-->
+<!--                      <td ><span class="timecal" th:text="${videopro.studyTime}"></span></td>-->
+<!--                      <td><a th:href="'studylog_detail/'+${videos[videoproStat.index].courseId}">查看详情</a></td>-->
+<!--                      </span>-->
+<!--                    </tr>-->
                     </tbody>
                   </table>
-                  <div class="row" style="float:right">
-                    <button>上一页</button>
-                    <span>2</span>
-                    <button>下一页</button>
-                    <div class="form-control-sm"></div>
-                    <button>跳转</button>
+
+                  <div style="float:right">
+                    <span id="videocurrentpage"></span>
+                  <button type="button" class="btn btn-light btn-sm waves-effect waves-light" style="margin-left: 8px;" onclick="videopageplus()">上一页</button>
+                  <button type="button" class="btn btn-light btn-sm waves-effect waves-light" style="margin-left: 2px;"onclick="videopagemin()">下一页</button>
                   </div>
-                </div>
               </div>
             </div>
           </div>
+          </div>
     </div><!-- end row -->
+
 
         <div class="row">
           <div class="col-12">
@@ -150,7 +154,7 @@
               <div class="card-body">
                 <h4 class="card-title">课程实验</h4>
                 <div >
-                  <table id="datatable-buttons" class="table table-striped table-bordered" style="overflow-x: scroll;">
+                  <table  class="table table-striped table-bordered" style="overflow-x: scroll;">
                     <thead style="text-align: center;">
                     <tr>
 
@@ -164,6 +168,9 @@
                     </tr>
                     </thead>
                     <tbody style="text-align: center">
+                      <tr>
+                        <td colspan="6"><span>暂无学习记录</span></td>
+                      </tr>
 <!--                    <tr th:each="videopro:${videopros}">-->
 <!--                      <td><span th:text="${videoproStat.index+1}"></span></td>-->
 <!--                      <td><span th:text="${videos[videoproStat.index].name}"></span></td>-->
@@ -183,6 +190,7 @@
 
   </div><!-- container-fluid -->
 </div><!-- End Page-content -->
+
 <footer class="footer">
   <div class="container-fluid">
     <div class="row">
@@ -216,6 +224,119 @@
 <script src="static/js/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
 <!--    <script src="static/js/pages/dashboard.init.js"></script>-->
 <script src="static/js/app.js"></script>
+<script th:inline="javascript" type="text/javascript">
+  var videolog = [[${videopros}]];
+  var experlog = [[${experpros}]];
+  var videos = [[${videos}]];
+  var videocurrentpage = 0;
+
+  $(document).ready(function() {
+    // console.log(videolog);
+    // console.log(experlog);
+    if(videolog!=null){
+      showvideo(1);
+    }
+    if(experlog!=null){
+      showvideo(1);
+    }
+
+
+
+  });
+
+  function showvideo(pageno){
+  //   <!--                    <tr th:each="videopro:${videopros}">-->
+  //   <!--                      <span th:if="${videoproStat.index}<10" >-->
+  // <!--                      <td><span th:text="${videoproStat.index+1}"></span></td>-->
+  //   <!--                      <td><span th:text="${videos[videoproStat.index].name}"></span></td>-->
+  //   <!--                      <td><span th:text="${#dates.format(videopro.startTime,'yyy-MM-dd HH:mm:ss')}"></span></td>-->
+  //   <!--                      <td><span th:text="${#dates.format(videopro.endTime,'yyy-MM-dd HH:mm:ss')}"></span></td>-->
+  //   <!--                      <td ><span class="timecal" th:text="${videopro.studyTime}"></span></td>-->
+  //   <!--                      <td><a th:href="'studylog_detail/'+${videos[videoproStat.index].courseId}">查看详情</a></td>-->
+  //   <!--                      </span>-->
+  // <!--                    </tr>-->
+    str="";
+    for(var i=(pageno-1)*10;i<videolog.length&&i<pageno*10;i++){
+      console.log(videolog[i]);
+      str += "<tr>";
+      str += "<td><span>"+(i+1)+"</span></td>";
+      str += "<td><span>"+videos[i].name+"</span></td>";
+      str += "<td><span>"+dateFormat("YYYY-mm-dd HH:MM:SS", videolog[i].startTime)+"</span></td>";
+      str += "<td><span>"+dateFormat("YYYY-mm-dd HH:MM:SS", videolog[i].endTime)+"</span></td>";
+      str += "<td><span>"+ timecall(videolog[i].studyTime)+"</span></td>";
+      str += "<td><span><a href='studylog_detail/"+videos[i].courseId+"'>查看详情</a></span></td>";
+      str += "</tr>";
+    }
+    $("#videologdiv").html(str);
+
+    showvideocurrent(pageno);
+  }
+
+  function showvideocurrent(pageno){
+    var allpage = Math.ceil(videolog.length/10);
+    var str = "当前第"+pageno+"页，共"+allpage+"页";
+    $("#videocurrentpage").html(str);
+    videocurrentpage = pageno;
+  }
+
+  function videopageplus(){
+    if(videocurrentpage>1) {
+      showvideo(videocurrentpage - 1);
+    }
+  }
+
+  function videopagemin(){
+    if(videocurrentpage<Math.ceil(videolog.length/10)) {
+      showvideo(videocurrentpage + 1);
+    }
+  }
+
+
+
+
+  function timecall(str){
+    var ss="";
+    if(str>=3600){
+      ss = ss+ parseInt(str/3600) +"时";
+      str =str%3600;
+      // console.log(ss +":"+str);
+    }
+    if(str>=60){
+      ss = ss+ parseInt(str/60) +"分";
+      str = str%60;
+      // console.log(ss +":"+str);
+    }
+    if(str<60){
+      ss = ss+ str +"秒";
+    }
+    return ss;
+}
+
+
+  function dateFormat(fmt, dates) {
+    var date = new Date(dates);
+    let ret;
+    const opt = {
+      "Y+": date.getFullYear().toString(),        // 年
+      "m+": (date.getMonth() + 1).toString(),     // 月
+      "d+": date.getDate().toString(),            // 日
+      "H+": date.getHours().toString(),           // 时
+      "M+": date.getMinutes().toString(),         // 分
+      "S+": date.getSeconds().toString()          // 秒
+      // 有其他格式化字符需求可以继续添加，必须转化成字符串
+    };
+    for (let k in opt) {
+      ret = new RegExp("(" + k + ")").exec(fmt);
+      if (ret) {
+        fmt = fmt.replace(ret[1], (ret[1].length == 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")))
+      };
+    };
+    return fmt;
+  }
+
+
+
+</script>
 </body>
 
 </html>
