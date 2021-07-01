@@ -440,9 +440,7 @@ public class adminController {
         // 只有管理员能够增加教师
         if (role_id == 1) {
             logger.info("进入admin_teacher_add，获取一个新Teacher()");
-
             model.addAttribute("teacher", new Teacher());
-            //System.out.println(new Teacher());
         }
         else{
             new ModelAndView("redirect:/login");
@@ -634,17 +632,19 @@ public class adminController {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
 
         // 补充信息
-        Course course = courseService.getCourseById(course_student.getCourseId());
-        Student stu = userService.getStudentByStuNumber(course_student.getStuNumber());
-
-        course_student.setCourseName(course.getCourseName());
-        //course_student.setTeaName(course.getTeaName());
-        course_student.setStuName(stu.getName());
-        course_student.setStuMajor(stu.getMajorName());
-        course_student.setStuClass(stu.getClassName());
+//        Course course = courseService.getCourseById(course_student.getCourseId());
+//        Student stu = userService.getStudentByStuNumber(course_student.getStuNumber());
+//
+//        course_student.setCourseName(course.getCourseName());
+//        course_student.setTeaNumber(course.getTeaNumber());
+//        course_student.setTeaName(course.getTeaName());
+//        course_student.setStuName(stu.getName());
+//        course_student.setStuMajor(stu.getMajorName());
+//        course_student.setStuClass(stu.getClassName());
 
         logger.info("提交新增的course_student: [{}]", course_student);
-        studentcourseService.insertStudentCourse(course_student);
+        //studentcourseService.insertStudentCourse(course_student);
+        studentcourseService.insertStudentCourse(course_student.getStuNumber(), course_student.getCourseId());
         return new ModelAndView("redirect:/admin_course_student");
     }
 
@@ -664,14 +664,15 @@ public class adminController {
     public ModelAndView edit_course_student(StudentCourse course_student){
 
         // 补充信息
-        Course course = courseService.getCourseById(course_student.getCourseId());
-        Student stu = userService.getStudentByStuNumber(course_student.getStuNumber());
-
-        course_student.setCourseName(course.getCourseName());
-        //course_student.setTeaName(course.getTeaName());
-        course_student.setStuName(stu.getName());
-        course_student.setStuMajor(stu.getMajorName());
-        course_student.setStuClass(stu.getClassName());
+//        Course course = courseService.getCourseById(course_student.getCourseId());
+//        Student stu = userService.getStudentByStuNumber(course_student.getStuNumber());
+//
+//        course_student.setCourseName(course.getCourseName());
+//        course_student.setTeaNumber(course.getTeaNumber());
+//        course_student.setTeaName(course.getTeaName());
+//        course_student.setStuName(stu.getName());
+//        course_student.setStuMajor(stu.getMajorName());
+//        course_student.setStuClass(stu.getClassName());
 
         logger.info("提交修改的course_student: [{}]", course_student);
         studentcourseService.insertStudentCourse(course_student.getStuNumber(), course_student.getCourseId());
@@ -1130,7 +1131,8 @@ public class adminController {
 
         //判断上传文件格式
         String fileType = file.getContentType();
-        if (fileType.equals("text/plain")) {
+        //if (fileType.equals("text/plain") || fileType.equals("application/json")) {
+        if (true) {
             // 要上传的目标文件存放的绝对路径
             final String localPath = "static\\dataset";
             //获取文件名
