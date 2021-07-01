@@ -52,7 +52,7 @@
                                             <div class="form-group row">
                                                 <label for="edit_teaNumber" class="col-md-2 col-form-label">账号：</label>
                                                 <div class="col-md-10">
-                                                    <input name="teaNumber" th:value="*{teaNumber}" class="form-control" type="text"  id="edit_teaNumber">
+                                                    <input name="teaNumber" th:value="*{teaNumber}" class="form-control" type="text"  id="edit_teaNumber" readonly style="border: none;">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -71,7 +71,7 @@
                                                 <label for="edit_major" class="col-md-2 col-form-label">教授专业：</label>
                                                 <div class="col-md-10">
                                                     <select name="majorId" th:value="*{majorId}" class="form-control" id="edit_major">
-                                                        <option th:value="majorId" style="display: none;" th:text="*{majorName}"></option>
+                                                        <option th:value="*{majorId}" style="display: none;" th:text="*{majorName}"></option>
                                                     </select>
                                                 </div>
                                             </div>

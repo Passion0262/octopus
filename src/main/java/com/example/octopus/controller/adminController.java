@@ -423,6 +423,7 @@ public class adminController {
         if (role_id == 1) {
             logger.info("进入教师管理");
             model.addAttribute("teachers", teacherService.getAllTeachers());
+            //System.out.println(teacherService.getAllTeachers());
         }
         else{
             return "redirect:/login";
@@ -439,7 +440,9 @@ public class adminController {
         // 只有管理员能够增加教师
         if (role_id == 1) {
             logger.info("进入admin_teacher_add，获取一个新Teacher()");
+
             model.addAttribute("teacher", new Teacher());
+            //System.out.println(new Teacher());
         }
         else{
             new ModelAndView("redirect:/login");
@@ -671,7 +674,7 @@ public class adminController {
         course_student.setStuClass(stu.getClassName());
 
         logger.info("提交修改的course_student: [{}]", course_student);
-        studentcourseService.insertStudentCourse(course_student);
+        studentcourseService.insertStudentCourse(course_student.getStuNumber(), course_student.getCourseId());
         return new ModelAndView("redirect:/admin_course_student");
     }
 
@@ -925,7 +928,7 @@ public class adminController {
     }
 
     @PostMapping("/edit_dataset")
-    public ModelAndView edit_dataset(StudentCourse dataset){
+    public ModelAndView edit_dataset(Dataset dataset){
         logger.info("提交修改的dataset: [{}]", dataset);
         // todo 提交修改
         return new ModelAndView("redirect:/admin_dataset");

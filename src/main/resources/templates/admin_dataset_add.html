@@ -56,7 +56,7 @@
                                               <label for="add_description" class="col-md-2 col-form-label">描述：</label>
                                               <div class="col-md-10">
                                             <!--                                <input name="teacher" th:value="*{teacher}" class="form-control" id="add_teacher" type="text">-->
-                                                  <textarea id="add_description" name="description" th:value="*{description}" class="form-control"></textarea>
+                                                  <textarea id="add_description" name="description" class="form-control">[[*{description}]]</textarea>
                                               </div>
                                             </div>
                                             <div class="form-group row">
