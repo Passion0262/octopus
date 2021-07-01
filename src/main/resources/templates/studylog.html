@@ -237,7 +237,7 @@
       showvideo(1);
     }
     if(experlog!=null){
-      showvideo(1);
+      showexper(1);
     }
 
 
@@ -245,16 +245,6 @@
   });
 
   function showvideo(pageno){
-  //   <!--                    <tr th:each="videopro:${videopros}">-->
-  //   <!--                      <span th:if="${videoproStat.index}<10" >-->
-  // <!--                      <td><span th:text="${videoproStat.index+1}"></span></td>-->
-  //   <!--                      <td><span th:text="${videos[videoproStat.index].name}"></span></td>-->
-  //   <!--                      <td><span th:text="${#dates.format(videopro.startTime,'yyy-MM-dd HH:mm:ss')}"></span></td>-->
-  //   <!--                      <td><span th:text="${#dates.format(videopro.endTime,'yyy-MM-dd HH:mm:ss')}"></span></td>-->
-  //   <!--                      <td ><span class="timecal" th:text="${videopro.studyTime}"></span></td>-->
-  //   <!--                      <td><a th:href="'studylog_detail/'+${videos[videoproStat.index].courseId}">查看详情</a></td>-->
-  //   <!--                      </span>-->
-  // <!--                    </tr>-->
     str="";
     for(var i=(pageno-1)*10;i<videolog.length&&i<pageno*10;i++){
       console.log(videolog[i]);
@@ -291,6 +281,44 @@
     }
   }
 
+
+
+  function showexper(pageno){
+    // str="";
+    // for(var i=(pageno-1)*10;i<videolog.length&&i<pageno*10;i++){
+    //   console.log(videolog[i]);
+    //   str += "<tr>";
+    //   str += "<td><span>"+(i+1)+"</span></td>";
+    //   str += "<td><span>"+videos[i].name+"</span></td>";
+    //   str += "<td><span>"+dateFormat("YYYY-mm-dd HH:MM:SS", videolog[i].startTime)+"</span></td>";
+    //   str += "<td><span>"+dateFormat("YYYY-mm-dd HH:MM:SS", videolog[i].endTime)+"</span></td>";
+    //   str += "<td><span>"+ timecall(videolog[i].studyTime)+"</span></td>";
+    //   str += "<td><span><a href='studylog_detail/"+videos[i].courseId+"'>查看详情</a></span></td>";
+    //   str += "</tr>";
+    // }
+    // $("#videologdiv").html(str);
+
+    showexpercurrent(pageno);
+  }
+
+  function showexpercurrent(pageno){
+    // var allpage = Math.ceil(videolog.length/10);
+    // var str = "当前第"+pageno+"页，共"+allpage+"页";
+    // $("#videocurrentpage").html(str);
+    // videocurrentpage = pageno;
+  }
+
+  function experpageplus(){
+    // if(expercurrentpage>1) {
+    //   showvideo(videocurrentpage - 1);
+    // }
+  }
+
+  function experpagemin(){
+    // if(expercurrentpage<Math.ceil(videolog.length/10)) {
+    //   showvideo(videocurrentpage + 1);
+    // }
+  }
 
 
 
