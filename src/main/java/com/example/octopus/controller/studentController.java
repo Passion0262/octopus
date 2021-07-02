@@ -91,7 +91,7 @@ public class studentController {
     SubExperimentReportSubmitService subExperimentReportSubmitService;
 
 
-    private final static String cookieName = "cookie_";
+    private final static String cookieName = "cookiestu";
 
     private CookieTokenUtils cookieThings = new CookieTokenUtils();
     private PropertiesUtil propertiesUtil = new PropertiesUtil();
@@ -132,7 +132,7 @@ public class studentController {
             //身份为教师或管理员，进入后台系统
             Teacher tea = teacherService.getTeacherByTeaNumber(Long.parseLong(userNumber));
             logger.info("当前登陆身份为：教师/管理员        欢迎您，" + userNumber + ":" + tea.getTeaName());
-            cookieThings.setCookie(userNumber, tea.getTeaName(), response, cookieName);
+            cookieThings.setCookie(userNumber, tea.getTeaName(), response, "cookietea");
             teacherService.updateLoginInfo(Long.parseLong(userNumber));
             return "redirect:/admin_index";
         }

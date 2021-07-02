@@ -127,7 +127,7 @@ public class CookieTokenUtils {
     }
 
     // 查找cookie
-    public static Cookie getCookie(HttpServletRequest request, String name) {
+    public static Cookie getCookie(HttpServletRequest request, String name) throws NullPointerException{
         //1.将cookies放到map中去
         Map<String, Cookie> cookieMap = new HashMap<>();
         Cookie[] cookies = request.getCookies();
@@ -144,14 +144,24 @@ public class CookieTokenUtils {
         }
     }
 
-    // 获取用户id
+
+    /**
+     * 获取cookie中token里的用户号
+     */
     public static String getCookieUserNum(HttpServletRequest request, String cookieName) {
-        // 获取cookie中的token
-        String token = getCookie(request, cookieName).getValue();
-        String userNum = getId(token);
-        return userNum;
+        try{
+            // 获取cookie中的token
+            String token = getCookie(request, cookieName).getValue();
+            String userNum = getId(token);
+            return userNum;
+        }catch (NullPointerException e){
+            return "0";
+        }
     }
-    // 获取用户名
+
+    /**
+     * 获取cookie中token里的用户名
+     */
     public static String getCookieUserName(HttpServletRequest request, String cookieName) {
         // 获取cookie中的token
         String token = getCookie(request, cookieName).getValue();

@@ -67,7 +67,7 @@ public class adminController {
     @Autowired
     DockerService dockerService;
 
-    private final static String cookieName = "cookie_";
+    private final static String cookieName = "cookietea";
 
     private CookieTokenUtils cookieThings = new CookieTokenUtils();
 
