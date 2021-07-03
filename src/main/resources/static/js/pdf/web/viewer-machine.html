@@ -395,5 +395,35 @@ See https://github.com/adobe-type-tools/cmap-resources
 
     </div> <!-- outerContainer -->
     <div id="printContainer"></div>
+
+    <script type="text/javascript">
+      window.addEventListener('keydown', function (e) {
+        if(e.keyCode == 83 && (navigator.platform.match('Mac') ? e.metaKey : e.ctrlKey)||e.keyCode == 122||e.keyCode == 123||e.keyCode == 17||e.keyCode == 18){
+          e.preventDefault();
+          window.event.returnValue= false;
+        }
+        if(e.ctrlKey && e.keyCode== 65){
+          e.preventDefault();
+          window.event.returnValue= false;
+        }
+        if(e.ctrlKey && e.keyCode== 67){
+          e.preventDefault();
+          window.event.returnValue= false;
+        }
+
+      });
+      window.onload=function(){
+        document.oncontextmenu=function(){
+          return false;
+        }
+      }
+      document.oncontextmenu = new Function("event.returnValue=false");
+      // document.onselectstart = new Function("event.returnValue=false");
+      document.oncopy = new Function("window.event.returnValue=false");
+      document.ondragstart = new Function("window.event.returnValue=false");
+
+    </script>
+
+
   </body>
 </html>
