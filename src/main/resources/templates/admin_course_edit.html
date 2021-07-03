@@ -80,7 +80,8 @@
                                             <div class="form-group row">
                                                 <label for="edit_imagePath" class="col-md-2 col-form-label">课程图标：</label>
                                                 <div class="col-md-10">
-                                                    <input name="" id="edit_imagePath" value="" onchange="checkImg()" class="form-control btn btn-light" type="file" accept="image/png, image/jpeg, image/jpg" style="background-color: white; border: 1px solid #ced4da;">
+                                                    <input type="file" class="form-control custom-file-input" id="edit_imagePath" onchange="checkImg()" accept="image/png, image/jpeg, image/jpg">
+                                                    <label id="for_imagePath" class="form-control custom-file-label" th:text="*{imagePath}" for="edit_imagePath" style="width: 97%;margin-left: 10px;"></label>
                                                     <input name="imagePath" id="imagePath" th:value="*{imagePath}" class="form-control btn btn-light" type="text" style="display: none">
                                                 </div>
                                             </div>
@@ -190,6 +191,11 @@
                 if(!changeImg){
                   changeImg = true;
                 }
+                if (document.getElementById('edit_imagePath').files.length !== 0){
+                    var name = document.getElementById('edit_imagePath').files[0].name;
+                    document.getElementById("for_imagePath").innerText = name;
+                }
+
             }
     
             function uploadImg() {

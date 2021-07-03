@@ -132,17 +132,28 @@ public class adminController {
 
         if (!cookieCheck(model, request)) return "redirect:/login";
 
-        // 获取用户名及用户id的方法使用如下语句
-        //String teaName = cookieThings.getCookieUserName(request, cookieName);
-        //long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         try {
             model.addAttribute("sizeof_experiments", experimentService.listExperiments().size());
             model.addAttribute("sizeof_projects", experimentService.listExperiments().size());
             model.addAttribute("sizeof_datasets", datasetService.listDatasets().size());
+            if (role_id == 1){
+                model.addAttribute("sizeof_courses", courseService.listCourses().size());
+            }
+            else{
+                model.addAttribute("sizeof_courses", courseService.listCoursesByTeaNumber(teaNum).size());
+            }
+
+            model.addAttribute("sizeof_videos", videoService.listVideos().size());
+           // model.addAttribute("sizeof_schools", );
+            model.addAttribute("sizeof_teachers", teacherService.getAllTeachers().size());
+            model.addAttribute("sizeof_students", userService.listStudents().size());
+            model.addAttribute("lastLoginTime", teacherService.getTeacherByTeaNumber(teaNum).getLastLoginTime());
             return "admin_index";
         } catch (Exception e) {
-            return "";
+            return "redirect:/";
         }
     }
 
@@ -558,12 +569,21 @@ public class adminController {
     @PostMapping("/add_course")
     public ModelAndView add_course(Course course, HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         logger.info("提交新增的course: [{}]", course);
         if (course.getTeaName() == null){
             // 如果只有账号没有姓名 则补充姓名
             course.setTeaName(teacherService.getTeacherByTeaNumber(course.getTeaNumber()).getTeaName());
         }
+        if (role_id == 3){
+            long id = Long.parseLong(course.getCourseName());
+            Course c = courseService.getCourseById(id);
+            course.setCourseName(c.getCourseName());
+            course.setImagePath(c.getImagePath());
+        }
+
         courseService.insertCourse(course);
         return new ModelAndView("redirect:/admin_course");
     }
@@ -735,6 +755,7 @@ public class adminController {
 
         if(role_id == 1){
             // todo 展示所有报告
+            //model.addAttribute("reports", )
         }
         else{
             // todo 根据老师展示报告
@@ -983,7 +1004,7 @@ public class adminController {
         return classes;
     }
 
-    // 获取所有的课程
+    // 获取所有的开课计划
     @ResponseBody
     @RequestMapping("/get_all_course")
     public Map get_all_course(HttpServletRequest request) {
@@ -999,6 +1020,26 @@ public class adminController {
             courses = courseService.listCoursesByTeaNumber(teaNum);
         }
         course.put("courses", courses);
+        return course;
+    }
+
+    // 获取所有的课程（目前是管理员开通的课程）
+    @ResponseBody
+    @RequestMapping("/get_course")
+    public Map get_course(HttpServletRequest request) {
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+        //int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
+
+        Map<String, Object> course = new HashMap<String, Object>();
+        List<Course> courses = courseService.listCourses();
+        List<Course> selected_courses = new ArrayList<>();
+        for (int i=0; i<courses.size(); i++){
+            Course c = courses.get(i);
+            if(sysUserRoleService.getRoleIdByUserId(c.getTeaNumber()) == 1){
+                selected_courses.add(c);
+            }
+        }
+        course.put("courses", selected_courses);
         return course;
     }
 

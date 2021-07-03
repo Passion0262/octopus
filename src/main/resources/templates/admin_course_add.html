@@ -49,9 +49,14 @@
                                         <form id="form" action="/add_course" method="post" th:object="${coursemodel.course}" novalidate="" style="padding-left: 20px;">
 
                                             <div class="form-group row">
-                                                <label for="add_courseName" class="col-md-2 col-form-label">课程名称：</label>
+                                                <label for="add_courseName" th:if="${coursemodel.role=='admin'}" class="col-md-2 col-form-label">课程名称：</label>
+                                                <label for="select_courseName" th:if="${coursemodel.role=='teacher'}" class="col-md-2 col-form-label">课程名称：</label>
                                                 <div class="col-md-10">
-                                                    <input name="courseName" th:value="*{courseName}" class="form-control" type="text"  id="add_courseName">
+                                                    <input name="courseName" th:value="*{courseName}" th:if="${coursemodel.role=='admin'}" class="form-control" type="text"  id="add_courseName">
+                                                    <select name="courseName" th:value="*{courseName}" th:if="${coursemodel.role=='teacher'}" class="form-control" id="select_courseName">
+                                                        <option value="0" style="display: none;">请选择课程</option>
+                                                    </select>
+
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -66,11 +71,13 @@
                                                     <input name="description" th:value="*{description}" id="add_description" class="form-control" type="text">
                                                 </div>
                                             </div>
-                                            <div class="form-group row">
+                                            <div class="form-group row" th:if="${coursemodel.role=='admin'}">
                                                 <label for="add_imagePath" class="col-md-2 col-form-label">课程图标：</label>
                                                 <div class="col-md-10">
-                                                    <input name="" id="add_imagePath" value="" class="form-control btn btn-light" type="file" accept="image/png, image/jpeg, image/jpg" style="background-color: white; border: 1px solid #ced4da;">
-                                                    <input name="imagePath" id="imagePath" th:value="*{imagePath}" class="form-control btn btn-light" type="text" style="display: none">
+<!--                                                    <input name="" id="add_imagePath" value="" class="form-control btn" type="file" accept="image/png, image/jpeg, image/jpg" style="background-color: white; border: 1px solid #ced4da;">-->
+                                                    <input type="file" class="form-control custom-file-input" id="add_imagePath" onchange="setImgName()" accept="image/png, image/jpeg, image/jpg">
+                                                    <label id="for_imagePath" class="form-control custom-file-label" for="add_imagePath" style="width: 97%;margin-left: 10px;">选择文件</label>
+                                                    <input name="imagePath" id="imagePath" th:value="*{imagePath}" class="form-control btn" type="text" style="display: none">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -166,11 +173,24 @@
         
         <script type="text/javascript" th:inline="javascript">
 
-            var oCourseName = document.getElementById("add_courseName");
+            var oCourseName;
+            if([[${coursemodel.role}]] === "admin"){
+                oCourseName = document.getElementById("add_courseName");
+            }
+            else{
+                oCourseName = document.getElementById("select_courseName");
+            }
             var oTeaNumber = document.getElementById("add_teacher");
             var oStartTime = document.getElementById("add_startTime");
             var oEndTime = document.getElementById("add_endTime");
             var oApplyTime = document.getElementById("add_applyTime");
+
+            function setImgName(){
+                if (document.getElementById('add_imagePath').files.length !== 0){
+                    var name = document.getElementById('add_imagePath').files[0].name;
+                    document.getElementById("for_imagePath").innerText = name;
+                }
+            }
 
             function uploadImg() {
                 var formData = new FormData();
@@ -212,12 +232,22 @@
             }
 
             function checkForm(){
-                if (!oCourseName.value){
-                    document.getElementById("alert").style.display="";
-                    document.getElementById("result_msg").innerHTML = "请填写课程名称！";
-                    return false;
+                if([[${coursemodel.role}]] === "admin"){
+                    if (!oCourseName.value){
+                        document.getElementById("alert").style.display="";
+                        document.getElementById("result_msg").innerHTML = "请填写课程名称！";
+                        return false;
+                    }
                 }
-                if (oTeaNumber.value === "0"){
+                else{
+                    if (oCourseName.value === "0"){
+                        document.getElementById("alert").style.display="";
+                        document.getElementById("result_msg").innerHTML = "请选择课程！";
+                        return false;
+                    }
+                }
+
+                if (!oTeaNumber.value){
                     document.getElementById("alert").style.display="";
                     document.getElementById("result_msg").innerHTML = "请填写授课教师账号！";
                     return false;
@@ -240,9 +270,10 @@
                     document.getElementById("result_msg").innerHTML = "开通申请日期不能晚于授课结束日期！";
                     return false;
                 }
-
-                if (uploadImg() == false){
-                    return false;
+                if([[${coursemodel.role}]] === "admin") {
+                    if (uploadImg() == false){
+                        return false;
+                    }
                 }
                 console.log("check form finish");
                 return true;
@@ -270,7 +301,28 @@
                 oStartTime.value = today;
                 oEndTime.value = today;
                 oApplyTime.value = today;
+
+                // 获取数据库已有的课程
+                if([[${coursemodel.role}]] === "teacher") {
+                    getCourse();
+                }
+
             })
+
+            function getCourse(){
+                $.ajax({
+                    type:"GET",
+                    url:"get_course",
+                    success:function (data) {
+                        //console.log(data);
+                        for(var i = 0;i < data.courses.length;i++){
+                            var option = $("<option></option>").text(data.courses[i].courseName);
+                            option.attr("value", data.courses[i].id);
+                            $("#select_courseName").append(option);
+                        }
+                    }
+                })
+            }
 
         </script>
     
