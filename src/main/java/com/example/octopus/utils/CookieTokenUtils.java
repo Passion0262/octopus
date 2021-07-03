@@ -72,7 +72,6 @@ public class CookieTokenUtils extends HttpServlet {
 		Claims claims = null;
 		try {
 			String token = getCookie(request, cookie).getValue();
-			System.out.println(token);
 			claims = getTokenBody(token);
 
 			tokenCheck.setSuccess(true);
@@ -126,10 +125,10 @@ public class CookieTokenUtils extends HttpServlet {
 		if (cookieMap.containsKey(name)) {
 			cookieMap.get(name).setMaxAge(0);
 			cookieMap.get(name).setValue("");
-			logger.info(request.getRequestURI()+"删除了名为" + name + "的cookie");
+			//logger.info("删除了名为" + name + "的cookie");
 			response.addCookie(cookieMap.get(name));
 		}
-		else logger.info(request.getRequestURI()+"未找到名为" + name + "的cookie，不需删除");
+		//else logger.info("未找到名为" + name + "的cookie，不需删除");
 	}
 
 	// 查找cookie
