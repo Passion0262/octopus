@@ -14,93 +14,76 @@
     <link href="../../static/js/libs/summernote/summernote.css"  rel="stylesheet" type="text/css" />
 
     <style>
-        /*.embed-responsive-2by1 {*/
-        /*    padding-top: 50%;*/
-        /*}*/
+
+        .h-bar{
+            width: 5px;
+            height: 100%;
+            resize: horizontal;
+            cursor: col-resize;
+            background-color: black;
+            float: left;
+        }
+        .top-left-style{
+            width:38%;
+            padding-right: 0px;
+            float: left;
+            margin-bottom: 0px;
+            min-width: 28%;
+        }
+        .top-right-style{
+            width:68%;
+            float: left;
+            margin-bottom: 0px;
+            min-width: 58%;
+        }
+        .allshow{
+            width:100%;
+        }
+        .noneshow{
+            width:0%;
+        }
     </style>
 </head>
 
-<body data-sidebar="light">
+<body data-sidebar="dark" data-topbar="dark" >
 <!-- Begin page -->
 <div id="layout-wrapper">
-    <header id="page-topbar">
-        <div class="navbar-header">
-            <div class="d-flex">
-                <!-- LOGO -->
-                <div class="navbar-brand-box">
-                    <a href="/index" class="logo logo-dark">
-                        <span class="logo-sm"><img src="../../static/images/logo-sm-dark.png" alt="" height="22"></span>
-                        <span class="logo-lg"><img src="../../static/images/logo-dark.png" alt="" height="27"></span>
-                    </a>
-                </div>
-
-            </div>
-
-
-            <div class="d-flex">
-
-                <div class="dropdown d-none d-lg-inline-block ml-1"><button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen"><i class="ri-fullscreen-line"></i></button></div>
-
-                <!-- 个人信息展示 退出登录操作 -->
-                <div class="dropdown d-inline-block user-dropdown">
-                    <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class=" " th:text="${stuname}"></span>
-                        <span class=" d-none" ></span>
-                        <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <!-- item-->
-                        <a class="dropdown-item" href="/userinfo"><i class="ri-user-line align-middle mr-1"></i>个人资料</a>
-                        <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="/logout"><i class="ri-shut-down-line align-middle mr-1 text-danger"></i>注销</a>
-                    </div>
-                </div>
-                <!-- 个人信息展示 退出登录操作 -->
-
-            </div>
-        </div>
-    </header>
-
 
     <!-- ============================================================== -->
-    <!-- Start right Content here -->
-    <!-- ============================================================== -->
-    <div class="main-content" style="margin-left: 0px;">
-        <div class="page-content" style="padding-top:80px;">
-            <div class="container-fluid">
-                <!-- start page title -->
+    <div class="main-content" style="margin: 0px;height:100%;">
+
 
                 <div class="row">
 
-                <div class="col-12">
+                <div class="col-12" style="background-color: #14213D;margin-left:  5px;margin-right: 5px;">
                     <div class="page-title-box d-flex align-items-center justify-content-between" style="padding-bottom: 5px; padding-top: 5px;">
-                        <h4 class="mb-4"><span th:text="${experiment.name}"></span>:&nbsp;&nbsp;&nbsp;<span th:text="${subExperiment.subExperimentName}"></span></h4>
+                        <h2 class="mb-4" style="color: #E5E5E5;font-size: 25px;margin-top: 10px;"><span th:text="${experiment.name}"></span>:&nbsp;&nbsp;&nbsp;<span th:text="${subExperiment.subExperimentName}"></span></h2>
                         <div class="page-title-right">
-                            <ol class="breadcrumb m-0">
-                                <button type="button" id="showpdfbtn" class="btn btn-outline-info waves-effect waves-light" th:onclick="showpdf()">文档模式</button>
+                            <ol class="breadcrumb m-0" style="margin-right: 5px;">
+                                <button type="button" id="showpdfbtn" class="btn btn-outline-info waves-effect waves-dark" th:onclick="showpdf()">文档模式</button>
                                 <span>&nbsp;&nbsp;&nbsp;</span>
-                                <button type="button" id="showmachinebtn" class="btn btn-outline-info waves-effect waves-light active" th:onclick="showm1()">虚拟机模式</button>
+                                <button type="button" id="showmachinebtn" class="btn btn-outline-info waves-effect waves-dark active" th:onclick="showm1()">虚拟机模式</button>
                                 <span>&nbsp;&nbsp;&nbsp;</span>
-                                <button type="button" class="btn btn-outline-dark waves-effect waves-light" th:onclick="location.href='/experiment_task_detail/'+[[${subExperiment.experimentId}]]">实验任务</button>
+                                <button type="button" class="btn btn-light waves-effect waves-dark" th:onclick="location.href='/experiment_task_detail/'+[[${subExperiment.experimentId}]]">实验任务</button>
                                 <span>&nbsp;&nbsp;&nbsp;</span>
                                 <span th:if="${isvideo}==0">
-                                <button type="button" disabled class="btn btn-outline-dark waves-effect waves-light" th:onclick="location.href='/course_video/'+[[${videocourse}]]">课程学习</button>
+                                <button type="button" disabled class="btn btn-light waves-effect " th:onclick="location.href='/course_video/'+[[${videocourse}]]">课程学习</button>
                                 </span>
                                 <span th:if="${isvideo}==1">
-                                <button type="button"  class="btn btn-outline-dark waves-effect waves-light" th:onclick="location.href='/course_video/'+[[${videocourse}]]+'/'+[[${subExperiment.experimentId}]]">课程学习</button>
+                                <button type="button"  class="btn btn-light waves-effect " th:onclick="location.href='/course_video/'+[[${videocourse}]]+'/'+[[${subExperiment.experimentId}]]">课程学习</button>
                                 </span>
                             </ol>
                         </div>
                     </div>
                 </div>
-                </div>
+                </div><!-- end row -->
 
 
-                <div class="row">
+        <div id='top' class="row" style="overflow: auto; position：absolute;flex-wrap: inherit;height:100%;">
 
-                    <div class="col-md-4 " id="follow_machine" style="padding-right: 0px;">
-                        <div class="card" id="follow_machine1" >
-                            <div class="card-body" style="padding-top:5px;padding-left: 0px; padding-right: 0px;padding-bottom: 0px;" >
-                                <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
+            <div class="card top-left-style " id="top-left" >
+<!--                <div class="card"  >-->
+                                <ul id ="card-ul" class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
                                     <li class="nav-item">
                                         <a class="nav-link active" data-toggle="tab" href="#txt_task" role="tab" aria-selected="true">
                                             <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
@@ -121,7 +104,7 @@
                                     </li>
                                 </ul>
 
-                                <div class="tab-content  text-muted" id="tabtext" style="min-height: 300px;">
+                                <div class="tab-content text-muted" id="tabtext" style="">
                                     <div class="tab-pane active" id="txt_task" role="tabpanel">
                                         <iframe th:src="'../../static/js/pdf/web/viewer-machine.html?file='+${subExperiment.requirePath}" width="100%" height="100%" ></iframe>
 <!--                                        <embed src="../../static/images/showpic/demo1.pdf#toolbar=0" type="application/pdf" width="100%" height="100%" />-->
@@ -131,7 +114,7 @@
                                             <iframe th:src="'../../static/js/pdf/web/viewer-machine.html?file='+${subExperiment.requirePath}" width="100%" height="100%" ></iframe>
                                     </div>
 
-                                    <div class="tab-pane " id="txt_profile" role="tabpanel" >
+                                    <div class="tab-pane " id="txt_profile" role="tabpanel"  style="margin-left: 5px;margin-right: 5px;">
                                         <div style="height: 40px;padding:2px 5px;">
                                         <div  style="float: right;">
                                             <button type="button"  class="btn btn-primary btn-rounded waves-effect waves-light" onclick="savetext()">保存</button>
@@ -144,65 +127,36 @@
                                         </div>
                                         </div>
                                                 <div  id="summernote"></div>
-                                    </div>
-                                </div>
 
-                        </div>
                     </div>
                     </div>
+<!--                    </div>-->
+            </div>
+                    <div id="top-spr" r-Type="width" div1="#top-left" div2="#top-right" class="h-bar"></div>
 
-                        <div class="col-md-8" id="machine">
-                            <div class="card" id="machine1" >
-                                <div class="card-body"  style="padding:0px;">
+            <div class="card top-right-style" id="top-right" >
+<!--                <div class="card"  >-->
 <!--                                    <p class="card-title-desc">实验机</p>-->
 
-<!--                                    <div class="embed-responsive embed-responsive-16by9" >-->
-<!--                                        <iframe class="embed-responsive-item" src="http://172.18.146.123:6080/#/" allowfullscreen="true" width="1400px"></iframe>-->
-<!--                                    </div>-->
-
-                                    <div class="embed-responsive embed-responsive-16by9" >
-                                        <iframe class="embed-responsive-item" src="http://172.18.146.124:6081/#/" allowfullscreen="true" ></iframe>
+                                    <div style="height: 100%;width: 100%;">
+                                        <iframe  src="http://172.18.146.123:6080/#/" allowfullscreen="true" scrolling="no" frameborder="0" width="100%" height="100%"></iframe>
                                     </div>
+
+<!--                                    <div class="embed-responsive embed-responsive-16by9" >-->
+<!--                                        <iframe class="embed-responsive-item" src="http://172.18.146.124:6081/#/" allowfullscreen="true" ></iframe>-->
+<!--                                    </div>-->
 
 
                                     <!--                                    <div class="embed-responsive embed-responsive-2by1" width="1400px">-->
 <!--                                        <iframe class="embed-responsive-item" src="http://172.18.146.123:6080/#/" frameborder="0" scrolling="0" style=""></iframe>-->
 <!--                                    </div>-->
 
-                                </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                </div><!-- end row -->
-
-<!--            <div class="row">-->
-<!--                <div class="col-12">-->
-<!--                    <div class="card">-->
-<!--                        <div class="card-body">-->
-<!--                            <div class="row">-->
-<!--                                <div class="col-9">-->
-<!--                            <h4 class="card-title">Summernote</h4>-->
-<!--                                </div>-->
-<!--                                <div class="col-3">-->
-<!--                                    <button type="button" class="btn btn-success btn-rounded waves-effect waves-light" th:onclick="">保存</button>-->
-<!--                                    <button type="button" class="btn btn-success btn-rounded waves-effect waves-light" th:onclick="submit()">提交</button>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="row"></div>-->
-<!--                            <div  id="summernote" >实验报告模板</div>-->
-
-<!--                        </div>-->
-<!--                    </div>-->
 <!--                </div>-->
-<!--            </div>-->
+                                </div>
+
+                        </div><!-- end div top -->
 
 
-            </div><!-- container-fluid -->
-        </div><!-- End Page-content -->
 
     </div><!-- end main content-->
 </div><!-- END layout-wrapper -->
@@ -212,6 +166,7 @@
 
 <!-- JAVASCRIPT -->
 <script th:src="@{../../static/js/libs/jquery/jquery.min.js}"></script>
+<script th:src="@{../../static/js/libs/jquery/divresizer.js}"></script>
 <script th:src="@{../../static/js/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
 <script th:src="@{../../static/js/libs/metismenu/metisMenu.min.js}"></script>
 <script th:src="@{../../static/js/libs/simplebar/simplebar.min.js}"></script>
@@ -228,15 +183,21 @@
 <script th:inline="javascript" type="text/javascript">
 
     $(document).ready(function(){
-        $('#follow_machine').css("height",$('#machine').height());
-        $('#follow_machine1').css("height",$('#machine1').height());
-        $('.tab-pane').css("height",$('#machine1').height()-42);
+        $("#layout-wrapper").css("height",$(document).height());
+        $(".tab-pane").css("height",$("#top").height()-$("#card-ul").height());
 
-        $(window).resize(function(){
-            $('#follow_machine').css("height",$('#machine').height());
-            $('#follow_machine1').css("height",$('#machine1').height());
-            $('.tab-pane').css("height",$('#machine1').height()-42);
-        });
+
+
+
+        // $('#follow_machine').css("height",$('#machine').height());
+        // $('#follow_machine1').css("height",$('#machine1').height());
+        // $('.tab-pane').css("height",$('#machine1').height()-42);
+        //
+        // $(window).resize(function(){
+        //     $('#follow_machine').css("height",$('#machine').height());
+        //     $('#follow_machine1').css("height",$('#machine1').height());
+        //     $('.tab-pane').css("height",$('#machine1').height()-42);
+        // });
 
         $('#summernote').summernote({
             height : $('#machine1').height()-42,
@@ -286,7 +247,9 @@
 
     });
 
-
+    $.divResizer({
+        select: '#top-spr',
+    });
 
 
     function sendFile(files, editor, $editable) {
@@ -386,14 +349,19 @@
     }
 
     function showpdf(){
-        $("#follow_machine").attr("class","col-md-12");
-        $("#machine").attr("class","");
+        $("#top-left").removeClass("top-left-style");
+        $("#top-right").removeClass("top-right-style");
+        $("#top-left").addClass("allshow");
+        $("#top-right").addClass("noneshow");
         $("#showpdfbtn").addClass("active");
         $("#showmachinebtn").removeClass("active");
     }
     function showm1(){
-        $("#follow_machine").attr("class","col-md-4");
-        $("#machine").attr("class","col-md-8");
+        $("#top-left").removeClass("allshow");
+        $("#top-left").addClass("top-left-style");
+        $("#top-right").removeClass("noneshow");
+        $("#top-right").addClass("top-right-style");
+
         $("#showmachinebtn").addClass("active");
         $("#showpdfbtn").removeClass("active");
     }
@@ -522,6 +490,10 @@
 
 alert("ok");
     }
+
+
+
+
 
 </script>
 

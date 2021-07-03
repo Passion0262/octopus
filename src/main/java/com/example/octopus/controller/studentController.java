@@ -301,6 +301,11 @@ public class studentController {
         model.addAttribute("course", course);
 
         List<Chapter> chapters = chapterService.listChaptersByCourseId(courseid_id);
+        logger.info("chapters:" + chapters);
+        if(chapters.size() == 0){
+            return "redirect:/mycourse";
+        }
+
 //        logger.info("chapters:" + chapters);
 //        logger.info("chapters:" + chapters.size());
         model.addAttribute("chapters", chapters);
