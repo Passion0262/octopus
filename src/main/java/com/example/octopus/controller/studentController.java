@@ -12,26 +12,14 @@ import com.example.octopus.utils.PropertiesUtil;
 import com.example.octopus.utils.TokenCheckUtils;
 
 import java.io.*;
-import java.nio.charset.Charset;
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.html.simpleparser.HTMLWorker;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.tool.xml.XMLWorker;
-import com.itextpdf.tool.xml.XMLWorkerHelper;
 import com.itextpdf.text.PageSize;
-import com.itextpdf.tool.xml.html.Tags;
-import com.itextpdf.tool.xml.parser.XMLParser;
-import com.itextpdf.tool.xml.pipeline.css.CSSResolver;
-import com.itextpdf.tool.xml.pipeline.css.CssResolverPipeline;
-import com.itextpdf.tool.xml.pipeline.end.PdfWriterPipeline;
-import com.itextpdf.tool.xml.pipeline.html.HtmlPipeline;
-import com.itextpdf.tool.xml.pipeline.html.HtmlPipelineContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,12 +31,10 @@ import org.springframework.web.bind.annotation.*;
 import com.example.octopus.entity.user.Student;
 import com.example.octopus.entity.user.Course;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.sql.Time;
 import java.util.*;
 
 
@@ -91,7 +77,7 @@ public class studentController {
     SubExperimentReportSubmitService subExperimentReportSubmitService;
 
 
-    private final static String cookieName = "cookiestu";
+    private final static String COOKIE_NAME = "cookiestu";
 
     private CookieTokenUtils cookieThings = new CookieTokenUtils();
     private PropertiesUtil propertiesUtil = new PropertiesUtil();
@@ -99,7 +85,7 @@ public class studentController {
 
     private boolean cookieCheck(Model model, HttpServletRequest request) {
         // 检查cookie合法性
-        TokenCheckUtils tokenCheck = cookieThings.validateToken(request, cookieName);
+        TokenCheckUtils tokenCheck = cookieThings.validateToken(request, COOKIE_NAME);
         if (tokenCheck.isSuccess()) {
             model.addAttribute("stuname", tokenCheck.getUserName());
             return true;
@@ -110,8 +96,9 @@ public class studentController {
     }
 
     @RequestMapping("/login")
-    public String login(Model model, HttpServletRequest request) {
-        cookieThings.deleteCookie(request, cookieName);
+    public String login(Model model, HttpServletRequest request, HttpServletResponse response) {
+        cookieThings.deleteCookie(request, response, COOKIE_NAME);
+        cookieThings.deleteCookie(request, response, "cookietea");
         return "auth-login";
 //        return "login";
     }
@@ -125,14 +112,14 @@ public class studentController {
             //身份为学生，进入前台系统
             Student stu = userService.getStudentByStuNumber(Long.parseLong(userNumber));
             logger.info("当前登陆身份为：学生        欢迎您，" + userNumber + ":" + stu.getName());
-            cookieThings.setCookie(userNumber, stu.getName(), response, cookieName);
+            cookieThings.setCookie(userNumber, stu.getName(),request, response, COOKIE_NAME);
             userService.updateLoginInfo(Long.parseLong(userNumber));
             return "redirect:/index";
         } else {
             //身份为教师或管理员，进入后台系统
             Teacher tea = teacherService.getTeacherByTeaNumber(Long.parseLong(userNumber));
             logger.info("当前登陆身份为：教师/管理员        欢迎您，" + userNumber + ":" + tea.getTeaName());
-            cookieThings.setCookie(userNumber, tea.getTeaName(), response, "cookietea");
+            cookieThings.setCookie(userNumber, tea.getTeaName(), request,response, "cookietea");
             teacherService.updateLoginInfo(Long.parseLong(userNumber));
             return "redirect:/admin_index";
         }
@@ -141,7 +128,7 @@ public class studentController {
     @RequestMapping("/index")
     public String index(Model model, HttpServletRequest request) {
         String stuNumber = SecurityContextHolder.getContext().getAuthentication().getName();
-        if (!stuNumber.equals(cookieThings.getCookieUserNum(request, cookieName))) return "redirect:/";
+        if (!stuNumber.equals(cookieThings.getCookieUserNum(request, COOKIE_NAME))) return "redirect:/";
 
         if (!cookieCheck(model, request)) return "redirect:/login";
 
@@ -159,8 +146,8 @@ public class studentController {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
         // todo 获取用户名及用户id的方法使用如下语句
-        String stuName = cookieThings.getCookieUserName(request, cookieName);
-        String stuNum = cookieThings.getCookieUserNum(request, cookieName);
+        String stuName = cookieThings.getCookieUserName(request, COOKIE_NAME);
+        String stuNum = cookieThings.getCookieUserNum(request, COOKIE_NAME);
 
 
 //        String stuname = (String) session.getAttribute("stuname");
@@ -181,7 +168,7 @@ public class studentController {
 
         logger.info("phoneNumber:" + phoneNumber);
 
-        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         boolean status = userService.updatePhoneNumber(stuNum, phoneNumber);
 
         return "redirect:userinfo";
@@ -220,7 +207,7 @@ public class studentController {
         model.addAttribute("course", course);
 
 
-        String stuNum = cookieThings.getCookieUserNum(request, cookieName);
+        String stuNum = cookieThings.getCookieUserNum(request, COOKIE_NAME);
         boolean isapplied = studentCourseService.isChosen(Long.parseLong(stuNum), Long.parseLong(id));
 
         logger.info("isapplied:" + isapplied);
@@ -237,7 +224,7 @@ public class studentController {
 //        String stuname = (String) session.getAttribute("stuname");
 
 
-        String stuNum = cookieThings.getCookieUserNum(request, cookieName);
+        String stuNum = cookieThings.getCookieUserNum(request, COOKIE_NAME);
         logger.info("确认课程_id:" + id);
         logger.info("确认学生_id:" + stuNum);
         boolean issuccess = studentCourseService.insertStudentCourse( Long.parseLong(stuNum),Long.parseLong(id));
@@ -256,7 +243,7 @@ public class studentController {
 
         logger.info("取消申请_id:" + id);
 
-        String stuNum = cookieThings.getCookieUserNum(request, cookieName);
+        String stuNum = cookieThings.getCookieUserNum(request, COOKIE_NAME);
         logger.info("确认课程_id:" + id);
         logger.info("确认学生_id:" + stuNum);
         boolean issuccess = studentCourseService.deleteStudentCourse( Long.parseLong(stuNum),Long.parseLong(id));
@@ -276,7 +263,7 @@ public class studentController {
 //        String stuname = (String) session.getAttribute("stuname");
 //        model.addAttribute("stuname", stuname);
 
-        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
 
         List<Course> mycourses = courseService.listCoursesByStuNumber(stuNum);
         logger.info("mycourses:" + mycourses);
@@ -322,7 +309,7 @@ public class studentController {
         List<List<Video>> videos = new ArrayList<>();
         List<List<Long>> tosubexperiments = new ArrayList<>();
         List<List<VideoProgress>> videopros = new ArrayList<>();
-        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
 
         for (int i=0;i<chapters.size();i++){
 //            logger.info("chaptersid:" + chapters.get(i).getId());
@@ -396,7 +383,7 @@ public class studentController {
         Integer jindu = Integer.parseInt((request.getParameter("jindu")));
         Integer learntime = Integer.parseInt((request.getParameter("learntime")));
         Long videoid = Long.parseLong(request.getParameter("videoid"));
-        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
 
 //        String strDateFormat = "yyyy-MM-dd HH:mm:ss";
 //        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -439,7 +426,7 @@ public class studentController {
 //        String stuname = (String) session.getAttribute("stuname");
 //        model.addAttribute("stuname", stuname);
 
-        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         List<Experiment> allexperiments = experimentService.listExperimentsByStuNumber(stuNum);
         logger.info("allExperiment:" + allexperiments);
         model.addAttribute("allexperiments", allexperiments);
@@ -487,7 +474,7 @@ public class studentController {
     @RequestMapping("/experiment_machine/{id}")
     public String experiment_machine(@PathVariable("id")String id,Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
 //        String stuname = (String) session.getAttribute("stuname");
 //        model.addAttribute("stuname", stuname);
 
@@ -627,7 +614,7 @@ public class studentController {
     @ResponseBody
     public void saveExperText(Model model, HttpServletRequest request) {
         Long experid = Long.parseLong(request.getParameter("experid"));
-        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         String text = request.getParameter("text");
 //        logger.info("experid:" + experid);
 //        logger.info("text:" + text);
@@ -643,7 +630,7 @@ public class studentController {
     @ResponseBody
     public void submitExperText(Model model, HttpServletRequest request) throws IOException, DocumentException {
         Long experid = Long.parseLong(request.getParameter("experid"));
-        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         String text = request.getParameter("text");
         logger.info("experid:" + experid);
         logger.info("text:" + text);
@@ -712,7 +699,7 @@ public class studentController {
     @RequestMapping("/studylog")
     public String studylog(Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         List<VideoProgress> videopros = videoProgressService.listByStuNumber(stuNum);
         model.addAttribute("videopros",  videopros);
         logger.info("videopros :" + videopros );
@@ -738,7 +725,7 @@ public class studentController {
     public String studylog_detail(@PathVariable(value = "id") String id,Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
         long cour_id = Long.parseLong(id);
-        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         Course course = courseService.getCourseById(cour_id);
         model.addAttribute("course",  course);
         logger.info("course:" + course );

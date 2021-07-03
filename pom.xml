@@ -12,6 +12,7 @@
     <artifactId>octopus</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>octopus</name>
+    <packaging>war</packaging>
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>1.8</java.version>
@@ -142,11 +143,17 @@
             <artifactId>xmlworker</artifactId>
             <version>5.5.8</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
 
 
     <build>
+        <finalName>aa</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

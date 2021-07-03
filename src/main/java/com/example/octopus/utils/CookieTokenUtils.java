@@ -1,8 +1,12 @@
 package com.example.octopus.utils;
 
+import com.example.octopus.controller.adminController;
 import io.jsonwebtoken.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
@@ -15,7 +19,9 @@ import java.util.Map;
  * token和cookie的配置内容
  */
 
-public class CookieTokenUtils {
+public class CookieTokenUtils extends HttpServlet {
+	private static Logger logger = LoggerFactory.getLogger(adminController.class);
+
 	// token///////////////////////////////////////////////
 	public static final String TOKEN_HEADER = "Authorization";
 	public static final String TOKEN_PREFIX = "Bearer ";
@@ -66,6 +72,7 @@ public class CookieTokenUtils {
 		Claims claims = null;
 		try {
 			String token = getCookie(request, cookie).getValue();
+			System.out.println(token);
 			claims = getTokenBody(token);
 
 			tokenCheck.setSuccess(true);
@@ -92,22 +99,22 @@ public class CookieTokenUtils {
 	// cookie////////////////////////////////////////////
 	// 设置cookie
 
-	public static void setCookie(String number, String name, HttpServletResponse response, String cookieName) {
+	public static void setCookie(String number, String name, HttpServletRequest request, HttpServletResponse response, String cookieName) {
 		// 生成token
-		// boolean remember = rememberme == "1" ? true : false;
 		String token = createToken(number, name, false);
 
 		Cookie cookie = new Cookie(cookieName, token);
-		cookie.setPath("/");
-		cookie.setSecure(true);
+		cookie.setPath(request.getContextPath());
+		cookie.setSecure(false);  // 安全cookie无法通过未加密的HTTP连接传输到服务器，故需设置为false
 		cookie.setMaxAge((int) EXPIRATION);
 		// 向客户端发送cookie
 		response.addCookie(cookie);
-		System.out.println("为用户" + number + ":" + name + "生成了名为" + cookieName + "的cookie");
+//		response.setHeader();
+		logger.info("为用户" + number + ":" + name + "生成了名为" + cookieName + "的cookie");
 	}
 
 	// 删除cookie
-	public static void deleteCookie(HttpServletRequest request, String name) {
+	public static void deleteCookie(HttpServletRequest request, HttpServletResponse response, String name) {
 		Map<String, Cookie> cookieMap = new HashMap<>();
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
@@ -119,11 +126,10 @@ public class CookieTokenUtils {
 		if (cookieMap.containsKey(name)) {
 			cookieMap.get(name).setMaxAge(0);
 			cookieMap.get(name).setValue("");
-
-			System.out.println("删除了名为" + name + "的cookie");
-			System.out.println(cookieMap.get(name).getValue());
-			System.out.println(cookieMap.get(name).getMaxAge());
+			logger.info(request.getRequestURI()+"删除了名为" + name + "的cookie");
+			response.addCookie(cookieMap.get(name));
 		}
+		else logger.info(request.getRequestURI()+"未找到名为" + name + "的cookie，不需删除");
 	}
 
 	// 查找cookie
@@ -137,11 +143,8 @@ public class CookieTokenUtils {
 			}
 		}
 		//2.查找是否存在cookie,是则返回查找到的cookie
-		if (cookieMap.containsKey(name)) {
-			return cookieMap.get(name);
-		} else {
-			return null;
-		}
+		if (cookieMap.containsKey(name)) return cookieMap.get(name);
+		else return null;
 	}
 
 
@@ -155,7 +158,7 @@ public class CookieTokenUtils {
 			String userNum = getId(token);
 			return userNum;
 		} catch (NullPointerException e) {
-			System.out.println("cannot find the cookie names" + cookieName);
+			System.out.println("cannot find the cookie names " + cookieName);
 			e.printStackTrace();
 			return "0";
 		}

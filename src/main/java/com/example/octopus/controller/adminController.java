@@ -10,6 +10,7 @@ import com.example.octopus.utils.UploadFileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -67,16 +68,16 @@ public class adminController {
     @Autowired
     DockerService dockerService;
 
-    private final static String cookieName = "cookietea";
+    private final static String COOKIE_NAME = "cookietea";
 
     private CookieTokenUtils cookieThings = new CookieTokenUtils();
 
 
     private boolean cookieCheck(Model model, HttpServletRequest request) {
         // 检查cookie合法性
-        TokenCheckUtils tokenCheck = cookieThings.validateToken(request, cookieName);
+        TokenCheckUtils tokenCheck = cookieThings.validateToken(request, COOKIE_NAME);
         if (tokenCheck.isSuccess()) {
-            long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+            long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
             int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
             model.addAttribute("username", tokenCheck.getUserName());
             if (role_id == 1){
@@ -108,7 +109,7 @@ public class adminController {
     @RequestMapping("/admin_userinfo")
     public String admin_userinfo(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         model.addAttribute("userinfo", teacherService.getTeacherByTeaNumber(teaNum));
         //System.out.println(teacherService.getTeacherByTeaNumber(teaNum));
         return "admin_userinfo";
@@ -126,8 +127,8 @@ public class adminController {
     //首页
     @RequestMapping("/admin_index")
     public String confirmlogin(HttpServletRequest request, Model model) {
-//        String teaNumber = SecurityContextHolder.getContext().getAuthentication().getName();
-//        if (!teaNumber.equals(cookieThings.getCookieUserNum(request, cookieName))) return "redirect:/";
+        String teaNumber = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (!teaNumber.equals(cookieThings.getCookieUserNum(request, COOKIE_NAME))) return "redirect:/";
 
         if (!cookieCheck(model, request)) return "redirect:/login";
 
@@ -150,7 +151,7 @@ public class adminController {
     @RequestMapping("/admin_major")
     public String admin_major(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         logger.info("进入专业管理");
@@ -168,7 +169,7 @@ public class adminController {
     @GetMapping("/admin_major_add")
     public ModelAndView admin_major_add(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  //获取角色，管理员还是教师
 
         // 只有管理员可以增加专业
@@ -183,8 +184,8 @@ public class adminController {
     @PostMapping("/add_major")
     public ModelAndView add_major(Major major, HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-        String teaName = cookieThings.getCookieUserName(request, cookieName);
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        String teaName = cookieThings.getCookieUserName(request, COOKIE_NAME);
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         if (role_id == 1){
@@ -201,7 +202,7 @@ public class adminController {
     @GetMapping("/admin_major_edit")
     public ModelAndView admin_major_edit(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         // 只有管理员可以修改专业
@@ -216,8 +217,8 @@ public class adminController {
     @PostMapping("/edit_major")
     public ModelAndView edit_major(Major major, HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-        String teaName = cookieThings.getCookieUserName(request, cookieName);
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        String teaName = cookieThings.getCookieUserName(request, COOKIE_NAME);
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         if (role_id == 1){
@@ -234,8 +235,8 @@ public class adminController {
     @RequestMapping("/admin_major_delete")
     public ModelAndView admin_major_delete(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-        String teaName = cookieThings.getCookieUserName(request, cookieName);
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        String teaName = cookieThings.getCookieUserName(request, COOKIE_NAME);
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         // todo 删除专业涉及到相关班级、学生、教师
@@ -255,7 +256,7 @@ public class adminController {
     @RequestMapping("/admin_class")
     public String admin_class(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         if (role_id == 1) {
@@ -272,7 +273,7 @@ public class adminController {
     @GetMapping("/admin_class_add")
     public ModelAndView admin_class_add(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         if (role_id == 1) {
@@ -286,7 +287,7 @@ public class adminController {
     public ModelAndView add_class(Class_ class_, Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
 
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
 
         logger.info("提交新增的class_: [{}]", class_);
         classService.insertClass(class_, teaNum);
@@ -298,7 +299,7 @@ public class adminController {
     @GetMapping("/admin_class_edit")
     public ModelAndView admin_class_edit(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         long id = Long.parseLong(request.getParameter("id"));
@@ -321,8 +322,8 @@ public class adminController {
     @RequestMapping("/admin_class_delete")
     public ModelAndView admin_class_delete(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-        String teaName = cookieThings.getCookieUserName(request, cookieName);
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        String teaName = cookieThings.getCookieUserName(request, COOKIE_NAME);
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         long id = Long.parseLong(request.getParameter("id"));
@@ -338,7 +339,7 @@ public class adminController {
     @RequestMapping("/admin_student")
     public String admin_student(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         logger.info("进入学生管理");
@@ -366,7 +367,7 @@ public class adminController {
     @PostMapping("/add_student")
     public ModelAndView add_student(Student student, HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         logger.info("提交新增的student: [{}]", student);
         userService.insertStudent(student, teaNum);
         return new ModelAndView("redirect:/admin_student");
@@ -421,7 +422,7 @@ public class adminController {
     @RequestMapping("/admin_teacher")
     public String admin_teacher(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
         // 只有管理员能够进入教师管理
         if (role_id == 1) {
@@ -439,7 +440,7 @@ public class adminController {
     @GetMapping("/admin_teacher_add")
     public ModelAndView admin_teacher_add(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
         // 只有管理员能够增加教师
         if (role_id == 1) {
@@ -455,7 +456,7 @@ public class adminController {
     @PostMapping("/add_teacher")
     public ModelAndView add_teacher(Teacher teacher, HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
         // 只有管理员能够增加教师
         if (role_id == 1) {
@@ -469,7 +470,7 @@ public class adminController {
     @GetMapping("/admin_teacher_edit")
     public ModelAndView admin_teacher_edit(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         if (role_id == 1) {
@@ -488,7 +489,7 @@ public class adminController {
     @PostMapping("/edit_teacher")
     public ModelAndView edit_teacher(Teacher teacher, HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         if (role_id == 1) {
@@ -518,7 +519,7 @@ public class adminController {
     @RequestMapping("/admin_course")
     public String admin_course(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         logger.info("进入开课计划管理");
@@ -535,8 +536,8 @@ public class adminController {
     @GetMapping("/admin_course_add")
     public ModelAndView admin_course_add(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-        String teaName = cookieThings.getCookieUserName(request, cookieName);
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        String teaName = cookieThings.getCookieUserName(request, COOKIE_NAME);
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         logger.info("进入admin_course_add，获取一个新Course()");
@@ -606,7 +607,7 @@ public class adminController {
     @RequestMapping("/admin_course_student")
     public String admin_course_student(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         logger.info("进入学生开课计划管理");
@@ -700,7 +701,7 @@ public class adminController {
     @RequestMapping("/admin_video_log")
     public String admin_video_log(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         model.addAttribute("video_logs", videoProgressService.getVideoStudySummaryByRole(teaNum));
         return "admin_video_log";
     }
@@ -711,7 +712,7 @@ public class adminController {
     @RequestMapping("/admin_video_log_details")
     public String admin_video_log_details(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         if(role_id == 1){
@@ -729,7 +730,7 @@ public class adminController {
     @RequestMapping("/admin_report")
     public String admin_report(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         if(role_id == 1){
@@ -767,7 +768,7 @@ public class adminController {
     public String admin_experiment_log(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         model.addAttribute("experiment_logs", subExperimentProgressService.getOperateTimeByRole(teaNum));
         return "admin_experiment_log";
     }
@@ -778,7 +779,7 @@ public class adminController {
     public String admin_pc_type(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         if(role_id == 1){
@@ -799,7 +800,7 @@ public class adminController {
     public String admin_cluster(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         if(role_id == 1){
@@ -818,7 +819,7 @@ public class adminController {
     public String admin_student_pc(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
         if(role_id == 1){
 
@@ -859,7 +860,7 @@ public class adminController {
     public String admin_video(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         if(role_id == 1){
@@ -877,7 +878,7 @@ public class adminController {
     public String admin_video_class(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         if(role_id == 1){
@@ -966,7 +967,7 @@ public class adminController {
     @ResponseBody
     @RequestMapping("/get_class_by_major")
     public Map get_class_by_major(HttpServletRequest request) {
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
         Map<String, Object> classes = new HashMap<String, Object>();
         Long majorId = Long.parseLong(request.getParameter("major"));
@@ -986,7 +987,7 @@ public class adminController {
     @ResponseBody
     @RequestMapping("/get_all_course")
     public Map get_all_course(HttpServletRequest request) {
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         Map<String, Object> course = new HashMap<String, Object>();
