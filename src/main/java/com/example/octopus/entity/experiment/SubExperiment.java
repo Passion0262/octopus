@@ -27,4 +27,6 @@ public class SubExperiment {
 
     private String requirePath;
 
+    private boolean copyable;
+
 }
