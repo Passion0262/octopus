@@ -68,19 +68,23 @@
                                                     <th>是否审核</th>
                                                     <th>提交时间</th>
                                                     <th>审核时间</th>
-                                                    <th>检测通过率</th>
-                                                    <th>检测时间</th>
+<!--                                                    <th>检测通过率</th>-->
+<!--                                                    <th>检测时间</th>-->
                                                     <th>实验实际操作时长</th>
                                                     <th>审核老师</th>
-                                                    <th>任务监控</th>
+<!--                                                    <th>任务监控</th>-->
                                                 </tr>
                                             </thead>
-                                            <tbody style="text-align: center;">
-                                                <tr>
+                                            <tbody style="text-align: center;" >
+<!--                                                <tr th:each="report:${reports}">-->
+                                                    <tr>
                                                     <td>
                                                         <div style="width:30px;"></div>
                                                         <a th:href="admin_report_detail" class="" style="color:#4aa3ff">
                                                             <i class="ri-login-box-line font-size-18"></i>
+                                                        </a>
+                                                        <a href="#" class="delete" style="color:#505d69" data-original-title="Delete">
+                                                            <i class=" ri-delete-bin-5-fill font-size-18"></i>
                                                         </a>
                                                     </td>
                                                     <td>丁一</td>
@@ -91,11 +95,11 @@
                                                     <td><div class="badge badge-soft-warning font-size-12">未审核</div></td>
                                                     <td>2020-05-13 11:11:11</td>
                                                     <td>未审核</td>
-                                                    <td>-</td>
-                                                    <td>-</td>
+<!--                                                    <td>-</td>-->
+<!--                                                    <td>-</td>-->
                                                     <td>1小时33分11秒</td>
                                                     <td>未审核</td>
-                                                    <td>系统监控(111)</td>
+<!--                                                    <td>系统监控(111)</td>-->
                                                 </tr>
 
                                             </tbody>
