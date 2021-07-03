@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8" />
@@ -124,7 +124,7 @@
                                             <td><span th:text="${course.teaName}"></span></td>
                                             <td><span th:text="${pros[courseStat.index]}+'%'"></span></td>
 <!--                                            <td><span th:text="${pros[courseStat.index]}"></span></td>-->
-                                            <td><a th:href="'/course_video/'+${course.id}+'/0'">继续学习</a></td>
+                                            <td><a th:href="'./course_video/'+${course.id}+'/0'">继续学习</a></td>
                                         </tr>
 
                                         </tbody>

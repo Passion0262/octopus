@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="utf-8" />
@@ -47,7 +47,7 @@
           <div class="dropdown-menu dropdown-menu-right">
             <!-- item-->
             <a class="dropdown-item" href="/userinfo"><i class="ri-user-line align-middle mr-1"></i>个人资料</a>
-            <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="/logout"><i class="ri-shut-down-line align-middle mr-1 text-danger"></i>注销</a>
+            <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="./logout"><i class="ri-shut-down-line align-middle mr-1 text-danger"></i>注销</a>
           </div>
         </div>
         <!-- 个人信息展示 退出登录操作 -->
@@ -66,13 +66,13 @@
         <ul class="metismenu list-unstyled" id="side-menu">
 
 
-          <li><a href="/index" class="waves-effect"><i class="ri-dashboard-line"></i><span>首页</span></a></li>
-          <li><a href="/applycourse" class=" waves-effect"><i class="ri-leaf-line"></i><span>申请学习</span></a></li>
-          <li><a href="/mycourse" class=" waves-effect"><i class="ri-plant-line"></i><span>我的课程</span></a></li>
-          <li><a href="/experiment_task" class="waves-effect"><i class="ri-checkbox-multiple-blank-line"></i><span>实验任务</span></a></li>
-          <li><a href="/projects" class=" waves-effect"><i class="ri-reserved-line"></i><span>项目实战</span></a></li>
-          <li><a href="/studylog" class=" waves-effect"><i class="ri-reserved-line"></i><span>学习记录</span></a></li>
-          <li><a href="/datasets" class=" waves-effect"><i class="ri-download-cloud-line"></i><span>数据集</span></a></li>
+          <li><a href="./index" class="waves-effect"><i class="ri-dashboard-line"></i><span>首页</span></a></li>
+          <li><a href="./applycourse" class=" waves-effect"><i class="ri-leaf-line"></i><span>申请学习</span></a></li>
+          <li><a href="./mycourse" class=" waves-effect"><i class="ri-plant-line"></i><span>我的课程</span></a></li>
+          <li><a href="./experiment_task" class="waves-effect"><i class="ri-checkbox-multiple-blank-line"></i><span>实验任务</span></a></li>
+          <li><a href="./projects" class=" waves-effect"><i class="ri-reserved-line"></i><span>项目实战</span></a></li>
+          <li><a href="./studylog" class=" waves-effect"><i class="ri-reserved-line"></i><span>学习记录</span></a></li>
+          <li><a href="./datasets" class=" waves-effect"><i class="ri-download-cloud-line"></i><span>数据集</span></a></li>
 
 
 
@@ -94,8 +94,8 @@
               <h4 class="mb-0">课程学习</h4>
               <div class="page-title-right">
                 <ol class="breadcrumb m-0">
-                  <li class="breadcrumb-item"><a href="/index"> 人工智能实验实训平台</a></li>
-                  <li class="breadcrumb-item"><a href="/mycourse">我的课程</a></li>
+                  <li class="breadcrumb-item"><a href="./index"> 人工智能实验实训平台</a></li>
+                  <li class="breadcrumb-item"><a href="./mycourse">我的课程</a></li>
                   <li class="breadcrumb-item active">课程学习</li>
                 </ol>
               </div>
@@ -114,7 +114,7 @@
                   </div>
                   <div class="col-md-3 "  style="">
                     <button id="machinebutton" type="button"  class="btn btn-outline-dark waves-effect waves-light"
-                            th:onclick="location.href ='/experiment_machine/1'">进入实验机</button>
+                            th:onclick="location.href ='./experiment_machine/1'">进入实验机</button>
                   </div>
 
                 </div>
@@ -427,7 +427,7 @@
      if(tosubexperiments[video.chapterId-1][video.number-1]!=null){
        $("#machinebutton").attr("disabled",false);
        $("#machinebutton").click(function(){
-         window.location.href ='/experiment_machine/'+tosubexperiments[video.chapterId-1][video.number-1];
+         window.location.href ='./experiment_machine/'+tosubexperiments[video.chapterId-1][video.number-1];
        });
      }else{
        $("#machinebutton").attr("disabled",true);
@@ -475,7 +475,7 @@
         'jindu':pro,
       },
       success:function (data) {
-        window.location.replace("/course_video/"+courseid+"/"+currentvideoid);
+        window.location.replace("./course_video/"+courseid+"/"+currentvideoid);
       }
     })
   }
