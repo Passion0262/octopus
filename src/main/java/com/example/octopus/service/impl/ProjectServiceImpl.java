@@ -1,6 +1,6 @@
 package com.example.octopus.service.impl;
 
-import com.example.octopus.dao.ProjectMapper;
+import com.example.octopus.dao.project.ProjectMapper;
 import com.example.octopus.entity.project.Project;
 import com.example.octopus.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;

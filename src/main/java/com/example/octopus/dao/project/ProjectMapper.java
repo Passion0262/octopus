@@ -1,4 +1,4 @@
-package com.example.octopus.dao;
+package com.example.octopus.dao.project;
 
 import com.example.octopus.entity.project.Project;
 import org.apache.ibatis.annotations.Mapper;

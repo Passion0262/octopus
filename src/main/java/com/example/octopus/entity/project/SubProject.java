@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  * @author ：shadow
@@ -19,7 +20,7 @@ public class SubProject {
 
     private long projectId;
 
-    private long moduleId;
+    private long projectModuleId;
 
     private String subProjectName;
 
@@ -27,6 +28,12 @@ public class SubProject {
 
     private String imagePath;
 
-    private String requirePath;
+    private String requirementPath;
+
+    private String knowledgePath;
+
+    private boolean copyable;
+
+    private Timestamp lastUpdateTime;
 
 }
