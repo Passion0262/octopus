@@ -58,9 +58,9 @@ public class VerifyServlet extends HttpServlet {
     /**
      * codeSequence 表示字符允许出现的序列值
      */
-    char[] codeSequence = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
-            'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
-            'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+    char[] codeSequence = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J',
+            'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
+            'X', 'Y', 'Z', '2', '3', '4', '5', '6', '7', '8', '9' };
 
     /**
      * 初始化验证图片属性
@@ -134,11 +134,11 @@ public class VerifyServlet extends HttpServlet {
         // 随机产生codeCount数字的验证码。
         for (int i = 0; i < codeCount; i++) {
             // 得到随机产生的验证码数字。
-            String strRand = String.valueOf(codeSequence[random.nextInt(36)]);
+            String strRand = String.valueOf(codeSequence[random.nextInt(32)]);
             // 产生随机的颜色分量来构造颜色值，这样输出的每位数字的颜色值都将不同。
-            red = random.nextInt(255);
-            green = random.nextInt(255);
-            blue = random.nextInt(255);
+            red = random.nextInt(75);
+            green = random.nextInt(75);
+            blue = random.nextInt(75);
             // 用随机产生的颜色将验证码绘制到图像中。
             gd.setColor(new Color(red,green,blue));
             gd.drawString(strRand, (i + 1) * codeX, codeY);
