@@ -5,6 +5,7 @@ import com.example.octopus.dao.TeacherMapper;
 import com.example.octopus.dao.UserMapper;
 import com.example.octopus.dao.experiment.ChapterMapper;
 import com.example.octopus.dao.experiment.ModuleMapper;
+import com.example.octopus.entity.experiment.Video;
 import com.example.octopus.entity.user.Major;
 import com.example.octopus.entity.user.Student;
 import com.example.octopus.entity.user.Teacher;
@@ -52,11 +53,12 @@ class OctopusApplicationTests {
 	ModuleMapper moduleMapper;
 	@Autowired
 	ChapterMapper chapterMapper;
+	@Autowired
+	VideoService videoService;
 	@Test
 	void interfaceTest() {
-
-//		System.out.println(studentCourseService.insertStudentCourse(3L,1L));
-		System.out.println(studentCourseService.listStudentCoursesByStuNumber(2));
+		Video video = new Video(10, "33333", 4, "ssssss", 3L, 1L);
+		System.out.println(videoService.updateVideo(video));
 	}
 
 

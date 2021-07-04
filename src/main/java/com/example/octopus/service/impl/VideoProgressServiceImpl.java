@@ -3,7 +3,7 @@ package com.example.octopus.service.impl;
 import com.example.octopus.dao.SysUserRoleMapper;
 import com.example.octopus.dao.experiment.VideoProgressMapper;
 import com.example.octopus.dao.experiment.VideoMapper;
-import com.example.octopus.entity.VOs.VideoStudySummaryVO;
+import com.example.octopus.entity.VOs.VideoStudyInfoVO;
 import com.example.octopus.entity.experiment.VideoProgress;
 import com.example.octopus.service.VideoProgressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,7 +88,7 @@ public class VideoProgressServiceImpl implements VideoProgressService {
 	}
 
 	@Override
-	public List<VideoStudySummaryVO> getVideoStudySummaryByRole(long teaNumber) {
+	public List<VideoStudyInfoVO> getVideoStudySummaryByRole(long teaNumber) {
 		long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
 		if (role == 1) {
 			return videoProgressMapper.getAllVideoStudySummary();

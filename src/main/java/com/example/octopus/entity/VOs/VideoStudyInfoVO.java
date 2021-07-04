@@ -10,7 +10,7 @@ import lombok.Data;
  */
 
 @Data
-public class VideoStudySummaryVO extends VideoProgress {
+public class VideoStudyInfoVO extends VideoProgress {
 	private String name;  //学生名
 	private String className;  //班级名
 	private String majorName;  //专业名

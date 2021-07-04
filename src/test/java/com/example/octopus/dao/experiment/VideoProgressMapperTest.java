@@ -1,6 +1,6 @@
 package com.example.octopus.dao.experiment;
 
-import com.example.octopus.entity.VOs.VideoStudySummaryVO;
+import com.example.octopus.entity.VOs.VideoStudyInfoVO;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +27,8 @@ class VideoProgressMapperTest {
 
 	@Test
 	void getAllVideoStudySummary() {
-		List<VideoStudySummaryVO> videoStudySummaryVOS = videoProgressMapper.getAllVideoStudySummary();
-		System.out.println(videoStudySummaryVOS.get(1).getProgress());
+		List<VideoStudyInfoVO> videoStudyInfoVOS = videoProgressMapper.getAllVideoStudySummary();
+		System.out.println(videoStudyInfoVOS.get(1).getProgress());
 	}
 
 	@Test

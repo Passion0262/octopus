@@ -1,8 +1,9 @@
 package com.example.octopus.dao.experiment;
 
+import com.example.octopus.entity.VOs.VideoManageVO;
 import com.example.octopus.entity.experiment.Video;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import lombok.Data;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -37,12 +38,31 @@ public interface VideoMapper {
     @Select("SELECT * FROM video WHERE chapter_id = #{chapterId}")
     List<Video> listVideosByChapterId(long chapterId);
 
+    @Select("SELECT * FROM video WHERE number=#{number} AND chapter_id = #{chapterId} AND course_id = #{courseId}")
+    List<Video> getVideoByCourseIdAndChapterIdAndNumber(int number, long chapterId, long courseId);
+
     /**
      * 根据id查找video
      */
     @Select("SELECT * FROM video WHERE id = #{id}")
     Video getById(long id);
 
+    @Select("SELECT v.*, c.course_name, cha.chapter_name " +
+            "FROM video v, course c, chapter cha " +
+            "WHERE v.chapter_id=cha.id and v.course_id=c.id")
+    List<VideoManageVO> getAllVideoManage();
 
+    @Insert("INSERT INTO video (name, number, path, chapter_id, course_id) " +
+            "VALUES (#{name}, #{number}, #{path}, #{chapterId}, #{courseId})")
+    boolean addVideo(Video video);
 
+    @Insert("INSERT INTO video (id, name, number, path, chapter_id, course_id) " +
+            "VALUES (#{id}, #{name}, #{number}, #{path}, #{chapterId}, #{courseId})")
+    boolean addVideoWithId(Video video);
+
+    @Update("UPDATE video SET name=#{name}, path=#{path} WHERE id=#{id}")
+    boolean updateNameAndPathById(long id, String name, String path);
+
+    @Delete("DELETE * FROM video WHERE id=#{id}")
+    boolean deleteVideoById(long id);
 }

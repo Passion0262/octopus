@@ -5,6 +5,7 @@ import java.sql.Date;
 
 @Data
 public class Video {
+    //course-->chapter-->number
 
     private long id;
 
@@ -16,7 +17,19 @@ public class Video {
 
     private long chapterId;
 
-
     private long courseId;
 
+    public Video() {
+    }
+
+
+
+    public Video(long id, String name, int number, String path, long chapterId, long courseId) {
+        this.id = id;
+        this.name = name;
+        this.number = number;
+        this.path = path;
+        this.chapterId = chapterId;
+        this.courseId = courseId;
+    }
 }

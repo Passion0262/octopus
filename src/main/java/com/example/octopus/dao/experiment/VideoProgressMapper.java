@@ -1,6 +1,6 @@
 package com.example.octopus.dao.experiment;
 
-import com.example.octopus.entity.VOs.VideoStudySummaryVO;
+import com.example.octopus.entity.VOs.VideoStudyInfoVO;
 import com.example.octopus.entity.experiment.VideoProgress;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -62,13 +62,13 @@ public interface VideoProgressMapper {
     @Select("SELECT vp.*, s.name, class_.class_name, major.major_name, course.course_name  " +
             "FROM video_progress vp, student s, class_, major, course, video " +
             "WHERE vp.stu_number=s.stu_number and s.major_id=major.id and s.class_id=class_.id and vp.video_id=video.id and video.course_id=course.id")
-    List<VideoStudySummaryVO> getAllVideoStudySummary();
+    List<VideoStudyInfoVO> getAllVideoStudySummary();
 
 
     @Select("SELECT vp.*, s.name, class_.class_name, major.major_name, course.course_name " +
             "FROM video_progress vp, student s, class_, major, course, video " +
             "WHERE vp.stu_number=s.stu_number and s.major_id=major.id and s.class_id=class_.id and vp.video_id=video.id and video.course_id=course.id and course.tea_number=#{teaNumber}")
-    List<VideoStudySummaryVO> getVideoStudySummaryByTeacherId(long teaNumber);
+    List<VideoStudyInfoVO> getVideoStudySummaryByTeacherId(long teaNumber);
 
     /**
      *  查询所有进度为100的videoId
