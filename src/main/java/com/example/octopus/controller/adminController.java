@@ -2,6 +2,8 @@ package com.example.octopus.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.example.octopus.entity.dataset.Dataset;
+import com.example.octopus.entity.project.Project;
+import com.example.octopus.entity.project.SubProject;
 import com.example.octopus.entity.user.*;
 import com.example.octopus.service.*;
 import com.example.octopus.utils.CookieTokenUtils;
@@ -873,6 +875,34 @@ public class adminController {
 //        }
 //        return "admin_report_template";
 //    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////
+    // 实战项目管理
+    @RequestMapping("/admin_project")
+    public String admin_project(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return "redirect:/login";
+
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
+
+        model.addAttribute("projects", projectService.listProjects());
+
+        return "admin_project";
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////
+    // 实战项目详情
+    @RequestMapping("/admin_project_detail")
+    public String admin_project_detail(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return "redirect:/login";
+
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，
+
+        //model.addAttribute("subprojects", );
+
+        return "admin_project_detail";
+    }
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////

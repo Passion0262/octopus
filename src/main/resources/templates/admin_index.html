@@ -21,6 +21,8 @@
     <link href="static/css/icons.min.css" rel="stylesheet" type="text/css" />
     <!-- App Css-->
     <link href="static/css/app-dark.min.css" id="app-style" rel="stylesheet" type="text/css" />
+
+    <link href="static/css/scroll.css" id="scroll" rel="stylesheet" type="text/css" />
 </head>
 
 <body data-sidebar="dark">
@@ -50,21 +52,18 @@
                                 <div class="col-md-3">
                                     <div class="card">
                                         <div class="card-body">
-                                            <div class="media">
-                                                <div class="media-body overflow-hidden">
-                                                    <p class="text-truncate font-size-14 mb-2"></p>
-                                                    <h4 class="mb-0">开课计划</h4>
+                                            <a  href="admin_course">
+                                                <div class="media">
+                                                    <div class="media-body overflow-hidden">
+                                                        <p class="text-truncate font-size-14 mb-2"></p>
+                                                        <h4 class="mb-0">开课计划</h4>
+                                                    </div>
+                                                    <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
                                                 </div>
-                                                <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
-                                            </div>
+                                            </a>
                                         </div>
                                         <div class="card-body border-top py-3">
                                             <div class="text-truncate">
-                                                <!--
-                                                <span class="badge badge-soft-success font-size-11">
-                                                    <i class="mdi mdi-menu-up"></i>2.4%
-                                                </span>
-                                                -->
                                                 <span class="text-muted ml-2" th:text="${sizeof_courses}"></span>
                                             </div>
                                         </div>
@@ -73,13 +72,15 @@
                                 <div class="col-md-3">
                                     <div class="card">
                                         <div class="card-body">
-                                            <div class="media">
-                                                <div class="media-body overflow-hidden">
-                                                    <p class="text-truncate font-size-14 mb-2"></p>
-                                                    <h4 class="mb-0">实战项目</h4>
+                                            <a>
+                                                <div class="media">
+                                                    <div class="media-body overflow-hidden">
+                                                        <p class="text-truncate font-size-14 mb-2"></p>
+                                                        <h4 class="mb-0">实战项目</h4>
+                                                    </div>
+                                                    <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
                                                 </div>
-                                                <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
-                                            </div>
+                                            </a>
                                         </div>
                                         <div class="card-body border-top py-3">
                                             <div class="text-truncate">
@@ -96,21 +97,18 @@
                                 <div class="col-md-3">
                                     <div class="card">
                                         <div class="card-body">
-                                            <div class="media">
-                                                <div class="media-body overflow-hidden">
-                                                    <p class="text-truncate font-size-14 mb-2"></p>
-                                                    <h4 class="mb-0">实验任务</h4>
+                                            <a>
+                                                <div class="media">
+                                                    <div class="media-body overflow-hidden">
+                                                        <p class="text-truncate font-size-14 mb-2"></p>
+                                                        <h4 class="mb-0">实验任务</h4>
+                                                    </div>
+                                                    <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
                                                 </div>
-                                                <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
-                                            </div>
+                                            </a>
                                         </div>
                                         <div class="card-body border-top py-3">
                                             <div class="text-truncate">
-                                                <!--
-                                                <span class="badge badge-soft-success font-size-11">
-                                                    <i class="mdi mdi-menu-up"></i>2.4%
-                                                </span>
-                                                -->
                                                 <span class="text-muted ml-2" th:text="${sizeof_experiments}"></span>
                                             </div>
                                         </div>
@@ -119,21 +117,18 @@
                                 <div class="col-md-3">
                                     <div class="card">
                                         <div class="card-body">
-                                            <div class="media">
-                                                <div class="media-body overflow-hidden">
-                                                    <p class="text-truncate font-size-14 mb-2"></p>
-                                                    <h4 class="mb-0">视频课程</h4>
+                                            <a href="admin_video">
+                                                <div class="media">
+                                                    <div class="media-body overflow-hidden">
+                                                        <p class="text-truncate font-size-14 mb-2"></p>
+                                                        <h4 class="mb-0">视频课程</h4>
+                                                    </div>
+                                                    <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
                                                 </div>
-                                                <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
-                                            </div>
+                                            </a>
                                         </div>
                                         <div class="card-body border-top py-3">
                                             <div class="text-truncate">
-                                                <!--
-                                                <span class="badge badge-soft-success font-size-11">
-                                                    <i class="mdi mdi-menu-up"></i>2.4%
-                                                </span>
-                                                -->
                                                 <span class="text-muted ml-2" th:text="${sizeof_videos}"></span>
                                             </div>
                                         </div>
@@ -142,21 +137,18 @@
                                 <div class="col-md-3">
                                     <div class="card">
                                         <div class="card-body">
-                                            <div class="media">
-                                                <div class="media-body overflow-hidden">
-                                                    <p class="text-truncate font-size-14 mb-2"></p>
-                                                    <h4 class="mb-0">在线机器</h4>
+                                            <a>
+                                                <div class="media">
+                                                    <div class="media-body overflow-hidden">
+                                                        <p class="text-truncate font-size-14 mb-2"></p>
+                                                        <h4 class="mb-0">在线机器</h4>
+                                                    </div>
+                                                    <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
                                                 </div>
-                                                <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
-                                            </div>
+                                            </a>
                                         </div>
                                         <div class="card-body border-top py-3">
                                             <div class="text-truncate">
-                                                <!--
-                                                <span class="badge badge-soft-success font-size-11">
-                                                    <i class="mdi mdi-menu-up"></i>2.4%
-                                                </span>
-                                                -->
                                                 <span class="text-muted ml-2">5</span>
                                             </div>
                                         </div>
@@ -165,21 +157,18 @@
                                 <div class="col-md-3">
                                     <div class="card">
                                         <div class="card-body">
-                                            <div class="media">
-                                                <div class="media-body overflow-hidden">
-                                                    <p class="text-truncate font-size-14 mb-2"></p>
-                                                    <h4 class="mb-0">实验镜像</h4>
+                                            <a href="">
+                                                <div class="media">
+                                                    <div class="media-body overflow-hidden">
+                                                        <p class="text-truncate font-size-14 mb-2"></p>
+                                                        <h4 class="mb-0">实验镜像</h4>
+                                                    </div>
+                                                    <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
                                                 </div>
-                                                <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
-                                            </div>
+                                            </a>
                                         </div>
                                         <div class="card-body border-top py-3">
                                             <div class="text-truncate">
-                                                <!--
-                                                <span class="badge badge-soft-success font-size-11">
-                                                    <i class="mdi mdi-menu-up"></i>2.4%
-                                                </span>
-                                                -->
                                                 <span class="text-muted ml-2">80</span>
                                             </div>
                                         </div>
@@ -188,21 +177,18 @@
                                 <div class="col-md-3">
                                     <div class="card">
                                         <div class="card-body">
-                                            <div class="media">
-                                                <div class="media-body overflow-hidden">
-                                                    <p class="text-truncate font-size-14 mb-2"></p>
-                                                    <h4 class="mb-0">数据集</h4>
+                                            <a href="admin_dataset">
+                                                <div class="media">
+                                                    <div class="media-body overflow-hidden">
+                                                        <p class="text-truncate font-size-14 mb-2"></p>
+                                                        <h4 class="mb-0">数据集</h4>
+                                                    </div>
+                                                    <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
                                                 </div>
-                                                <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
-                                            </div>
+                                            </a>
                                         </div>
                                         <div class="card-body border-top py-3">
                                             <div class="text-truncate">
-                                                <!--
-                                                <span class="badge badge-soft-success font-size-11">
-                                                    <i class="mdi mdi-menu-up"></i>2.4%
-                                                </span>
-                                                -->
                                                 <span class="text-muted ml-2" th:text="${sizeof_datasets}"></span>
                                             </div>
                                         </div>
@@ -229,13 +215,15 @@
                                 <div class="col-md-3" th:if="${role=='admin'}">
                                     <div class="card">
                                         <div class="card-body">
-                                            <div class="media">
-                                                <div class="media-body overflow-hidden">
-                                                    <p class="text-truncate font-size-14 mb-2"></p>
-                                                    <h4 class="mb-0">注册教师</h4>
+                                            <a href="admin_teacher">
+                                                <div class="media">
+                                                    <div class="media-body overflow-hidden">
+                                                        <p class="text-truncate font-size-14 mb-2"></p>
+                                                        <h4 class="mb-0">注册教师</h4>
+                                                    </div>
+                                                    <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
                                                 </div>
-                                                <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
-                                            </div>
+                                            </a>
                                         </div>
                                         <div class="card-body border-top py-3">
                                             <div class="text-truncate">
@@ -247,13 +235,15 @@
                                 <div class="col-md-3" th:if="${role=='admin'}">
                                     <div class="card">
                                         <div class="card-body">
-                                            <div class="media">
-                                                <div class="media-body overflow-hidden">
-                                                    <p class="text-truncate font-size-14 mb-2"></p>
-                                                    <h4 class="mb-0">注册学生</h4>
+                                            <a href="admin_student">
+                                                <div class="media">
+                                                    <div class="media-body overflow-hidden">
+                                                        <p class="text-truncate font-size-14 mb-2"></p>
+                                                        <h4 class="mb-0">注册学生</h4>
+                                                    </div>
+                                                    <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
                                                 </div>
-                                                <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
-                                            </div>
+                                            </a>
                                         </div>
                                         <div class="card-body border-top py-3">
                                             <div class="text-truncate">
