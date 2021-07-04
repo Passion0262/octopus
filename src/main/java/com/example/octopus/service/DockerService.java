@@ -3,6 +3,7 @@ package com.example.octopus.service;
 import com.example.octopus.entity.Docker;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: Hao
@@ -19,8 +20,23 @@ public interface DockerService {
 	 */
 	boolean existsStuNumDocker(long stuNumber);
 
-	boolean existsIdDocker(long id);
+	/**
+	 * 通过学生号获取docker状态，包含sleeping、project、experiment三种情况及相对应的processingId
+	 *
+	 * @param stuNumber 学生号
+	 * @return String[0]为状态status，String[1]为processingId，注意需要转换为long型
+	 */
+	String[] getStatusByStuNum(long stuNumber);
 
+	/**
+	 * 通过学生号更新docker状态，包含sleeping、project、experiment三种情况
+	 *
+	 * @param stuNumber    学生号
+	 * @param statusCode   sleeping:0、project:1、experiment:2
+	 * @param processingId 正在进行的project或experiment的id；如为sleeping，则设置为0
+	 * @return 更新成功与否
+	 */
+	boolean updateStatusByStuNum(long stuNumber, int statusCode, long processingId);
 
 	/**
 	 * 获取所有docker信息
@@ -55,13 +71,6 @@ public interface DockerService {
 	 */
 	String getAddressByStuNumber(long stuNumber);
 
-	/**
-	 * 通过学生号获取其虚拟机状况（未在使用、在使用、无虚拟机）
-	 *
-	 * @param stuNumber 学生号
-	 * @return 返回虚拟机容器状况
-	 */
-	String getStatusByStuNumber(long stuNumber);
 
 	/**
 	 * 创建新的docker

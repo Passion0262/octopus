@@ -20,6 +20,8 @@ import java.util.List;
 @Service
 public class DockerServiceImpl implements DockerService {
 
+    private static final int[] FORBIDDEN_PORTS = {8080, 3306};
+
     private static ShellUtils shellUtils = new ShellUtils();
 
     @Autowired
@@ -27,12 +29,6 @@ public class DockerServiceImpl implements DockerService {
 
     @Autowired
     private UserService userService;
-
-    @Override
-    public boolean existsIdDocker(long id) {
-        Docker docker = findDockerByStuNumber(id);
-        return false ? docker == null : true;
-    }
 
     @Override
     public boolean existsStuNumDocker(long stuNumber) {
@@ -45,62 +41,52 @@ public class DockerServiceImpl implements DockerService {
     }
 
 
-    /**
-     * 获取所有docker信息
-     *
-     * @return docker信息列表
-     */
+
+
     @Override
     public List<Docker> getDockerList() {
         return dockerMapper.listAllDockers();
     }
 
 
-    /**
-     * 通过docker id获取docker信息
-     *
-     * @param id docker的id
-     * @return 该docker信息
-     */
     @Override
     public Docker findDockerById(long id) {
         return dockerMapper.getDockerById(id);
     }
 
-    /**
-     * 通过学生号检索docker信息
-     *
-     * @param stuNumber 学生id
-     * @return 该docker信息
-     */
     @Override
     public Docker findDockerByStuNumber(long stuNumber) {
         return dockerMapper.getDockerByStuNum(stuNumber);
     }
 
-    /**
-     * 通过学生号获取docker的完整ip地址
-     *
-     * @param stuNumber 学生号
-     * @return 完整ip地址，如 http://172.18.146.123:6081/#/
-     */
+
     @Override
     public String getAddressByStuNumber(long stuNumber) {
         return dockerMapper.getDockerByStuNum(stuNumber).getDockerAddress();
     }
 
-    /**
-     * 通过学生号获取其虚拟机状况（未在使用、在使用、无虚拟机）
-     *
-     * @param stuNumber 学生号
-     * @return 返回虚拟机容器状况
-     */
     @Override
-    public String getStatusByStuNumber(long stuNumber) {
-        return dockerMapper.getDockerByStuNum(stuNumber).getDockerStatus();
+    public String[] getStatusByStuNum(long stuNumber) {
+        String[] result = new String[2];
+        Docker docker = dockerMapper.getDockerByStuNum(stuNumber);
+        result[0] = docker.getDockerStatus();
+        result[1] = String.valueOf(docker.getProcessingId());
+        return result;
     }
 
-    private static final int[] FORBIDDEN_PORTS = {8080, 3306};
+    @Override
+    public boolean updateStatusByStuNum(long stuNumber, int statusCode, long processingId){
+        String status=null;
+        if (statusCode==0) {
+            status="sleeping";
+            processingId=0;
+        }
+        else if(statusCode==1) status="project";
+        else if(statusCode==2) status="experiment";
+        else return false;
+        return dockerMapper.updateStatusByStuNum(stuNumber, status, processingId);
+    }
+
 
     @Override
     public boolean createNewDocker(long stuNumber) {
