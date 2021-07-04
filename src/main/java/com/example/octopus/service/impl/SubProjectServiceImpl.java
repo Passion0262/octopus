@@ -19,8 +19,8 @@ public class SubProjectServiceImpl implements SubProjectService {
     SubProjectMapper subProjectMapper;
 
     @Override
-    public List<SubProject> listSubExperimentsByModuleId(long projectModuleId) {
-        return subProjectMapper.listSubExperimentsByModuleId(projectModuleId);
+    public List<SubProject> listSubProjectsByModuleId(long projectModuleId) {
+        return subProjectMapper.listSubProjectsByModuleId(projectModuleId);
     }
 
     @Override

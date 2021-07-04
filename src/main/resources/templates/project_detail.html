@@ -6,7 +6,6 @@
   <title>人工智能实验实训平台</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta content="人工智能实验实训平台" name="description" />
-  <link href="../../static/js/libs/admin-resources/jquery.vectormap/static" rel="stylesheet" type="text/css" /><!-- DataTables -->
   <link href="../../static/js/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" /><!-- Responsive datatable examples -->
   <link href="../../static/js/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" /><!-- Bootstrap Css -->
   <link href="../../static/css/bootstrap-dark.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" /><!-- Icons Css -->
@@ -116,45 +115,28 @@
             </div>
           </div>
 
-          <div class="col-12">
+          <div class="col-12" th:each="module:${modules}">
             <div class="card">
               <div class="card-body">
-                <h4 class="card-title mt-0" >模块一</h4>
-                <div class="row">
-                  <div class="col-3"><img src="../../static/images/subject/subject.jpg" alt="Python数据分析、挖掘与可视化" class="img-fluid"/></div>
+                <h4 class="card-title mt-0">模块<span th:text="${module.moduleNumber}"></span>:&nbsp;&nbsp;&nbsp;<span th:text="${module.moduleName}"></span></h4>
+
+                <div class="row" th:each="subproject:${subprojects[moduleStat.index]}">
+                  <div class="col-3"><img th:src="'../../'+${subproject.imagePath}" class="img-fluid"/></div>
                   <div class="col-6">
-                    <p class="card-text">任务一</p>
-                    <p class="card-text">操作时长</p>
+                    <p class="card-text">任务<span th:text="${subproject.number}"></span>:&nbsp;&nbsp;&nbsp;<span th:text="${subproject.subProjectName}"></span></p>
+                    <!--                    <p class="card-text">操作时长</p>-->
                   </div>
                   <div class="col-3">
-                    <button type="button" class="btn btn-primary  waves-effect waves-light" id="">进入</button>
+                    <button type="button" class="btn btn-primary  waves-effect waves-light" th:onclick="window.location.href ='/project_machine/'+[[${subproject.id}]]">继续学习</button>
                   </div>
-
-              </div>
-            </div>
-          </div>
-          </div>
-
-
-
-            <div class="col-12">
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title mt-0" >模块二</h4>
-                  <div class="row">
-                    <div class="col-3"><img src="../../static/images/subject/subject.jpg" alt="Python数据分析、挖掘与可视化" class="img-fluid"/></div>
-                    <div class="col-6">
-                      <p class="card-text">任务一</p>
-                      <p class="card-text">操作时长</p>
-                    </div>
-                    <div class="col-3">
-                      <button type="button" class="btn btn-primary  waves-effect waves-light" id="">进入</button>
-                    </div>
-
-                  </div>
+                  <div class="col-12" style="margin-top: 20px;"></div>
                 </div>
               </div>
             </div>
+          </div>
+
+
+
 
 
     </div><!-- end row -->

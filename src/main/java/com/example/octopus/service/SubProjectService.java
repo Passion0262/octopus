@@ -13,7 +13,7 @@ public interface SubProjectService {
     /**
      * 根据 projectModuleId 查询子项目
      */
-    List<SubProject> listSubExperimentsByModuleId(long projectModuleId) ;
+    List<SubProject> listSubProjectsByModuleId(long projectModuleId) ;
 
     /**
      * 根据子项目id查询子项目
