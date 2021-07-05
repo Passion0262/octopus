@@ -2,6 +2,7 @@ package com.example.octopus.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.example.octopus.entity.dataset.Dataset;
+import com.example.octopus.entity.experiment.Video;
 import com.example.octopus.entity.project.Project;
 import com.example.octopus.entity.project.SubProject;
 import com.example.octopus.entity.user.*;
@@ -63,6 +64,7 @@ public class adminController {
 
     @Autowired
     VideoService videoService;
+
 
     @Autowired
     VideoProgressService videoProgressService;
@@ -915,12 +917,29 @@ public class adminController {
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         if(role_id == 1){
-            model.addAttribute("video", videoService.listVideos());
+            model.addAttribute("video", videoService.getAllVideoManageInfo());
         }
         else{
-            model.addAttribute("video", videoService.listVideos());
+            model.addAttribute("video", videoService.getAllVideoManageInfo());
         }
         return "admin_video";
+    }
+
+    //视频增加
+    @GetMapping("/admin_video_add")
+    public ModelAndView admin_video_add(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
+
+        logger.info("进入admin_video_add，获取一个新Video()");
+        if (role_id == 1){
+            model.addAttribute("video", new Video());
+        }
+        else{
+            return new ModelAndView("redirect:/admin_video");
+        }
+        return new ModelAndView("admin_video_add", "videomodel", model);
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////
