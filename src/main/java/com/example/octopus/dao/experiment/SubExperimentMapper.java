@@ -42,7 +42,7 @@ public interface SubExperimentMapper {
     /**
      *  新增sub_experiment
      */
-    @Insert("INSERT INTO sub_experiment (experiment_id,module_id,sub_experiment_name,number,image_path,expect_time,require_path,copyable) VALUES (#{experimentId},#{moduleId},#{subExperimentName},#{number},#{imagePath},#{expectTime},#{requirePath},#{copyable})")
+    @Insert("INSERT INTO sub_experiment (experiment_id,module_id,sub_experiment_name,number,image_path,expect_time,requirement_path,knowledge_path,template_path,copyable,last_update_time) VALUES (#{experimentId},#{moduleId},#{subExperimentName},#{number},#{imagePath},#{expectTime},#{requirementPath},#{knowledgePath},#{templatePath},#{copyable},CURRENT_TIMESTAMP)")
     boolean insert(SubExperiment subExperiment);
 
     /**

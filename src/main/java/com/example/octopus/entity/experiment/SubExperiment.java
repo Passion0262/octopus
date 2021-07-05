@@ -25,7 +25,7 @@ public class SubExperiment {
 
     private Date expectTime;
 
-    private String requirePath;
+    private String requirementPath;
 
     private boolean copyable;
 
