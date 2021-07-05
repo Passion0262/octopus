@@ -1,6 +1,7 @@
 package com.example.octopus.dao.experiment;
 
-import com.example.octopus.entity.VOs.VideoStudyInfoVO;
+import com.example.octopus.entity.VOs.VideoProgressDetailVO;
+import com.example.octopus.entity.VOs.VideoProgressHistoryVO;
 import com.example.octopus.entity.experiment.VideoProgress;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -62,18 +63,34 @@ public interface VideoProgressMapper {
     @Select("SELECT vp.*, s.name, class_.class_name, major.major_name, course.course_name  " +
             "FROM video_progress vp, student s, class_, major, course, video " +
             "WHERE vp.stu_number=s.stu_number and s.major_id=major.id and s.class_id=class_.id and vp.video_id=video.id and video.course_id=course.id")
-    List<VideoStudyInfoVO> getAllVideoStudySummary();
+    List<VideoProgressHistoryVO> getAllVideoStudyDetail();
 
 
     @Select("SELECT vp.*, s.name, class_.class_name, major.major_name, course.course_name " +
             "FROM video_progress vp, student s, class_, major, course, video " +
             "WHERE vp.stu_number=s.stu_number and s.major_id=major.id and s.class_id=class_.id and vp.video_id=video.id and video.course_id=course.id and course.tea_number=#{teaNumber}")
-    List<VideoStudyInfoVO> getVideoStudySummaryByTeacherId(long teaNumber);
+    List<VideoProgressHistoryVO> getVideoStudyDetailByTeacherId(long teaNumber);
 
     /**
      *  查询所有进度为100的videoId
      */
     @Select("SELECT video_id FROM video_progress WHERE progress=100 AND stu_number = #{stuNumber}")
     List<Long> getFinishedVideoIdsByStuNumber(long stuNumber);
+
+    /**
+     * 视频学习详情，每个学生和每个视频对应一条数据
+     * @return 返回所有学生在视频中的学习信息
+     */
+    @Select("select vp.stu_number, s.name, vp.video_id, v.name as video_name, v.course_id, c.course_name, sum(vp.study_time) as study_time_sum, min(vp.start_time) as very_start_time, max(vp.end_time) as very_last_time " +
+            "from video_progress vp, video v, course c, student s " +
+            "where vp.stu_number = s.stu_number and vp.video_id = v.id and v.course_id = c.id " +
+            "group by vp.stu_number, vp.video_id")
+    List<VideoProgressDetailVO>  getAllVideoProgressDetail();
+
+    @Select("select vp.stu_number, s.name, vp.video_id, v.name as video_name, v.course_id, c.course_name, sum(vp.study_time) as study_time_sum, min(vp.start_time) as very_start_time, max(vp.end_time) as very_last_time" +
+            "from video_progress vp, video v, course c, student s " +
+            "where vp.stu_number = s.stu_number and c.tea_number = #{teaNumber} and vp.video_id = v.id and v.course_id = c.id " +
+            "group by vp.stu_number, vp.video_id")
+    List<VideoProgressDetailVO> getVideoProgressDetailByTeacherId(long teaNumber);
 
 }

@@ -6,7 +6,7 @@ import lombok.Data;
 /**
  * @author: Hao
  * @date: 2021/6/26 16:11
- * 不映射数据库表的前端显示类：实验操作时长
+ * 实验操作时长视图类
  */
 @Data
 public class SubExperimentOperateTimeVO extends SubExperimentProgress {

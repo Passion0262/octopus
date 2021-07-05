@@ -2,8 +2,6 @@ package com.example.octopus.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.example.octopus.entity.dataset.Dataset;
-import com.example.octopus.entity.project.Project;
-import com.example.octopus.entity.project.SubProject;
 import com.example.octopus.entity.user.*;
 import com.example.octopus.service.*;
 import com.example.octopus.utils.CookieTokenUtils;
@@ -724,7 +722,7 @@ public class adminController {
     public String admin_video_log(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
-        model.addAttribute("video_logs", videoProgressService.getVideoStudySummaryByRole(teaNum));
+        model.addAttribute("video_logs", videoProgressService.getVideoProgressHistoryByRole(teaNum));
         return "admin_video_log";
     }
 

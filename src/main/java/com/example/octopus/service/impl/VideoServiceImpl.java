@@ -1,8 +1,10 @@
 package com.example.octopus.service.impl;
 
+import com.example.octopus.dao.SysUserRoleMapper;
 import com.example.octopus.dao.experiment.VideoMapper;
 import com.example.octopus.dao.experiment.VideoSubExperimentMapper;
 import com.example.octopus.entity.VOs.VideoManageVO;
+import com.example.octopus.entity.VOs.VideoStudySummaryVO;
 import com.example.octopus.entity.experiment.Video;
 import com.example.octopus.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class VideoServiceImpl implements VideoService {
 
 	@Autowired
 	VideoSubExperimentMapper videoSubExperimentMapper;
+
+	@Autowired
+	SysUserRoleMapper sysUserRoleMapper;
 
 	@Override
 	public List<Video> listVideos() {
@@ -89,5 +94,14 @@ public class VideoServiceImpl implements VideoService {
 	@Override
 	public boolean deleteVideoById(long id) {
 		return videoMapper.deleteVideoById(id);
+	}
+
+	@Override
+	public List<VideoStudySummaryVO> getVideoStudySummaryByRole(long teaNumber){
+		long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
+		if (role == 1) {
+			//管理员获取全部
+			return videoMapper.getAllVideoStudySummary();
+		} else return videoMapper.getVideoStudySummaryByTeacherId(teaNumber);
 	}
 }

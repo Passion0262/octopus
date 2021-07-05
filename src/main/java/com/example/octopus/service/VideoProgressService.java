@@ -1,6 +1,7 @@
 package com.example.octopus.service;
 
-import com.example.octopus.entity.VOs.VideoStudyInfoVO;
+import com.example.octopus.entity.VOs.VideoProgressDetailVO;
+import com.example.octopus.entity.VOs.VideoProgressHistoryVO;
 import com.example.octopus.entity.experiment.VideoProgress;
 
 import java.util.List;
@@ -61,11 +62,18 @@ public interface VideoProgressService {
      * @param teaNumber 教师号，用于自动分辨管理员or教师
      * @return 对管理员输出所有，对教师仅输出其所授课程的视频学习汇总情况
      */
-    List<VideoStudyInfoVO> getVideoStudySummaryByRole(long teaNumber);
+    List<VideoProgressHistoryVO> getVideoProgressHistoryByRole(long teaNumber);
 
     /**
      * 计算学生在课程的进度
      * 该课程下学生的进度总和除以总进度总和
      */
     double getCourseProgress(long courseId, long stuNumber);
+
+    /**
+     * 视频学习详情，每个学生和每个视频对应一条数据。根据教师不同权限
+     * @param teaNumber 教师号
+     * @return 获取所有学生在视频中的学习信息
+     */
+    List<VideoProgressDetailVO> getVideoProgressDetailByRole(long teaNumber);
 }
