@@ -49,7 +49,7 @@ public interface VideoMapper {
 
     @Select("SELECT v.*, c.course_name, cha.chapter_name " +
             "FROM video v, course c, chapter cha " +
-            "WHERE v.chapter_id=cha.id and v.course_id=c.id")
+            "WHERE v.chapter_id=cha.chapter_id and v.course_id=c.id")
     List<VideoManageVO> getAllVideoManage();
 
     @Insert("INSERT INTO video (name, number, path, chapter_id, course_id) " +
