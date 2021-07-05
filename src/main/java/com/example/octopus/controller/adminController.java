@@ -2,6 +2,9 @@ package com.example.octopus.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.example.octopus.entity.dataset.Dataset;
+import com.example.octopus.entity.experiment.Video;
+import com.example.octopus.entity.project.Project;
+import com.example.octopus.entity.project.SubProject;
 import com.example.octopus.entity.user.*;
 import com.example.octopus.service.*;
 import com.example.octopus.utils.CookieTokenUtils;
@@ -736,7 +739,7 @@ public class adminController {
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         if(role_id == 1){
-            //model.addAttribute("video_log_details", videoService.listVideoLogDetails());
+            //model.addAttribute("video_log_details", videoProcessService.getAllVideoProcessDetail());
         }
         else{
             //model.addAttribute("video_log_details", videoService.listVideoLogDetailsByTeaNumber(teaNum));
@@ -913,12 +916,69 @@ public class adminController {
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         if(role_id == 1){
-            model.addAttribute("video", videoService.listVideos());
+            model.addAttribute("video", videoService.getAllVideoManageInfo());
         }
         else{
-            model.addAttribute("video", videoService.listVideos());
+            model.addAttribute("video", videoService.getAllVideoManageInfo());
         }
         return "admin_video";
+    }
+
+    //视频增加
+    @GetMapping("/admin_video_add")
+    public ModelAndView admin_video_add(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
+
+        logger.info("进入admin_video_add，获取一个新Video()");
+        if (role_id == 1){
+            model.addAttribute("video", new Video());
+        }
+        else{
+            return new ModelAndView("redirect:/admin_video");
+        }
+        return new ModelAndView("admin_video_add", "videomodel", model);
+    }
+
+    @PostMapping("/add_video")
+    public ModelAndView add_video(Video video, Model model, HttpServletRequest request) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
+        logger.info("提交新增的dataset: [{}]", video);
+        videoService.addVideo(video);
+        return new ModelAndView("redirect:/admin_video");
+    }
+
+    //修改视频
+    @GetMapping("/admin_video_edit")
+    public ModelAndView admin_video_edit(HttpServletRequest request, Model model){
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
+        long id = Long.parseLong(request.getParameter("id"));
+        logger.info("进入admin_video_edit，获取指定id的Video(),id=[{}]", id);
+
+        model.addAttribute("video", videoService.getById(id));
+
+        return new ModelAndView("admin_video_edit","videomodel",model);
+    }
+
+    @PostMapping("/edit_video")
+    public ModelAndView edit_video(Video video){
+        logger.info("提交修改的video: [{}]", video);
+        videoService.updateVideo(video);
+        return new ModelAndView("redirect:/admin_video");
+    }
+
+    //删除视频
+    @RequestMapping("/admin_video_delete")
+    public ModelAndView admin_video_delete(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
+        long id = Long.parseLong(request.getParameter("id"));
+        logger.info("删除 video.id=[{}]", id);
+        videoService.deleteVideoById(id);
+        return new ModelAndView("redirect:/admin_video");
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////
@@ -1213,14 +1273,61 @@ public class adminController {
             String fileName = file.getOriginalFilename();
             //获取文件后缀名
             String suffixName = fileName.substring(fileName.lastIndexOf("."));
-
-            if (UploadFileUtils.upload(file, localPath, fileName, true) == "true") {
-                //文件存放的相对路径(一般存放在数据库用于img标签的src)
+            String result = UploadFileUtils.upload(file, localPath, fileName, false);
+            while (result.equals("exists")){
+                //重新生成文件名
+                fileName = UUID.randomUUID() + suffixName;
+                result = UploadFileUtils.upload(file, localPath, fileName, false);
+            }
+            if (result.equals("true")) {
                 String relativePath = "static/dataset/" + fileName;
                 root.put("relativePath", relativePath);//前端根据是否存在该字段来判断上传是否成功
                 result_msg = "文件上传成功";
                 root.put("fileFormat", suffixName);
                 root.put("size", file.getSize());
+            } else {
+                result_msg = "文件上传失败";
+            }
+        } else {
+            result_msg = "文件格式不正确";
+        }
+        root.put("result_msg", result_msg);
+
+        String root_json = JSON.toJSONString(root);
+        logger.info(root_json);
+        return root;
+    }
+
+    //上传视频
+    @ResponseBody
+    @RequestMapping("/upload_video")
+    public Map videoUpload(MultipartFile file, HttpServletRequest request) {
+        String result_msg = "";  //上传结果信息
+        Map<String, Object> root = new HashMap<String, Object>();
+
+        //判断上传文件格式
+        String fileType = file.getContentType();
+        if (fileType.equals("video/mp4") ||
+                fileType.equals("video/mpeg4") ||
+                fileType.equals("video/avi") ||
+                fileType.equals("video/x-ms-wmv")) {
+//        if (true) {
+            // 要上传的目标文件存放的绝对路径
+            final String localPath = "static\\video";
+            //获取文件名
+            String fileName = file.getOriginalFilename();
+            //获取文件后缀名
+            String suffixName = fileName.substring(fileName.lastIndexOf("."));
+            String result = UploadFileUtils.upload(file, localPath, fileName, false);
+            while (result.equals("exists")){
+                //重新生成文件名
+                fileName = UUID.randomUUID() + suffixName;
+                result = UploadFileUtils.upload(file, localPath, fileName, false);
+            }
+            if (result.equals("true")) {
+                String relativePath = "static/video/" + fileName;
+                root.put("relativePath", relativePath);//前端根据是否存在该字段来判断上传是否成功
+                result_msg = "文件上传成功";
             } else {
                 result_msg = "文件上传失败";
             }
