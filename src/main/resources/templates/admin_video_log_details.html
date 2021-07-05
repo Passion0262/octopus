@@ -59,57 +59,27 @@
                                         <table id="datatable-buttons" class="table table-striped table-bordered table-centered" style="white-space:nowrap;">
                                             <thead style="text-align: center;">
                                                 <tr>
+                                                    <td>编号</td>
                                                     <th>学号</th>
                                                     <th>学生</th>
-                                                    <th>班级</th>
-                                                    <th>专业</th>
+                                                    <th>视频名称</th>
                                                     <th>课程名称</th>
                                                     <th>学习时长</th>
-                                                    <th>讲座名称</th>
-                                                    <th>学习日期</th>
                                                     <th>首次学习时间</th>
                                                     <th>末次学习时间</th>
-                                                    <th>超出学习时长</th>
                                                 </tr>
                                             </thead>
                                             <tbody style="text-align: center;">
                                                 <tr th:each="log_detail:${video_log_details}">
-                                                    <td th:text="${log_detail.stuNum}"></td>
-                                                    <td th:text="${log_detail.stuName}"></td>
-                                                    <td th:text="${log_detail.class}"></td>
-                                                    <td th:text="${log_detail.major}"></td>
-                                                    <td th:text="${log_detail.course}"></td>
-                                                    <td th:text="${log_detail.video}"></td>
-                                                    <td th:text="${log_detail.startTime}"></td>
-                                                    <td th:text="${log_detail.endTime}"></td>
-                                                    <td th:text="${log_detail.overTime}"></td>
+                                                    <td th:text="${log_detailStat.index+1}"></td>
+                                                    <td th:text="${log_detail.stuNumber}"></td>
+                                                    <td th:text="${log_detail.name}"></td>
+                                                    <td th:text="${log_detail.videoName}"></td>
+                                                    <td th:text="${log_detail.courseName}"></td>
+                                                    <td th:text="${log_detail.studyTimeSum}"></td>
+                                                    <td th:text="${log_detail.veryStartTime}"></td>
+                                                    <td th:text="${log_detail.veryLastTime}"></td>
                                                 </tr>
-<!--                                            <tr>-->
-<!--                                                <td>10001</td>-->
-<!--                                                <td>丁一</td>-->
-<!--                                                <td>大数据技术与应用</td>-->
-<!--                                                <td>大数据2101</td>-->
-<!--                                                <td>数据可视化技术</td>-->
-<!--                                                <td>0小时56分11秒</td>-->
-<!--                                                <td>1.1简介</td>-->
-<!--                                                <td>2020-02-10</td>-->
-<!--                                                <td>2020-02-08 11:20:01</td>-->
-<!--                                                <td>2020-03-18 14:11:19</td>-->
-<!--                                                <td>0小时0分0秒</td>-->
-<!--                                            </tr>-->
-<!--                                            <tr>-->
-<!--                                                <td>10002</td>-->
-<!--                                                <td>王五</td>-->
-<!--                                                <td>大数据技术与应用</td>-->
-<!--                                                <td>大数据2101</td>-->
-<!--                                                <td>数据可视化技术</td>-->
-<!--                                                <td>3小时56分11秒</td>-->
-<!--                                                <td>1.1简介</td>-->
-<!--                                                <td>2020-02-09</td>-->
-<!--                                                <td>2020-02-08 11:20:01</td>-->
-<!--                                                <td>2020-03-18 14:11:19</td>-->
-<!--                                                <td>0小时56分11秒</td>-->
-<!--                                            </tr>-->
                                             </tbody>
                                         </table>
                                     </div>
@@ -144,8 +114,6 @@
     <script src="static/js/libs/simplebar/simplebar.min.js"></script>
     <!-- node-waves -->
     <script src="static/js/libs/node-waves/waves.min.js"></script>
-    <!-- apexcharts -->
-    <script src="static/js/libs/apexcharts/apexcharts.min.js"></script>
     <!-- admin-resources/jquery.vectormap -->
     <script src="static/js/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
     <script src="static/js/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-us-merc-en.js"></script>
@@ -160,15 +128,12 @@
     <script src="static/js/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
     <script src="static/js/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
     <script src="static/js/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
-    <script src="static/js/libs/datatables.net-select/js/dataTables.select.min.js"></script>   
-    <!-- jszip -->
-    <script src="static/js/libs/jszip/jszip.min.js"></script>
+    <script src="static/js/libs/datatables.net-select/js/dataTables.select.min.js"></script>
     <!-- pdfmake/build -->
     <script src="static/js/libs/pdfmake/build/pdfmake.min.js"></script>
     <script src="static/js/libs/pdfmake/build/vfs_fonts.js"></script>
     <!-- js/pages/ -->
     <script src="static/js/pages/datatables.init.js"></script>
-    <script src="static/js/pages/dashboard.init.js"></script>
     <script src="static/js/app.js"></script>
 
 

@@ -725,7 +725,7 @@ public class adminController {
     public String admin_video_log(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
-        model.addAttribute("video_logs", videoProgressService.getVideoProgressHistoryByRole(teaNum));
+        model.addAttribute("video_logs", videoService.getVideoStudySummaryByRole(teaNum));
         return "admin_video_log";
     }
 
@@ -736,14 +736,8 @@ public class adminController {
     public String admin_video_log_details(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
-        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
-
-        if(role_id == 1){
-            //model.addAttribute("video_log_details", videoProcessService.getAllVideoProcessDetail());
-        }
-        else{
-            //model.addAttribute("video_log_details", videoService.listVideoLogDetailsByTeaNumber(teaNum));
-        }
+        System.out.println(videoProgressService.getVideoProgressDetailByRole(teaNum));
+        model.addAttribute("video_log_details", videoProgressService.getVideoProgressDetailByRole(teaNum));
         return "admin_video_log_details";
     }
 
