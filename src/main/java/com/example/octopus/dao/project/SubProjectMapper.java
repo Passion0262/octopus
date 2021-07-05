@@ -19,7 +19,7 @@ public interface SubProjectMapper {
      * 根据 projectModuleId 查询子项目
      */
     @Select(("SELECT * FROM sub_project WHERE project_module_id = #{projectModuleId} order by number"))
-    List<SubProject> listSubExperimentsByModuleId(long projectModuleId) ;
+    List<SubProject> listSubProjectsByModuleId(long projectModuleId) ;
 
     /**
      * 根据子项目id查询子项目

@@ -5,6 +5,8 @@ import com.example.octopus.entity.dataset.Dataset;
 import com.example.octopus.entity.experiment.*;
 import com.example.octopus.entity.experiment.Module;
 import com.example.octopus.entity.project.Project;
+import com.example.octopus.entity.project.ProjectModule;
+import com.example.octopus.entity.project.SubProject;
 import com.example.octopus.entity.user.Teacher;
 import com.example.octopus.service.*;
 import com.example.octopus.utils.CookieTokenUtils;
@@ -68,6 +70,10 @@ public class studentController {
     TeacherService teacherService;
     @Autowired
     VideoService videoService;
+    @Autowired
+    ProjectModuleService projectModuleService;
+    @Autowired
+    SubProjectService subProjectService;
 
     @Autowired
     VideoProgressService videoProgressService;
@@ -686,19 +692,60 @@ public class studentController {
     public String project_detail(@PathVariable(value = "id") String id, Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
-//        String stuname = (String) session.getAttribute("stuname");
-//        model.addAttribute("stuname", stuname);
+
         long project_id = Long.parseLong(id);
 
         logger.info("project_id:" + project_id);
 
-        //        这里需要一个根据实验的id 返回course操作
+
         Project project = projectService.getProjectById(project_id);
         logger.info("project——detail:" + project);
         model.addAttribute("project", project);
 
+        List<ProjectModule> modules = projectModuleService.listByProjectId(project_id);
+        logger.info("project——module:" + modules);
+        logger.info("project——module-size:" + modules.size());
+        model.addAttribute("modules", modules);
+        model.addAttribute("modulesnum", modules.size());
+
+        List<List<SubProject>> subprojects = new ArrayList<>();
+        for (int i = 0; i < modules.size(); i++) {
+            logger.info("subprojects——module-sub:" + modules.get(i).getModuleId());
+            List<SubProject> subproject = subProjectService.listSubProjectsByModuleId(modules.get(i).getModuleId());
+            subprojects.add(subproject);
+        }
+        logger.info("subprojects:" + subprojects);
+        model.addAttribute("subprojects", subprojects);
+
         return "project_detail";
     }
+
+    @RequestMapping("/project_machine/{id}")
+    public String project_machine(@PathVariable("id")String id,Model model, HttpServletRequest request) {
+        if (!cookieCheck(model, request)) return "redirect:/login";
+        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+//        String stuname = (String) session.getAttribute("stuname");
+//        model.addAttribute("stuname", stuname);
+
+        logger.info("project实验机id:"+id);
+        Long sub_id = Long.parseLong(id);
+//        logger.info("sub_id:"+sub_id);
+
+        SubProject subProject = subProjectService.getById(sub_id);
+        logger.info("subProject:"+subProject);
+        model.addAttribute("subProject", subProject);
+
+        Project project = projectService.getProjectById(subProject.getProjectId());
+//        logger.info("experiment:"+experiment);
+        model.addAttribute("project", project );
+
+        return "project_machine";
+
+    }
+
+
+
+
 
 
     @RequestMapping("/studylog")

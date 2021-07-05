@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8" />
+  <title>人工智能实验实训平台</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta content="人工智能实验实训平台" name="description" />
+  <link href="../../static/js/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" /><!-- Responsive datatable examples -->
+  <link href="../../static/js/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" /><!-- Bootstrap Css -->
+  <link href="../../static/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" /><!-- Icons Css -->
+  <link href="../../static/css/icons.min.css" rel="stylesheet" type="text/css" /><!-- App Css-->
+  <link href="../../static/css/app.min.css" rel="stylesheet" type="text/css" />
+  <link href="../../static/js/libs/summernote/summernote.css"  rel="stylesheet" type="text/css" />
+
+  <style>
+
+    .h-bar{
+      width: 5px;
+      height: 100%;
+      resize: horizontal;
+      cursor: col-resize;
+      background-color: black;
+      float: left;
+    }
+    .top-left-style{
+      width:38%;
+      padding-right: 0px;
+      float: left;
+      margin-bottom: 0px;
+      min-width: 28%;
+    }
+    .top-right-style{
+      width:68%;
+      float: left;
+      margin-bottom: 0px;
+      min-width: 58%;
+    }
+    .allshow{
+      width:100%;
+    }
+    .noneshow{
+      width:0%;
+    }
+  </style>
+</head>
+
+<body data-sidebar="dark">
+<!-- Begin page -->
+<div id="layout-wrapper">
+
+  <!-- ============================================================== -->
+  <div class="main-content" style="margin: 0px;height:100%;">
+
+
+    <div class="row">
+
+      <div class="col-12" style="background-color: #272d3e;margin-left:  5px;margin-right: 5px;">
+        <div class="page-title-box d-flex align-items-center justify-content-between" style="padding-bottom: 5px; padding-top: 5px;">
+          <h2 class="mb-4" style="color: #E5E5E5;font-size: 25px;margin-top: 10px;"><span th:text="${project.name}"></span>:&nbsp;&nbsp;&nbsp;<span th:text="${subProject.subProjectName}"></span></h2>
+          <div class="page-title-right">
+            <ol class="breadcrumb m-0" style="margin-right: 5px;">
+              <button type="button" id="showpdfbtn" class="btn btn-outline-info waves-effect waves-dark" th:onclick="showpdf()">文档模式</button>
+              <span>&nbsp;&nbsp;&nbsp;</span>
+              <button type="button" id="showmachinebtn" class="btn btn-outline-info waves-effect waves-dark active" th:onclick="showm1()">虚拟机模式</button>
+              <span>&nbsp;&nbsp;&nbsp;</span>
+              <button type="button" class="btn btn-light waves-effect waves-dark" th:onclick="location.href='/project_detail/'+[[${subProject.projectId}]]">实验任务</button>
+              <span>&nbsp;&nbsp;&nbsp;</span>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div><!-- end row -->
+
+
+    <div id='top' class="row" style="overflow: auto; position：absolute;flex-wrap: inherit;height:100%;">
+
+      <div class="card top-left-style " id="top-left" >
+        <!--                <div class="card"  >-->
+        <ul id ="card-ul" class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#txt_task" role="tab" aria-selected="true">
+              <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+              <span class="d-none d-sm-block">实验要求</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " data-toggle="tab" href="#txt_core" role="tab" aria-selected="false">
+              <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+              <span class="d-none d-sm-block">核心知识</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="tab-content text-muted" id="tabtext" style="">
+          <div class="tab-pane active" id="txt_task" role="tabpanel">
+                                        <span th:if="${subProject.copyable}==true">
+                                        <iframe th:src="'../../static/js/pdf/web/viewer-machine-enable-copy.html?file='+${subProject.requirementPath}" width="100%" height="100%" ></iframe>
+                                          <!--                                        <embed src="../../static/images/showpic/demo1.pdf#toolbar=0" type="application/pdf" width="100%" height="100%" />-->
+                                        </span>
+            <span th:if="${subProject.copyable}==false">
+                                        <iframe th:src="'../../static/js/pdf/web/viewer-machine.html?file='+${subProject.requirementPath}" width="100%" height="100%" ></iframe>
+              <!--                                        <embed src="../../static/images/showpic/demo1.pdf#toolbar=0" type="application/pdf" width="100%" height="100%" />-->
+                                        </span>
+          </div>
+
+          <div class="tab-pane " id="txt_core" role="tabpanel">
+                                        <span th:if="${subProject.copyable}==true">
+                                            <iframe th:src="'../../static/js/pdf/web/viewer-machine-enable-copy.html?file='+${subProject.knowledgePath}" width="100%" height="100%" ></iframe>
+                                        </span>
+            <span th:if="${subProject.copyable}==false">
+                                            <iframe th:src="'../../static/js/pdf/web/viewer-machine.html?file='+${subProject.knowledgePath}" width="100%" height="100%" ></iframe>
+                                        </span>
+          </div>
+
+        </div>
+        <!--                    </div>-->
+      </div>
+      <div id="top-spr" r-Type="width" div1="#top-left" div2="#top-right" class="h-bar"></div>
+
+      <div class="card top-right-style" id="top-right" >
+        <!--                <div class="card"  >-->
+        <!--                                    <p class="card-title-desc">实验机</p>-->
+
+        <div style="height: 100%;width: 100%;">
+          <iframe  src="http://172.18.146.123:6080/#/" allowfullscreen="true" scrolling="no" frameborder="0" width="100%" height="100%"></iframe>
+        </div>
+
+        <!--                                    <div class="embed-responsive embed-responsive-16by9" >-->
+        <!--                                        <iframe class="embed-responsive-item" src="http://172.18.146.124:6081/#/" allowfullscreen="true" ></iframe>-->
+        <!--                                    </div>-->
+
+
+        <!--                                    <div class="embed-responsive embed-responsive-2by1" width="1400px">-->
+        <!--                                        <iframe class="embed-responsive-item" src="http://172.18.146.123:6080/#/" frameborder="0" scrolling="0" style=""></iframe>-->
+        <!--                                    </div>-->
+
+        <!--                </div>-->
+      </div>
+
+    </div><!-- end div top -->
+
+
+
+  </div><!-- end main content-->
+</div><!-- END layout-wrapper -->
+
+
+
+
+<!-- JAVASCRIPT -->
+<script th:src="@{../../static/js/libs/jquery/jquery.min.js}"></script>
+<script th:src="@{../../static/js/libs/jquery/divresizer.js}"></script>
+<script th:src="@{../../static/js/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{../../static/js/libs/metismenu/metisMenu.min.js}"></script>
+<script th:src="@{../../static/js/libs/simplebar/simplebar.min.js}"></script>
+<script th:src="@{../../static/js/libs/node-waves/waves.min.js}"></script>
+<script th:src="@{../../static/js/app.js}"></script>
+<script th:src="@{../../static/js/libs/summernote/summernote.js}"></script>
+<script th:src="@{../../static/js/libs/tinymce/tinymce.min.js}"></script>
+<script th:src="@{../../static/js/pages/form-editor.init.js}"></script>
+<script th:src="@{../../static/js/libs/summernote/lang/summernote-zh-CN.min.js}"></script>
+<script th:src="@{../../static/js/libs/htmlToPdf/html2canvas.min.js}"></script>
+<script th:src="@{../../static/js/libs/htmlToPdf/jspdf.min.js}"></script>
+<script th:src="@{../../static/js/pdf/build/pdf.js}"></script>
+
+<script th:inline="javascript" type="text/javascript">
+
+  $(document).ready(function() {
+    $("#layout-wrapper").css("height", $(document).height());
+    $(".tab-pane").css("height", $("#top").height() - $("#card-ul").height());
+
+
+    $.divResizer({
+      select: '#top-spr',
+    });
+  });
+
+    function showpdf() {
+      $("#top-left").removeClass("top-left-style");
+      $("#top-right").removeClass("top-right-style");
+      $("#top-left").addClass("allshow");
+      $("#top-right").addClass("noneshow");
+      $("#showpdfbtn").addClass("active");
+      $("#showmachinebtn").removeClass("active");
+    }
+
+    function showm1() {
+      $("#top-left").removeClass("allshow");
+      $("#top-left").addClass("top-left-style");
+      $("#top-right").removeClass("noneshow");
+      $("#top-right").addClass("top-right-style");
+
+      $("#showmachinebtn").addClass("active");
+      $("#showpdfbtn").removeClass("active");
+    }
+
+
+
+
+</script>
+
+</body>
+
+</html>

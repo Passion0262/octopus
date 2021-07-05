@@ -6,7 +6,7 @@
     <title>人工智能实验实训平台</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="人工智能实验实训平台" name="description" />
-    <link th:href="@{static/js/libs/admin-resources/jquery.vectormap/static}" rel="stylesheet" type="text/css" /><!-- DataTables -->
+<!--    <link th:href="@{static/js/libs/admin-resources/jquery.vectormap/static}" rel="stylesheet" type="text/css" />&lt;!&ndash; DataTables &ndash;&gt;-->
     <link th:href="@{static/js/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css}" rel="stylesheet" type="text/css" /><!-- Responsive datatable examples -->
     <link th:href="@{static/js/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css}" rel="stylesheet" type="text/css" /><!-- Bootstrap Css -->
     <link th:href="@{static/css/bootstrap-dark.min.css}" id="bootstrap-style" rel="stylesheet" type="text/css" /><!-- Icons Css -->
@@ -130,10 +130,10 @@
                                             <td><span th:text="${course.endTime}"></span></td>
                                             <td>
                                                 <span th:if="${course.status}=='有效'">
-                                                <span style="color:limegreen">允许申请</span>
+                                                <span style="color:darkgreen">允许申请</span>
                                                 </span>
                                                 <span th:if="${course.status}=='无效'">
-                                                <span style="color:dimgrey">禁止申请</span>
+                                                <span style="color:grey">禁止申请</span>
                                                 </span>
                                             </td>
                                             <td>
@@ -195,7 +195,7 @@
     function showdetail(id) {
         // var couid = $("#couid").text();
         // alert(couid);
-        window.location.href="./apply_detail/"+id;
+        window.location.href="apply_detail/"+id;
 
         //这里需要注意的是，prompt有两个参数，前面是提示的话，后面是当对话框出来后，在对话框里的默认值
         // if (couid)//如果返回的有内容
