@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <title>人工智能实验实训平台-后台管理</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--<meta content="Premium Multipurpose Admin & Dashboard Template" name="description" /> -->
+        <!--<meta content="Themesdesign" name="author" /> -->
+        <link rel="shortcut icon" href="static/images/favicon.png">
+        <!-- jquery.vectormap css -->
+        <link href="static/js/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
+        <!-- dropzone css -->
+        <link href="static/js/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
+        <!-- Bootstrap Css -->
+        <link href="static/css/bootstrap-dark.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons css -->
+        <link href="static/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="static/css/app-dark.min.css" id="app-style" rel="stylesheet" type="text/css" />
+
+        <link href="static/css/scroll.css" id="scroll-style" rel="stylesheet" type="text/css" />
+    </head>
+
+    <body data-sidebar="dark">
+        <!-- Begin page -->
+        <div id="layout-wrapper">
+
+            <div th:replace="commons::topbar(${videomodel.username})"></div>
+            <div th:replace="commons::leftSidebar(${videomodel.role})"></div>
+
+            <!-- Start right Content here -->
+            <div class="main-content">
+                <div class="page-content">
+                    <div class="container-fluid">
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="mb-0">增加视频</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <form id="form" action="/add_video" method="post" th:object="${videomodel.video}" novalidate="" style="padding-left: 20px;">
+                                            <div class="form-group row">
+                                                <label for="add_name" class="col-md-2 col-form-label">视频名称：</label>
+                                                <div class="col-md-10">
+                                                    <input name="name" th:value="*{name}"  class="form-control" id="add_name" type="text">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="add_path" class="col-md-2 col-form-label">视频文件：</label>
+                                                <div class="col-md-10">
+<!--                                                    <input name="" id="add_imagePath" value="" class="form-control btn" type="file" accept="image/png, image/jpeg, image/jpg" style="background-color: white; border: 1px solid #ced4da;">-->
+                                                    <input type="file" class="form-control custom-file-input" id="add_path" onchange="setVideoName()" accept="">
+                                                    <label id="for_path" class="form-control custom-file-label" for="add_path" style="width: 97%;margin-left: 10px;">选择文件</label>
+                                                    <input name="path" id="path" th:value="*{path}" class="form-control btn" type="text" style="display: none">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="add_courseId" class="col-md-2 col-form-label">课程ID：</label>
+                                                <div class="col-md-10">
+                                                    <input name="courseId" th:value="*{courseId}" id="add_courseId" class="form-control" type="text">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="add_chapterId" class="col-md-2 col-form-label">章节ID：</label>
+                                                <div class="col-md-10">
+                                                    <input name="chapterId" th:value="*{chapterId}" id="add_chapterId" class="form-control" type="text">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="add_number" class="col-md-2 col-form-label">小节ID：</label>
+                                                <div class="col-md-10">
+                                                    <input name="number" th:value="*{number}" id="add_number" class="form-control" type="text">
+                                                </div>
+                                            </div>
+
+                                            <div id="alert" class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none;margin-top: 5px;padding: 5px;padding-left: 20px;">
+                                                <i class="mdi mdi-block-helper mr-2">
+                                                    <span id="result_msg" style="padding-left: 10px;"></span>
+                                                </i>
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="padding: 5px;">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
+                                            <div class="row" style="display: block;text-align: center;">
+                                                <a href="admin_video" class="btn btn-light btn-rounded waves-effect waves-light">
+                                                    <i class="ri-close-line align-middle mr-2"></i>取消
+                                                </a>
+                                                <button type="button" onclick="submitForm()" class="btn btn-success btn-rounded waves-effect waves-light" style="margin: 20px;">
+                                                    <i class="ri-check-line align-middle mr-2"></i>提交
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div th:replace="commons::footer"></div>
+            </div>
+            <!-- end main content-->
+
+
+        </div>
+    
+    
+    
+        <!-- JAVASCRIPT -->
+        <!-- jquery -->
+        <script src="static/js/libs/jquery/jquery.min.js"></script>
+        <!-- bootstrap/js -->
+        <script src="static/js/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- metismenu -->
+        <script src="static/js/libs/metismenu/metisMenu.min.js"></script>
+        <!-- simplebar -->
+        <script src="static/js/libs/simplebar/simplebar.min.js"></script>
+        <!-- node-waves -->
+        <script src="static/js/libs/node-waves/waves.min.js"></script>
+        <!-- admin-resources/jquery.vectormap -->
+        <script src="static/js/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
+        <script src="static/js/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-us-merc-en.js"></script>
+        <!-- bs-custom-file-input -->
+        <script src="static/js/libs/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+        <!-- dropzone -->
+        <script src="static/js/libs/dropzone/min/dropzone.min.js"></script>
+        <!-- js/pages/ -->
+        <script src="static/js/pages/form-element.init.js"></script>
+        <script src="static/js/app.js"></script>
+        
+        <script type="text/javascript" th:inline="javascript">
+
+            var oVideoName = document.getElementById("add_name");
+            var oCourseId = document.getElementById("add_courseId");
+            var oChapterId = document.getElementById("add_chapterId");
+            var oNumber = document.getElementById("add_number");
+
+            function setVideoName(){
+                if (document.getElementById('add_path').files.length !== 0){
+                    var name = document.getElementById('add_path').files[0].name;
+                    document.getElementById("for_path").innerText = name;
+                }
+            }
+
+            function uploadVideo() {
+                var formData = new FormData();
+                if (document.getElementById('add_path').files.length == 0){
+                    document.getElementById("alert").style.display="";
+                    document.getElementById("result_msg").innerHTML = "请上传视频！";
+                    return false;
+                }
+                formData.append('file', document.getElementById('add_path').files[0]);
+                $.ajax({
+                    async: false,
+                    type: 'POST',
+                    url: "/upload_video",
+                    dataType: 'json',
+                    data: formData,
+                    contentType:false,
+                    processData:false,
+                    success: function (data) {
+                        if(data.hasOwnProperty("relativePath")){
+                            console.log("上传视频成功！");
+                            document.getElementById("path").value = data.relativePath;
+                            return true;
+                        }
+                        else {
+                            document.getElementById("alert").style.display="";
+                            document.getElementById("result_msg").innerHTML = data.result_msg;
+                            console.log(data.result_msg);
+                            return false;
+                        }
+                    },
+                    error: function (e) {
+                        document.getElementById("alert").style.display="";
+                        document.getElementById("result_msg").innerHTML = "上传视频失败！";
+                        console.log(data.result_msg);
+                        return false;
+                    }
+                })
+            }
+
+            function checkForm(){
+                if (!oVideoName.value){
+                        document.getElementById("alert").style.display="";
+                        document.getElementById("result_msg").innerHTML = "请填写视频名称！";
+                        return false;
+                }
+
+                if (!oCourseId.value){
+                    document.getElementById("alert").style.display="";
+                    document.getElementById("result_msg").innerHTML = "请填写课程ID！";
+                    return false;
+                }
+
+                if (!oChapterId.value){
+                    document.getElementById("alert").style.display="";
+                    document.getElementById("result_msg").innerHTML = "请填写章节ID！";
+                    return false;
+                }
+
+                if (!oNumber.value){
+                    document.getElementById("alert").style.display="";
+                    document.getElementById("result_msg").innerHTML = "请填写小节ID！";
+                    return false;
+                }
+
+               if (uploadVideo() == false){
+                   return false;
+               }
+
+                console.log("check form finish");
+                return true;
+            }
+
+            function submitForm(){
+                console.log("check form start");
+                if (checkForm()){
+                    //console.log("submit form");
+                    oForm = document.getElementById("form");
+                    oForm.submit();
+                }
+            }
+
+            $(function() {
+
+
+
+            })
+
+
+        </script>
+    
+    
+    </body>
+
+</html>

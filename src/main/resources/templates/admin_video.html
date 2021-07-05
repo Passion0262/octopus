@@ -66,6 +66,7 @@
                                                     <th>所属课程名称</th>
                                                     <th>所属章节ID</th>
                                                     <th>所属章节名称</th>
+                                                    <th>所属小节ID</th>
                                                     <th>视频名称</th>
                                                     <th>视频地址</th>
                                                 </tr>
@@ -89,6 +90,7 @@
                                                     <td th:text="${video.courseName}"></td>
                                                     <td th:text="${video.chapterId}"></td>
                                                     <td th:text="${video.chapterName}"></td>
+                                                    <td th:text="${video.number}"></td>
                                                     <td th:text="${video.name}"></td>
                                                     <td><a th:href="${video.path}" style="color:#5664d2" target="_blank">查看视频</a></td>
 

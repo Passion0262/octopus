@@ -6,14 +6,14 @@ import lombok.Data;
 /**
  * @author: Hao
  * @date: 2021/6/26 11:32
- * 不映射数据库表的前端显示类：视频学习汇总
+ * 视频学习历史记录视图类
+ * 相关操作在videoProcess的service、impl、mapper中
  */
 
 @Data
-public class VideoStudyInfoVO extends VideoProgress {
+public class VideoProgressHistoryVO extends VideoProgress {
 	private String name;  //学生名
 	private String className;  //班级名
 	private String majorName;  //专业名
 	private String courseName;  //课程名
-
 }

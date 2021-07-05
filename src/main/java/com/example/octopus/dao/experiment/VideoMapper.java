@@ -1,6 +1,7 @@
 package com.example.octopus.dao.experiment;
 
 import com.example.octopus.entity.VOs.VideoManageVO;
+import com.example.octopus.entity.VOs.VideoStudySummaryVO;
 import com.example.octopus.entity.experiment.Video;
 import lombok.Data;
 import org.apache.ibatis.annotations.*;
@@ -65,4 +66,18 @@ public interface VideoMapper {
 
     @Delete("DELETE * FROM video WHERE id=#{id}")
     boolean deleteVideoById(long id);
+
+    /**
+     * 视频学习汇总，每个学生和每个课程对应一条数据，这个学生在这门课程里面的视频学习总时长、首次学习时间、末次学习时间
+     * @return 获取所有学生在课程中的视频学习汇总信息
+     */
+    @Select("select stu_number, name as stu_name, course_id, course_name, sum(study_time_sum)  as study_time_total, min(very_start_time) as first_start_time, max(very_last_time)  as last_end_time " +
+            "from video_process_detail " +
+            "group by stu_number and course_id")
+    List<VideoStudySummaryVO> getAllVideoStudySummary();
+
+    @Select("select stu_number, name as stu_name, course_id, vpd.course_name, sum(study_time_sum)  as study_time_total, min(very_start_time) as first_start_time, max(very_last_time)  as last_end_time " +
+            "from video_process_detail vpd, course where course.id=course_id and course.tea_number=#{teaNumber} " +
+            "group by stu_number and course_id")
+    List<VideoStudySummaryVO> getVideoStudySummaryByTeacherId(long teaNumber);
 }

@@ -266,9 +266,10 @@
                     document.getElementById("result_msg").innerHTML = "开通申请日期不能晚于授课结束日期！";
                     return false;
                 }
-    
-                if (uploadImg() == false){
-                    return false;
+                if (changeImg){
+                    if (uploadImg() === false){
+                        return false;
+                    }
                 }
                 console.log("check form finish");
                 return true;
