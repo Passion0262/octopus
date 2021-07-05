@@ -1,36 +1,5 @@
 /*@import url(https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600&display=swap);
 */
-/*@font-face {
-    font-family: Inter;
-    font-style: normal;
-    font-weight: 300;
-    font-display: swap;
-    src: url(../fonts/inter-light?v=3.13.woff2) format("woff2"), url(../fonts/inter-light?v=3.13.woff) format("woff")
-}
-
-@font-face {
-    font-family: Inter;
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: url(../fonts/inter-regular?v=3.13.woff2) format("woff2"), url(../fonts/inter-regular?v=3.13.woff) format("woff")
-}
-
-@font-face {
-    font-family: Inter;
-    font-style: normal;
-    font-weight: 500;
-    font-display: swap;
-    src: url(../fonts/inter-medium?v=3.13.woff2) format("woff2"), url(../fonts/inter-medium?v=3.13.woff) format("woff")
-}
-
-@font-face {
-    font-family: Inter;
-    font-style: normal;
-    font-weight: 700;
-    font-display: swap;
-    src: url(../fonts/inter-bold?v=3.13.woff2) format("woff2"), url(../fonts/iter-bold?v=3.13.woff) format("woff")
-}*/
 
 #page-topbar {
     position: fixed;
