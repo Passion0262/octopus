@@ -22,4 +22,9 @@ class SubExperimentProgressMapperTest {
 	@Test
 	void getOperateTimeByTeacherId() {
 	}
+
+	@Test
+	void update() {
+//		subExperimentProgressMapper.update();
+	}
 }

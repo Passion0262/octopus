@@ -40,7 +40,7 @@ public class VideoProgressServiceImpl implements VideoProgressService {
 		List<Long> videoIdList = videoMapper.listVideoIdsByCourseId(courseId);
 		List<VideoProgress> videoProgressList = new ArrayList<>();
 		for (long videoId : videoIdList) {
-			videoProgressList.addAll(videoProgressMapper.listByStuNumberAndStuNumber(videoId, stuNumber));
+			videoProgressList.addAll(videoProgressMapper.listByVideoIdAndStuNumber(videoId, stuNumber));
 		}
 		return videoProgressList;
 	}

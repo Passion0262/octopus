@@ -30,7 +30,7 @@ public interface VideoProgressMapper {
      *  根据学生学号和videoId查询所有的videoProgress
      */
     @Select("SELECT * FROM video_progress WHERE stu_number = #{stuNumber} AND video_id = #{videoId} order by end_time desc")
-    List<VideoProgress> listByStuNumberAndStuNumber(long videoId, long stuNumber);
+    List<VideoProgress> listByVideoIdAndStuNumber(long videoId, long stuNumber);
 
     /**
      *  根据id查找videoProgress

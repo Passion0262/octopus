@@ -52,8 +52,14 @@ public interface SubExperimentProgressMapper {
     /**
      *  新增子实验学习时间记录
      */
-    @Insert("INSERT INTO sub_experiment_progress (sub_experiment_id, stu_number, start_time, end_time, valid_study_time) VALUES (#{subExperimentId},#{stuNumber},#{startTime},#{endTime},#{validStudyTime})")
+    @Insert("INSERT INTO sub_experiment_progress (sub_experiment_id, stu_number, start_time, end_time, valid_study_time) VALUES (#{subExperimentId},#{stuNumber},CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,#{validStudyTime})")
     boolean insert(SubExperimentProgress subExperimentProgress);
+
+    /**
+     *  更新子实验学习时间记录
+     */
+    @Update("UPDATE sub_experiment_progress SET end_time=CURRENT_TIMESTAMP, valid_study_time=CURRENT_TIMESTAMP-start_time WHERE stu_number=#{stuNumber} AND sub_experiment_id = #{subExperimentId}")
+    boolean updateByStuNumberAndId(long stuNumber, long subExperimentId);
 
     /**
      *  更新子实验学习时间记录

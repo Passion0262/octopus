@@ -45,12 +45,22 @@ public interface SubExperimentProgressService {
     int countValidStudyTime(long stuNumber, long subExperimentId);
 
     /**
-     *  新增子实验学习时间记录
+     *  新增子实验学习时间记录（前台调用）
+     */
+    boolean insert(long stuNumber, long subExperimentId);
+
+    /**
+     *  新增子实验学习时间记录（后台调用）
      */
     boolean insert(SubExperimentProgress subExperimentProgress);
 
     /**
-     *  更新子实验学习时间记录
+     *  更新子实验学习时间记录（前台调用）
+     */
+    boolean update(long stuNumber, long subExperimentId);
+
+    /**
+     *  更新子实验学习时间记录（后台调用）
      */
     boolean update(SubExperimentProgress subExperimentProgress);
 

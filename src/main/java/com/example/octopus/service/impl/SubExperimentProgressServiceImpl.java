@@ -55,8 +55,19 @@ public class SubExperimentProgressServiceImpl implements SubExperimentProgressSe
     }
 
     @Override
+    public boolean insert(long stuNumber, long subExperimentId) {
+        SubExperimentProgress subExperimentProgress = new SubExperimentProgress(1,subExperimentId,stuNumber,null,null,0);
+        return subExperimentProgressMapper.insert(subExperimentProgress);
+    }
+
+    @Override
     public boolean insert(SubExperimentProgress subExperimentProgress) {
         return subExperimentProgressMapper.insert(subExperimentProgress);
+    }
+
+    @Override
+    public boolean update(long stuNumber, long subExperimentId) {
+        return subExperimentProgressMapper.updateByStuNumberAndId(stuNumber,subExperimentId);
     }
 
     @Override
