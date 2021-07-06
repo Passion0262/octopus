@@ -62,7 +62,8 @@ public class DockerServiceImpl implements DockerService {
 
     @Override
     public String getAddressByStuNumber(long stuNumber) {
-        return dockerMapper.getDockerByStuNum(stuNumber).getDockerAddress();
+        return "http://172.18.146.123:6080/#/";
+//        return dockerMapper.getDockerByStuNum(stuNumber).getDockerAddress();
     }
 
     @Override
