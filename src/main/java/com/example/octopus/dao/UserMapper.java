@@ -15,6 +15,14 @@ public interface UserMapper {
     @Select("SELECT s.*, major_name, class_name FROM student s, major, class_ WHERE s.major_id=major.id and s.class_id=class_.id")
     List<Student> listAllStudents();
 
+    /**
+     * 显示选了这位老师教的课的所有学生
+     */
+    @Select("SELECT DISTINCT s.*, major_name, class_name FROM student s, major, class_, course, student_course sc " +
+            "WHERE s.major_id=major.id and s.class_id=class_.id " +
+            "and course.tea_number=#{teaNumber} and course.id=sc.course.id and sc.stu_number=s.stu_number")
+    List<Student> listStudentsByTeaNum(long teaNumber);
+
     @Select("SELECT s.*, major_name, class_name FROM student s, major, class_ WHERE s.class_name = #{className} and s.major_id=major.id and s.class_id=class_.id")
     List<Student> listByClassName(String className);
 

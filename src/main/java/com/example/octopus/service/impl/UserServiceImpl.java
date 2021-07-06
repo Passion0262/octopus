@@ -41,18 +41,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<Student> listStudentsByTeaNumber(long teaNumber) {
-        List<Long> courseIdList = teacherCourseMapper.listCourseIdsByTeaNumber(teaNumber);
-
-        ArrayList<Long> stuNumberList = new ArrayList<>();
-        for (long courseId : courseIdList) {
-            stuNumberList.addAll(studentCourseMapper.listStuNumbersByCourseId(courseId));
-        }
-
-        ArrayList<Student> studentList = new ArrayList<>();
-        for (long stuNumber : stuNumberList) {
-            studentList.add(userMapper.getStudentByStuNumber(stuNumber));
-        }
-        return studentList;
+//        List<Long> courseIdList = teacherCourseMapper.listCourseIdsByTeaNumber(teaNumber);
+//
+//        ArrayList<Long> stuNumberList = new ArrayList<>();
+//        for (long courseId : courseIdList) {
+//            stuNumberList.addAll(studentCourseMapper.listStuNumbersByCourseId(courseId));
+//        }
+//
+//        ArrayList<Student> studentList = new ArrayList<>();
+//        for (long stuNumber : stuNumberList) {
+//            studentList.add(userMapper.getStudentByStuNumber(stuNumber));
+//        }
+//        return studentList;
+		return userMapper.listStudentsByTeaNum(teaNumber);
     }
 
     @Override
@@ -64,11 +65,6 @@ public class UserServiceImpl implements UserService {
     public Student getStudentByName(String name) {
         return userMapper.getStudentByName(name);
     }
-
-//    @Override
-//    public Student login(long stuNumber, String password) {
-//        return userMapper.getStudentByStuNumberAndPassword(stuNumber, password);
-//    }
 
     @Override
     public boolean insertStudent(Student student, long teaNumber) {
@@ -89,7 +85,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void resetPassword(long stuNumber) {
-        //userMapper.resetPassword(stuNumber);
         sysUserRoleMapper.updatePassword(stuNumber, "000000");
     }
 
