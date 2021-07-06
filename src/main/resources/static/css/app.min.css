@@ -5,7 +5,7 @@
     right: 0;
     left: 0;
     z-index: 1002;
-    background-color: #fff;
+    background-color: #033165;
     -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, .08);
     box-shadow: 0 2px 4px rgba(0, 0, 0, .08)
 }
@@ -177,12 +177,12 @@
 }
 
 body[data-topbar=dark] #page-topbar {
-    /*background-color: #252b3b;*/
-    background-image: url("../../static/images/bg-topbar.png");
+    background-color: #033165;
+/*    background-image: url("../../static/images/bg-topbar.png");
     background-repeat: no-repeat;
     background-size: cover;
 -webkit-background-size: cover;
--o-background-size: cover;
+-o-background-size: cover;*/
 }
 
 body[data-topbar=dark] .navbar-header .dropdown.show .header-item {
@@ -410,7 +410,7 @@ body[data-layout=horizontal] .footer {
 .vertical-menu {
     width: 240px;
     z-index: 1001;
-   /* background: #fff;*/
+    background: #BBD8F1;
     bottom: 0;
     margin-top: 0;
     position: fixed;
@@ -419,11 +419,11 @@ body[data-layout=horizontal] .footer {
 
     box-shadow: 0 2px 4px rgba(0, 0, 0, .08);
 
-background-image: url("../../static/images/bg-sidebar.png");
+/*background-image: url("../../static/images/bg-sidebar.png");
     background-repeat: no-repeat;
     background-size: cover;
 -webkit-background-size: cover;
--o-background-size: cover;
+-o-background-size: cover;*/
 
 
 

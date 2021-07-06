@@ -1,6 +1,7 @@
 package com.example.octopus.controller;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.example.octopus.entity.dataset.Dataset;
 import com.example.octopus.entity.experiment.*;
 import com.example.octopus.entity.experiment.Module;
@@ -23,6 +24,7 @@ import com.itextpdf.text.html.simpleparser.HTMLWorker;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.PageSize;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +76,8 @@ public class studentController {
     ProjectModuleService projectModuleService;
     @Autowired
     SubProjectService subProjectService;
+    @Autowired
+    DockerService dockerService;
 
     @Autowired
     VideoProgressService videoProgressService;
@@ -531,95 +535,104 @@ public class studentController {
             logger.info("isexpsubmit:1");
         }
 
+
+        String docker_url = dockerService.getAddressByStuNumber(stuNum);
+        boolean a =dockerService.updateStatusByStuNum(stuNum, 2, sub_id);
+        model.addAttribute("docker_url", docker_url);
+
+
         return "experiment_machine";
 
     }
 
-
-
-    @RequestMapping(value = "sendExperImage", headers = ("content-type=multipart/*"), method = RequestMethod.POST)
+    @RequestMapping("/imageupload")
     @ResponseBody
-    public String sendExperImage(@RequestParam("file") MultipartFile file, Model model,HttpServletRequest request) throws Exception {
-//        logger.info("图片上传");
-        try {
+    public JSONObject imageUpload(@RequestParam("editormd-image-file") MultipartFile file) {
+        JSONObject jsonObject = new JSONObject();
+        if(file != null) {
             String path =propertiesUtil.getExpImageSavePath();
             String fileName ="exp" +  UUID.randomUUID().toString().replace("-", "") + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-//            logger.info("fileName:"+fileName);
+            logger.info("fileName:"+fileName);
+            try {
             File destFile = new File(path + "/" + fileName);
             file.transferTo(destFile);
-//            FileUtils.copyInputStreamToFile(file.getInputStream(), destFile);
-            //上面代码是拷贝到本地的，但是因为感觉并不人性化，所以采取了上传到图片服务器的思路
-//            InputStream inputStream=file.getInputStream();
-
-//            String url = null;
-//            Boolean flag= FtpFileUtil.uploadFile(fileName,inputStream);
-//            if(flag){
-//                url = fileName;
-//            }
-
-//             String url = destFile.getAbsolutePath();
-//            logger.info("url:"+url);
-            for(int i = 0;i<50;i++){
-                if(destFile.exists()){
-                    Map<String,Object> params = new HashMap<>();
-                    params.put("state", "success");
-                    String exppic = propertiesUtil.getExpPicPath();
-                    params.put("picurl", exppic+fileName);
-                    return JSONArray.toJSON(params).toString();
-                }
-            }
-            Map<String,Object> params = new HashMap<>();
-            params.put("state", "fail");
-            params.put("picurl", "");
-            return JSONArray.toJSON(params).toString();
-        }catch (Exception e){
+            String exppicurl = propertiesUtil.getExpPicPath()+fileName;
+            jsonObject.put("url", exppicurl);
+            jsonObject.put("success", 1);
+            jsonObject.put("message", "upload success!");
+            return jsonObject;
+            }catch (Exception e){
             return  null;
         }
-//        String file = request.getParameter("file");
-//        logger.info("fileupload:" + file);
-//        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, cookieName));
-//        logger.info("图片上传");
-//        Date date = new Date();
-//        String parent = "/Users/wangxiang/IdeaProjects/octopus/src/main/resources/static";
-//        String filename = stuNum.toString()+date.toString();
-//        String suffix = ".jpg";
-//        String child = filename + suffix;
-//        File dest = new File(parent,child);
-////        file.transferTo(dest);
-//
-//        logger.info("url",child);
-//
-//        Map<String,Object> params = new HashMap<>();
-//        params.put("state", "success");
-//        params.put("url", "../../static/temp/"+child);
-//        return JSONArray.toJSON(params).toString();
-//       Exception String str = FileUpdate.uploadFile(file);
-//        Map<String,Object> params = new HashMap<>();
-//        logger.info("fileupload:" + request.getParameter("dir"));
-    }
-
-
-    @PostMapping(value = "/deleteExpImage")
-    @ResponseBody
-    public String deleteExpImage(HttpServletRequest request) {
-
-        String picUrl = request.getParameter("picUrl");
-        logger.info("deletepicUrl:" + picUrl);
-        String filename = picUrl.replace("http://localhost:8080/static/","");
-        String filepath = propertiesUtil.getExpImageSavePath();
-
-        File file = new File(filepath+filename);
-        Map<String,Object> params = new HashMap<>();
-        if (file.exists()) {
-            file.delete();
-            params.put("state", "success");
-//            System.out.println("===========删除成功=================");
-        } else {
-            params.put("state", "fail");
-//            System.out.println("===============删除失败==============");
         }
-        return JSONArray.toJSON(params).toString();
+        jsonObject.put("success", 0);
+        jsonObject.put("message", "upload error!");
+        return jsonObject;
     }
+
+
+//    @RequestMapping(value = "sendExperImage", headers = ("content-type=multipart/*"), method = RequestMethod.POST)
+//    @ResponseBody
+//    public String sendExperImage(@RequestParam("file") MultipartFile file, Model model,HttpServletRequest request) throws Exception {
+////        logger.info("图片上传");
+//        try {
+//            String path =propertiesUtil.getExpImageSavePath();
+//            String fileName ="exp" +  UUID.randomUUID().toString().replace("-", "") + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+////            logger.info("fileName:"+fileName);
+//            File destFile = new File(path + "/" + fileName);
+//            file.transferTo(destFile);
+////            FileUtils.copyInputStreamToFile(file.getInputStream(), destFile);
+//            //上面代码是拷贝到本地的，但是因为感觉并不人性化，所以采取了上传到图片服务器的思路
+////            InputStream inputStream=file.getInputStream();
+//
+////            String url = null;
+////            Boolean flag= FtpFileUtil.uploadFile(fileName,inputStream);
+////            if(flag){
+////                url = fileName;
+////            }
+//
+////             String url = destFile.getAbsolutePath();
+////            logger.info("url:"+url);
+//            for(int i = 0;i<50;i++){
+//                if(destFile.exists()){
+//                    Map<String,Object> params = new HashMap<>();
+//                    params.put("state", "success");
+//                    String exppic = propertiesUtil.getExpPicPath();
+//                    params.put("picurl", exppic+fileName);
+//                    return JSONArray.toJSON(params).toString();
+//                }
+//            }
+//            Map<String,Object> params = new HashMap<>();
+//            params.put("state", "fail");
+//            params.put("picurl", "");
+//            return JSONArray.toJSON(params).toString();
+//        }catch (Exception e){
+//            return  null;
+//        }
+//    }
+//
+//
+//    @PostMapping(value = "/deleteExpImage")
+//    @ResponseBody
+//    public String deleteExpImage(HttpServletRequest request) {
+//
+//        String picUrl = request.getParameter("picUrl");
+//        logger.info("deletepicUrl:" + picUrl);
+//        String filename = picUrl.replace("http://localhost:8080/static/","");
+//        String filepath = propertiesUtil.getExpImageSavePath();
+//
+//        File file = new File(filepath+filename);
+//        Map<String,Object> params = new HashMap<>();
+//        if (file.exists()) {
+//            file.delete();
+//            params.put("state", "success");
+////            System.out.println("===========删除成功=================");
+//        } else {
+//            params.put("state", "fail");
+////            System.out.println("===============删除失败==============");
+//        }
+//        return JSONArray.toJSON(params).toString();
+//    }
 
     @PostMapping(value="/saveExperText")
     @ResponseBody
@@ -739,6 +752,15 @@ public class studentController {
 //        logger.info("experiment:"+experiment);
         model.addAttribute("project", project );
 
+//申请虚拟机资源
+        String docker_url = dockerService.getAddressByStuNumber(stuNum);
+        boolean a =dockerService.updateStatusByStuNum(stuNum, 1, sub_id);
+        model.addAttribute("docker_url", docker_url);
+        //实验学习记录
+//        SubExperimentProgress subexppro = new SubExperimentProgress();
+////        subexppro.setStuNumber(stuNum);
+////        subexppro.setSubExperimentId(sub_id);
+
         return "project_machine";
 
     }
@@ -846,7 +868,6 @@ public class studentController {
     @PostMapping(value = "/datasetdownload")
     @ResponseBody
     public String datasetdownload(HttpServletRequest request) {
-
         Long datasetid = Long.parseLong(request.getParameter("datasetid"));
         logger.info("datasetid:" + datasetid);
         datasetService.increaseDownloadNum(datasetid);
@@ -856,6 +877,36 @@ public class studentController {
         params.put("num",d.getDownloadNum());
         return JSONArray.toJSON(params).toString();
 
+    }
+
+
+//    @PostMapping(value = "/applymachine")
+//    @ResponseBody
+//    public String applymachine(HttpServletRequest request) {
+//        logger.info("申请资源");
+//        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+//        String type = request.getParameter("type");
+//        String sid = request.getParameter("id");
+//        Long id = Long.parseLong(sid);
+//        String docker_url = dockerService.getAddressByStuNumber(stuNum);
+//        if(type=="experiment"){
+//            boolean a =dockerService.updateStatusByStuNum(stuNum, 2, id);
+//        }else{
+//            boolean b =dockerService.updateStatusByStuNum(stuNum, 1, id);
+//        }
+//        Map<String,Object> params = new HashMap<>();
+//
+//        params.put("url", docker_url);
+//
+//        return JSONArray.toJSON(params).toString();
+//    }
+
+    @PostMapping(value = "/sleepmachine")
+    @ResponseBody
+    public void sleepmachine(HttpServletRequest request) {
+        logger.info("注销资源");
+        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+        boolean a =dockerService.updateStatusByStuNum(stuNum, 0, 0);
     }
 
 }

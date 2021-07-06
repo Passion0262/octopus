@@ -45,7 +45,7 @@
   </style>
 </head>
 
-<body data-sidebar="dark">
+<body data-topbar="dark">
 <!-- Begin page -->
 <div id="layout-wrapper">
 
@@ -123,7 +123,7 @@
         <!--                                    <p class="card-title-desc">实验机</p>-->
 
         <div style="height: 100%;width: 100%;">
-          <iframe  src="http://172.18.146.123:6080/#/" allowfullscreen="true" scrolling="no" frameborder="0" width="100%" height="100%"></iframe>
+          <iframe  th:src="${{docker_url}}" allowfullscreen="true" scrolling="no" frameborder="0" width="100%" height="100%"></iframe>
         </div>
 
         <!--                                    <div class="embed-responsive embed-responsive-16by9" >-->
@@ -176,7 +176,19 @@
     });
   });
 
-    function showpdf() {
+  window.onbeforeunload = function () {
+    $.ajax({
+      type: "POST",
+      url: "/sleepmachine",
+      success: function () {
+      },
+      error: function () {
+      }
+    });
+  };
+
+
+  function showpdf() {
       $("#top-left").removeClass("top-left-style");
       $("#top-right").removeClass("top-right-style");
       $("#top-left").addClass("allshow");
