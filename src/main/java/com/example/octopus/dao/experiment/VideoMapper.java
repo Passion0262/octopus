@@ -64,7 +64,7 @@ public interface VideoMapper {
     @Update("UPDATE video SET name=#{name}, path=#{path} WHERE id=#{id}")
     boolean updateNameAndPathById(long id, String name, String path);
 
-    @Delete("DELETE * FROM video WHERE id=#{id}")
+    @Delete("DELETE FROM video WHERE id=#{id}")
     boolean deleteVideoById(long id);
 
     /**

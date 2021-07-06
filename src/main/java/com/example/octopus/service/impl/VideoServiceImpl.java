@@ -79,14 +79,22 @@ public class VideoServiceImpl implements VideoService {
 
 	@Override
 	public boolean updateVideo(Video video) {
+		//根据传入的videoId来查看表中有无相关数据
 		Video old = videoMapper.getById(video.getId());
+		//根据传入的课程号章节号小节号定位
 		List<Video> existVideos = videoMapper.getVideoByCourseIdAndChapterIdAndNumber(video.getNumber(), video.getChapterId(), video.getCourseId());
 
-		if (!existVideos.isEmpty() && old.getId() == existVideos.get(0).getId()) {
-			//只修改了名或地址，使用update，不删除
-			return videoMapper.updateNameAndPathById(video.getId(), video.getName(), video.getPath());
-		} else {
+		//如表中已有此videoId，则直接删除旧数据添加新数据
+		if (old != null) {
 			videoMapper.deleteVideoById(old.getId());
+			return videoMapper.addVideo(video);
+		}
+		//如无此videoId，但表中有课程、章节、小节号都对应的数据，则对这条数据进行修改
+		else if (!existVideos.isEmpty()) {
+			return videoMapper.updateNameAndPathById(existVideos.get(0).getId(), video.getName(), video.getPath());
+		}
+		//如无此videoId，也在表中没有课程、章节、小节号都对应的数据，则直接添加这条数据（videoId由数据库自动生成）
+		else {
 			return videoMapper.addVideo(video);
 		}
 	}
@@ -97,7 +105,7 @@ public class VideoServiceImpl implements VideoService {
 	}
 
 	@Override
-	public List<VideoStudySummaryVO> getVideoStudySummaryByRole(long teaNumber){
+	public List<VideoStudySummaryVO> getVideoStudySummaryByRole(long teaNumber) {
 		long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
 		if (role == 1) {
 			//管理员获取全部
