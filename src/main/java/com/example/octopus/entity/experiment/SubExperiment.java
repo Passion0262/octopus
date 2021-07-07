@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 @Data
 @AllArgsConstructor
@@ -23,10 +24,16 @@ public class SubExperiment {
 
     private String imagePath;
 
-    private Date expectTime;
+    private int expectTime;
 
     private String requirementPath;
 
+    private String knowledgePath;
+
+    private String templatePath;
+
     private boolean copyable;
+
+    private Timestamp lastUpdateTime;
 
 }

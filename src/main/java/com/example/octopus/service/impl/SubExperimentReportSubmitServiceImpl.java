@@ -38,8 +38,13 @@ public class SubExperimentReportSubmitServiceImpl implements SubExperimentReport
     }
 
     @Override
-    public boolean update(SubExperimentReportSubmit subExperimentReportSubmit) {
-        return subExperimentReportSubmitMapper.update(subExperimentReportSubmit);
+    public boolean updateBySubmit(long subExperimentId, long stuNumber, String content) {
+        return subExperimentReportSubmitMapper.updateBySubmit(subExperimentId,stuNumber,content);
+    }
+
+    @Override
+    public boolean updateByExamine(long subExperimentId, long stuNumber, long teaNumber, int score) {
+        return subExperimentReportSubmitMapper.updateByExamine(subExperimentId,stuNumber,teaNumber,score);
     }
 
     @Override

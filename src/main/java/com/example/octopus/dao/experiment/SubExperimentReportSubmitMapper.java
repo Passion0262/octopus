@@ -27,14 +27,20 @@ public interface SubExperimentReportSubmitMapper {
     /**
      *  新增subExperimentReportSave
      */
-    @Insert("INSERT INTO sub_experiment_report_submit (sub_experiment_id, stu_number, report_path, last_update_time) VALUES (#{subExperimentId},#{stuNumber},#{reportPath},CURRENT_TIMESTAMP)")
+    @Insert("INSERT INTO sub_experiment_report_submit (sub_experiment_id, stu_number, content, report_path, submit_time) VALUES (#{subExperimentId},#{stuNumber},#{content},#{reportPath},CURRENT_TIMESTAMP)")
     boolean insert(SubExperimentReportSubmit subExperimentReportSubmit);
 
     /**
-     *  更新subExperimentReportSave
+     *  学生提交报告 更新
      */
-    @Update("UPDATE sub_experiment_report_save SET sub_experiment_id=#{subExperimentId},stu_number=#{stuNumber},report_path=#{reportPath},last_update_time=CURRENT_TIMESTAMP WHERE id = #{id}")
-    boolean update(SubExperimentReportSubmit subExperimentReportSubmit);
+    @Update("UPDATE sub_experiment_report_submit SET content=#{content},submit_time=CURRENT_TIMESTAMP WHERE sub_experiment_id = #{subExperimentId} AND stu_number = #{stuNumber}")
+    boolean updateBySubmit(long subExperimentId, long stuNumber, String content);
+
+    /**
+     *  教师审核报告 更新
+     */
+    @Update("UPDATE sub_experiment_report_submit SET score=#{score}, tea_number=#{teaNumber}, examined=1, examined_time=CURRENT_TIMESTAMP WHERE sub_experiment_id=#{subExperimentId} AND stu_number=#{stuNumber}")
+    boolean updateByExamine(long subExperimentId, long stuNumber, long teaNumber, int score);
 
     /**
      *  删除subExperimentReportSave

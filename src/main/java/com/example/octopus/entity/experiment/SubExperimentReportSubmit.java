@@ -22,9 +22,11 @@ public class SubExperimentReportSubmit {
 
     private long stuNumber;
 
-    private String reportPath;  //报告pdf的存储路径
+    private String content; // 报告内容
 
-    private Timestamp lastUpdateTime;
+//    private String reportPath;  //报告pdf的存储路径
+
+    private Timestamp submitTime;
 
     private boolean examined;  //是否已经审核
 

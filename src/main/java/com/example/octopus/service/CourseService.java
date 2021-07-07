@@ -22,6 +22,11 @@ public interface CourseService {
 	Course getCourseById(long id);
 
 	/**
+	 *	根据实验id获取课程
+	 */
+	Long getCourseIdByExperimentId(long experimentId);
+
+	/**
 	 * 查询所有的课程
 	 *
 	 * @return 返回所有课程实体

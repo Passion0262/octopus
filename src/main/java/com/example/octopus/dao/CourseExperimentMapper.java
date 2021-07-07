@@ -16,4 +16,11 @@ public interface CourseExperimentMapper {
      */
     @Select("SELECT experiment_id FROM course_experiment WHERE course_id = #{courseId}")
     Long getExperimentIdByCourseId(long courseId);
+
+    /**
+     * 查询实验对应的课程id
+     */
+    @Select("SELECT course_id FROM course_experiment WHERE experiment_id = #{experimentId}")
+    Long getCourseIdByExperimentId(long experimentId);
+
 }

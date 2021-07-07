@@ -28,9 +28,16 @@ public interface SubExperimentReportSubmitService {
     boolean insert(SubExperimentReportSubmit subExperimentReportSubmit);
 
     /**
-     *  更新subExperimentReportSave
+     *  学生提交报告 更新
      */
-    boolean update(SubExperimentReportSubmit subExperimentReportSubmit);
+    @Update("UPDATE sub_experiment_report_submit SET content=#{content},submit_time=CURRENT_TIMESTAMP WHERE sub_experiment_id = #{subExperimentId} AND stu_number = #{stuNumber}")
+    boolean updateBySubmit(long subExperimentId, long stuNumber, String content);
+
+    /**
+     *  教师审核报告 更新
+     */
+    @Update("UPDATE sub_experiment_report_submit SET score=#{score}, tea_number=#{teaNumber}, examined=1, examined_time=CURRENT_TIMESTAMP WHERE sub_experiment_id=#{subExperimentId} AND stu_number=#{stuNumber}")
+    boolean updateByExamine(long subExperimentId, long stuNumber, long teaNumber, int score);
 
     /**
      *  删除subExperimentReportSave

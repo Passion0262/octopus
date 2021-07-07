@@ -1,9 +1,6 @@
 package com.example.octopus.service.impl;
 
-import com.example.octopus.dao.CourseMapper;
-import com.example.octopus.dao.StudentCourseMapper;
-import com.example.octopus.dao.TeacherCourseMapper;
-import com.example.octopus.dao.UserMapper;
+import com.example.octopus.dao.*;
 import com.example.octopus.entity.user.Course;
 import com.example.octopus.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +24,9 @@ public class CourseServiceImpl implements CourseService {
     UserMapper userMapper;
 
     @Autowired
+    CourseExperimentMapper courseExperimentMapper;
+
+    @Autowired
     StudentCourseMapper studentCourseMapper;
 
     @Autowired
@@ -35,6 +35,11 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Course getCourseById(long id) {
         return courseMapper.getCourseById(id);
+    }
+
+    @Override
+    public Long getCourseIdByExperimentId(long experimentId) {
+        return courseExperimentMapper.getCourseIdByExperimentId(experimentId);
     }
 
     @Override
