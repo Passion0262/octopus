@@ -233,6 +233,8 @@
   var experlog = [[${experpros}]];
   var videos = [[${videos}]];
   var subexpers = [[${subexpers}]];
+  var courseids = [[${courseids}]];
+
   var videocurrentpage = 0;
   var expercurrentpage = 0;
 
@@ -301,7 +303,7 @@
       str += "<td><span>"+dateFormat("YYYY-mm-dd HH:MM:SS", experlog[i].startTime)+"</span></td>";
       str += "<td><span>"+dateFormat("YYYY-mm-dd HH:MM:SS", experlog[i].endTime)+"</span></td>";
       str += "<td><span>"+ timecall(experlog[i].validStudyTime)+"</span></td>";
-      str += "<td><span><a href='studylog_detail/"+subexpers[i].experimentId+"'>查看详情</a></span></td>";
+      str += "<td><span><a href='studylog_detail/"+courseids[i]+"'>查看详情</a></span></td>";
       str += "</tr>";
     }
     $("#experlogdiv").html(str);
