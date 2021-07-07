@@ -53,22 +53,33 @@
                                     <div class="card-body">
                                         <form id="form" action="/edit_course" method="post" th:object="${coursemodel.course}" novalidate="" style="pediting-left: 20px;">
 
+<!--                                            <div class="form-group row">-->
+<!--                                                <label for="edit_id" class="col-md-2 col-form-label">课程编号：</label>-->
+<!--                                                <div class="col-md-10">-->
+<!--                                                    <input name="id" th:value="*{id}" class="form-control" type="text"  id="edit_id" readonly style="border: none">-->
+<!--                                                </div>-->
+<!--                                            </div>-->
                                             <div class="form-group row">
-                                                <label for="edit_id" class="col-md-2 col-form-label">课程编号：</label>
+                                                <label for="edit_courseName" th:if="${coursemodel.role=='admin'}" class="col-md-2 col-form-label">课程名称：</label>
+                                                <label for="select_courseName" th:if="${coursemodel.role=='teacher'}" class="col-md-2 col-form-label">课程名称：</label>
                                                 <div class="col-md-10">
-                                                    <input name="id" th:value="*{id}" class="form-control" type="text"  id="edit_id" readonly style="border: none">
+                                                    <input name="courseName" th:value="*{courseName}" th:if="${coursemodel.role=='admin'}" class="form-control" type="text"  id="edit_courseName">
+                                                    <select name="courseName" th:value="*{courseName}" th:if="${coursemodel.role=='teacher'}" class="form-control" id="select_courseName">
+                                                        <option th:value="*{id}" th:text="*{courseName}" style="display: none;"></option>
+                                                    </select>
+
                                                 </div>
                                             </div>
-                                            <div class="form-group row">
-                                                <label for="edit_courseName" class="col-md-2 col-form-label">课程名称：</label>
-                                                <div class="col-md-10">
-                                                    <input name="courseName" th:value="*{courseName}" class="form-control" type="text"  id="edit_courseName">
-                                                </div>
-                                            </div>
+<!--                                            <div class="form-group row">-->
+<!--                                                <label for="edit_courseName" class="col-md-2 col-form-label">课程名称：</label>-->
+<!--                                                <div class="col-md-10">-->
+<!--                                                    <input name="courseName" th:value="*{courseName}" class="form-control" type="text"  id="edit_courseName">-->
+<!--                                                </div>-->
+<!--                                            </div>-->
                                             <div class="form-group row">
                                                 <label for="edit_teacher" class="col-md-2 col-form-label">授课老师账号：</label>
                                                 <div class="col-md-10">
-                                                    <input name="teaNumber" th:value="*{teaNumber}"  class="form-control" id="edit_teacher" type="text">
+                                                    <input name="teaNumber" th:value="*{teaNumber}"  class="form-control" id="edit_teacher" type="text" readonly style="border: none;">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -177,7 +188,13 @@
         
         <script type="text/javascript" th:inline="javascript">
 
-            var oCourseName = document.getElementById("edit_courseName");
+            var oCourseName;
+            if([[${coursemodel.role}]] === "admin"){
+                oCourseName = document.getElementById("edit_courseName");
+            }
+            else{
+                oCourseName = document.getElementById("select_courseName");
+            }
             var oTeaNumber = document.getElementById("edit_teacher");
             var oStartTime = document.getElementById("edit_startTime");
             var oEndTime = document.getElementById("edit_endTime");
@@ -238,10 +255,19 @@
             }
     
             function checkForm(){
-                if (!oCourseName.value){
-                    document.getElementById("alert").style.display="";
-                    document.getElementById("result_msg").innerHTML = "请填写课程名称！";
-                    return false;
+                if([[${coursemodel.role}]] === "admin"){
+                    if (!oCourseName.value){
+                        document.getElementById("alert").style.display="";
+                        document.getElementById("result_msg").innerHTML = "请填写课程名称！";
+                        return false;
+                    }
+                }
+                else{
+                    if (oCourseName.value === "0"){
+                        document.getElementById("alert").style.display="";
+                        document.getElementById("result_msg").innerHTML = "请选择课程！";
+                        return false;
+                    }
                 }
                 if (oTeaNumber.value === "0"){
                     document.getElementById("alert").style.display="";
@@ -288,8 +314,28 @@
                 if ([[${coursemodel.role}]] === "teacher"){
                     $("#edit_teacher").attr("readonly",true);
                 }
+
+                // 获取数据库已有的课程
+                if([[${coursemodel.role}]] === "teacher") {
+                    getCourse();
+                }
                 
             })
+
+            function getCourse(){
+                $.ajax({
+                    type:"GET",
+                    url:"get_course",
+                    success:function (data) {
+                        //console.log(data);
+                        for(var i = 0;i < data.courses.length;i++){
+                            var option = $("<option></option>").text(data.courses[i].courseName);
+                            option.attr("value", data.courses[i].id);
+                            $("#select_courseName").append(option);
+                        }
+                    }
+                })
+            }
         
     
     </script>

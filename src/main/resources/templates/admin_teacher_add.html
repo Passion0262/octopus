@@ -167,6 +167,8 @@
 
         <script type="text/javascript" th:inline="javascript">
             $(function () {
+                document.getElementById("add_teaNumber").value = "";
+
                 //发送请求获取所有的专业
                 $.ajax({
                     type:"GET",
