@@ -3,6 +3,7 @@ package com.example.octopus.service;
 import com.example.octopus.entity.experiment.SubExperiment;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -11,6 +12,16 @@ import java.util.List;
  * @date ：Created in 2021/6/10 4:15 下午
  */
 public interface SubExperimentService {
+
+    /**
+     * 根据实验id获取所有的子实验id
+     */
+    List<Long> listIdsByExperimentId(long experimentId);
+
+    /**
+     * 根据实验id获取所有的子实验
+     */
+    List<SubExperiment> listByExperimentId(long experimentId);
 
     /**
      * 根据 moduleId 查询子实验

@@ -2,6 +2,8 @@ package com.example.octopus.service;
 
 import com.example.octopus.entity.experiment.SubExperimentReportSubmit;
 
+import java.util.List;
+
 /**
  * @author ：shadow
  * @date ：Created in 2021/6/24 8:33 下午
@@ -17,6 +19,11 @@ public interface SubExperimentReportSubmitService {
      *  根据id查询
      */
     SubExperimentReportSubmit getById(long id);
+
+    /**
+     *  查询教师教的课的所有提交记录(不是所有已审核的)
+     */
+    List<SubExperimentReportSubmit> listByTeaNumber(long teaNumber);
 
     /**
      *  新增subExperimentReportSave

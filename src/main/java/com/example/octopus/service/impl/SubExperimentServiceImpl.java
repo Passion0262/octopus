@@ -23,6 +23,16 @@ public class SubExperimentServiceImpl implements SubExperimentService {
     VideoSubExperimentMapper videoSubExperimentMapper;
 
     @Override
+    public List<Long> listIdsByExperimentId(long experimentId) {
+        return subExperimentMapper.listIdsByExperimentId(experimentId);
+    }
+
+    @Override
+    public List<SubExperiment> listByExperimentId(long experimentId) {
+        return subExperimentMapper.listByExperimentId(experimentId);
+    }
+
+    @Override
     public List<SubExperiment> listSubExperimentsByModuleId(long moduleId) {
         return subExperimentMapper.listSubExperimentsByModuleId(moduleId);
     }

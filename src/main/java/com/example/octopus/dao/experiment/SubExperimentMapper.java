@@ -16,6 +16,18 @@ import java.util.List;
 public interface SubExperimentMapper {
 
     /**
+     * 根据实验id获取所有的子实验id
+     */
+    @Select("SELECT id FROM sub_experiment WHERE experiment_id = #{experimentId}")
+    List<Long> listIdsByExperimentId(long experimentId);
+
+    /**
+     * 根据实验id获取所有的子实验
+     */
+    @Select("SELECT * FROM sub_experiment WHERE experiment_id = #{experimentId}")
+    List<SubExperiment> listByExperimentId(long experimentId);
+
+    /**
      * 根据 moduleId 查询子实验
      * @param moduleId 模块id
      * @return subExperiment list

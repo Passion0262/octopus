@@ -10,7 +10,13 @@ import java.util.List;
  * @date ：Created in 2021/6/24 8:27 下午
  */
 @Mapper
-public interface SubExperimentReportSubmitMapper {
+public interface SubExperimentReportSubmitMapper{
+
+    /**
+     *  查询某子实验下所有学生的提交记录
+     */
+    @Select("SELECT * FROM sub_experiment_report_submit WHERE sub_experiment_id = #{subExperimentId}")
+    List<SubExperimentReportSubmit> listBySubExperimentId(long subExperimentId);
 
     /**
      * 查询某学生在某子实验上提交的记录
