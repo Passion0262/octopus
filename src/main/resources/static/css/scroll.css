@@ -10,15 +10,26 @@
 ::-webkit-resizer 定义右下角拖动块的样式
 */
 
-::-webkit-scrollbar {
-    background-color: #1d222e;
+/*::-webkit-scrollbar {*/
+/*    background-color: #383c40;*/
+/*}*/
+
+/*::-webkit-scrollbar-thumb {*/
+/*    background-color: #033165;*/
+/*}*/
+
+/*::-webkit-scrollbar-corner {*/
+/*    background-color: #2d3450;*/
+/*}*/
+
+
+/*
+siderbar
+*/
+#sidebar-menu ul li a {
+    font-size: 15px;
 }
 
-::-webkit-scrollbar-thumb {
-    background-color: #2d3448;
+#sidebar-menu ul li ul.sub-menu li a {
+    font-size: 14px;
 }
-
-::-webkit-scrollbar-corner {
-    background-color: #2d3450;
-}
-
