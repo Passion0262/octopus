@@ -101,31 +101,55 @@
                     </div>
                 </div><!-- end row -->
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-xl-8">
+                    <div class="row">
+                    <div class="col-md-4">
                         <div class="card">
-                            <div class="card-body">
+                            <div class="card-body" style=" height: 100px;">
                                 <p class="text-truncate font-size-14 mb-2">已选课程数</p>
                                 <h4 class="mb-0">14</h4>
                             </div>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <div class="card">
-                            <div class="card-body">
+                            <div class="card-body" style=" height: 100px;">
                                 <p class="text-truncate font-size-14 mb-2">未完成课程数</p>
                                 <h4 class="mb-0">9</h4>
                             </div>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body" style=" height: 100px;">
+                                <p class="text-truncate font-size-14 mb-2">上一次学习时间</p>
+                                <h4 class="mb-0">16：34：08</h4>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
                         <div class="card">
                             <div class="card-body">
-                                <p class="text-truncate font-size-14 mb-2">上一次学习时间</p>
-                                <h4 class="mb-0">2021-5-23 16：34：08</h4>
+                                <div id="chart2" style=" height: 340px;"></div>
                             </div>
                         </div>
                     </div>
-                </div></div><!-- end row -->
+                    <div class="col-xl-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div id="chart3" style=" height: 200px;"></div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div id="chart1" style=" height: 200px;"></div>
+                            </div>
+                        </div>
+                    </div>
+            </div><!-- end row -->
+
+
+
 
 
     </div><!-- container-fluid -->
@@ -153,16 +177,39 @@
 <script src="static/js/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="static/js/libs/metismenu/metisMenu.min.js"></script>
 <script src="static/js/libs/simplebar/simplebar.min.js"></script>
-<script src="static/js/libs/node-waves/waves.min.js"></script><!-- apexcharts -->
-<script src="static/js/libs/apexcharts/apexcharts.min.js"></script><!-- jquery.vectormap map -->
-<script src="static/js/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="static/js/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-us-merc-en.js"></script><!-- Required datatable js -->
-<script src="static/js/libs/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="static/js/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script><!-- Responsive examples -->
-<script src="static/js/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-<script src="static/js/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
-<!--    <script src="static/js/pages/dashboard.init.js"></script>-->
+<script src="static/js/libs/node-waves/waves.min.js"></script>
 <script src="static/js/app.js"></script>
+<script src="static/js/libs/chart.js/echarts.min.js"></script>
+<script th:inline="javascript" type="text/javascript">
+    $(document).ready(function() {
+        var option1 = {
+            title:{
+                text:'ECharts 数据统计'
+            },
+            tooltip:{},
+            legend:{
+                data:['用户来源']
+            },
+            xAxis:{
+                data:["Android","IOS","PC","Ohter"]
+            },
+            yAxis:{
+
+            },
+            series:[{
+                name:'访问量',
+                type:'line',
+                data:[500,200,360,100]
+            }]
+        };
+        var myChart1 = echarts.init(document.getElementById('chart1'));
+        myChart1.setOption(option1);
+
+    })
+
+
+
+</script>
 </body>
 
 </html>

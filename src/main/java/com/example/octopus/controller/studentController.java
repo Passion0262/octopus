@@ -796,13 +796,19 @@ public class studentController {
         List<SubExperimentProgress>  experpros = subExperimentProgressService.listByStuNumber(stuNum);
         logger.info("experpros:" + experpros);
         model.addAttribute("experpros", experpros);
+
         List<SubExperiment> subexpers = new ArrayList<>();
+        List<Long> courseids = new ArrayList<>();
         for (int i = 0; i < experpros.size(); i++) {
             SubExperiment w = subExperimentService.getById(experpros.get(i).getSubExperimentId());
             subexpers.add(w);
+            Long c = courseService.getCourseIdByExperimentId(w.getExperimentId());
+            courseids.add(c);
         }
         logger.info("subexpers:" + subexpers);
         model.addAttribute("subexpers", subexpers);
+        logger.info("courseids:" + courseids);
+        model.addAttribute("courseids", courseids);
 
         return "studylog";
     }
@@ -838,7 +844,29 @@ public class studentController {
         model.addAttribute("videos", videos);
 
 
-        model.addAttribute("experpros", null);
+
+
+
+
+
+
+        List<SubExperimentProgress>  experpros = subExperimentProgressService.listByStuNumber(stuNum);
+        logger.info("experpros:" + experpros);
+        model.addAttribute("experpros", experpros);
+
+        List<SubExperiment> subexpers = new ArrayList<>();
+        List<Long> courseids = new ArrayList<>();
+        for (int i = 0; i < experpros.size(); i++) {
+            SubExperiment w = subExperimentService.getById(experpros.get(i).getSubExperimentId());
+            subexpers.add(w);
+            Long c = courseService.getCourseIdByExperimentId(w.getExperimentId());
+            courseids.add(c);
+        }
+        logger.info("subexpers:" + subexpers);
+        model.addAttribute("subexpers", subexpers);
+        logger.info("courseids:" + courseids);
+        model.addAttribute("courseids", courseids);
+
 
 
         return "studylog_detail";

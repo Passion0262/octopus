@@ -2,6 +2,7 @@ package com.example.octopus.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.example.octopus.entity.dataset.Dataset;
+import com.example.octopus.entity.experiment.SubExperimentReportSubmit;
 import com.example.octopus.entity.experiment.Video;
 import com.example.octopus.entity.project.Project;
 import com.example.octopus.entity.project.SubProject;
@@ -67,6 +68,9 @@ public class adminController {
 
     @Autowired
     VideoProgressService videoProgressService;
+
+    @Autowired
+    SubExperimentReportSubmitService subExperimentReportSubmitService;
 
     @Autowired
     DockerService dockerService;
@@ -963,7 +967,10 @@ public class adminController {
         if (!cookieCheck(model, request)) return "redirect:/login";
         try {
             // todo 根据报告id返回报告
-            model.addAttribute("pdf", "https://arxiv.org/pdf/1508.01006v1.pdf");
+
+//            model.addAttribute("pdf", "https://arxiv.org/pdf/1508.01006v1.pdf");
+            SubExperimentReportSubmit expSub = subExperimentReportSubmitService.getById(6);
+            model.addAttribute("expSub", expSub);
             return "admin_report_detail";
         }
         catch (Exception e){

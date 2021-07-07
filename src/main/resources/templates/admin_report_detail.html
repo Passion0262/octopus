@@ -24,6 +24,7 @@
             width: 100%;
             border: none;
         }
+
     </style>
 </head>
 <body data-topbar="dark">
@@ -51,8 +52,8 @@
                         <div class="card" style="width:100%;margin-bottom: 10px;">
                             <div class="card-body" style="padding: 8px;">
                                 <div class="row">
-                                    <div class="col-md-9" >
-                                        <div id="reportshow"></div>
+                                    <div class="col-md-9 " >
+                                        <div id="reportshow" ></div>
 <!--                                        <iframe id="previewpdf" th:src="'static/js/pdf/web/viewer.html?file='+${pdf}"></iframe>-->
                                     </div>
                                     <div class="col-md-3" style="padding-top: 50px;padding-left: 30px;" id="detailshow">
@@ -163,19 +164,15 @@
                 selector: '#reportshow',
                 language:'zh_CN',
                 menubar:'false',
-                skin: 'oxide-dark',
+                toolbar:'false',
                 statusbar: false,
-                // readonly : 1,
                 height:$("#detailshow").height(),
                 plugins:'print image lists advlist charmap  fullscreen  table imagetools textcolor codesample wordcount kityformula-editor',
-                toolbar:[
-                    'wordcount fullscreen print',
-                ],
+                readonly : 1,
                 init_instance_callback : function(editor) {
-                    tinyMCE.editors["reportshow"].insertContent("<p>dasdasdas</p>");
+                    tinyMCE.editors["reportshow"].insertContent([[${expSub.content}]]);
                 }
             });
-            tinymce.activeEditor.getBody().setAttribute('contenteditable', false);
         });
     </script>
 

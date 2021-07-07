@@ -114,8 +114,9 @@
                                             <th>讲授老师</th><td><span th:text="${course.teaName}"></span></td>
                                         </tr>
                                         <tr>
-                                            <th>总共学习时长</th><td><span class="timeformat" th:text="${videoprostudynum}"></span></td>
-                                            <th>总共学习次数</th><td><span th:text="${videoprosnum}"></span></td>
+                                            <th>总共视频学习时长</th><td><span class="timeformat" th:text="${videoprostudynum}"></span></td>
+<!--                                            <th>总共实验学习时长</th><td><span th:text="${videoprosnum}"></span></td>-->
+                                            <th>总共实验学习时长</th><td><span class="timeformat" th:text="${experprostudynum}"></span></td>
                                         </tr>
                                     </table>
 
@@ -190,7 +191,7 @@
 
                                             </tr>
                                             </thead>
-                                            <tbody style="text-align: center">
+                                            <tbody style="text-align: center" id="experlogdiv">
                                             <tr>
                                                 <td colspan="5"><span>暂无学习记录</span></td>
                                             </tr>
@@ -205,6 +206,11 @@
 
                                             </tbody>
                                         </table>
+                                        <div style="float:right">
+                                            <span id="expercurrentpage"></span>
+                                            <button type="button" class="btn btn-light btn-sm waves-effect waves-light" style="margin-left: 8px;" onclick="experpageplus()">上一页</button>
+                                            <button type="button" class="btn btn-light btn-sm waves-effect waves-light" style="margin-left: 2px;"onclick="experpagemin()">下一页</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -254,7 +260,11 @@
     var videolog = [[${videopros}]];
     var experlog = [[${experpros}]];
     var videos = [[${videos}]];
+    var subexpers = [[${subexpers}]];
+    var courseids = [[${courseids}]];
+
     var videocurrentpage = 0;
+    var expercurrentpage = 0;
 
     $(document).ready(function() {
         // console.log(videolog);
@@ -314,40 +324,39 @@
 
 
     function showexper(pageno){
-        // str="";
-        // for(var i=(pageno-1)*10;i<videolog.length&&i<pageno*10;i++){
-        //   console.log(videolog[i]);
-        //   str += "<tr>";
-        //   str += "<td><span>"+(i+1)+"</span></td>";
-        //   str += "<td><span>"+videos[i].name+"</span></td>";
-        //   str += "<td><span>"+dateFormat("YYYY-mm-dd HH:MM:SS", videolog[i].startTime)+"</span></td>";
-        //   str += "<td><span>"+dateFormat("YYYY-mm-dd HH:MM:SS", videolog[i].endTime)+"</span></td>";
-        //   str += "<td><span>"+ timecall(videolog[i].studyTime)+"</span></td>";
-        //   str += "<td><span><a href='studylog_detail/"+videos[i].courseId+"'>查看详情</a></span></td>";
-        //   str += "</tr>";
-        // }
-        // $("#videologdiv").html(str);
+        str="";
+        for(var i=(pageno-1)*10;i<experlog.length&&i<pageno*10;i++){
+            console.log(experlog[i]);
+            str += "<tr>";
+            str += "<td><span>"+(i+1)+"</span></td>";
+            str += "<td><span>"+subexpers[i].subExperimentName+"</span></td>";
+            str += "<td><span>"+dateFormat("YYYY-mm-dd HH:MM:SS", experlog[i].startTime)+"</span></td>";
+            str += "<td><span>"+dateFormat("YYYY-mm-dd HH:MM:SS", experlog[i].endTime)+"</span></td>";
+            str += "<td><span>"+ timecall(experlog[i].validStudyTime)+"</span></td>";
+            str += "</tr>";
+        }
+        $("#experlogdiv").html(str);
 
         showexpercurrent(pageno);
     }
 
     function showexpercurrent(pageno){
-        // var allpage = Math.ceil(videolog.length/10);
-        // var str = "当前第"+pageno+"页，共"+allpage+"页";
-        // $("#videocurrentpage").html(str);
-        // videocurrentpage = pageno;
+        var allpage = Math.ceil(experlog.length/10);
+        var str = "当前第"+pageno+"页，共"+allpage+"页";
+        $("#expercurrentpage").html(str);
+        expercurrentpage = pageno;
     }
 
     function experpageplus(){
-        // if(expercurrentpage>1) {
-        //   showvideo(videocurrentpage - 1);
-        // }
+        if(expercurrentpage>1) {
+            showexper(expercurrentpage - 1);
+        }
     }
 
     function experpagemin(){
-        // if(expercurrentpage<Math.ceil(videolog.length/10)) {
-        //   showvideo(videocurrentpage + 1);
-        // }
+        if(expercurrentpage<Math.ceil(experlog.length/10)) {
+            showexper(expercurrentpage + 1);
+        }
     }
 
 
