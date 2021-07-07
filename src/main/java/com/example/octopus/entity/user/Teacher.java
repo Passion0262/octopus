@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.lang.reflect.Field;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,7 +39,7 @@ public class Teacher {
 
 	private int loginNumber;
 
-	private Date lastLoginTime;
+	private Timestamp lastLoginTime;
 
 
 	public Teacher(long teaNumber, String teaName, String password, long majorId, Boolean adminRights, String phone, String school) {
