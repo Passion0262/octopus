@@ -27,7 +27,7 @@ public interface SubExperimentReportSubmitMapper {
     /**
      *  新增subExperimentReportSave
      */
-    @Insert("INSERT INTO sub_experiment_report_submit (sub_experiment_id, stu_number, content, report_path, submit_time) VALUES (#{subExperimentId},#{stuNumber},#{content},#{reportPath},CURRENT_TIMESTAMP)")
+    @Insert("INSERT INTO sub_experiment_report_submit (sub_experiment_id, stu_number, content, submit_time) VALUES (#{subExperimentId},#{stuNumber},#{content},CURRENT_TIMESTAMP)")
     boolean insert(SubExperimentReportSubmit subExperimentReportSubmit);
 
     /**

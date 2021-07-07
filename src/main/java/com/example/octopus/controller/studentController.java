@@ -78,6 +78,8 @@ public class studentController {
     SubProjectService subProjectService;
     @Autowired
     DockerService dockerService;
+    @Autowired
+    SubExperimentProgressService subExperimentProgressService;
 
     @Autowired
     VideoProgressService videoProgressService;
@@ -540,6 +542,8 @@ public class studentController {
         boolean a =dockerService.updateStatusByStuNum(stuNum, 2, sub_id);
         model.addAttribute("docker_url", docker_url);
 
+        boolean b = subExperimentProgressService.insert(stuNum,sub_id);
+
 
         return "experiment_machine";
 
@@ -652,37 +656,39 @@ public class studentController {
 
     @PostMapping(value="/submitExperText")
     @ResponseBody
-    public void submitExperText(Model model, HttpServletRequest request) throws IOException, DocumentException {
+    public void submitExperText(HttpServletRequest request) {
         Long experid = Long.parseLong(request.getParameter("experid"));
         Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         String text = request.getParameter("text");
         logger.info("experid:" + experid);
         logger.info("text:" + text);
-        String alltext = "<html><head></head><body>"+text+"</body></html>";
+        SubExperimentReportSubmit subexpsub = new SubExperimentReportSubmit();
+        subexpsub.setSubExperimentId(experid);
+        subexpsub.setContent(text);
+        subexpsub.setStuNumber(stuNum);
+        subExperimentReportSubmitService.insert(subexpsub);
 
-        String savepath = propertiesUtil.getPdfSubmitPath();
-        String savepdfname = "exp"+UUID.randomUUID().toString().replace("-", "")+".pdf";
-        Document document = new Document(PageSize.A4);
-        PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream(savepath + savepdfname));
-        document.open();
+
+//        String alltext = "<html><head></head><body>"+text+"</body></html>";
+
+//        String savepath = propertiesUtil.getPdfSubmitPath();
+//        String savepdfname = "exp"+UUID.randomUUID().toString().replace("-", "")+".pdf";
+//        Document document = new Document(PageSize.A4);
+//        PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream(savepath + savepdfname));
+//        document.open();
+        //        document.close();
+//        pdfWriter.close();
+        //
+//        HTMLWorker htmlWorker = new HTMLWorker(document);
+//        htmlWorker.parse(new StringReader(text));
 //        ByteArrayInputStream bin = new ByteArrayInputStream(alltext.getBytes());
 //        XMLWorkerHelper.getInstance().parseXHtml(pdfWriter, document, bin, Charset.forName("UTF-8"));
 
 
-        HTMLWorker htmlWorker = new HTMLWorker(document);
-        htmlWorker.parse(new StringReader(text));
 //        InputStream stream = new ByteArrayInputStream(text.toString().getBytes("UTF-8"));
 //        XMLWorkerHelper.getInstance().parseXHtml(pdfWriter, document, stream);
 //        XMLWorkerHelper worker = XMLWorkerHelper.getInstance();
 //        worker.parseXHtml(pdfWriter, document, new StringReader(text));
-        document.close();
-        pdfWriter.close();
-
-        SubExperimentReportSubmit subexpsub = new SubExperimentReportSubmit();
-        subexpsub.setSubExperimentId(experid);
-        subexpsub.setReportPath("http://localhost:8080/static/"+savepdfname);
-        subexpsub.setStuNumber(stuNum);
-        subExperimentReportSubmitService.insert(subexpsub);
 
     }
 
@@ -787,8 +793,16 @@ public class studentController {
         model.addAttribute("videos", videos);
 
 
-
-        model.addAttribute("experpros", null);
+        List<SubExperimentProgress>  experpros = subExperimentProgressService.listByStuNumber(stuNum);
+        logger.info("experpros:" + experpros);
+        model.addAttribute("experpros", experpros);
+        List<SubExperiment> subexpers = new ArrayList<>();
+        for (int i = 0; i < experpros.size(); i++) {
+            SubExperiment w = subExperimentService.getById(experpros.get(i).getSubExperimentId());
+            subexpers.add(w);
+        }
+        logger.info("subexpers:" + subexpers);
+        model.addAttribute("subexpers", subexpers);
 
         return "studylog";
     }
@@ -905,8 +919,11 @@ public class studentController {
     @ResponseBody
     public void sleepmachine(HttpServletRequest request) {
         logger.info("注销资源");
+        Long experid = Long.parseLong(request.getParameter("experid"));
         Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         boolean a =dockerService.updateStatusByStuNum(stuNum, 0, 0);
+
+        boolean b = subExperimentProgressService.update(stuNum,experid);
     }
 
 }

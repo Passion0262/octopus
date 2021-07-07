@@ -51,10 +51,11 @@
                         <div class="card" style="width:100%;margin-bottom: 10px;">
                             <div class="card-body" style="padding: 8px;">
                                 <div class="row">
-                                    <div class="col-md-9">
-                                        <iframe id="previewpdf" th:src="'static/js/pdf/web/viewer.html?file='+${pdf}"></iframe>
+                                    <div class="col-md-9" >
+                                        <div id="reportshow"></div>
+<!--                                        <iframe id="previewpdf" th:src="'static/js/pdf/web/viewer.html?file='+${pdf}"></iframe>-->
                                     </div>
-                                    <div class="col-md-3" style="padding-top: 50px;padding-left: 30px;">
+                                    <div class="col-md-3" style="padding-top: 50px;padding-left: 30px;" id="detailshow">
                                         <div class="row">
                                             <p th:text="'姓名：'+${stuName}" style="display: flex;align-items: center;margin-bottom: 20px; margin-top: 20px;"></p>
                                         </div>
@@ -146,12 +147,36 @@
     <script src="static/js/pages/range-sliders.init.js"></script>
     <!-- app.js -->
     <script src="static/js/app.js"></script>
+    <!-- tinymce.min.js -->
+    <script src="static/js/tinymce/tinymce.min.js"></script>
+
+
 
     <script type="text/javascript" th:inline="javascript">
         function getScore(){
             var oScore = document.getElementById("score");
             console.log(oScore.value);
         }
+
+        $(document).ready(function(){
+            tinymce.init({
+                selector: '#reportshow',
+                language:'zh_CN',
+                menubar:'false',
+                skin: 'oxide-dark',
+                statusbar: false,
+                // readonly : 1,
+                height:$("#detailshow").height(),
+                plugins:'print image lists advlist charmap  fullscreen  table imagetools textcolor codesample wordcount kityformula-editor',
+                toolbar:[
+                    'wordcount fullscreen print',
+                ],
+                init_instance_callback : function(editor) {
+                    tinyMCE.editors["reportshow"].insertContent("<p>dasdasdas</p>");
+                }
+            });
+            tinymce.activeEditor.getBody().setAttribute('contenteditable', false);
+        });
     </script>
 
 

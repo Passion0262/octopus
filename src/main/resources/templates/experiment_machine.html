@@ -188,6 +188,9 @@
             $.ajax({
                 type: "POST",
                 url: "/sleepmachine",
+                data:{
+                    experid:[[${subExperiment.id}]]
+                },
                 success: function () {
                 },
                 error: function () {
@@ -202,7 +205,7 @@
             menubar:'false',
             statusbar: false,
             height:$("#txt_profile").height(),
-            plugins:' image lists charmap  fullscreen save table imagetools textcolor codesample wordcount kityformula-editor',
+            plugins:' image lists charmap  fullscreen save table imagetools textcolor codesample wordcount kityformula-editor advlist',
             toolbar:[
                 'savebtn submitbtn |undo redo|fontselect fontsizeselect| bold italic underline strikethrough |forecolor backcolor|alignleft aligncenter alignright|bullist numlist  ',
                 'table|subscript superscript charmap kityformula-editor|image codesample |wordcount fullscreen ',
@@ -260,7 +263,7 @@
         if ([[${isexpsubmit}]]==1){
             alert("已经提交过,不能重复提交。");
         }else {
-            convertpdf();
+            // convertpdf();
             var allstr = tinyMCE.editors["editor"].getContent();
             var sureconfirm = confirm("只能提交一次，是否确认提交?");
             if (sureconfirm == true) {
@@ -326,130 +329,130 @@
     }
 
 
-    function convertpdf(){
-
-        // var element = $(".note-editable"); // 这个dom元素是要导出pdf的div容器
-        // var w = element.width(); // 获得该容器的宽
-        // var h = element.height(); // 获得该容器的高
-        // var offsetTop = element.offset().top; // 获得该容器到文档顶部的距离
-        // var offsetLeft = element.offset().left; // 获得该容器到文档最左的距离
-        // var canvas = document.createElement("canvas");
-        // var abs = 0;
-        // var win_i = $(window).width(); // 获得当前可视窗口的宽度（不包含滚动条）
-        // var win_o = window.innerWidth; // 获得当前窗口的宽度（包含滚动条）
-        // if(win_o>win_i){
-        //     abs = (win_o - win_i)/2; // 获得滚动条长度的一半
-        // }
-        // canvas.width = w * 2; // 将画布宽&&高放大两倍
-        // canvas.height = h * 2;
-        // var context = canvas.getContext("2d");
-        // context.scale(2, 2);
-        // context.translate(-offsetLeft-abs,-offsetTop);
-        // // 这里默认横向没有滚动条的情况，因为offset.left(),有无滚动条的时候存在差值，因此
-        // // translate的时候，要把这个差值去掉
-        // html2canvas(element).then(function(canvas) {
-        //     var contentWidth = canvas.width;
-        //     var contentHeight = canvas.height;
-        //     //一页pdf显示html页面生成的canvas高度;
-        //     var pageHeight = contentWidth / 592.28 * 841.89;
-        //     //未生成pdf的html页面高度
-        //     var leftHeight = contentHeight;
-        //     //页面偏移
-        //     var position = 0;
-        //     //a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
-        //     var imgWidth = 595.28;
-        //     var imgHeight = 592.28/contentWidth * contentHeight;
-        //
-        //     var pageData = canvas.toDataURL('image/jpeg', 1.0);
-        //
-        //     var pdf = new jsPDF('', 'pt', 'a4');
-        //
-        //     //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
-        //     //当内容未超过pdf一页显示的范围，无需分页
-        //     if (leftHeight < pageHeight) {
-        //         pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight);
-        //     } else { // 分页
-        //         while(leftHeight > 0) {
-        //             pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
-        //             leftHeight -= pageHeight;
-        //             position -= 841.89;
-        //             //避免添加空白页
-        //             if(leftHeight > 0) {
-        //                 pdf.addPage();
-        //             }
-        //         }
-        //     }
-        //     pdf.save('shiyanbaogao.pdf');
-        // })
-
-
-        var element = $("#editor");    // 这个dom元素是要导出pdf的div容器
-        element.get(0).style.background = "#FFFFFF";
-        var w = element.width();    // 获得该容器的宽
-        var h = element.height();    // 获得该容器的高
-        var offsetTop = element.offset().top;    // 获得该容器到文档顶部的距离
-        var offsetLeft = element.offset().left;    // 获得该容器到文档最左的距离
-        var canvas = document.createElement("canvas");
-        var abs = 2;
-        var win_i = $(window).width();    // 获得当前可视窗口的宽度（不包含滚动条）
-        var win_o = window.innerWidth;    // 获得当前窗口的宽度（包含滚动条）
-        console.log(win_i);console.log(win_o);
-        if(win_o>win_i){
-
-            abs = (win_o - win_i)/2;    // 获得滚动条长度的一半
-        }
-        canvas.width = w * 2;    // 将画布宽&&高放大两倍
-        canvas.height = h * 2;
-        var context = canvas.getContext("2d");
-
-        // 【重要】关闭抗锯齿
-        context.mozImageSmoothingEnabled = false;
-        context.webkitImageSmoothingEnabled = false;
-        context.msImageSmoothingEnabled = false;
-        context.imageSmoothingEnabled = false;
-
-        context.scale(2, 2);
-        context.translate(-offsetLeft-abs,-offsetTop);
-        // 这里默认横向没有滚动条的情况，因为offset.left(),有无滚动条的时候存在差值，因此
-        // translate的时候，要把这个差值去掉
-        html2canvas(element).then(function(canvas) {
-            var contentWidth = canvas.width;
-            var contentHeight = canvas.height;
-            //一页pdf显示html页面生成的canvas高度;
-            var pageHeight = contentWidth / 592.28 * 841.89;
-            //未生成pdf的html页面高度
-            var leftHeight = contentHeight;
-            //页面偏移
-            var position = 10;
-            //a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
-            var imgWidth = 820.89;
-            var imgHeight = 560.28;
-
-            var pageData = canvas.toDataURL('image/jpeg', 1.0);
-
-            //l纵向 p横向
-            var pdf = new jsPDF('l', 'pt', 'a4');
-
-            //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
-            //当内容未超过pdf一页显示的范围，无需分页
-            if (leftHeight < pageHeight) {
-                pdf.addImage(pageData, 'JPEG', 10, 10, imgWidth, imgHeight);
-            } else {    // 分页
-                while(leftHeight > 0) {
-                    pdf.addImage(pageData, 'JPEG', 10, position, imgWidth, imgHeight);
-                    leftHeight -= pageHeight;
-                    position -= 841.89;
-                    //避免添加空白页
-                    if(leftHeight > 0) {
-                        pdf.addPage();
-                    }
-                }
-            }
-            pdf.save("a.pdf");
-        });
-
-        alert("ok");
-    }
+    // function convertpdf(){
+    //
+    //     // var element = $(".note-editable"); // 这个dom元素是要导出pdf的div容器
+    //     // var w = element.width(); // 获得该容器的宽
+    //     // var h = element.height(); // 获得该容器的高
+    //     // var offsetTop = element.offset().top; // 获得该容器到文档顶部的距离
+    //     // var offsetLeft = element.offset().left; // 获得该容器到文档最左的距离
+    //     // var canvas = document.createElement("canvas");
+    //     // var abs = 0;
+    //     // var win_i = $(window).width(); // 获得当前可视窗口的宽度（不包含滚动条）
+    //     // var win_o = window.innerWidth; // 获得当前窗口的宽度（包含滚动条）
+    //     // if(win_o>win_i){
+    //     //     abs = (win_o - win_i)/2; // 获得滚动条长度的一半
+    //     // }
+    //     // canvas.width = w * 2; // 将画布宽&&高放大两倍
+    //     // canvas.height = h * 2;
+    //     // var context = canvas.getContext("2d");
+    //     // context.scale(2, 2);
+    //     // context.translate(-offsetLeft-abs,-offsetTop);
+    //     // // 这里默认横向没有滚动条的情况，因为offset.left(),有无滚动条的时候存在差值，因此
+    //     // // translate的时候，要把这个差值去掉
+    //     // html2canvas(element).then(function(canvas) {
+    //     //     var contentWidth = canvas.width;
+    //     //     var contentHeight = canvas.height;
+    //     //     //一页pdf显示html页面生成的canvas高度;
+    //     //     var pageHeight = contentWidth / 592.28 * 841.89;
+    //     //     //未生成pdf的html页面高度
+    //     //     var leftHeight = contentHeight;
+    //     //     //页面偏移
+    //     //     var position = 0;
+    //     //     //a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
+    //     //     var imgWidth = 595.28;
+    //     //     var imgHeight = 592.28/contentWidth * contentHeight;
+    //     //
+    //     //     var pageData = canvas.toDataURL('image/jpeg', 1.0);
+    //     //
+    //     //     var pdf = new jsPDF('', 'pt', 'a4');
+    //     //
+    //     //     //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
+    //     //     //当内容未超过pdf一页显示的范围，无需分页
+    //     //     if (leftHeight < pageHeight) {
+    //     //         pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight);
+    //     //     } else { // 分页
+    //     //         while(leftHeight > 0) {
+    //     //             pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
+    //     //             leftHeight -= pageHeight;
+    //     //             position -= 841.89;
+    //     //             //避免添加空白页
+    //     //             if(leftHeight > 0) {
+    //     //                 pdf.addPage();
+    //     //             }
+    //     //         }
+    //     //     }
+    //     //     pdf.save('shiyanbaogao.pdf');
+    //     // })
+    //
+    //
+    //     var element = $("#editor");    // 这个dom元素是要导出pdf的div容器
+    //     element.get(0).style.background = "#FFFFFF";
+    //     var w = element.width();    // 获得该容器的宽
+    //     var h = element.height();    // 获得该容器的高
+    //     var offsetTop = element.offset().top;    // 获得该容器到文档顶部的距离
+    //     var offsetLeft = element.offset().left;    // 获得该容器到文档最左的距离
+    //     var canvas = document.createElement("canvas");
+    //     var abs = 2;
+    //     var win_i = $(window).width();    // 获得当前可视窗口的宽度（不包含滚动条）
+    //     var win_o = window.innerWidth;    // 获得当前窗口的宽度（包含滚动条）
+    //     console.log(win_i);console.log(win_o);
+    //     if(win_o>win_i){
+    //
+    //         abs = (win_o - win_i)/2;    // 获得滚动条长度的一半
+    //     }
+    //     canvas.width = w * 2;    // 将画布宽&&高放大两倍
+    //     canvas.height = h * 2;
+    //     var context = canvas.getContext("2d");
+    //
+    //     // 【重要】关闭抗锯齿
+    //     context.mozImageSmoothingEnabled = false;
+    //     context.webkitImageSmoothingEnabled = false;
+    //     context.msImageSmoothingEnabled = false;
+    //     context.imageSmoothingEnabled = false;
+    //
+    //     context.scale(2, 2);
+    //     context.translate(-offsetLeft-abs,-offsetTop);
+    //     // 这里默认横向没有滚动条的情况，因为offset.left(),有无滚动条的时候存在差值，因此
+    //     // translate的时候，要把这个差值去掉
+    //     html2canvas(element).then(function(canvas) {
+    //         var contentWidth = canvas.width;
+    //         var contentHeight = canvas.height;
+    //         //一页pdf显示html页面生成的canvas高度;
+    //         var pageHeight = contentWidth / 592.28 * 841.89;
+    //         //未生成pdf的html页面高度
+    //         var leftHeight = contentHeight;
+    //         //页面偏移
+    //         var position = 10;
+    //         //a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
+    //         var imgWidth = 820.89;
+    //         var imgHeight = 560.28;
+    //
+    //         var pageData = canvas.toDataURL('image/jpeg', 1.0);
+    //
+    //         //l纵向 p横向
+    //         var pdf = new jsPDF('l', 'pt', 'a4');
+    //
+    //         //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
+    //         //当内容未超过pdf一页显示的范围，无需分页
+    //         if (leftHeight < pageHeight) {
+    //             pdf.addImage(pageData, 'JPEG', 10, 10, imgWidth, imgHeight);
+    //         } else {    // 分页
+    //             while(leftHeight > 0) {
+    //                 pdf.addImage(pageData, 'JPEG', 10, position, imgWidth, imgHeight);
+    //                 leftHeight -= pageHeight;
+    //                 position -= 841.89;
+    //                 //避免添加空白页
+    //                 if(leftHeight > 0) {
+    //                     pdf.addPage();
+    //                 }
+    //             }
+    //         }
+    //         pdf.save("a.pdf");
+    //     });
+    //
+    //     alert("ok");
+    // }
 
 
 
