@@ -26,4 +26,12 @@ public class SubExperimentReportSubmit {
 
     private Timestamp lastUpdateTime;
 
+    private boolean examined;  //是否已经审核
+
+    private Timestamp examinedTime;  //审核时间
+
+    private long teaNumber;  //审核教师
+
+    private int score;  //报告得分
+
 }
