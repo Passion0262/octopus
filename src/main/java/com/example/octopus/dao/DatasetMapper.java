@@ -1,9 +1,7 @@
 package com.example.octopus.dao;
 
 import com.example.octopus.entity.dataset.Dataset;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -29,9 +27,16 @@ public interface DatasetMapper {
     @Select("SELECT * FROM dataset WHERE id = #{id}")
     Dataset getDatasetById(long id);
 
+    @Delete("DELETE FROM dataset WHERE id=#{id}")
+    boolean deleteDatasetById(long id);
+
     /**
      *  下载次数+1
      */
     @Update("UPDATE dataset SET download_num = download_num+1 WHERE id = #{id}")
     boolean updateDownloadNumById(long id);
+
+    @Insert("INSERT INTO dataset (name, description, uploader, size, download_num, download_path, file_format, image_path) " +
+            "VALUES (#{name}, #{description}, #{uploader}, #{size}, #{downloadNum}, #{downloadPath}, #{fileFormat}, #{imagePath})")
+    boolean addDataset(Dataset dataset);
 }

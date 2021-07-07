@@ -32,4 +32,27 @@ public class DatasetServiceImpl implements DatasetService {
     public boolean increaseDownloadNum(long id) {
         return datasetMapper.updateDownloadNumById(id);
     }
+
+    @Override
+    public boolean updateDatasetById(Dataset dataset){
+        Dataset old = datasetMapper.getDatasetById(dataset.getId());
+        if (old!=null){
+            datasetMapper.deleteDatasetById(old.getId());
+            return datasetMapper.addDataset(dataset);
+        } else {
+            System.out.println("Dataset id is wrong! Cannot find the specific dataset.");
+            return false;
+        }
+
+    }
+
+    @Override
+    public boolean addDataset(Dataset dataset){
+        return datasetMapper.addDataset(dataset);
+    }
+
+    @Override
+    public boolean deleteDataset(long datasetId){
+        return datasetMapper.deleteDatasetById(datasetId);
+    }
 }

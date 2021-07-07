@@ -28,4 +28,22 @@ public interface DatasetService {
      */
     boolean increaseDownloadNum(long id);
 
+    /**
+     * 更新数据集，需保证对象的各项属性完整且正确
+     * @param dataset 数据集对象
+     */
+    boolean updateDatasetById(Dataset dataset);
+
+    /**
+     * 增加数据集
+     * @param dataset 数据集对象
+     */
+    boolean addDataset(Dataset dataset);
+
+    /**
+     * 根据id删除数据集
+     * @param datasetId 数据集id
+     */
+    boolean deleteDataset(long datasetId);
+
 }
