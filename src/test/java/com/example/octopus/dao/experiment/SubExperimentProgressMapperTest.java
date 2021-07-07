@@ -27,4 +27,14 @@ class SubExperimentProgressMapperTest {
 	void update() {
 //		subExperimentProgressMapper.update();
 	}
+
+    @Test
+    void listByStuNumberAndExperimentId() {
+		System.out.println(subExperimentProgressMapper.listByStuNumberAndExperimentId(2, 1));
+	}
+
+	@Test
+	void countValidStudyTimeOnExperiment() {
+		System.out.println(subExperimentProgressMapper.countValidStudyTimeOnExperiment(2,1));
+	}
 }

@@ -32,6 +32,13 @@ public interface SubExperimentProgressMapper {
     List<SubExperimentProgress> listByStuNumber(long stuNumber);
 
     /**
+     *  根据学生id和实验id查询，返回这个学生有关这个实验所有的学习记录
+     */
+    @Select("SELECT * FROM sub_experiment s1, sub_experiment_progress s2 " +
+            "WHERE s1.experiment_id=#{ExperimentId} AND s1.id=s2.sub_experiment_id AND s2.stu_number=#{stuNumber}")
+    List<SubExperimentProgress> listByStuNumberAndExperimentId(long stuNumber, long ExperimentId);
+
+    /**
      *  根据学生id和子实验id查询，返回这个学生有关这个子实验所有的学习记录
      */
     @Select("SELECT * FROM sub_experiment_progress WHERE stu_number = #{stuNumber} AND sub_experiment_id = #{subExperimentId}")
@@ -48,6 +55,13 @@ public interface SubExperimentProgressMapper {
      */
     @Select("SELECT SUM(valid_study_time) FROM sub_experiment_progress WHERE stu_number = #{stuNumber} AND sub_experiment_id=#{subExperimentId}")
     int countValidStudyTimeByStuNumberAndSubExpId(long stuNumber, long subExperimentId);
+
+    /**
+     *  计算该学生在该实验任务的所有总计有效学习时间
+     */
+    @Select("SELECT SUM(s2.valid_study_time) FROM sub_experiment s1, sub_experiment_progress s2 " +
+            "WHERE s1.experiment_id = #{experimentId} AND s1.id=s2.sub_experiment_id AND s2.stu_number=#{stuNumber}")
+    int countValidStudyTimeOnExperiment(long stuNumber, long experimentId);
 
     /**
      *  新增子实验学习时间记录

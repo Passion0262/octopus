@@ -40,6 +40,11 @@ public class SubExperimentProgressServiceImpl implements SubExperimentProgressSe
     }
 
     @Override
+    public List<SubExperimentProgress> listByStuNumberAndExperimentId(long stuNumber, long ExperimentId) {
+        return subExperimentProgressMapper.listByStuNumberAndExperimentId(stuNumber,ExperimentId);
+    }
+
+    @Override
     public List<SubExperimentProgress> listByStuNumberAndSubExperimentId(long stuNumber, long subExperimentId) {
         return subExperimentProgressMapper.listByStuNumberAndSubExperimentId(stuNumber, subExperimentId);
     }
@@ -52,6 +57,11 @@ public class SubExperimentProgressServiceImpl implements SubExperimentProgressSe
     @Override
     public int countValidStudyTime(long stuNumber, long subExperimentId) {
         return subExperimentProgressMapper.countValidStudyTimeByStuNumberAndSubExpId(stuNumber, subExperimentId);
+    }
+
+    @Override
+    public int countValidStudyTimeOnExperiment(long stuNumber, long experimentId) {
+        return subExperimentProgressMapper.countValidStudyTimeOnExperiment(stuNumber,experimentId);
     }
 
     @Override

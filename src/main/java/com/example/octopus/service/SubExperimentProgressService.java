@@ -27,6 +27,11 @@ public interface SubExperimentProgressService {
     List<SubExperimentProgress> listByStuNumber(long stuNumber);
 
     /**
+     *  根据学生id和实验id查询，返回这个学生有关这个实验所有的学习记录
+     */
+    List<SubExperimentProgress> listByStuNumberAndExperimentId(long stuNumber, long ExperimentId);
+
+    /**
      *  根据学生id和子实验id查询，返回这个学生有关这个子实验所有的学习记录
      */
     List<SubExperimentProgress> listByStuNumberAndSubExperimentId(long stuNumber, long subExperimentId);
@@ -39,10 +44,13 @@ public interface SubExperimentProgressService {
 
     /**
      * 计算该学生在某子实验上总计有效学习时间
-     * @param stuNumber 学生id
-     * @param subExperimentId 子实验id
      */
     int countValidStudyTime(long stuNumber, long subExperimentId);
+
+    /**
+     *  计算该学生在某实验上总计有效时间
+     */
+    int countValidStudyTimeOnExperiment(long stuNumber, long experimentId);
 
     /**
      *  新增子实验学习时间记录（前台调用）
