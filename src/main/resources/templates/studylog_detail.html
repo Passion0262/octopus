@@ -325,7 +325,7 @@
 
     function showexper(pageno){
         str="";
-        for(var i=(pageno-1)*10;i<experlog.length&&i<pageno*10;i++){
+        for(var i=(pageno-1)*5;i<experlog.length&&i<pageno*5;i++){
             console.log(experlog[i]);
             str += "<tr>";
             str += "<td><span>"+(i+1)+"</span></td>";
@@ -341,7 +341,7 @@
     }
 
     function showexpercurrent(pageno){
-        var allpage = Math.ceil(experlog.length/10);
+        var allpage = Math.ceil(experlog.length/5);
         var str = "当前第"+pageno+"页，共"+allpage+"页";
         $("#expercurrentpage").html(str);
         expercurrentpage = pageno;
@@ -354,7 +354,7 @@
     }
 
     function experpagemin(){
-        if(expercurrentpage<Math.ceil(experlog.length/10)) {
+        if(expercurrentpage<Math.ceil(experlog.length/5)) {
             showexper(expercurrentpage + 1);
         }
     }

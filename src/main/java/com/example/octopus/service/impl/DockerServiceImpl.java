@@ -1,6 +1,7 @@
 package com.example.octopus.service.impl;
 
 import com.example.octopus.dao.DockerMapper;
+import com.example.octopus.dao.SysUserRoleMapper;
 import com.example.octopus.entity.Docker;
 import com.example.octopus.entity.user.Student;
 import com.example.octopus.service.DockerService;
@@ -30,6 +31,9 @@ public class DockerServiceImpl implements DockerService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    SysUserRoleMapper sysUserRoleMapper;
+
     @Override
     public boolean existsStuNumDocker(long stuNumber) {
         Student student = userService.getStudentByStuNumber(stuNumber);
@@ -44,8 +48,12 @@ public class DockerServiceImpl implements DockerService {
 
 
     @Override
-    public List<Docker> getDockerList() {
-        return dockerMapper.listAllDockers();
+    public List<Docker> getDockerListByRole(long teaNumber) {
+        long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
+        if (role == 1) {
+            //管理员获取全部
+            return dockerMapper.listAllDockers();
+        } else return dockerMapper.listDockersByTeaId(teaNumber);
     }
 
 

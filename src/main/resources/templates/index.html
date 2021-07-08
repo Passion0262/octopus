@@ -130,19 +130,19 @@
                     </div>
                         <div class="card">
                             <div class="card-body">
-                                <div id="chart2" style=" height: 340px;"></div>
+                                <div id="chart1" style=" height: 340px;"></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-xl-4">
                         <div class="card">
                             <div class="card-body">
-                                <div id="chart3" style=" height: 200px;"></div>
+                                <div id="chart2" style=" height: 200px;"></div>
                             </div>
                         </div>
                         <div class="card">
                             <div class="card-body">
-                                <div id="chart1" style=" height: 200px;"></div>
+                                <div id="chart3" style=" height: 200px;"></div>
                             </div>
                         </div>
                     </div>
@@ -183,28 +183,144 @@
 <script th:inline="javascript" type="text/javascript">
     $(document).ready(function() {
         var option1 = {
-            title:{
-                text:'ECharts 数据统计'
-            },
-            tooltip:{},
-            legend:{
-                data:['用户来源']
-            },
-            xAxis:{
-                data:["Android","IOS","PC","Ohter"]
-            },
-            yAxis:{
+            title : {
+                text: '最近七天学习时长',
+                x:'center'
 
             },
-            series:[{
-                name:'访问量',
-                type:'line',
-                data:[500,200,360,100]
-            }]
+            tooltip : {
+                trigger: 'item'
+            },
+            legend: {
+                orient : 'vertical',
+                x : 'right',
+                data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
+            },
+
+            calculable : true,
+            xAxis : [
+                {
+                    type : 'category',
+                    boundaryGap : false,
+                    data : ['周一','周二','周三','周四','周五','周六','周日']
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : [
+                {
+                    name:'邮件营销',
+                    type:'line',
+                    stack: '总量',
+                    data:[120, 132, 101, 134, 90, 230, 210]
+                },
+                {
+                    name:'联盟广告',
+                    type:'line',
+                    stack: '总量',
+                    data:[220, 182, 191, 234, 290, 330, 310]
+                },
+                {
+                    name:'视频广告',
+                    type:'line',
+                    stack: '总量',
+                    data:[150, 232, 201, 154, 190, 330, 410]
+                },
+                {
+                    name:'直接访问',
+                    type:'line',
+                    stack: '总量',
+                    data:[320, 332, 301, 334, 390, 330, 320]
+                },
+                {
+                    name:'搜索引擎',
+                    type:'line',
+                    stack: '总量',
+                    data:[820, 932, 901, 934, 1290, 1330, 1320]
+                }
+            ]
         };
-        var myChart1 = echarts.init(document.getElementById('chart1'));
-        myChart1.setOption(option1);
 
+
+        option2 = {
+            title : {
+                text: '课程学习比例图',
+                x:'center'
+            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient : 'vertical',
+                x : 'left',
+                data:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+            },
+            calculable : true,
+            series : [
+                {
+                    name:'访问来源',
+                    type:'pie',
+                    radius : '55%',
+                    center: ['50%', '60%'],
+                    data:[
+                        {value:335, name:'直接访问'},
+                        {value:310, name:'邮件营销'},
+                        {value:234, name:'联盟广告'},
+                        {value:135, name:'视频广告'},
+                        {value:1548, name:'搜索引擎'}
+                    ]
+                }
+            ]
+        };
+        option3 = {
+            title : {
+                text: '课程学习比例图',
+                x:'center'
+            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient : 'vertical',
+                x : 'left',
+                data:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+            },
+            calculable : true,
+            series : [
+                {
+                    name:'访问来源',
+                    type:'pie',
+                    radius : '55%',
+                    center: ['50%', '60%'],
+                    data:[
+                        {value:335, name:'直接访问'},
+                        {value:310, name:'邮件营销'},
+                        {value:234, name:'联盟广告'},
+                        {value:135, name:'视频广告'},
+                        {value:1548, name:'搜索引擎'}
+                    ]
+                }
+            ]
+        };
+
+        var myChart1 = echarts.init(document.getElementById('chart1'));
+        var myChart2 = echarts.init(document.getElementById('chart2'));
+        var myChart3 = echarts.init(document.getElementById('chart3'));
+        myChart1.setOption(option1);
+        myChart2.setOption(option2);
+        myChart3.setOption(option3);
+
+
+        window.addEventListener("resize", function () {
+            myChart1.resize();
+            myChart2.resize();
+            myChart3.resize();
+        });
     })
 
 
