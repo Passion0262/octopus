@@ -845,12 +845,8 @@ public class studentController {
 
 
 
-
-
-
-
-
-        List<SubExperimentProgress>  experpros = subExperimentProgressService.listByStuNumber(stuNum);
+        Long experid = experimentService.getExperimentByCourseId(cour_id).getId();
+        List<SubExperimentProgress>  experpros = subExperimentProgressService.listByStuNumberAndExperimentId(stuNum,experid);
         logger.info("experpros:" + experpros);
         model.addAttribute("experpros", experpros);
 
@@ -866,6 +862,8 @@ public class studentController {
         model.addAttribute("subexpers", subexpers);
         logger.info("courseids:" + courseids);
         model.addAttribute("courseids", courseids);
+
+
 
 
 
