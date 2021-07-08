@@ -39,11 +39,9 @@ public interface DockerService {
 	boolean updateStatusByStuNum(long stuNumber, int statusCode, long processingId);
 
 	/**
-	 * 获取所有docker信息
-	 *
-	 * @return docker信息列表
+	 * 根据角色获取全部或自己学生的docker信息
 	 */
-	List<Docker> getDockerList();
+	List<Docker> getDockerListByRole(long teaNumber);
 
 
 	/**

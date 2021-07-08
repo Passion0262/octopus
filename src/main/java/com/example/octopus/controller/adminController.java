@@ -1066,12 +1066,13 @@ public class adminController {
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
         try {
-            if (role_id == 1) {
-                model.addAttribute(dockerService.getDockerList());
-            } else {
+            model.addAttribute(dockerService.getDockerListByRole(teaNum));
 
-                //model.addAttribute("student_pc", );
-            }
+//            if (role_id == 1) {
+//            } else {
+//
+//                //model.addAttribute("student_pc", );
+//            }
             return "admin_student_pc";
         }
         catch (Exception e){
