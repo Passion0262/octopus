@@ -96,7 +96,7 @@
                                                             <div th:text="${teachers.adminRights==false?'No':'Yes'}" th:class="${teachers.adminRights==false?'badge badge-soft-warning':'badge badge-soft-success'}" style="font-size: 13px"></div>
                                                         </td>
                                                         <td th:text="${teachers.loginNumber}"></td>
-                                                        <td th:text="${teachers.lastLoginTime}"></td>
+                                                        <td th:text="${#dates.format(teachers.lastLoginTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                                     </tr>
                                                 </tbody>
                                             </table>

@@ -26,7 +26,7 @@
     <link href="static/css/scroll.css" id="scroll-style" rel="stylesheet" type="text/css" />
 </head>
 
-<body data-topbar="dark">
+<body data-topbar="dark" onload="addRows()">
     <!-- Begin page -->
     <div id="layout-wrapper">
 
@@ -69,17 +69,17 @@
                                                     <th>末次学习时间</th>
                                                 </tr>
                                             </thead>
-                                            <tbody style="text-align: center;">
-                                                <tr th:each="log_detail:${video_log_details}">
-                                                    <td th:text="${log_detailStat.index+1}"></td>
-                                                    <td th:text="${log_detail.stuNumber}"></td>
-                                                    <td th:text="${log_detail.name}"></td>
-                                                    <td th:text="${log_detail.videoName}"></td>
-                                                    <td th:text="${log_detail.courseName}"></td>
-                                                    <td th:text="${log_detail.studyTimeSum}"></td>
-                                                    <td th:text="${log_detail.veryStartTime}"></td>
-                                                    <td th:text="${log_detail.veryLastTime}"></td>
-                                                </tr>
+                                            <tbody style="text-align: center;"  id="tbody">
+<!--                                                <tr th:each="log_detail:${video_log_details}">-->
+<!--                                                    <td th:text="${log_detailStat.index+1}"></td>-->
+<!--                                                    <td th:text="${log_detail.stuNumber}"></td>-->
+<!--                                                    <td th:text="${log_detail.name}"></td>-->
+<!--                                                    <td th:text="${log_detail.videoName}"></td>-->
+<!--                                                    <td th:text="${log_detail.courseName}"></td>-->
+<!--                                                    <td th:text="${log_detail.studyTimeSum}"></td>-->
+<!--                                                    <td th:text="${#dates.format(log_detail.veryStartTime, 'yyyy-MM-dd HH:mm:ss')}"></td>-->
+<!--                                                    <td th:text="${#dates.format(log_detail.veryLastTime, 'yyyy-MM-dd HH:mm:ss')}"></td>-->
+<!--                                                </tr>-->
                                             </tbody>
                                         </table>
                                     </div>
@@ -135,6 +135,73 @@
     <!-- js/pages/ -->
     <script src="static/js/pages/datatables.init.js"></script>
     <script src="static/js/app.js"></script>
+
+    <script type="text/javascript" th:inline="javascript">
+
+        function addRows() {
+            var oTbody = document.getElementById('tbody');
+
+            for (var i=0; i<[[${video_log_details}]].length; i++) {
+                var log = [[${video_log_details}]][i];
+                //console.log(log);
+                var tr = document.createElement("tr");
+                var str = "";
+                str += "<tr>";
+                str += "<td>" + (i+1).toString() + "</td>";
+                str += "<td>" + log.stuNumber + "</td>";
+                str += "<td>" + log.name + "</td>";
+                str += "<td>" + log.videoName + "</td>";
+                str += "<td>" + log.courseName + "</td>";
+                str += "<td>" + timecall(log.studyTimeSum) + "</td>";
+                str += "<td>" + dateFormat("YYYY-mm-dd HH:MM:SS", log.veryStartTime) + "</td>";
+                str += "<td>" + dateFormat("YYYY-mm-dd HH:MM:SS", log.veryLastTime) + "</td>";
+                tr.innerHTML = str;
+                // console.log(tr);
+                oTbody.appendChild(tr);
+            }
+
+
+        }
+
+        function timecall(str){
+            var ss="";
+            if(str>=3600){
+                ss = ss+ parseInt(str/3600) +"时";
+                str =str%3600;
+                // console.log(ss +":"+str);
+            }
+            if(str>=60){
+                ss = ss+ parseInt(str/60) +"分";
+                str = str%60;
+                // console.log(ss +":"+str);
+            }
+            if(str<60){
+                ss = ss+ str +"秒";
+            }
+            return ss;
+        }
+
+        function dateFormat(fmt, dates) {
+            var date = new Date(dates);
+            let ret;
+            const opt = {
+                "Y+": date.getFullYear().toString(),        // 年
+                "m+": (date.getMonth() + 1).toString(),     // 月
+                "d+": date.getDate().toString(),            // 日
+                "H+": date.getHours().toString(),           // 时
+                "M+": date.getMinutes().toString(),         // 分
+                "S+": date.getSeconds().toString()          // 秒
+                // 有其他格式化字符需求可以继续添加，必须转化成字符串
+            };
+            for (let k in opt) {
+                ret = new RegExp("(" + k + ")").exec(fmt);
+                if (ret) {
+                    fmt = fmt.replace(ret[1], (ret[1].length == 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")))
+                };
+            };
+            return fmt;
+        }
+    </script>
 
 
 </body>

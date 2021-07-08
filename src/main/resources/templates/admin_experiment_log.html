@@ -26,7 +26,7 @@
     <link href="static/css/scroll.css" id="scroll-style" rel="stylesheet" type="text/css" />
 </head>
 
-<body data-topbar="dark">
+<body data-topbar="dark" onload="addRows()">
     <!-- Begin page -->
     <div id="layout-wrapper">
 
@@ -56,7 +56,7 @@
                                 <div class="card-body">
                                     <h4 class="card-title"></h4>
                                     <div>
-                                        <table id="datatable-buttons" class="table table-striped table-bordered table-centered" style="white-space:nowrap;">
+                                        <table id="datatable-buttons"  class="table table-striped table-bordered table-centered" style="white-space:nowrap;">
                                             <thead style="text-align: center;">
                                                 <tr>
                                                     <th>编号</th>
@@ -71,32 +71,19 @@
                                                     <th>最近操作时间</th>
                                                 </tr>
                                             </thead>
-                                            <tbody style="text-align: center;">
-                                                <tr th:each="log:${experiment_logs}">
-                                                    <td th:text="${logStat.index+1}"></td>
-                                                    <td th:text="${log.stuNumber}"></td>
-                                                    <td th:text="${log.name}"></td>
-                                                    <td th:text="${log.className}"></td>
-                                                    <td th:text="${log.majorName}"></td>
-                                                    <td th:text="${log.courseName}"></td>
-                                                    <td th:text="${log.subExperimentName}"></td>
-                                                    <td th:text="${log.startTime}"></td>
-                                                    <td th:text="${log.endTime}"></td>
-                                                    <td th:text="${log.validStudyTime}"></td>
-                                                </tr>
-<!--                                            <tr>-->
-<!--                                                <td>丁一</td>-->
-<!--                                                <td>10001</td>-->
-<!--                                                <td>大数据技术与应用</td>-->
-<!--                                                <td>大数据2101</td>-->
-<!--                                                <td>spark课程</td>-->
-<!--                                                <td>pyspark SQL文件处理</td>-->
-<!--                                                <td>2小时11分09秒</td>-->
-<!--                                                <td>2021-02-08 11:20:01</td>-->
-<!--                                                <td>2020-04-18 11:20:01</td>-->
-<!--                                                <td>操作详细</td>-->
-<!--                                                <td>实验监控(123)</td>-->
-<!--                                            </tr>-->
+                                            <tbody style="text-align: center;" id="tbody">
+<!--                                                <tr th:each="log:${experiment_logs}">-->
+<!--                                                    <td th:text="${logStat.index+1}"></td>-->
+<!--                                                    <td th:text="${log.name}"></td>-->
+<!--                                                    <td th:text="${log.stuNumber}"></td>-->
+<!--                                                    <td th:text="${log.className}"></td>-->
+<!--                                                    <td th:text="${log.majorName}"></td>-->
+<!--                                                    <td th:text="${log.courseName}"></td>-->
+<!--                                                    <td th:text="${log.subExperimentName}"></td>-->
+<!--                                                    <td th:text="${log.validStudyTime}"></td>-->
+<!--                                                    <td th:text="${#dates.format(log.startTime, 'yyyy-MM-dd HH:mm:ss')}"></td>-->
+<!--                                                    <td th:text="${#dates.format(log.endTime, 'yyyy-MM-dd HH:mm:ss')}"></td>-->
+<!--                                                </tr>-->
                                             
                                             </tbody>
                                         </table>
@@ -158,6 +145,75 @@
     <script src="static/js/pages/datatables.init.js"></script>
     <script src="static/js/pages/dashboard.init.js"></script>
     <script src="static/js/app.js"></script>
+
+    <script type="text/javascript" th:inline="javascript">
+
+        function addRows() {
+            var oTbody = document.getElementById('tbody');
+
+            for (var i=0; i<[[${experiment_logs}]].length; i++) {
+                var log = [[${experiment_logs}]][i];
+                //console.log(log);
+                var tr = document.createElement("tr");
+                var str = "";
+                str += "<tr>";
+                str += "<td>" + (i+1).toString() + "</td>";
+                str += "<td>" + log.name + "</td>";
+                str += "<td>" + log.stuNumber + "</td>";
+                str += "<td>" + log.className + "</td>";
+                str += "<td>" + log.majorName + "</td>";
+                str += "<td>" + log.courseName + "</td>";
+                str += "<td>" + log.subExperimentName + "</td>";
+                str += "<td>" + timecall(log.validStudyTime) + "</td>";
+                str += "<td>" + dateFormat("YYYY-mm-dd HH:MM:SS", log.startTime) + "</td>";
+                str += "<td>" + dateFormat("YYYY-mm-dd HH:MM:SS", log.endTime) + "</td>";
+                tr.innerHTML = str;
+                // console.log(tr);
+                oTbody.appendChild(tr);
+            }
+
+
+        }
+
+        function timecall(str){
+            var ss="";
+            if(str>=3600){
+                ss = ss+ parseInt(str/3600) +"时";
+                str =str%3600;
+                // console.log(ss +":"+str);
+            }
+            if(str>=60){
+                ss = ss+ parseInt(str/60) +"分";
+                str = str%60;
+                // console.log(ss +":"+str);
+            }
+            if(str<60){
+                ss = ss+ str +"秒";
+            }
+            return ss;
+        }
+
+        function dateFormat(fmt, dates) {
+            var date = new Date(dates);
+            let ret;
+            const opt = {
+                "Y+": date.getFullYear().toString(),        // 年
+                "m+": (date.getMonth() + 1).toString(),     // 月
+                "d+": date.getDate().toString(),            // 日
+                "H+": date.getHours().toString(),           // 时
+                "M+": date.getMinutes().toString(),         // 分
+                "S+": date.getSeconds().toString()          // 秒
+                // 有其他格式化字符需求可以继续添加，必须转化成字符串
+            };
+            for (let k in opt) {
+                ret = new RegExp("(" + k + ")").exec(fmt);
+                if (ret) {
+                    fmt = fmt.replace(ret[1], (ret[1].length == 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")))
+                };
+            };
+            return fmt;
+        }
+    </script>
 
 
 </body>

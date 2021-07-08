@@ -26,7 +26,7 @@
     <link href="static/css/scroll.css" id="scroll-style" rel="stylesheet" type="text/css" />
 </head>
 
-<body data-topbar="dark">
+<body data-topbar="dark" onload="addRows()">
     <!-- Begin page -->
     <div id="layout-wrapper">
 
@@ -71,24 +71,24 @@
                                                     <th>正在进行的实验/项目</th>
                                                 </tr>
                                             </thead>
-                                            <tbody style="text-align: center;">
-                                                <tr th:each="docker:${dockers}">
-                                                    <td th:text="${dockerStat.index+1}"></td>
-                                                    <td th:text="${docker.stuName}"></td>
-                                                    <td th:text="${docker.stuNumber}"></td>
-                                                    <td th:text="${docker.dockerName}"></td>
-                                                    <td th:text="${docker.dockerPort}"></td>
-                                                    <td th:text="${docker.dockerId}"></td>
-                                                    <td th:text="${docker.dockerAddress}"></td>
-                                                    <td th:text="${docker.dockerStatus}"></td>
-                                                    <td>
-                                                        <div th:if="${docker.dockerStatus eq 'project'}" text="项目实战" class="badge badge-soft-success" style="font-size: 13px"></div>
-                                                        <div th:if="${docker.dockerStatus eq 'experiment'}" text="课程实验" class="badge badge-soft-info" style="font-size: 13px"></div>
-                                                        <div th:if="${docker.dockerStatus eq 'sleeping'}" text="挂起/未使用" class="badge badge-soft-danger" style="font-size: 13px"></div>
-                                                    </td>
-                                                    <td th:text="${docker.runningTime}"></td>
-                                                    <td th:text="${docker.processingId}"></td>
-                                                </tr>
+                                            <tbody id="tbody" style="text-align: center;">
+<!--                                                <tr th:each="docker:${dockers}">-->
+<!--                                                    <td th:text="${dockerStat.index+1}"></td>-->
+<!--                                                    <td th:text="${docker.stuName}"></td>-->
+<!--                                                    <td th:text="${docker.stuNumber}"></td>-->
+<!--                                                    <td th:text="${docker.dockerName}"></td>-->
+<!--                                                    <td th:text="${docker.dockerPort}"></td>-->
+<!--                                                    <td th:text="${docker.dockerId}"></td>-->
+<!--                                                    <td th:text="${docker.dockerAddress}"></td>-->
+<!--                                                    -->
+<!--                                                    <td>-->
+<!--                                                        <div th:if="${docker.dockerStatus eq 'project'}" text="项目实战" class="badge badge-soft-success" style="font-size: 13px"></div>-->
+<!--                                                        <div th:if="${docker.dockerStatus eq 'experiment'}" text="课程实验" class="badge badge-soft-info" style="font-size: 13px"></div>-->
+<!--                                                        <div th:if="${docker.dockerStatus eq 'sleeping'}" text="挂起/未使用" class="badge badge-soft-danger" style="font-size: 13px"></div>-->
+<!--                                                    </td>-->
+<!--                                                    <td th:text="${docker.runningTime}"></td>-->
+<!--                                                    <td th:text="${docker.processingId}"></td>-->
+<!--                                                </tr>-->
                                             </tbody>
                                         </table>
                                     </div>
@@ -149,6 +149,63 @@
     <script src="static/js/pages/datatables.init.js"></script>
     <script src="static/js/pages/dashboard.init.js"></script>
     <script src="static/js/app.js"></script>
+
+    <script type="text/javascript" th:inline="javascript">
+
+        function addRows() {
+            var oTbody = document.getElementById('tbody');
+
+            if([[${dockers}]] != null){
+                for (var i=0; i<[[${dockers}]].length; i++) {
+                    var docker = [[${dockers}]][i];
+                    //console.log(log);
+                    var tr = document.createElement("tr");
+                    var str = "";
+                    str += "<tr>";
+                    str += "<td>" + (i+1).toString() + "</td>";
+                    str += "<td>" + docker.stuName + "</td>";
+                    str += "<td>" + docker.stuNumber + "</td>";
+                    str += "<td>" + docker.dockerName + "</td>";
+                    str += "<td>" + docker.dockerPort + "</td>";
+                    str += "<td>" + docker.dockerId + "</td>";
+                    str += "<td>" + docker.dockerAddress + "</td>";
+                    str += "<td>";
+                    str += "<div if=("+ docker.dockerStatus +"=='project') class=\"badge badge-soft-success\" style=\"font-size: 13px\">项目实战</div>";
+                    str += "<div if=("+ docker.dockerStatus + "=='experiment') class=\"badge badge-soft-success\" style=\"font-size: 13px\">课程实验</div>";
+                    str += "<div if=("+ docker.dockerStatus + "=='sleeping') class=\"badge badge-soft-success\" style=\"font-size: 13px\">挂起/未使用</div>";
+                    str += "</td>";
+                    str += "<td>" + timecall(docker.runningTime) + "</td>";
+                    str += "<td>" + docker.processingId + "</td>";
+                    tr.innerHTML = str;
+                    // console.log(tr);
+                    oTbody.appendChild(tr);
+                }
+            }
+
+
+
+        }
+
+        function timecall(str){
+            var ss="";
+            if(str>=3600){
+                ss = ss+ parseInt(str/3600) +"时";
+                str =str%3600;
+                // console.log(ss +":"+str);
+            }
+            if(str>=60){
+                ss = ss+ parseInt(str/60) +"分";
+                str = str%60;
+                // console.log(ss +":"+str);
+            }
+            if(str<60){
+                ss = ss+ str +"秒";
+            }
+            return ss;
+        }
+
+
+    </script>
 
 
 </body>

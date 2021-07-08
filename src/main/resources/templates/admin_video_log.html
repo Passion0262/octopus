@@ -26,7 +26,7 @@
     <link href="static/css/scroll.css" id="scroll-style" rel="stylesheet" type="text/css" />
 </head>
 
-<body data-topbar="dark">
+<body data-topbar="dark" onload="addRows()">
     <!-- Begin page -->
     <div id="layout-wrapper">
 
@@ -68,16 +68,16 @@
                                                     <th>末次学习时间</th>
                                                 </tr>
                                             </thead>
-                                            <tbody style="text-align: center;">
-                                                <tr th:each="log:${video_logs}">
-                                                    <td th:text="${logStat.index+1}"></td>
-                                                    <td th:text="${log.stuNumber}"></td>
-                                                    <td th:text="${log.stuName}"></td>
-                                                    <td th:text="${log.courseName}"></td>
-                                                    <td th:text="${log.studyTimeTotal}"></td>
-                                                    <td th:text="${log.firstStartTime}"></td>
-                                                    <td th:text="${log.lastEndTime}"></td>
-                                                </tr>
+                                            <tbody style="text-align: center;"  id="tbody">
+<!--                                                <tr th:each="log:${video_logs}">-->
+<!--                                                    <td th:text="${logStat.index+1}"></td>-->
+<!--                                                    <td th:text="${log.stuNumber}"></td>-->
+<!--                                                    <td th:text="${log.stuName}"></td>-->
+<!--                                                    <td th:text="${log.courseName}"></td>-->
+<!--                                                    <td th:text="${log.studyTimeTotal}"></td>-->
+<!--                                                    <td th:text="${#dates.format(log.firstStartTime, 'yyyy-MM-dd HH:mm:ss')}"></td>-->
+<!--                                                    <td th:text="${#dates.format(log.lastEndTime, 'yyyy-MM-dd HH:mm:ss')}"></td>-->
+<!--                                                </tr>-->
 <!--                                            <tr>-->
 <!--                                                <td>10001</td>-->
 <!--                                                <td>丁一</td>-->
@@ -155,6 +155,74 @@
     <!-- js/pages/ -->
     <script src="static/js/pages/datatables.init.js"></script>
     <script src="static/js/app.js"></script>
+
+    <script type="text/javascript" th:inline="javascript">
+
+        function addRows() {
+            var oTbody = document.getElementById('tbody');
+
+            for (var i=0; i<[[${video_logs}]].length; i++) {
+                var log = [[${video_logs}]][i];
+                //console.log(log);
+                var tr = document.createElement("tr");
+                var str = "";
+                str += "<tr>";
+                str += "<td>" + (i+1).toString() + "</td>";
+                str += "<td>" + log.stuNumber + "</td>";
+                str += "<td>" + log.stuName + "</td>";
+                str += "<td>" + log.courseName + "</td>";
+                str += "<td>" + timecall(log.studyTimeTotal) + "</td>";
+                str += "<td>" + dateFormat("YYYY-mm-dd HH:MM:SS", log.firstStartTime) + "</td>";
+                str += "<td>" + dateFormat("YYYY-mm-dd HH:MM:SS", log.lastEndTime) + "</td>";
+                tr.innerHTML = str;
+                // console.log(tr);
+                oTbody.appendChild(tr);
+            }
+
+
+        }
+
+        function timecall(str){
+            var ss="";
+            if(str>=3600){
+                ss = ss+ parseInt(str/3600) +"时";
+                str =str%3600;
+                // console.log(ss +":"+str);
+            }
+            if(str>=60){
+                ss = ss+ parseInt(str/60) +"分";
+                str = str%60;
+                // console.log(ss +":"+str);
+            }
+            if(str<60){
+                ss = ss+ str +"秒";
+            }
+            return ss;
+        }
+
+        function dateFormat(fmt, dates) {
+            var date = new Date(dates);
+            let ret;
+            const opt = {
+                "Y+": date.getFullYear().toString(),        // 年
+                "m+": (date.getMonth() + 1).toString(),     // 月
+                "d+": date.getDate().toString(),            // 日
+                "H+": date.getHours().toString(),           // 时
+                "M+": date.getMinutes().toString(),         // 分
+                "S+": date.getSeconds().toString()          // 秒
+                // 有其他格式化字符需求可以继续添加，必须转化成字符串
+            };
+            for (let k in opt) {
+                ret = new RegExp("(" + k + ")").exec(fmt);
+                if (ret) {
+                    fmt = fmt.replace(ret[1], (ret[1].length == 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")))
+                };
+            };
+            return fmt;
+        }
+    </script>
+
+
 
 
 </body>

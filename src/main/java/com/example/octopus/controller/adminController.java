@@ -1,7 +1,9 @@
 package com.example.octopus.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.example.octopus.entity.VOs.SubExperimentOperateTimeVO;
 import com.example.octopus.entity.dataset.Dataset;
+import com.example.octopus.entity.experiment.SubExperimentProgress;
 import com.example.octopus.entity.experiment.SubExperimentReportSubmit;
 import com.example.octopus.entity.experiment.Video;
 import com.example.octopus.entity.project.Project;
@@ -11,6 +13,7 @@ import com.example.octopus.service.*;
 import com.example.octopus.utils.CookieTokenUtils;
 import com.example.octopus.utils.TokenCheckUtils;
 import com.example.octopus.utils.UploadFileUtils;
+//import com.example.octopus.utils.TimeTransUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -173,6 +176,8 @@ public class adminController {
            // model.addAttribute("sizeof_schools", );
             model.addAttribute("sizeof_teachers", teacherService.getAllTeachers().size());
             model.addAttribute("sizeof_students", userService.listStudents().size());
+            model.addAttribute("sizeof_dockers", dockerService.getDockerListByRole(teaNum).size());
+
             model.addAttribute("lastLoginTime", teacherService.getTeacherByTeaNumber(teaNum).getLastLoginTime());
             return "admin_index";
         } catch (Exception e) {
@@ -947,10 +952,10 @@ public class adminController {
         if (!cookieCheck(model, request)) return "redirect:/login";
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
-        System.out.println(subExperimentReportSubmitService.listByTeaNumber(teaNum));
+        //System.out.println(subExperimentReportSubmitService.listByTeaNumber(3));
         try {
 
-            model.addAttribute("reports", subExperimentReportSubmitService.listByTeaNumber(teaNum));
+            model.addAttribute("reports", subExperimentReportSubmitService.listByTeaNumber(3));
             return "admin_report";
         }
         catch (Exception e){
@@ -962,15 +967,15 @@ public class adminController {
     @RequestMapping("/admin_report_detail")
     public String admin_report_detail(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-        try {
-//            long id = Long.parseLong(request.getParameter("id"));
-            SubExperimentReportSubmit expSub = subExperimentReportSubmitService.getById(6);
+//        try {
+            long id = Long.parseLong(request.getParameter("id"));
+            SubExperimentReportSubmit expSub = subExperimentReportSubmitService.getById(id);
             model.addAttribute("expSub", expSub);
             return "admin_report_detail";
-        }
-        catch (Exception e){
-            return "redirect:/admin_error";
-        }
+//        }
+//        catch (Exception e){
+//            return "redirect:/admin_error";
+//        }
     }
 
     //提交实验报告评分
@@ -1001,6 +1006,11 @@ public class adminController {
 
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         try {
+//            List<SubExperimentOperateTimeVO> subExp = subExperimentProgressService.getOperateTimeByRole(teaNum);
+//            for (int i=0; i<subExp.size(); i++){
+//                SubExperimentOperateTimeVO e = subExp.get(i);
+//                e.setValidStudyTime(TimeTransUtils.timeTrans(e.getValidStudyTime()));
+//            }
             model.addAttribute("experiment_logs", subExperimentProgressService.getOperateTimeByRole(teaNum));
             return "admin_experiment_log";
         }

@@ -93,7 +93,7 @@
                                             <td th:text="${course_student.stuName}"></td>
                                             <td th:text="${course_student.stuMajor}"></td>
                                             <td th:text="${course_student.stuClass}"></td>
-                                            <td th:text="${course_student.applyTime}"></td>
+                                            <td th:text="${#dates.format(course_student.applyTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
 <!--                                            <td th:text="${course_student.auditor}"></td>-->
 <!--                                            <td th:text="${course_student.auditTime}"></td>-->
                                         </tr>
