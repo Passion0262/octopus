@@ -37,6 +37,6 @@ public interface DatasetMapper {
     boolean updateDownloadNumById(long id);
 
     @Insert("INSERT INTO dataset (name, description, uploader, size, download_num, download_path, file_format, image_path) " +
-            "VALUES (#{name}, #{description}, #{uploader}, #{size}, #{downloadNum}, #{downloadPath}, #{fileFormat}, #{imagePath})")
+            "VALUES (#{name}, #{description}, #{uploader}, #{size}, 0, #{downloadPath}, #{fileFormat}, #{imagePath})")
     boolean addDataset(Dataset dataset);
 }
