@@ -3,7 +3,6 @@ package com.example.octopus.service.impl;
 import com.example.octopus.dao.experiment.SubExperimentReportSaveMapper;
 import com.example.octopus.dao.experiment.SubExperimentReportSubmitMapper;
 import com.example.octopus.entity.experiment.SubExperimentReportSubmit;
-import com.example.octopus.entity.user.Course;
 import com.example.octopus.service.CourseService;
 import com.example.octopus.service.ExperimentService;
 import com.example.octopus.service.SubExperimentReportSubmitService;
@@ -45,16 +44,7 @@ public class SubExperimentReportSubmitServiceImpl implements SubExperimentReport
 
     @Override
     public List<SubExperimentReportSubmit> listByTeaNumber(long teaNumber) {
-        List<SubExperimentReportSubmit> result = new ArrayList<>();
-        List<Course> courseList = courseService.listCoursesByTeaNumber(teaNumber);  //获取老师教的所有课
-        for (Course course:courseList) {
-            long ExperimentId = experimentService.getExperimentByCourseId(course.getId()).getId();  //获取这门课对应的实验id
-            List<Long> subExperimentIdList = subExperimentService.listIdsByExperimentId(ExperimentId);  //获取实验对应的所有子实验id
-            for (Long subExperimentId:subExperimentIdList) {
-                result.addAll(subExperimentReportSubmitMapper.listBySubExperimentId(subExperimentId));  //添加所有子实验对应的提交记录
-            }
-        }
-        return result;
+        return subExperimentReportSubmitMapper.listByTeaNumber(teaNumber);
     }
 
     @Override

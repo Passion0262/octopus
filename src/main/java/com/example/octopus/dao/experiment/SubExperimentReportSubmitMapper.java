@@ -15,25 +15,36 @@ public interface SubExperimentReportSubmitMapper{
     /**
      *  查询某子实验下所有学生的提交记录
      */
-    @Select("SELECT * FROM sub_experiment_report_submit WHERE sub_experiment_id = #{subExperimentId}")
+    @Select("SELECT sers.*,se.sub_experiment_name,s.name as stu_name,t.tea_name FROM sub_experiment_report_submit sers, sub_experiment se, student s, teacher t " +
+            "WHERE sers.sub_experiment_id = #{subExperimentId} AND sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND sers.tea_number = t.tea_number")
     List<SubExperimentReportSubmit> listBySubExperimentId(long subExperimentId);
+
+    /**
+     *  查询教师教的课的所有提交记录
+     */
+    @Select("SELECT sers.*,se.sub_experiment_name,s.name as stu_name,t.tea_name FROM sub_experiment_report_submit sers, sub_experiment se, student s, teacher t " +
+            "WHERE sers.tea_number = #{teaNumber} AND sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND sers.tea_number = t.tea_number")
+    List<SubExperimentReportSubmit> listByTeaNumber(long teaNumber);
 
     /**
      * 查询某学生在某子实验上提交的记录
      */
-    @Select("SELECT * FROM sub_experiment_report_submit WHERE sub_experiment_id = #{subExperimentId} AND stu_number = #{stuNumber}")
+    @Select("SELECT sers.*,se.sub_experiment_name,s.name as stu_name,t.tea_name FROM sub_experiment_report_submit sers, sub_experiment se, student s, teacher t " +
+            "WHERE sub_experiment_id = #{subExperimentId} AND stu_number = #{stuNumber} AND sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND sers.tea_number = t.tea_number")
     SubExperimentReportSubmit getByStuNumberAndSubExperimentId(long subExperimentId, long stuNumber);
 
     /**
      *  根据id查询
      */
-    @Select("SELECT * FROM sub_experiment_report_submit WHERE id = #{id}")
+    @Select("SELECT sers.*,se.sub_experiment_name,s.name as stu_name,t.tea_name FROM sub_experiment_report_submit sers, sub_experiment se, student s, teacher t " +
+            "WHERE id = #{id} AND sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND sers.tea_number = t.tea_number")
     SubExperimentReportSubmit getById(long id);
 
     /**
      *  新增subExperimentReportSave
      */
-    @Insert("INSERT INTO sub_experiment_report_submit (sub_experiment_id, stu_number, content, submit_time) VALUES (#{subExperimentId},#{stuNumber},#{content},CURRENT_TIMESTAMP)")
+    @Insert("INSERT INTO sub_experiment_report_submit (sub_experiment_id, stu_number, content, submit_time,tea_number) VALUES (#{subExperimentId},#{stuNumber},#{content},CURRENT_TIMESTAMP," +
+            "(SELECT c.tea_number FROM sub_experiment se, course_experiment ce, course c WHERE se.id=#{subExperimentId} AND se.experiment_id = ce.experiment_id AND ce.course_id = c.id ))")
     boolean insert(SubExperimentReportSubmit subExperimentReportSubmit);
 
     /**

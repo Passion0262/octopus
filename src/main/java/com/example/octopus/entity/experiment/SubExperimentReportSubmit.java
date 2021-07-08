@@ -20,11 +20,13 @@ public class SubExperimentReportSubmit {
 
     private long subExperimentId;
 
+    private String subExperimentName;   //子实验名字，不在sub_experiment_report_submit表中
+
     private long stuNumber;
 
-    private String content; // 报告内容
+    private String stuName;     //学生名字，不在sub_experiment_report_submit表中
 
-//    private String reportPath;  //报告pdf的存储路径
+    private String content; // 报告内容
 
     private Timestamp submitTime;
 
@@ -33,6 +35,8 @@ public class SubExperimentReportSubmit {
     private Timestamp examinedTime;  //审核时间
 
     private long teaNumber;  //审核教师
+
+    private String teaName;     //教师名字，不在sub_experiment_report_submit表中
 
     private int score;  //报告得分
 
