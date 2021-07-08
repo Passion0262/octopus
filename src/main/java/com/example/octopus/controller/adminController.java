@@ -1067,8 +1067,7 @@ public class adminController {
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
         try {
             if (role_id == 1) {
-
-                //model.addAttribute("student_pc", );
+                model.addAttribute(dockerService.getDockerList());
             } else {
 
                 //model.addAttribute("student_pc", );

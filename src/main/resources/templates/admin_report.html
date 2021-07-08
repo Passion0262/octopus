@@ -64,17 +64,11 @@
                                                     <th>学生</th>
                                                     <th>学号</th>
                                                     <th>所属任务</th>
-<!--                                                    <th>报告来源</th>-->
-<!--                                                    <th>任务总分</th>-->
-                                                    <th>任务得分</th>
-                                                    <th>是否审核</th>
                                                     <th>提交时间</th>
+                                                    <th>是否审核</th>
+                                                    <th>任务得分</th>
                                                     <th>审核时间</th>
-<!--                                                    <th>检测通过率</th>-->
-<!--                                                    <th>检测时间</th>-->
-                                                    <th>实验实际操作时长</th>
                                                     <th>审核老师</th>
-<!--                                                    <th>任务监控</th>-->
                                                 </tr>
                                             </thead>
                                             <tbody style="text-align: center;" >
@@ -93,21 +87,20 @@
                                                     <td th:text="${report.stuName}"></td>
                                                     <td th:text="${report.stuNumber}"></td>
                                                     <td th:text="${report.subExperimentName}"></td>
-                                                    <td th:text="${report.score}"></td>
-                                                    <td th:text="${report.examined}"></td>
                                                     <td th:text="${#dates.format(report.submitTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                                                    <td th:text="${#dates.format(report.examinedTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                                                    <td th:text="${report.teaName}"></td>
-<!--                                                    <td>丁一</td>-->
-<!--                                                    <td>三、利用HiveSQL离线分析评论数据</td>-->
-<!--                                                    <td>项目任务</td>-->
-<!--                                                    <td>100</td>-->
-<!--                                                    <td>未审核</td>-->
-<!--                                                    <td><div class="badge badge-soft-warning font-size-12">未审核</div></td>-->
-<!--                                                    <td>2020-05-13 11:11:11</td>-->
-<!--                                                    <td>未审核</td>-->
-<!--                                                    <td>1小时33分11秒</td>-->
-<!--                                                    <td>未审核</td>-->
+                                                    <td>
+                                                        <div th:text="${report.examined}" th:class="${report.examined==true?'badge badge-soft-success':'badge badge-soft-warning'}" style="font-size: 13px"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div th:text="${report.examined==true?report.score:'未审核'}" th:class="${report.examined==true?'badge badge-soft-success':'badge badge-soft-warning'}" style="font-size: 13px"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div th:if="${report.examined==true}" th:text="${#dates.format(report.examinedTime, 'yyyy-MM-dd HH:mm:ss')}" th:class="badge badge-soft-success" style="font-size: 13px"></div>
+                                                        <div th:if="${report.examined==false}" text="未审核" th:class="badge badge-soft-warning" style="font-size: 13px"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div th:text="${report.examined==true?report.teaName:'未审核'}" th:class="${report.examined==true?'badge badge-soft-success':'badge badge-soft-warning'}" style="font-size: 13px"></div>
+                                                    </td>
                                                 </tr>
 
                                             </tbody>
