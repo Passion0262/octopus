@@ -47,7 +47,12 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <form id="form" action="/edit_dataset" method="post" th:object="${datasetmodel.dataset}" novalidate="" style="pediting-left: 20px;">
-
+                                            <div class="form-group row" style="display:none;">
+                                                <label for="id" class="col-md-2 col-form-label">数据集ID：</label>
+                                                <div class="col-md-10">
+                                                    <input name="id" th:value="*{id}" class="form-control" type="text"  id="id">
+                                                </div>
+                                            </div>
                                             <div class="form-group row">
                                               <label for="edit_name" class="col-md-2 col-form-label">数据集名称：</label>
                                               <div class="col-md-10">
@@ -79,6 +84,12 @@
                                                 <label for="edit_fileFormat" class="col-md-2 col-form-label">数据集格式：</label>
                                                 <div class="col-md-10">
                                                     <input name="fileFormat" th:value="*{fileFormat}" class="form-control" type="text"  id="edit_fileFormat">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row" style="display: none">
+                                                <label for="downloadNum" class="col-md-2 col-form-label">下载次数：</label>
+                                                <div class="col-md-10">
+                                                    <input name="downloadNum" th:value="*{downloadNum}" class="form-control" type="text"  id="downloadNum">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -182,7 +193,7 @@
                 }
             }
 
-            function uploeditataset() {
+            function uploadDataset() {
                 var formData = new FormData();
                 formData.append('file', document.getElementById('edit_datasetPath').files[0]);
                 $.ajax({
@@ -198,6 +209,7 @@
                             document.getElementById("datasetPath").value = data.relativePath;
                             document.getElementById("edit_size").value = data.size;
                             document.getElementById("edit_fileFormat").value = data.fileFormat;
+                            document.getElementById("downloadNum").value = [[${datasetmodel.dataset.downloadNum}]];
                             console.log("上传文件成功");
                             datasetOk = true;
                         }
@@ -253,7 +265,7 @@
                 }
 
                 if (changeDataset){
-                    if (document.getElementById('add_datasetPath').files.length == 0) {
+                    if (document.getElementById('edit_datasetPath').files.length == 0) {
                         document.getElementById("alert").style.display = "";
                         document.getElementById("result_msg").innerHTML = "请上传数据集文件！";
                         return false;
@@ -263,7 +275,7 @@
                 }
 
                 if(changeImg) {
-                    if (document.getElementById('add_imagePath').files.length == 0) {
+                    if (document.getElementById('edit_imagePath').files.length == 0) {
                         document.getElementById("alert").style.display = "";
                         document.getElementById("result_msg").innerHTML = "请上传数据集图标！";
                         return false;

@@ -259,7 +259,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <p class="text-truncate font-size-14 mb-2">最近登录时间</p>
-                                    <h4 class="mb-0" th:text="${lastLoginTime}"></h4>
+                                    <h4 class="mb-0" th:text="${#dates.format(lastLoginTime,'yyyy-MM-dd HH:mm:ss')}"></h4>
                                 </div>
                             </div>
                         </div>

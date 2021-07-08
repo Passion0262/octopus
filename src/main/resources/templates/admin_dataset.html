@@ -87,7 +87,7 @@
                                                 <td th:text="${dataset.name}"></td>
                                                 <td th:text="${dataset.description}"></td>
                                                 <td th:text="${dataset.uploader}"></td>
-                                                <td th:text="${dataset.size}"></td>
+                                                <td th:text="${dataset.size}+'KB'"></td>
                                                 <td>
                                                     <div style="width:30px;"></div>
                                                     <a th:href="${dataset.downloadPath}" th:download="${dataset.name}" th:onclick="download_dataset([[${dataset.id}]])" style="color:#4aa3ff">

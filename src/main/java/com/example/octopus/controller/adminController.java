@@ -947,13 +947,10 @@ public class adminController {
         if (!cookieCheck(model, request)) return "redirect:/login";
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
+        System.out.println(subExperimentReportSubmitService.listByTeaNumber(teaNum));
         try {
-            if (role_id == 1) {
-                // todo 展示所有报告
-                //model.addAttribute("reports", )
-            } else {
-                // todo 根据老师展示报告
-            }
+
+            model.addAttribute("reports", subExperimentReportSubmitService.listByTeaNumber(teaNum));
             return "admin_report";
         }
         catch (Exception e){
@@ -966,9 +963,7 @@ public class adminController {
     public String admin_report_detail(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
         try {
-            // todo 根据报告id返回报告
-
-//            model.addAttribute("pdf", "https://arxiv.org/pdf/1508.01006v1.pdf");
+//            long id = Long.parseLong(request.getParameter("id"));
             SubExperimentReportSubmit expSub = subExperimentReportSubmitService.getById(6);
             model.addAttribute("expSub", expSub);
             return "admin_report_detail";
@@ -980,12 +975,16 @@ public class adminController {
 
     //提交实验报告评分
     @PostMapping("/report_score")
-    public ModelAndView report_score( Model model, HttpServletRequest request) {
+    public ModelAndView report_score( Model model, HttpServletRequest request, SubExperimentReportSubmit subExperimentReportSubmit) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
 
         logger.info("提交报告分数: [{}]", "xxx");
         try {
-            // todo 向数据库提交报告评分
+            long id = Long.parseLong(request.getParameter("id"));
+            long stuNumber = Long.parseLong(request.getParameter("stuNumber"));
+            long teaNumber = Long.parseLong(request.getParameter("teaNumber"));
+            int score = Integer.parseInt(request.getParameter("score"));
+            subExperimentReportSubmitService.updateByExamine(id, stuNumber, teaNumber, score);
             return new ModelAndView("redirect:/admin_report");
         }
         catch (Exception e){
@@ -1301,7 +1300,7 @@ public class adminController {
 
         logger.info("提交新增的dataset: [{}]", dataset);
         try {
-            // todo 向数据库提交新增的dataset
+            datasetService.addDataset(dataset);
             return new ModelAndView("redirect:/admin_dataset");
         }
         catch (Exception e){
@@ -1329,7 +1328,7 @@ public class adminController {
     public ModelAndView edit_dataset(Dataset dataset){
         logger.info("提交修改的dataset: [{}]", dataset);
         try {
-            // todo 提交修改
+            datasetService.updateDatasetById(dataset);
             return new ModelAndView("redirect:/admin_dataset");
         }
         catch (Exception e){
@@ -1345,7 +1344,7 @@ public class adminController {
         long id = Long.parseLong(request.getParameter("id"));
         logger.info("删除 dataset.id=[{}]", id);
         try {
-            // todo 数据库删除对应数据
+            datasetService.deleteDataset(id);
             return new ModelAndView("redirect:/admin_dataset");
         }
         catch (Exception e){
@@ -1577,7 +1576,7 @@ public class adminController {
                 root.put("relativePath", relativePath);//前端根据是否存在该字段来判断上传是否成功
                 result_msg = "文件上传成功";
                 root.put("fileFormat", suffixName);
-                root.put("size", file.getSize());
+                root.put("size", Math.round(file.getSize()/1024));
             } else {
                 result_msg = "文件上传失败";
             }

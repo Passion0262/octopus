@@ -183,6 +183,10 @@
                         //将option添加到select标签中
                         $("#edit_major").append(option);
                     }
+                },
+                error:function(){
+                    document.getElementById("alert").style.display="";
+                    document.getElementById("result_msg").innerHTML = "获取专业列表失败";
                 }
             })
         })

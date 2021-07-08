@@ -19,11 +19,11 @@
 
 
     <style type="text/css">
-        iframe {
-            height: 600px;
-            width: 100%;
-            border: none;
-        }
+        /*iframe {*/
+        /*    height: 600px;*/
+        /*    width: 100%;*/
+        /*    border: none;*/
+        /*}*/
 
     </style>
 </head>
@@ -53,21 +53,21 @@
                             <div class="card-body" style="padding: 8px;">
                                 <div class="row">
                                     <div class="col-md-9 " >
-                                        <div id="reportshow" ></div>
+                                        <div id="reportshow"></div>
 <!--                                        <iframe id="previewpdf" th:src="'static/js/pdf/web/viewer.html?file='+${pdf}"></iframe>-->
                                     </div>
-                                    <div class="col-md-3" style="padding-top: 50px;padding-left: 30px;" id="detailshow">
+                                    <div class="col-md-3" style="padding-left: 30px;" id="detailshow">
                                         <div class="row">
-                                            <p th:text="'姓名：'+${stuName}" style="display: flex;align-items: center;margin-bottom: 20px; margin-top: 20px;"></p>
+                                            <p th:text="'姓名：'+${expSub.stuName}" style="display: flex;align-items: center;margin-bottom: 20px; margin-top: 20px;"></p>
                                         </div>
                                         <div class="row">
-                                            <p th:text="'所属任务：'" style="display: flex;align-items: center;margin-bottom: 20px; margin-top: 20px;"></p>
+                                            <p th:text="'学号：'+${expSub.stuNumber}" style="display: flex;align-items: center;margin-bottom: 20px; margin-top: 20px;"></p>
                                         </div>
                                         <div class="row">
-                                            <p th:text="'报告来源：'" style="display: flex;align-items: center;margin-bottom: 20px; margin-top: 20px;"></p>
+                                            <p th:text="'所属任务：'+${expSub.subExperimentName}" style="display: flex;align-items: center;margin-bottom: 20px; margin-top: 20px;"></p>
                                         </div>
                                         <div class="row">
-                                            <p th:text="'提交时间：'" style="display: flex;align-items: center;margin-bottom: 20px; margin-top: 20px;"></p>
+                                            <p th:text="'提交时间：'+${#dates.format(expSub.submitTime, 'yyyy-MM-dd HH:mm:ss')}" style="display: flex;align-items: center;margin-bottom: 20px; margin-top: 20px;"></p>
                                         </div>
                                         <div class="row">
                                             <p th:text="'得分：'" style="display: flex;align-items: center;margin-bottom: 20px; margin-top: 20px;"></p>
@@ -76,13 +76,13 @@
                                             <input type="text" id="score" name="score">
                                         </div>
                                         <div class="row">
-                                            <p th:text="'审核老师：'" style="display: flex;align-items: center;margin-bottom: 20px; margin-top: 20px;"></p>
+                                            <p th:text="'审核老师：'+${expSub.teaName}" style="display: flex;align-items: center;margin-bottom: 20px; margin-top: 20px;"></p>
                                         </div>
                                         <div class="row" style="display: block;text-align: center;margin-top: 30px;">
                                             <a href="admin_report" class="btn btn-light btn-rounded waves-effect waves-light" style="margin: 10px;">
                                                 <i class="ri-close-line align-middle mr-2"></i>取消
                                             </a>
-                                            <button onclick="getScore()" type="submit" class="btn btn-success btn-rounded waves-effect waves-light" style="margin: 10px;">
+                                            <button onclick="submitScore()" type="submit" class="btn btn-success btn-rounded waves-effect waves-light" style="margin: 10px;">
                                                 <i class="ri-check-line align-middle mr-2"></i>提交
                                             </button>
                                         </div>
@@ -119,7 +119,7 @@
 <!--                            </div>-->
 <!--                        </div>-->
 <!--                    </div>-->
-
+                </div>
 
                 <div th:replace="commons::footer"></div>
             </div>
@@ -127,7 +127,7 @@
 
         <!-- Main Content End -->
     </div>
-                    </div>
+
 
 
 
@@ -154,10 +154,29 @@
 
 
     <script type="text/javascript" th:inline="javascript">
-        function getScore(){
-            var oScore = document.getElementById("score");
-            console.log(oScore.value);
+
+        function submitScore(){
+            var score = document.getElementById("score").value;
+            var id = [[${expSub.id}]];
+            var stuNumber = [[${expSub.stuNumber}]];
+            var teaNumber = [[${expSub.teaNumber}]];
+            $.ajax({
+                type:"POST",
+                url:"report_score",
+                data: {"id": id,
+                    "stuNumber": stuNumber,
+                    "teaNumber": teaNumber,
+                    "score": score},
+                success:function () {
+
+                },
+                error: function(){
+
+                }
+            })
+
         }
+
 
         $(document).ready(function(){
             tinymce.init({

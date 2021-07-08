@@ -60,10 +60,12 @@
                                             <thead style="text-align: center;">
                                                 <tr>
                                                     <th>操作</th>
+                                                    <th>编号</th>
                                                     <th>学生</th>
+                                                    <th>学号</th>
                                                     <th>所属任务</th>
-                                                    <th>报告来源</th>
-                                                    <th>任务总分</th>
+<!--                                                    <th>报告来源</th>-->
+<!--                                                    <th>任务总分</th>-->
                                                     <th>任务得分</th>
                                                     <th>是否审核</th>
                                                     <th>提交时间</th>
@@ -76,30 +78,36 @@
                                                 </tr>
                                             </thead>
                                             <tbody style="text-align: center;" >
-<!--                                                <tr th:each="report:${reports}">-->
-                                                    <tr>
+                                                <tr th:each="report:${reports}">
+
                                                     <td>
                                                         <div style="width:30px;"></div>
-                                                        <a th:href="admin_report_detail" class="" style="color:#4aa3ff;" >
+                                                        <a th:href="@{admin_report_detail(id=${report.id})}" class="" style="color:#4aa3ff;" >
                                                             <i class="mdi mdi-login font-size-18"></i>
                                                         </a>
-                                                        <a href="#" class="delete" style="color:#505d69" data-original-title="Delete">
+                                                        <a th:href="@{admin_report_delete(id=${report.id})}" class="delete" style="color:#505d69">
                                                             <i class="mdi mdi-trash-can font-size-18"></i>
                                                         </a>
                                                     </td>
-                                                    <td>丁一</td>
-                                                    <td>三、利用HiveSQL离线分析评论数据</td>
-                                                    <td>项目任务</td>
-                                                    <td>100</td>
-                                                    <td>未审核</td>
-                                                    <td><div class="badge badge-soft-warning font-size-12">未审核</div></td>
-                                                    <td>2020-05-13 11:11:11</td>
-                                                    <td>未审核</td>
-<!--                                                    <td>-</td>-->
-<!--                                                    <td>-</td>-->
-                                                    <td>1小时33分11秒</td>
-                                                    <td>未审核</td>
-<!--                                                    <td>系统监控(111)</td>-->
+                                                    <td th:text="${reportStat.index+1}"></td>
+                                                    <td th:text="${report.stuName}"></td>
+                                                    <td th:text="${report.stuNumber}"></td>
+                                                    <td th:text="${report.subExperimentName}"></td>
+                                                    <td th:text="${report.score}"></td>
+                                                    <td th:text="${report.examined}"></td>
+                                                    <td th:text="${#dates.format(report.submitTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                                    <td th:text="${#dates.format(report.examinedTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                                    <td th:text="${report.teaName}"></td>
+<!--                                                    <td>丁一</td>-->
+<!--                                                    <td>三、利用HiveSQL离线分析评论数据</td>-->
+<!--                                                    <td>项目任务</td>-->
+<!--                                                    <td>100</td>-->
+<!--                                                    <td>未审核</td>-->
+<!--                                                    <td><div class="badge badge-soft-warning font-size-12">未审核</div></td>-->
+<!--                                                    <td>2020-05-13 11:11:11</td>-->
+<!--                                                    <td>未审核</td>-->
+<!--                                                    <td>1小时33分11秒</td>-->
+<!--                                                    <td>未审核</td>-->
                                                 </tr>
 
                                             </tbody>
