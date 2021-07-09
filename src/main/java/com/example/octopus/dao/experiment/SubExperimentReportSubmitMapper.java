@@ -37,7 +37,7 @@ public interface SubExperimentReportSubmitMapper{
      *  根据id查询
      */
     @Select("SELECT sers.*,se.sub_experiment_name,s.name as stu_name,t.tea_name FROM sub_experiment_report_submit sers, sub_experiment se, student s, teacher t " +
-            "WHERE id = #{id} AND sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND sers.tea_number = t.tea_number")
+            "WHERE sers.id = #{id} AND sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND sers.tea_number = t.tea_number")
     SubExperimentReportSubmit getById(long id);
 
     /**
