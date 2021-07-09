@@ -87,7 +87,7 @@ public interface VideoProgressMapper {
             "group by vp.stu_number, vp.video_id")
     List<VideoProgressDetailVO>  getAllVideoProgressDetail();
 
-    @Select("select vp.stu_number, s.name, vp.video_id, v.name as video_name, v.course_id, c.course_name, sum(vp.study_time) as study_time_sum, min(vp.start_time) as very_start_time, max(vp.end_time) as very_last_time" +
+    @Select("select vp.stu_number, s.name, vp.video_id, v.name as video_name, v.course_id, c.course_name, sum(vp.study_time) as study_time_sum, min(vp.start_time) as very_start_time, max(vp.end_time) as very_last_time " +
             "from video_progress vp, video v, course c, student s " +
             "where vp.stu_number = s.stu_number and c.tea_number = #{teaNumber} and vp.video_id = v.id and v.course_id = c.id " +
             "group by vp.stu_number, vp.video_id")
