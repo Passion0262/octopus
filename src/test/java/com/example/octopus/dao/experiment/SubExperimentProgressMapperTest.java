@@ -16,7 +16,7 @@ class SubExperimentProgressMapperTest {
 
 	@Test
 	void getAllOperateTime() {
-		System.out.println(subExperimentProgressMapper.getAllOperateTime());
+//		System.out.println(subExperimentProgressMapper.getAllOperateTime());
 	}
 
 	@Test
