@@ -22,6 +22,8 @@ public interface DockerMapper {
             "WHERE c.tea_number=#{teaNumber} and d.stu_number=sc.stu_number and sc.course_id=c.id")
     List<Docker> listDockersByTeaId(long teaNumber);
 
+
+    ////////////////
     @Select("SELECT * FROM docker WHERE stu_number = #{stuNumber}")
     Docker getDockerByStuNum(long stuNumber);
 
@@ -46,5 +48,19 @@ public interface DockerMapper {
     boolean updateStatusByStuNum(long stuNumber, String status, long processingId);
 
 
+    ////////// 按运行中与睡眠中查询
+    @Select("SELECT * FROM docker WHERE docker_status not like 'sleeping'")
+    List<Docker> listAllAwakeDocker();
+
+    @Select("SELECT d.* FROM docker d, student_course sc, course c " +
+            "WHERE docker_status not like 'sleeping' and c.tea_number=#{teaNumber} and d.stu_number=sc.stu_number and sc.course_id=c.id")
+    List<Docker> listAwakeDockerByTeaID(long teaNumber);
+
+    @Select("SELECT * FROM docker WHERE docker_status='sleeping'")
+    List<Docker> listAllSleepDocker();
+
+    @Select("SELECT d.* FROM docker d, student_course sc, course c " +
+            "WHERE docker_status='sleeping' and c.tea_number=#{teaNumber} and d.stu_number=sc.stu_number and sc.course_id=c.id")
+    List<Docker> listSleepDockerByTeaID(long teaNumber);
 
 }

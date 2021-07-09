@@ -94,7 +94,7 @@ public class SubExperimentProgressServiceImpl implements SubExperimentProgressSe
     public List<SubExperimentOperateTimeVO> getOperateTimeByRole(long teaNumber){
         long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
         if (role == 1) {
-            return subExperimentProgressMapper.getAllOperateTime();
-        } else return subExperimentProgressMapper.getOperateTimeByTeacherId(teaNumber);
+            return subExperimentProgressMapper.getAllOperateTimeSummary();
+        } else return subExperimentProgressMapper.getOperateTimeSummaryByTeacherId(teaNumber);
     }
 }

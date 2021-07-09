@@ -78,5 +78,14 @@ public interface DockerService {
 	 */
 	boolean createNewDocker(long stuNumber);
 
+	/**
+	 * 通过教师身份查询运行中或睡眠中的docker
+	 *
+	 * @param teaNumber 教师号
+	 * @param awaken    true则查询运行中docker
+	 *                  false则查询睡眠中docker
+	 */
+	List<Docker> getDockerListByRoleAndAwake(long teaNumber, boolean awaken);
+
 
 }
