@@ -62,7 +62,7 @@
                                             <div class="form-group row">
                                                 <label for="add_teacher" class="col-md-2 col-form-label">授课老师账号：</label>
                                                 <div class="col-md-10">
-                                                    <input name="teaNumber" th:value="*{teaNumber}"  class="form-control" id="add_teacher" type="text" readonly style="border: none">
+                                                    <input name="teaNumber" th:value="*{teaNumber}"  class="form-control" id="add_teacher" type="text">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -289,7 +289,7 @@
             }
 
             $(function() {
-                if ([[${coursemodel.role}]] === "teacher"){
+                if ([[${coursemodel.role=='teacher'}]]){
                     $("#add_teacher").attr("readonly",true);
                 }
 
