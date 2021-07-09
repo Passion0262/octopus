@@ -70,14 +70,25 @@
                                             <p th:text="'提交时间：'+${#dates.format(expSub.submitTime, 'yyyy-MM-dd HH:mm:ss')}" style="display: flex;align-items: center;margin-bottom: 20px; margin-top: 20px;"></p>
                                         </div>
                                         <div class="row">
+                                            <p style="display: flex;align-items: center;margin-bottom: 20px; margin-top: 20px;">是否审核：
+                                                <span th:text="${expSub.examined==true?'已审核':'未审核'}" th:class="'badge badge-soft-'+${expSub.examined==true?'success':'warning'}" style="font-size: 13px"></span>
+                                            </p>
+                                        </div>
+                                        <div class="row">
                                             <p th:text="'得分：'" style="display: flex;align-items: center;margin-bottom: 20px; margin-top: 20px;"></p>
                                         </div>
                                         <div class="col-md-14">
-                                            <input type="text" id="score" name="score">
+                                            <input type="text" id="score" name="score" th:value="${expSub.score}">
                                         </div>
                                         <div class="row">
                                             <p th:text="'审核老师：'+${expSub.teaName}" style="display: flex;align-items: center;margin-bottom: 20px; margin-top: 20px;"></p>
                                         </div>
+                                        <form id="form" method="post" action="/report_score" style="display: none" th:object="${expSub}">
+                                            <input name="subExperimentId" th:value="*{subExperimentId}">
+                                            <input name="stuNumber" th:value="*{stuNumber}">
+                                            <input name="teaNumber" th:value="*{teaNumber}">
+                                            <input id="set_score" name="score" th:value="*{score}">
+                                        </form>
                                         <div class="row" style="display: block;text-align: center;margin-top: 30px;">
                                             <a href="admin_report" class="btn btn-light btn-rounded waves-effect waves-light" style="margin: 10px;">
                                                 <i class="ri-close-line align-middle mr-2"></i>取消
@@ -156,25 +167,8 @@
     <script type="text/javascript" th:inline="javascript">
 
         function submitScore(){
-            var score = document.getElementById("score").value;
-            var id = [[${expSub.id}]];
-            var stuNumber = [[${expSub.stuNumber}]];
-            var teaNumber = [[${expSub.teaNumber}]];
-            $.ajax({
-                type:"POST",
-                url:"report_score",
-                data: {"id": id,
-                    "stuNumber": stuNumber,
-                    "teaNumber": teaNumber,
-                    "score": score},
-                success:function () {
-
-                },
-                error: function(){
-
-                }
-            })
-
+            document.getElementById("set_score").value = document.getElementById("score").value;
+            document.getElementById("form").submit();
         }
 
 
