@@ -21,116 +21,127 @@ import java.util.List;
 @Service
 public class DockerServiceImpl implements DockerService {
 
-    private static final int[] FORBIDDEN_PORTS = {8080, 3306};
+	private static final int[] FORBIDDEN_PORTS = {8080, 3306};
 
-    private static ShellUtils shellUtils = new ShellUtils();
+	private static ShellUtils shellUtils = new ShellUtils();
 
-    @Autowired
-    private DockerMapper dockerMapper;
+	@Autowired
+	private DockerMapper dockerMapper;
 
-    @Autowired
-    private UserService userService;
+	@Autowired
+	private UserService userService;
 
-    @Autowired
-    SysUserRoleMapper sysUserRoleMapper;
+	@Autowired
+	SysUserRoleMapper sysUserRoleMapper;
 
-    @Override
-    public boolean existsStuNumDocker(long stuNumber) {
-        Student student = userService.getStudentByStuNumber(stuNumber);
-        if (student != null) {
-            Docker docker = findDockerByStuNumber(stuNumber);
-            return docker != null;
-        }
-        return false;
-    }
-
-
+	@Override
+	public boolean existsStuNumDocker(long stuNumber) {
+		Student student = userService.getStudentByStuNumber(stuNumber);
+		if (student != null) {
+			Docker docker = findDockerByStuNumber(stuNumber);
+			return docker != null;
+		}
+		return false;
+	}
 
 
-    @Override
-    public List<Docker> getDockerListByRole(long teaNumber) {
-        long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
-        if (role == 1) {
-            //管理员获取全部
-            return dockerMapper.listAllDockers();
-        } else return dockerMapper.listDockersByTeaId(teaNumber);
-    }
+	@Override
+	public List<Docker> getDockerListByRole(long teaNumber) {
+		long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
+		if (role == 1) {
+			//管理员获取全部
+			return dockerMapper.listAllDockers();
+		} else return dockerMapper.listDockersByTeaId(teaNumber);
+	}
 
 
-    @Override
-    public Docker findDockerById(long id) {
-        return dockerMapper.getDockerById(id);
-    }
+	@Override
+	public Docker findDockerById(long id) {
+		return dockerMapper.getDockerById(id);
+	}
 
-    @Override
-    public Docker findDockerByStuNumber(long stuNumber) {
-        return dockerMapper.getDockerByStuNum(stuNumber);
-    }
+	@Override
+	public Docker findDockerByStuNumber(long stuNumber) {
+		return dockerMapper.getDockerByStuNum(stuNumber);
+	}
 
 
-    @Override
-    public String getAddressByStuNumber(long stuNumber) {
-        return "http://172.18.146.123:6080/#/";
+	@Override
+	public String getAddressByStuNumber(long stuNumber) {
+		return "http://172.18.146.123:6080/#/";
 //        return dockerMapper.getDockerByStuNum(stuNumber).getDockerAddress();
-    }
+	}
 
-    @Override
-    public String[] getStatusByStuNum(long stuNumber) {
-        String[] result = new String[2];
-        Docker docker = dockerMapper.getDockerByStuNum(stuNumber);
-        result[0] = docker.getDockerStatus();
-        result[1] = String.valueOf(docker.getProcessingId());
-        return result;
-    }
+	@Override
+	public String[] getStatusByStuNum(long stuNumber) {
+		String[] result = new String[2];
+		Docker docker = dockerMapper.getDockerByStuNum(stuNumber);
+		result[0] = docker.getDockerStatus();
+		result[1] = String.valueOf(docker.getProcessingId());
+		return result;
+	}
 
-    @Override
-    public boolean updateStatusByStuNum(long stuNumber, int statusCode, long processingId){
-        String status=null;
-        if (statusCode==0) {
-            status="sleeping";
-            processingId=0;
+	@Override
+	public boolean updateStatusByStuNum(long stuNumber, int statusCode, long processingId) {
+		String status = null;
+		if (statusCode == 0) {
+			status = "sleeping";
+			processingId = 0;
+		} else if (statusCode == 1) status = "project";
+		else if (statusCode == 2) status = "experiment";
+		else return false;
+		return dockerMapper.updateStatusByStuNum(stuNumber, status, processingId);
+	}
+
+
+	@Override
+	public boolean createNewDocker(long stuNumber) {
+
+		if (existsStuNumDocker(stuNumber)) {
+			System.out.println("该学生已有docker容器了，不需要再创建");
+			return false;
+		}
+
+		List<String> ports = dockerMapper.getAllPorts();  //获取所有端口
+
+		String stuName = userService.getStudentByStuNumber(stuNumber).getName();
+		String dockerName = String.valueOf(stuNumber);
+		int dockerPort = Integer.parseInt(Collections.max(ports)) + 1;
+		for (int i = 0; i < FORBIDDEN_PORTS.length; i++) {
+			if (dockerPort == FORBIDDEN_PORTS[i]) {
+				dockerPort++;
+				i--;
+			}
+		}
+
+		String dockerCommand = "docker run -idt -p " + dockerPort + "-e USER=test -e PASSWORD=123 --name "
+				+ dockerName + "  centminmod/docker-ubuntu-vnc-desktop";
+		shellUtils.sshRemoteCallLogin();
+		shellUtils.execCommand(dockerCommand);
+		shellUtils.closeSession();
+
+
+		String address = "http://172.18.146.123:" + String.valueOf(dockerPort) + "/#/";
+		try {
+			dockerMapper.createDocker(dockerName, dockerPort, stuNumber, stuName, address);
+			return true;
+		} catch (Exception e) {
+			throw e;
+		}
+
+	}
+
+	@Override
+	public List<Docker> getDockerListByRoleAndAwake(long teaNumber, boolean awaken) {
+		long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
+		if (role == 1) {
+			//管理员获取全部
+			if (awaken) return dockerMapper.listAllAwakeDocker();
+			else return dockerMapper.listAllSleepDocker();
+		}
+		else{
+            if (awaken) return dockerMapper.listAwakeDockerByTeaID(teaNumber);
+            else return dockerMapper.listSleepDockerByTeaID(teaNumber);
         }
-        else if(statusCode==1) status="project";
-        else if(statusCode==2) status="experiment";
-        else return false;
-        return dockerMapper.updateStatusByStuNum(stuNumber, status, processingId);
-    }
-
-
-    @Override
-    public boolean createNewDocker(long stuNumber) {
-
-        if (existsStuNumDocker(stuNumber)) {
-            System.out.println("该学生已有docker容器了，不需要再创建");
-            return false;
-        }
-
-        List<String> ports = dockerMapper.getAllPorts();  //获取所有端口
-
-        String stuName = userService.getStudentByStuNumber(stuNumber).getName();
-        String dockerName = String.valueOf(stuNumber);
-        int dockerPort = Integer.valueOf(Collections.max(ports)) + 1;
-        for (int i = 0; i < FORBIDDEN_PORTS.length; i++) {
-            if (dockerPort == FORBIDDEN_PORTS[i]) {
-                dockerPort++;
-                i--;
-            }
-        }
-
-        String dockerCommand = "docker run -idt -p " + dockerPort + "-e USER=test -e PASSWORD=123 --name "
-                + dockerName + "  centminmod/docker-ubuntu-vnc-desktop";
-        shellUtils.sshRemoteCallLogin();
-        shellUtils.execCommand(dockerCommand);
-        shellUtils.closeSession();
-
-
-        String address = "http://172.18.146.123:" + String.valueOf(dockerPort) + "/#/";
-        try {
-            dockerMapper.createDocker(dockerName, dockerPort, stuNumber, stuName, address);
-            return true;
-        } catch (Exception e) {
-            throw e;
-        }
-
-    }
+	}
 }
