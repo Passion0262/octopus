@@ -43,6 +43,11 @@ public class SubExperimentReportSubmitServiceImpl implements SubExperimentReport
     }
 
     @Override
+    public List<SubExperimentReportSubmit> listAll() {
+        return subExperimentReportSubmitMapper.listAll();
+    }
+
+    @Override
     public List<SubExperimentReportSubmit> listByTeaNumber(long teaNumber) {
         return subExperimentReportSubmitMapper.listByTeaNumber(teaNumber);
     }

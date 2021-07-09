@@ -21,6 +21,11 @@ class SubExperimentReportSubmitMapperTest {
     SubExperimentReportSubmitMapper subExperimentReportSubmitMapper;
 
     @Test
+    void listALL() {
+        System.out.println(subExperimentReportSubmitMapper.listAll());
+    }
+
+    @Test
     void listBySubExperimentId() {
         System.out.println(subExperimentReportSubmitMapper.listBySubExperimentId(1));
     }

@@ -21,6 +21,11 @@ public interface SubExperimentReportSubmitService {
     SubExperimentReportSubmit getById(long id);
 
     /**
+     *  返回所有的提交记录
+     */
+    List<SubExperimentReportSubmit> listAll();
+
+    /**
      *  查询教师教的课的所有提交记录(不是所有已审核的)
      */
     List<SubExperimentReportSubmit> listByTeaNumber(long teaNumber);

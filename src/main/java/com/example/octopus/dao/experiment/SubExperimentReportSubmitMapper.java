@@ -13,6 +13,13 @@ import java.util.List;
 public interface SubExperimentReportSubmitMapper{
 
     /**
+     *  返回所有的提交记录
+     */
+    @Select("SELECT sers.*,se.sub_experiment_name,s.name as stu_name,t.tea_name FROM sub_experiment_report_submit sers, sub_experiment se, student s, teacher t " +
+            "WHERE sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND sers.tea_number = t.tea_number")
+    List<SubExperimentReportSubmit> listAll();
+
+    /**
      *  查询某子实验下所有学生的提交记录
      */
     @Select("SELECT sers.*,se.sub_experiment_name,s.name as stu_name,t.tea_name FROM sub_experiment_report_submit sers, sub_experiment se, student s, teacher t " +
