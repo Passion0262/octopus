@@ -179,7 +179,7 @@ public class adminController {
             model.addAttribute("sizeof_teachers", teacherService.getAllTeachers().size());
             model.addAttribute("sizeof_students", userService.listStudents().size());
             model.addAttribute("sizeof_dockers", dockerService.getDockerListByRole(teaNum).size());
-
+            model.addAttribute("sizeof_active_dockers", dockerService.getDockerListByRoleAndAwake(teaNum, true).size());
             model.addAttribute("lastLoginTime", teacherService.getTeacherByTeaNumber(teaNum).getLastLoginTime());
             return "admin_index";
         } catch (Exception e) {
