@@ -99,7 +99,7 @@ public interface SubExperimentProgressMapper {
             "WHERE sep.stu_number=s.stu_number and s.major_id=major.id and s.class_id=class_.id and sep.sub_experiment_id=se.id and se.experiment_id=ce.experiment_id and ce.course_id=course.id")
     List<SubExperimentOperateTimeVO> getAllOperateTimeSummary();
 
-    @Select("SELECT sep.id, sep.sub_experiment_id, sep.stu_number, min(start_time) AS start_time, max(end_time) AS end_time, sum(valid_study_time) AS valid_study_time, " +
+    @Select("SELECT sep.id, sep.sub_experiment_id, sep.stu_number, min(sep.start_time) AS start_time, max(sep.end_time) AS end_time, sum(sep.valid_study_time) AS valid_study_time, " +
             "s.name, class_.class_name, major.major_name, course.course_name, se.sub_experiment_name " +
             "FROM sub_experiment_progress sep, student s, class_, major, course, sub_experiment se, course_experiment ce " +
             "WHERE sep.stu_number=s.stu_number and s.major_id=major.id and s.class_id=class_.id and sep.sub_experiment_id=se.id and se.experiment_id=ce.experiment_id and ce.course_id=course.id and course.tea_number=#{teaNumber}")
