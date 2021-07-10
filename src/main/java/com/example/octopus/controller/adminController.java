@@ -369,9 +369,14 @@ public class adminController {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
 
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         try {
             logger.info("提交新增的class_: [{}]", class_);
+            if (role_id == 3){
+                // 如果是教师账号，学校只能是该教师所在学校
+                class_.setSchool(teacherService.getTeacherByTeaNumber(teaNum).getSchool());
+            }
             classService.insertClass(class_);
             return new ModelAndView("redirect:/admin_class");
         }
