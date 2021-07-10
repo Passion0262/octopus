@@ -372,7 +372,7 @@ public class adminController {
 
         try {
             logger.info("提交新增的class_: [{}]", class_);
-            classService.insertClass(class_, teaNum);
+            classService.insertClass(class_);
             return new ModelAndView("redirect:/admin_class");
         }
         catch (Exception e){

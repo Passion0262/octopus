@@ -13,12 +13,10 @@ import java.util.List;
 public interface ClassService {
 
     /**
-     * 新增课程
-     *
-     * @param class_ 课程实体
-     * @return 成功为true，失败为false
+     * 新增班级
      */
-    boolean insertClass(Class_ class_, long teaNumber);
+
+    boolean insertClass(Class_ class_);
 
     /**
      * 查询所有课程

@@ -23,7 +23,7 @@ public interface TeacherMapper {
     @Select("SELECT t.*, major_name FROM teacher t, major m WHERE t.major_id=m.id")
     List<Teacher> getAllTeachers();
 
-    @Update("UPDATE teacher SET tea_name = #{teaName},major_id = #{majorId},admin_rights = #{adminRights},phone = #{phone},school = #{school},login_number = #{loginNumber}, last_login_time = #{lastLoginTime} " +
+    @Update("UPDATE teacher SET tea_name = #{teaName},major_id = #{majorId},admin_rights = #{adminRights},phone = #{phone},school = #{school}" +
             "WHERE tea_number = #{teaNumber}")
     boolean updateTeacher(Teacher teacher);
 
