@@ -69,8 +69,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean insertStudent(Student student, long teaNumber) {
         student.setSchool(teacherMapper.getSchoolByTeaNumber(teaNumber));
+        if (student.getPassword() == null)
+            student.setPassword("123");
         SysUserRole sysUserRole = new SysUserRole(student.getStuNumber(), 2,  student.getPassword());
-        return userMapper.insertStudent(student) && sysUserRoleMapper.insert(sysUserRole);
+
+        boolean add2StuTable = userMapper.insertStudent(student);
+        boolean add2SURTable = false;
+        if (add2StuTable) {
+            add2SURTable = sysUserRoleMapper.insert(sysUserRole);
+            //如成功加入到了teacher表但因主键问题等没有加入到SUR表，则删除先加在teacher表中的数据
+            if (!add2SURTable) userMapper.deleteByStuNumber(student.getStuNumber());
+        }
+        return add2StuTable && add2SURTable;
     }
 
     @Override
