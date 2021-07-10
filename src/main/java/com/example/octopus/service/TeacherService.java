@@ -1,5 +1,6 @@
 package com.example.octopus.service;
 
+import com.example.octopus.entity.VOs.AdminInfoVO;
 import com.example.octopus.entity.user.Teacher;
 import org.springframework.stereotype.Service;
 
@@ -60,5 +61,15 @@ public interface TeacherService {
      */
     boolean deleteTeacher(long teaNumber);
 
+    /////////////获取首页展示信息：返回 最近七天 视频学习时间 和 实验学习时间 两个列表 单位为秒
+
+    /**
+     * 显示最近七天视频学习时间总和，注意如某日期下没有学习，则在返回的表中不会存在此日期信息
+     */
+    List<AdminInfoVO> getSumVideoTimeByRole(long teaNumber);
+    /**
+     * 显示最近七天实验学习时间总和，注意如某日期下没有学习，则在返回的表中不会存在此日期信息
+     */
+    List<AdminInfoVO> getSumExperimentTimeByRole(long teaNumber);
 
 }
