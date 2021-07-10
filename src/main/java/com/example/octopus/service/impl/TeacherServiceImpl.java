@@ -45,8 +45,7 @@ public class TeacherServiceImpl implements TeacherService {
 		Teacher old = teacherMapper.getByTeaNumber(teacher.getTeaNumber());
 		Teacher t = old.mergeUpdate(old, teacher);
 		long roleId = t.getAdminRights() ? 1 : 3;
-		return teacherMapper.updateTeacher(t) && sysUserRoleMapper.updateRoleId(t.getTeaNumber(), roleId)
-				&& sysUserRoleMapper.updatePassword(t.getTeaNumber(), t.getPassword());
+		return teacherMapper.updateTeacher(t) && sysUserRoleMapper.updateRoleId(t.getTeaNumber(), roleId);
 	}
 
 	@Override

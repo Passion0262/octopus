@@ -34,7 +34,7 @@ public interface TeacherService {
     List<Teacher> getAllTeachers();
 
     /**
-     * 更新老师信息，不允许更新登录信息
+     * 更新老师信息，不允许更新密码和登录信息
      * @param teacher 老师实体
      * @return 更新成功与否
      */

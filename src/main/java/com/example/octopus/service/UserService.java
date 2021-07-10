@@ -43,7 +43,7 @@ public interface UserService {
     boolean insertStudent(Student student, long teaNumber);
 
     /**
-     * 更新学生信息
+     * 更新学生信息，不更新密码和登录信息
      * @param student 学生实体
      * @return 成功为true，失败为false
      */

@@ -30,8 +30,7 @@ public class ClassServiceImpl implements ClassService {
 	SysUserRoleMapper sysUserRoleMapper;
 
 	@Override
-	public boolean insertClass(Class_ class_, long teaNumber) {
-		class_.setSchool(teacherMapper.getSchoolByTeaNumber(teaNumber));
+	public boolean insertClass(Class_ class_){
 		return classMapper.insertClass(class_);
 	}
 

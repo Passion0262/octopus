@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean updateStudent(Student student) {
-        return userMapper.updateStudent(student) && sysUserRoleMapper.updatePassword(student.getStuNumber(), student.getPassword());
+        return userMapper.updateStudent(student);
     }
 
     @Override
