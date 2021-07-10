@@ -2,6 +2,7 @@ package com.example.octopus.service.impl;
 
 import com.example.octopus.dao.SysUserRoleMapper;
 import com.example.octopus.dao.TeacherMapper;
+import com.example.octopus.entity.VOs.AdminInfoVO;
 import com.example.octopus.entity.user.SysUserRole;
 import com.example.octopus.entity.user.Teacher;
 import com.example.octopus.service.TeacherService;
@@ -76,4 +77,19 @@ public class TeacherServiceImpl implements TeacherService {
 		return teacherMapper.deleteTeacher(teaNumber) && sysUserRoleMapper.deleteUser(teaNumber);
 	}
 
+	@Override
+	public List<AdminInfoVO> getSumVideoTimeByRole(long teaNumber){
+		long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
+		if (role == 1) {
+			return teacherMapper.getAllVideoStudyTimeSum();
+		} else return teacherMapper.getVideoStudyTimeSumByTeaNumber(teaNumber);
+	}
+
+	@Override
+	public List<AdminInfoVO> getSumExperimentTimeByRole(long teaNumber){
+		long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
+		if (role == 1) {
+			return teacherMapper.getAllExperimentTimeSum();
+		} else return teacherMapper.getExperimentTimeSumByTeaNumber(teaNumber);
+	}
 }
