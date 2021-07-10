@@ -50,12 +50,12 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <form id="form" class="needs-validation" action="/add_student" method="post" th:object="${stumodel.student}" novalidate="" style="padding-left: 20px;">
-                                            <div class="form-group row">
-                                                <label for="add_stuNumber" class="col-md-2 col-form-label">学号：</label>
-                                                <div class="col-md-10">
-                                                    <input name="stuNumber" th:value="*{stuNumber}" class="form-control" type="text"  id="add_stuNumber">
-                                                </div>
-                                            </div>
+<!--                                            <div class="form-group row" style="display:none">-->
+<!--                                                <label for="add_stuNumber" class="col-md-2 col-form-label">学号：</label>-->
+<!--                                                <div class="col-md-10">-->
+<!--                                                    <input name="stuNumber" th:value="*{stuNumber}" class="form-control" type="text"  id="add_stuNumber">-->
+<!--                                                </div>-->
+<!--                                            </div>-->
                                             <div class="form-group row">
                                                 <label for="add_stuName" class="col-md-2 col-form-label">姓名：</label>
                                                 <div class="col-md-10">
@@ -160,7 +160,7 @@
 
         <script type="text/javascript" th:inline="javascript">
             $(function () {
-                document.getElementById("add_stuNumber").value = "";
+                //document.getElementById("add_stuNumber").value = "";
 
                 //发送请求获取所有的专业
                 $.ajax({
@@ -205,16 +205,40 @@
             }
 
             function checkForm(){
-                var oStuNumber = document.getElementById("add_stuNumber");
+                //var oStuNumber = document.getElementById("add_stuNumber");
                 var oStuName = document.getElementById("add_stuName");
-                if (!oStuNumber.value){
-                    document.getElementById("alert").style.display="";
-                    document.getElementById("result_msg").innerHTML = "请填写学号！";
-                    return false;
-                }
+                var oMajor = document.getElementById("add_major");
+                var oClass = document.getElementById("add_class");
+                var oSchool = document.getElementById("add_school");
+                var oPhone = document.getElementById("add_phoneNumber");
+                // if (!oStuNumber.value){
+                //     document.getElementById("alert").style.display="";
+                //     document.getElementById("result_msg").innerHTML = "请填写学号！";
+                //     return false;
+                // }
                 if (!oStuName.value){
                     document.getElementById("alert").style.display="";
                     document.getElementById("result_msg").innerHTML = "请填写姓名！";
+                    return false;
+                }
+                if (oMajor==="0"){
+                    document.getElementById("alert").style.display="";
+                    document.getElementById("result_msg").innerHTML = "请填写专业！";
+                    return false;
+                }
+                if (oClass==="0"){
+                    document.getElementById("alert").style.display="";
+                    document.getElementById("result_msg").innerHTML = "请填写班级！";
+                    return false;
+                }
+                if (!School.value){
+                    document.getElementById("alert").style.display="";
+                    document.getElementById("result_msg").innerHTML = "请填写学校！";
+                    return false;
+                }
+                if (!oPhone.value){
+                    document.getElementById("alert").style.display="";
+                    document.getElementById("result_msg").innerHTML = "请填写联系手机！";
                     return false;
                 }
                 return true;

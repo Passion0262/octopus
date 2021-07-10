@@ -646,27 +646,27 @@ public class adminController {
     }
 
     //删除教师
-    @RequestMapping("/admin_teacher_delete")
-    public ModelAndView admin_teacher_delete(HttpServletRequest request, Model model) {
-        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-        long teaNum = Long.parseLong(request.getParameter("teaNumber"));
-        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
-
-        if (role_id == 1) {
-            logger.info("删除 teaNumber=[{}]", teaNum);
-            try {
-                teacherService.deleteTeacher(teaNum);
-                return new ModelAndView("redirect:/admin_teacher");
-            }
-            catch (Exception e){
-                return new ModelAndView("redirect:/admin_error");
-            }
-        }
-        else{
-            return new ModelAndView("redirect:/login");
-        }
-
-    }
+//    @RequestMapping("/admin_teacher_delete")
+//    public ModelAndView admin_teacher_delete(HttpServletRequest request, Model model) {
+//        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+//        long teaNum = Long.parseLong(request.getParameter("teaNumber"));
+//        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
+//
+//        if (role_id == 1) {
+//            logger.info("删除 teaNumber=[{}]", teaNum);
+//            try {
+//                teacherService.deleteTeacher(teaNum);
+//                return new ModelAndView("redirect:/admin_teacher");
+//            }
+//            catch (Exception e){
+//                return new ModelAndView("redirect:/admin_error");
+//            }
+//        }
+//        else{
+//            return new ModelAndView("redirect:/login");
+//        }
+//
+//    }
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////
