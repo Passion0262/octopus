@@ -501,13 +501,13 @@ public class adminController {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
 
         logger.info("提交修改的student: [{}]", student);
-        try {
+//        try {
             userService.updateStudent(student);
             return new ModelAndView("redirect:/admin_student");
-        }
-        catch (Exception e){
-            return new ModelAndView("redirect:/admin_error");
-        }
+//        }
+//        catch (Exception e){
+//            return new ModelAndView("redirect:/admin_error");
+//        }
     }
 
     //删除学生
