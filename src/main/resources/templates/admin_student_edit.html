@@ -63,6 +63,18 @@
                                                         <input name="name" th:value="*{name}" class="form-control" type="text" id="edit_stuName">
                                                     </div>
                                                 </div>
+                                                <div class="form-group row" style="display: none">
+                                                    <label for="edit_password" class="col-md-2 col-form-label">密码：</label>
+                                                    <div class="col-md-10">
+                                                        <input name="password" th:value="*{password}" class="form-control" type="password" id="edit_password">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row" th:if="${stumodel.role eq 'admin'}">
+                                                    <label for="edit_school" class="col-md-2 col-form-label">学校：</label>
+                                                    <div class="col-md-10">
+                                                        <input name="school" th:value="*{school}" id="edit_school" class="form-control" type="text">
+                                                    </div>
+                                                </div>
                                                 <div class="form-group row">
                                                     <label for="edit_major" class="col-md-2 col-form-label">所属专业：</label>
                                                     <div class="col-md-10">
@@ -215,10 +227,13 @@
                         document.getElementById("result_msg").innerHTML = "请填写姓名！";
                         return false;
                     }
-                    if (!oSchool.value){
-                        document.getElementById("alert").style.display="";
-                        document.getElementById("result_msg").innerHTML = "请填写学校！";
-                        return false;
+                    if([[${stumodel.role eq 'admin'}]]){
+                        var oSchool = document.getElementById("edit_school");
+                        if (!oSchool.value) {
+                            document.getElementById("alert").style.display = "";
+                            document.getElementById("result_msg").innerHTML = "请填写学校！";
+                            return false;
+                        }
                     }
                     if (!oPhone.value){
                         document.getElementById("alert").style.display="";
