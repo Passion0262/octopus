@@ -181,6 +181,10 @@ public class adminController {
             model.addAttribute("sizeof_dockers", dockerService.getDockerListByRole(teaNum).size());
             model.addAttribute("sizeof_active_dockers", dockerService.getDockerListByRoleAndAwake(teaNum, true).size());
             model.addAttribute("lastLoginTime", teacherService.getTeacherByTeaNumber(teaNum).getLastLoginTime());
+            model.addAttribute("sumExperimentTime", teacherService.getSumExperimentTimeByRole(teaNum));
+            model.addAttribute("sumVideoTime", teacherService.getSumVideoTimeByRole(teaNum));
+//            logger.info("实验时间：{}", teacherService.getSumExperimentTimeByRole(teaNum));
+//            logger.info("视频时间：{}", teacherService.getSumVideoTimeByRole(teaNum));
             return "admin_index";
         } catch (Exception e) {
             return "redirect:/";

@@ -350,13 +350,13 @@
                         name:'视频学习',
                         type:'line',
                         stack: '总量',
-                        data:[120, 132, 101, 134, 90, 230, 210]
+                        data:[[${sumVideoTime}]]
                     },
                     {
                         name:'实验学习',
                         type:'line',
                         stack: '总量',
-                        data:[220, 182, 191, 234, 290, 330, 310]
+                        data:[[${sumExperimentTime}]]
                     }
                 ]
             };
@@ -407,7 +407,7 @@
         function getday() {
             let days = [];
             var date = new Date();
-            for(let i=144; i>=0;i-=24){		//144是前六天的小时数
+            for(let i=168; i>=0;i-=24){		//144是前六天的小时数
                 let dateItem=new Date(date.getTime() - i * 60 * 60 * 1000);	//使用当天时间戳减去以前的时间毫秒（小时*分*秒*毫秒）
                 let y = dateItem.getFullYear();	//获取年份
                 let m = dateItem.getMonth() + 1;	//获取月份js月份从0开始，需要+1
