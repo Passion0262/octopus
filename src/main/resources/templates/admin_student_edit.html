@@ -54,7 +54,7 @@
                                                 <div class="form-group row">
                                                     <label for="edit_stuNumber" class="col-md-2 col-form-label">学号：</label>
                                                     <div class="col-md-10">
-                                                        <input name="stuNumber" th:value="*{stuNumber}" class="form-control" type="text"  id="edit_stuNumber">
+                                                        <input name="stuNumber" th:value="*{stuNumber}" class="form-control" type="text"  id="edit_stuNumber" readonly style="border: none;">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -179,6 +179,9 @@
                             document.getElementById("result_msg").innerHTML = "获取专业列表失败";
                         }
                     })
+
+                    getClass();
+
                 })
 
                 function getClass(){
@@ -204,16 +207,22 @@
                 }
 
                 function checkForm(){
-                    var oStuNumber = document.getElementById("edit_stuNumber");
                     var oStuName = document.getElementById("edit_stuName");
-                    if (!oStuNumber.value){
-                        document.getElementById("alert").style.display="";
-                        document.getElementById("result_msg").innerHTML = "请填写学号！";
-                        return false;
-                    }
+                    var oSchool = document.getElementById("edit_school");
+                    var oPhone = document.getElementById("edit_phoneNumber");
                     if (!oStuName.value){
                         document.getElementById("alert").style.display="";
                         document.getElementById("result_msg").innerHTML = "请填写姓名！";
+                        return false;
+                    }
+                    if (!oSchool.value){
+                        document.getElementById("alert").style.display="";
+                        document.getElementById("result_msg").innerHTML = "请填写学校！";
+                        return false;
+                    }
+                    if (!oPhone.value){
+                        document.getElementById("alert").style.display="";
+                        document.getElementById("result_msg").innerHTML = "请填写联系手机！";
                         return false;
                     }
                     return true;

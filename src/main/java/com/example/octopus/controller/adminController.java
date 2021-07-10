@@ -646,27 +646,27 @@ public class adminController {
     }
 
     //删除教师
-    @RequestMapping("/admin_teacher_delete")
-    public ModelAndView admin_teacher_delete(HttpServletRequest request, Model model) {
-        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-        long teaNum = Long.parseLong(request.getParameter("teaNumber"));
-        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
-
-        if (role_id == 1) {
-            logger.info("删除 teaNumber=[{}]", teaNum);
-            try {
-                teacherService.deleteTeacher(teaNum);
-                return new ModelAndView("redirect:/admin_teacher");
-            }
-            catch (Exception e){
-                return new ModelAndView("redirect:/admin_error");
-            }
-        }
-        else{
-            return new ModelAndView("redirect:/login");
-        }
-
-    }
+//    @RequestMapping("/admin_teacher_delete")
+//    public ModelAndView admin_teacher_delete(HttpServletRequest request, Model model) {
+//        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+//        long teaNum = Long.parseLong(request.getParameter("teaNumber"));
+//        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
+//
+//        if (role_id == 1) {
+//            logger.info("删除 teaNumber=[{}]", teaNum);
+//            try {
+//                teacherService.deleteTeacher(teaNum);
+//                return new ModelAndView("redirect:/admin_teacher");
+//            }
+//            catch (Exception e){
+//                return new ModelAndView("redirect:/admin_error");
+//            }
+//        }
+//        else{
+//            return new ModelAndView("redirect:/login");
+//        }
+//
+//    }
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////
@@ -957,8 +957,12 @@ public class adminController {
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
         //System.out.println(subExperimentReportSubmitService.listByTeaNumber(3));
         try {
-
-            model.addAttribute("reports", subExperimentReportSubmitService.listByTeaNumber(3));
+            if (role_id == 1){
+                model.addAttribute("reports", subExperimentReportSubmitService.listAll());
+            }
+            else if (role_id == 3){
+                model.addAttribute("reports", subExperimentReportSubmitService.listByTeaNumber(teaNum));
+            }
             return "admin_report";
         }
         catch (Exception e){
@@ -982,22 +986,25 @@ public class adminController {
     }
 
     //提交实验报告评分
-    @PostMapping("/report_score")
-    public ModelAndView report_score( Model model, HttpServletRequest request, SubExperimentReportSubmit subExperimentReportSubmit) {
+    @PostMapping ("/report_score")
+    public ModelAndView report_score(Model model, SubExperimentReportSubmit subExperimentReportSubmit,HttpServletRequest request) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
 
-        logger.info("提交报告分数: [{}]", "xxx");
-        try {
-            long id = Long.parseLong(request.getParameter("id"));
-            long stuNumber = Long.parseLong(request.getParameter("stuNumber"));
-            long teaNumber = Long.parseLong(request.getParameter("teaNumber"));
-            int score = Integer.parseInt(request.getParameter("score"));
-            subExperimentReportSubmitService.updateByExamine(id, stuNumber, teaNumber, score);
+//        try {
+            long subExperimentId = subExperimentReportSubmit.getSubExperimentId();
+            long stuNumber = subExperimentReportSubmit.getStuNumber();
+            long teaNumber = subExperimentReportSubmit.getTeaNumber();
+            int score = subExperimentReportSubmit.getScore();
+            logger.info("提交报告分数: subExperimentId="+subExperimentId+
+                    ", stuNumber:"+stuNumber+
+                    ", teaNumber:"+teaNumber+
+                    ", score:"+score);
+            //subExperimentReportSubmitService.updateByExamine(subExperimentId, stuNumber, teaNumber, score);
             return new ModelAndView("redirect:/admin_report");
-        }
-        catch (Exception e){
-            return new ModelAndView("redirect:/admin_error");
-        }
+//        }
+//        catch (Exception e){
+//            return "redirect:/admin_error";
+//        }
     }
 
 
@@ -1009,11 +1016,6 @@ public class adminController {
 
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         try {
-//            List<SubExperimentOperateTimeVO> subExp = subExperimentProgressService.getOperateTimeByRole(teaNum);
-//            for (int i=0; i<subExp.size(); i++){
-//                SubExperimentOperateTimeVO e = subExp.get(i);
-//                e.setValidStudyTime(TimeTransUtils.timeTrans(e.getValidStudyTime()));
-//            }
             model.addAttribute("experiment_logs", subExperimentProgressService.getOperateTimeByRole(teaNum));
             return "admin_experiment_log";
         }
@@ -1478,7 +1480,7 @@ public class adminController {
             String fileType = img.getContentType();
             if (fileType.equals("image/jpeg") || fileType.equals("image/png") || fileType.equals("image/jpg")) {
                 // 要上传的目标文件存放的绝对路径
-                final String localPath = "static\\images\\upload\\" + target_dir;
+                final String localPath = "static\\images\\" + target_dir;
                 //上传后保存的文件名(需要防止图片重名导致的文件覆盖)
                 //获取文件名
                 String fileName = img.getOriginalFilename();
@@ -1494,7 +1496,7 @@ public class adminController {
                 }
                 if (result.equals("true")) {
                     //文件存放的相对路径(一般存放在数据库用于img标签的src)
-                    String relativePath = "static/images/upload/" + target_dir + "/" + fileName;
+                    String relativePath = "static/images/" + target_dir + "/" + fileName;
                     root.put("relativePath", relativePath);//前端根据是否存在该字段来判断上传是否成功
                     result_msg = "图片上传成功";
                 } else {
@@ -1516,49 +1518,49 @@ public class adminController {
 
 
     //上传文件
-    @ResponseBody
-    @RequestMapping("/upload_file")
-    public Map fileUpload(MultipartFile file, HttpServletRequest request) {
-        String result_msg = "";  //上传结果信息
-        Map<String, Object> root = new HashMap<String, Object>();
+//    @ResponseBody
+//    @RequestMapping("/upload_file")
+//    public Map fileUpload(MultipartFile file, HttpServletRequest request) {
+//        String result_msg = "";  //上传结果信息
+//        Map<String, Object> root = new HashMap<String, Object>();
+//
+//        //判断上传文件格式
+//        String fileType = file.getContentType();
+//        if (fileType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document") ||
+//                fileType.equals("application/pdf") ||
+//                fileType.equals("application/msword")) {
+//            // 要上传的目标文件存放的绝对路径
+//            final String localPath = "static\\reportsTemp";
+//            //上传后保存的文件名(需要防止图片重名导致的文件覆盖)
+//            //获取文件名
+//            String fileName = file.getOriginalFilename();
+//            //获取文件后缀名
+//            String suffixName = fileName.substring(fileName.lastIndexOf("."));
+//            String result = UploadFileUtils.upload(file, localPath, fileName, false);
+//            while (result.equals("exists")){
+//                //重新生成文件名
+//                fileName = UUID.randomUUID() + suffixName;
+//                result = UploadFileUtils.upload(file, localPath, fileName, false);
+//            }
+//            if (result.equals("true")) {
+//                //文件存放的相对路径(一般存放在数据库用于img标签的src)
+//                String relativePath = "static/reportsTemp/" + fileName;
+//                root.put("relativePath", relativePath);//前端根据是否存在该字段来判断上传是否成功
+//                result_msg = "文件上传成功";
+//            } else {
+//                result_msg = "文件上传失败";
+//            }
+//        } else {
+//            result_msg = "文件格式不正确";
+//        }
 
-        //判断上传文件格式
-        String fileType = file.getContentType();
-        if (fileType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document") ||
-                fileType.equals("application/pdf") ||
-                fileType.equals("application/msword")) {
-            // 要上传的目标文件存放的绝对路径
-            final String localPath = "static\\reportsTemp";
-            //上传后保存的文件名(需要防止图片重名导致的文件覆盖)
-            //获取文件名
-            String fileName = file.getOriginalFilename();
-            //获取文件后缀名
-            String suffixName = fileName.substring(fileName.lastIndexOf("."));
-            String result = UploadFileUtils.upload(file, localPath, fileName, false);
-            while (result.equals("exists")){
-                //重新生成文件名
-                fileName = UUID.randomUUID() + suffixName;
-                result = UploadFileUtils.upload(file, localPath, fileName, false);
-            }
-            if (result.equals("true")) {
-                //文件存放的相对路径(一般存放在数据库用于img标签的src)
-                String relativePath = "static/reportsTemp/" + fileName;
-                root.put("relativePath", relativePath);//前端根据是否存在该字段来判断上传是否成功
-                result_msg = "文件上传成功";
-            } else {
-                result_msg = "文件上传失败";
-            }
-        } else {
-            result_msg = "文件格式不正确";
-        }
 
-
-        root.put("result_msg", result_msg);
-//        JSON.toJSONString(root,SerializerFeature.DisableCircularReferenceDetect);
-        String root_json = JSON.toJSONString(root);
-        logger.info(root_json);
-        return root;
-    }
+//        root.put("result_msg", result_msg);
+////        JSON.toJSONString(root,SerializerFeature.DisableCircularReferenceDetect);
+//        String root_json = JSON.toJSONString(root);
+//        logger.info(root_json);
+//        return root;
+//    }
 
 
     //上传数据集

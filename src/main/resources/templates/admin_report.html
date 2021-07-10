@@ -89,17 +89,17 @@
                                                     <td th:text="${report.subExperimentName}"></td>
                                                     <td th:text="${#dates.format(report.submitTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                                     <td>
-                                                        <div th:text="${report.examined==true?'Yes':'No'}" th:class="${report.examined==true?'badge badge-soft-success':'badge badge-soft-warning'}" style="font-size: 13px"></div>
+                                                        <div th:text="${report.examined==true?'Yes':'No'}" th:class="${report.examined==true?'badge badge-soft-success':'badge badge-soft-warning'}" th:style="${report.examined==true?'':'font-size: 13px'}"></div>
                                                     </td>
                                                     <td>
-                                                        <div th:text="${report.examined==true?report.score:'未审核'}" th:class="${report.examined==true?'':'badge badge-soft-warning'}" style="font-size: 13px"></div>
+                                                        <div th:text="${report.examined==true?report.score:'未审核'}" th:class="${report.examined==true?'':'badge badge-soft-warning'}" th:style="${report.examined==true?'':'font-size: 13px'}"></div>
                                                     </td>
                                                     <td>
-                                                        <div th:if="${report.examined==true}" th:text="${#dates.format(report.examinedTime, 'yyyy-MM-dd HH:mm:ss')}" style="font-size: 13px"></div>
+                                                        <div th:if="${report.examined==true}" th:text="${#dates.format(report.examinedTime, 'yyyy-MM-dd HH:mm:ss')}" th:style="${report.examined==true?'':'font-size: 13px'}"></div>
                                                         <div th:if="${report.examined==false}" class="badge badge-soft-warning" style="font-size: 13px">未审核</div>
                                                     </td>
                                                     <td>
-                                                        <div th:text="${report.examined==true?report.teaName:'未审核'}" th:class="${report.examined==true?'':'badge badge-soft-warning'}" style="font-size: 13px"></div>
+                                                        <div th:text="${report.examined==true?report.teaName:'未审核'}" th:class="${report.examined==true?'':'badge badge-soft-warning'}" th:style="${report.examined==true?'':'font-size: 13px'}"></div>
                                                     </td>
                                                 </tr>
 

@@ -56,7 +56,6 @@
                                                     <input name="teaNumber" th:value="*{teaNumber}" class="form-control" type="text"  id="add_teaNumber">
                                                 </div>
                                             </div>
-<!--                                            yt-->
                                             <div class="form-group row">
                                                 <label for="add_teaName" class="col-md-2 col-form-label">姓名：</label>
                                                 <div class="col-md-10">
@@ -143,26 +142,7 @@
         <!-- admin-resources/jquery.vectormap -->
         <script src="static/js/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
         <script src="static/js/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-us-merc-en.js"></script>
-        <!-- datatables -->
-        <script src="static/js/libs/datatables.net/js/jquery.dataTables.min.js"></script>
-        <script src="static/js/libs/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-        <script src="static/js/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
-        <script src="static/js/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-        <script src="static/js/libs/datatables.net-buttons/js/buttons.colVis.min.js"></script>
-        <script src="static/js/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
-        <script src="static/js/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
-        <script src="static/js/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
-        <script src="static/js/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-        <script src="static/js/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
-        <script src="static/js/libs/datatables.net-select/js/dataTables.select.min.js"></script>
-        <!-- jszip -->
-        <script src="static/js/libs/jszip/jszip.min.js"></script>
-        <!-- pdfmake/build -->
-        <script src="static/js/libs/pdfmake/build/pdfmake.min.js"></script>
-        <script src="static/js/libs/pdfmake/build/vfs_fonts.js"></script>
         <!-- js/pages/ -->
-        <script src="static/js/pages/datatables.init.js"></script>
-        <script src="static/js/pages/dashboard.init.js"></script>
         <script src="static/js/app.js"></script>
 
         <script type="text/javascript" th:inline="javascript">
@@ -187,22 +167,23 @@
 
             function checkForm(){
                 var oTeaNumber = document.getElementById("add_teaNumber");
-                // var oPwd = document.getElementById("add_password");
                 var oTeaName = document.getElementById("add_teaName");
                 var oSchool = document.getElementById("add_school");
+                var oMajor = document.getElementById("add_major");
+                var oPhone = document.getElementById("add_phone");
                 if (!oTeaNumber.value){
                     document.getElementById("alert").style.display="";
                     document.getElementById("result_msg").innerHTML = "请填写账号！";
                     return false;
                 }
-                // if (!oPwd.value){
-                //     document.getElementById("alert").style.display="";
-                //     document.getElementById("result_msg").innerHTML = "请填写密码！";
-                //     return false;
-                // }
                 if (!oTeaName.value){
                     document.getElementById("alert").style.display="";
                     document.getElementById("result_msg").innerHTML = "请填写姓名！";
+                    return false;
+                }
+                if (!oPhone.value){
+                    document.getElementById("alert").style.display="";
+                    document.getElementById("result_msg").innerHTML = "请填写联系手机！";
                     return false;
                 }
                 if (!oSchool.value){
@@ -210,7 +191,11 @@
                     document.getElementById("result_msg").innerHTML = "请填写学校！";
                     return false;
                 }
-
+                if (oMajor==="0"){
+                    document.getElementById("alert").style.display="";
+                    document.getElementById("result_msg").innerHTML = "请选择专业！";
+                    return false;
+                }
                 getAdminRights();
                 return true;
             }
