@@ -78,18 +78,30 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	@Override
-	public List<AdminInfoVO> getSumVideoTimeByRole(long teaNumber){
+	public int[] getSumVideoTimeByRole(long teaNumber) {
 		long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
-		if (role == 1) {
-			return teacherMapper.getAllVideoStudyTimeSum();
-		} else return teacherMapper.getVideoStudyTimeSumByTeaNumber(teaNumber);
+		int[] sum = {0, 0, 0, 0, 0, 0, 0, 0};
+		List<AdminInfoVO> result;
+		if (role == 1) result = teacherMapper.getAllVideoStudyTimeSum();
+		else result = teacherMapper.getVideoStudyTimeSumByTeaNumber(teaNumber);
+		for (AdminInfoVO a : result) {
+			int i = (int) (a.getToday().getTime() - a.getStudyDate().getTime()) / 1000 / 60 / 60 / 24;
+			sum[sum.length - i - 1] = a.getSumStudyTime();
+		}
+		return sum;
 	}
 
 	@Override
-	public List<AdminInfoVO> getSumExperimentTimeByRole(long teaNumber){
+	public int[] getSumExperimentTimeByRole(long teaNumber) {
 		long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
-		if (role == 1) {
-			return teacherMapper.getAllExperimentTimeSum();
-		} else return teacherMapper.getExperimentTimeSumByTeaNumber(teaNumber);
+		int[] sum = {0, 0, 0, 0, 0, 0, 0, 0};
+		List<AdminInfoVO> result;
+		if (role == 1) result = teacherMapper.getAllExperimentTimeSum();
+		else result = teacherMapper.getExperimentTimeSumByTeaNumber(teaNumber);
+		for (AdminInfoVO a : result) {
+			int i = (int) (a.getToday().getTime() - a.getStudyDate().getTime()) / 1000 / 60 / 60 / 24;
+			sum[sum.length - i - 1] = a.getSumStudyTime();
+		}
+		return sum;
 	}
 }

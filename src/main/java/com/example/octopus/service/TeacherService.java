@@ -66,10 +66,10 @@ public interface TeacherService {
     /**
      * 显示最近七天视频学习时间总和，注意如某日期下没有学习，则在返回的表中不会存在此日期信息
      */
-    List<AdminInfoVO> getSumVideoTimeByRole(long teaNumber);
+    int[] getSumVideoTimeByRole(long teaNumber);
     /**
      * 显示最近七天实验学习时间总和，注意如某日期下没有学习，则在返回的表中不会存在此日期信息
      */
-    List<AdminInfoVO> getSumExperimentTimeByRole(long teaNumber);
+    int[] getSumExperimentTimeByRole(long teaNumber);
 
 }
