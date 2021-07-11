@@ -183,6 +183,7 @@ public class adminController {
             model.addAttribute("lastLoginTime", teacherService.getTeacherByTeaNumber(teaNum).getLastLoginTime());
             model.addAttribute("sumExperimentTime", teacherService.getSumExperimentTimeByRole(teaNum));
             model.addAttribute("sumVideoTime", teacherService.getSumVideoTimeByRole(teaNum));
+            model.addAttribute("docker_status", dockerService.countDockerByStatus(teaNum));
 //            logger.info("实验时间：{}", teacherService.getSumExperimentTimeByRole(teaNum));
 //            logger.info("视频时间：{}", teacherService.getSumVideoTimeByRole(teaNum));
             return "admin_index";
@@ -999,7 +1000,7 @@ public class adminController {
     public ModelAndView report_score(Model model, SubExperimentReportSubmit subExperimentReportSubmit,HttpServletRequest request) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
 
-//        try {
+        try {
             long subExperimentId = subExperimentReportSubmit.getSubExperimentId();
             long stuNumber = subExperimentReportSubmit.getStuNumber();
             long teaNumber = subExperimentReportSubmit.getTeaNumber();
@@ -1008,12 +1009,12 @@ public class adminController {
                     ", stuNumber:"+stuNumber+
                     ", teaNumber:"+teaNumber+
                     ", score:"+score);
-            //subExperimentReportSubmitService.updateByExamine(subExperimentId, stuNumber, teaNumber, score);
+            subExperimentReportSubmitService.updateByExamine(subExperimentId, stuNumber, teaNumber, score);
             return new ModelAndView("redirect:/admin_report");
-//        }
-//        catch (Exception e){
-//            return "redirect:/admin_error";
-//        }
+        }
+        catch (Exception e){
+            return new ModelAndView("redirect:/admin_error");
+        }
     }
 
 

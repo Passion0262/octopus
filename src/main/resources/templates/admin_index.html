@@ -384,9 +384,9 @@
                         radius : '55%',
                         center: ['50%', '60%'],
                         data:[
-                            {value:100, name:'实验任务'},
-                            {value:50, name:'项目实战'},
-                            {value:12, name:'挂起/未使用'}
+                            {value:[[${docker_status[2]}]], name:'实验任务'},
+                            {value:[[${docker_status[1]}]], name:'项目实战'},
+                            {value:[[${docker_status[0]}]], name:'挂起/未使用'}
                         ]
                     }
                 ]
