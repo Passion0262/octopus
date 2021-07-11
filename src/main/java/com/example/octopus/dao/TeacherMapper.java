@@ -1,6 +1,6 @@
 package com.example.octopus.dao;
 
-import com.example.octopus.entity.VOs.AdminInfoVO;
+import com.example.octopus.entity.VOs.AdminStudyTimeInfoVO;
 import com.example.octopus.entity.user.Teacher;
 import org.apache.ibatis.annotations.*;
 
@@ -47,23 +47,23 @@ public interface TeacherMapper {
     //视频学习时间
     @Select("SELECT SUM(study_time) AS sum_study_time, date(start_time) AS study_date, CURDATE() AS today FROM video_progress " +
             "WHERE DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date(start_time) GROUP BY date(start_time)")
-    List<AdminInfoVO> getAllVideoStudyTimeSum();
+    List<AdminStudyTimeInfoVO> getAllVideoStudyTimeSum();
 
     @Select("SELECT SUM(vp.study_time) AS sum_study_time, date(vp.start_time) AS study_date, CURDATE() AS today FROM video_progress vp, video v, course c " +
             "WHERE DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date(vp.start_time) " +
             "AND vp.video_id=v.id AND v.course_id=c.id AND c.tea_number=#{teaNumber} GROUP BY date(vp.start_time)")
-    List<AdminInfoVO> getVideoStudyTimeSumByTeaNumber(long teaNumber);
+    List<AdminStudyTimeInfoVO> getVideoStudyTimeSumByTeaNumber(long teaNumber);
 
     //实验学习时间
     @Select("SELECT SUM(valid_study_time) AS sum_study_time, date(start_time) AS study_date, CURDATE() AS today FROM sub_experiment_progress " +
             "WHERE DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date(start_time) GROUP BY date(start_time)")
-    List<AdminInfoVO> getAllExperimentTimeSum();
+    List<AdminStudyTimeInfoVO> getAllExperimentTimeSum();
 
     @Select("SELECT SUM(sep.valid_study_time) AS sum_study_time, date(sep.start_time) AS study_date, CURDATE() AS today " +
             "FROM sub_experiment_progress sep, sub_experiment se, course_experiment ce, course c " +
             "WHERE DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date(sep.start_time) AND sep.sub_experiment_id=se.id " +
             "AND se.experiment_id = ce.experiment_id AND ce.course_id=c.id AND c.tea_number=#{teaNumber} GROUP BY date(sep.start_time)")
-    List<AdminInfoVO> getExperimentTimeSumByTeaNumber(long teaNumber);
+    List<AdminStudyTimeInfoVO> getExperimentTimeSumByTeaNumber(long teaNumber);
 
 
 

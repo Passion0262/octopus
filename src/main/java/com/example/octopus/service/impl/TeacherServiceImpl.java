@@ -2,7 +2,7 @@ package com.example.octopus.service.impl;
 
 import com.example.octopus.dao.SysUserRoleMapper;
 import com.example.octopus.dao.TeacherMapper;
-import com.example.octopus.entity.VOs.AdminInfoVO;
+import com.example.octopus.entity.VOs.AdminStudyTimeInfoVO;
 import com.example.octopus.entity.user.SysUserRole;
 import com.example.octopus.entity.user.Teacher;
 import com.example.octopus.service.TeacherService;
@@ -80,10 +80,10 @@ public class TeacherServiceImpl implements TeacherService {
 	public int[] getSumVideoTimeByRole(long teaNumber) {
 		long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
 		int[] sum = {0, 0, 0, 0, 0, 0, 0, 0};
-		List<AdminInfoVO> result;
+		List<AdminStudyTimeInfoVO> result;
 		if (role == 1) result = teacherMapper.getAllVideoStudyTimeSum();
 		else result = teacherMapper.getVideoStudyTimeSumByTeaNumber(teaNumber);
-		for (AdminInfoVO a : result) {
+		for (AdminStudyTimeInfoVO a : result) {
 			int i = (int) (a.getToday().getTime() - a.getStudyDate().getTime()) / 1000 / 60 / 60 / 24;
 			sum[sum.length - i - 1] = a.getSumStudyTime();
 		}
@@ -94,10 +94,10 @@ public class TeacherServiceImpl implements TeacherService {
 	public int[] getSumExperimentTimeByRole(long teaNumber) {
 		long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
 		int[] sum = {0, 0, 0, 0, 0, 0, 0, 0};
-		List<AdminInfoVO> result;
+		List<AdminStudyTimeInfoVO> result;
 		if (role == 1) result = teacherMapper.getAllExperimentTimeSum();
 		else result = teacherMapper.getExperimentTimeSumByTeaNumber(teaNumber);
-		for (AdminInfoVO a : result) {
+		for (AdminStudyTimeInfoVO a : result) {
 			int i = (int) (a.getToday().getTime() - a.getStudyDate().getTime()) / 1000 / 60 / 60 / 24;
 			sum[sum.length - i - 1] = a.getSumStudyTime();
 		}

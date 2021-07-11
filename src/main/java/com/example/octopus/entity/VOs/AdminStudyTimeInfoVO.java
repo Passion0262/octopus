@@ -11,7 +11,7 @@ import java.sql.Date;
  */
 
 @Data
-public class AdminInfoVO {
+public class AdminStudyTimeInfoVO {
 	private int sumStudyTime;
 	private Date studyDate;
 	private Date today;

@@ -10,6 +10,7 @@ import com.example.octopus.utils.ShellUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.print.Doc;
 import java.util.Collections;
 import java.util.List;
 
@@ -138,10 +139,30 @@ public class DockerServiceImpl implements DockerService {
 			//管理员获取全部
 			if (awaken) return dockerMapper.listAllAwakeDocker();
 			else return dockerMapper.listAllSleepDocker();
+		} else {
+			if (awaken) return dockerMapper.listAwakeDockerByTeaID(teaNumber);
+			else return dockerMapper.listSleepDockerByTeaID(teaNumber);
 		}
-		else{
-            if (awaken) return dockerMapper.listAwakeDockerByTeaID(teaNumber);
-            else return dockerMapper.listSleepDockerByTeaID(teaNumber);
-        }
+	}
+
+	@Override
+	public int[] countDockerByStatus(long teaNumber) {
+		long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
+		int[] result = {0, 0, 0};
+		int size;
+		String status;
+		List<Docker> d;
+
+		if (role == 1) d = dockerMapper.listAllDockers();
+		else d = dockerMapper.listDockersByTeaId(teaNumber);
+
+		size = d.size();
+		for (int i = 0; i < size; i++) {
+			status = d.get(i).getDockerStatus();
+			if (status.equals("experiment")) ++result[2];
+			else if (status.equals("project")) ++result[1];
+			else ++result[0];
+		}
+		return result;
 	}
 }

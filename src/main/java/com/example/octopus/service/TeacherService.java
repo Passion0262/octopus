@@ -1,8 +1,6 @@
 package com.example.octopus.service;
 
-import com.example.octopus.entity.VOs.AdminInfoVO;
 import com.example.octopus.entity.user.Teacher;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

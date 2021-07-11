@@ -87,5 +87,11 @@ public interface DockerService {
 	 */
 	List<Docker> getDockerListByRoleAndAwake(long teaNumber, boolean awaken);
 
+	/**
+	 * 教师管理员登录首页，实验机状态比例显示
+	 * @return sleeping:0、project:1、experiment:2
+	 */
+	int[] countDockerByStatus(long teaNumber);
+
 
 }
