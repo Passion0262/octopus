@@ -5,6 +5,7 @@ import com.example.octopus.dao.TeacherMapper;
 import com.example.octopus.dao.UserMapper;
 import com.example.octopus.dao.experiment.ChapterMapper;
 import com.example.octopus.dao.experiment.ModuleMapper;
+import com.example.octopus.dao.experiment.SubExperimentMapper;
 import com.example.octopus.entity.experiment.Video;
 import com.example.octopus.entity.user.Major;
 import com.example.octopus.entity.user.Student;
@@ -18,6 +19,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Map;
 
 @SpringBootTest
@@ -55,10 +58,17 @@ class OctopusApplicationTests {
 	ChapterMapper chapterMapper;
 	@Autowired
 	VideoService videoService;
+	@Autowired
+	TeacherService teacherService;
+	@Autowired
+	SubExperimentService subExperimentService;
+	@Autowired
+	SubExperimentMapper subExperimentMapper;
 	@Test
 	void interfaceTest() {
-		Video video = new Video(10, "33333", 4, "ssssss", 3L, 1L);
-		System.out.println(videoService.updateVideo(video));
+		System.out.println(subExperimentService.listSubExperimentByRole(1));
+		System.out.println();
+		System.out.println(subExperimentMapper.listSubExperimentDetailByTeaId(1));
 	}
 
 

@@ -1,7 +1,9 @@
 package com.example.octopus.service.impl;
 
+import com.example.octopus.dao.SysUserRoleMapper;
 import com.example.octopus.dao.experiment.SubExperimentMapper;
 import com.example.octopus.dao.experiment.VideoSubExperimentMapper;
+import com.example.octopus.entity.VOs.SubExperimentDetailVO;
 import com.example.octopus.entity.experiment.SubExperiment;
 import com.example.octopus.service.SubExperimentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,18 @@ public class SubExperimentServiceImpl implements SubExperimentService {
 
     @Autowired
     VideoSubExperimentMapper videoSubExperimentMapper;
+
+    @Autowired
+    SysUserRoleMapper sysUserRoleMapper;
+
+    @Override
+    public List<SubExperimentDetailVO> listSubExperimentByRole(long teaNumber){
+        long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
+        if (role == 1) {
+            //管理员获取全部
+            return subExperimentMapper.listAllSubExperimentDetail();
+        } else return subExperimentMapper.listSubExperimentDetailByTeaId(teaNumber);
+    }
 
     @Override
     public List<Long> listIdsByExperimentId(long experimentId) {
