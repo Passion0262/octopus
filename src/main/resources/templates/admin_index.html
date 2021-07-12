@@ -316,9 +316,10 @@
 
     <script th:inline="javascript" type="text/javascript">
         $(document).ready(function() {
+
             var option1 = {
                 title : {
-                    text: '最近7天学习时长统计',
+                    text: '最近7天学习时长统计（单位：时）',
                     x:'center'
 
                 },
@@ -350,13 +351,13 @@
                         name:'视频学习',
                         type:'line',
                         stack: '总量',
-                        data:[[${sumVideoTime}]]
+                        data: getVideoValue()
                     },
                     {
                         name:'实验学习',
                         type:'line',
                         stack: '总量',
-                        data:[[${sumExperimentTime}]]
+                        data: getExpValue()
                     }
                 ]
             };
@@ -428,6 +429,27 @@
                 time = '0' + time.toString();
             }
             return time;
+        }
+
+        function getExpValue(){
+            var experimentTimes = [[${sumExperimentTime}]];
+            //console.log(experimentTimes);
+            var times = [];
+            for (var i=0; i<=6;i++){
+                times.push(experimentTimes[i]/3600);
+            }
+            //console.log(times);
+            return times;
+        }
+
+        function getVideoValue(){
+            var videoTimes = [[${sumVideoTime}]];
+            //console.log(videoTimes);
+            var times = [];
+            for (var i=0; i<=6;i++){
+                times.push(videoTimes[i]/3600);
+            }
+            return times;
         }
 
 

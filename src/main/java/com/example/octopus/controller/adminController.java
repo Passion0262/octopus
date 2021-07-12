@@ -987,15 +987,15 @@ public class adminController {
     @RequestMapping("/admin_report_detail")
     public String admin_report_detail(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-//        try {
+        try {
             long id = Long.parseLong(request.getParameter("id"));
             SubExperimentReportSubmit expSub = subExperimentReportSubmitService.getById(id);
             model.addAttribute("expSub", expSub);
             return "admin_report_detail";
-//        }
-//        catch (Exception e){
-//            return "redirect:/admin_error";
-//        }
+        }
+        catch (Exception e){
+            return "redirect:/admin_error";
+        }
     }
 
     //提交实验报告评分

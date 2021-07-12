@@ -93,11 +93,11 @@
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <div style="display: block;text-align: right;" th:if="${role} eq 'admin'">
-                                            <a href="#" class="add">
-                                                <i class="mdi mdi-text-box-plus font-size-18" style="color:#ff3d60"></i>新增...
-                                            </a>
-                                        </div>
+<!--                                        <div style="display: block;text-align: right;" th:if="${role} eq 'admin'">-->
+<!--                                            <a href="#" class="add">-->
+<!--                                                <i class="mdi mdi-text-box-plus font-size-18" style="color:#ff3d60"></i>新增...-->
+<!--                                            </a>-->
+<!--                                        </div>-->
                                     </div>
                                 </div>
                             </div>
@@ -158,16 +158,7 @@
 
     <script type="text/javascript" th:inline="javascript">
 
-        function download_dataset(id){
-            $.ajax({
-                type:"POST",
-                url:"download_dataset",
-                data: {"id": id},
-                success:function (data) {
-                    console.log("下载 + 1");
-                }
-            })
-        }
+
 
     </script>
 

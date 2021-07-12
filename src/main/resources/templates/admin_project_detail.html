@@ -42,8 +42,8 @@
                             <div class="page-title-box d-flex align-items-center justify-content-between" id="page">
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="#">实验管理</a></li>
-                                        <li class="breadcrumb-item">实验详情</li>
+                                        <li class="breadcrumb-item"><a href="#">项目管理</a></li>
+                                        <li class="breadcrumb-item">项目详情</li>
                                     </ol>
                                 </div>
                             </div>
@@ -61,19 +61,15 @@
                                                 <tr>
     <!--                                                <th class="sorting_disabled" th:if="${role} eq 'admin'">操作</th>-->
                                                     <th>编号</th>
-    <!--                                                <th>课程ID</th>-->
-    <!--                                                <th>课程名称</th>-->
-                                                    <th>实验ID</th>
-                                                    <th>实验名称</th>
+                                                    <th>项目ID</th>
+                                                    <th>项目名称</th>
                                                     <th>模块ID</th>
                                                     <th>模块名称</th>
-                                                    <th>模块号</th>
-                                                    <th>子实验名称</th>
-                                                    <th>子实验小节号</th>
+                                                    <th>子项目名称</th>
                                                 </tr>
                                             </thead>
                                             <tbody style="text-align: center;">
-                                                <tr th:each="subExp:${subExperiments}">
+                                                <tr th:each="subproject:${subprojects}">
     <!--                                                <td th:if="${role} eq 'admin'">-->
     <!--                                                    <div style="width:30px;"></div>-->
     <!--                                                    <a href="#" class="add" style="color:#ff3d60">-->
@@ -86,16 +82,12 @@
     <!--                                                        <i class="mdi mdi-trash-can font-size-18"></i>-->
     <!--                                                    </a>-->
     <!--                                                </td>-->
-                                                    <td th:text="${subExpStat.index+1}"></td>
-    <!--                                                <td th:text="${subExp.courseId}"></td>-->
-    <!--                                                <td th:text="${subExp.courseName}"></td>-->
-                                                    <td th:text="${subExp.experimentId}"></td>
-                                                    <td th:text="${subExp.experimentName}"></td>
-                                                    <td th:text="${subExp.moduleId}"></td>
-                                                    <td th:text="${subExp.moduleName}"></td>
-                                                    <td th:text="${subExp.moduleNumber}"></td>
-                                                    <td th:text="${subExp.subExperimentName}"></td>
-                                                    <td th:text="${subExp.subExperimentNumber}"></td>
+                                                    <td th:text="${subprojectStat.index+1}"></td>
+                                                    <td th:text="${subproject.projectId}"></td>
+                                                    <td th:text="${subproject.projectName}"></td>
+                                                    <td th:text="${subproject.projectModuleId}"></td>
+                                                    <td th:text="${subproject.projectModuleName}"></td>
+                                                    <td th:text="${subproject.subProjectName}"></td>
                                                 </tr>
                                             </tbody>
                                         </table>
