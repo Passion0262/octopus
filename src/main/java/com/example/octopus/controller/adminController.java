@@ -58,6 +58,9 @@ public class adminController {
     ExperimentService experimentService;
 
     @Autowired
+    SubExperimentService subExperimentService;
+
+    @Autowired
     SubExperimentProgressService subExperimentProgressService;
 
     @Autowired
@@ -1035,6 +1038,23 @@ public class adminController {
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////
+    // 实验详情
+    @RequestMapping("/admin_experiment_detail")
+    public String admin_experiment_detail(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return "redirect:/login";
+
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，
+        try{
+//            System.out.println();
+            model.addAttribute("subExperiments", subExperimentService.listSubExperimentByRole(teaNum));
+            return "admin_experiment_detail";
+        }
+        catch (Exception e){
+            return "redirect:/admin_error";
+        }
+    }
+
     // 实验机类型管理
     @RequestMapping("/admin_pc_type")
     public String admin_pc_type(HttpServletRequest request, Model model) {
@@ -1137,7 +1157,6 @@ public class adminController {
 //        System.out.println(projectService.listProjects());
         try {
             model.addAttribute("projects", projectService.listProjects());
-
             return "admin_project";
         }
         catch (Exception e){
@@ -1154,8 +1173,8 @@ public class adminController {
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，
         try{
-            //model.addAttribute("subprojects", );
-
+//            System.out.println();
+//            model.addAttribute("subprojects", );
             return "admin_project_detail";
         }
         catch (Exception e){
