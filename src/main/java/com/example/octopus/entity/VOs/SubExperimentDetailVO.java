@@ -22,4 +22,7 @@ public class SubExperimentDetailVO {
 
 	private long experimentId;  //实验id
 	private String experimentName;  //实验名
+
+	private long courseId;  //课程id
+	private String courseName;  //课程名
 }

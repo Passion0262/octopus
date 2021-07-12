@@ -15,18 +15,19 @@ import java.util.List;
  */
 @Mapper
 public interface SubExperimentMapper {
-
+    //////////////////////
     /**
      * 管理员获取子实验相关信息（实验-->模块-->子实验）
      */
-    @Select("SELECT se.id AS sub_experiment_id, sub_experiment_name, se.number AS sub_experiment_number, se.module_id, module_name, module_number, e.id AS experiment_id, e.name AS experiment_name " +
-            "FROM sub_experiment se, module m, experiment e WHERE se.module_id=m.module_id AND se.experiment_id=e.id ORDER BY e.id, module_number, number")
+    @Select("SELECT c.id AS course_id, c.course_name, se.id AS sub_experiment_id, sub_experiment_name, se.number AS sub_experiment_number, se.module_id, module_name, module_number, e.id AS experiment_id, e.name AS experiment_name " +
+            "FROM sub_experiment se, module m, experiment e, course_experiment ce, course c " +
+            "WHERE c.id=ce.course_id AND ce.experiment_id=e.id AND se.module_id=m.module_id AND se.experiment_id=e.id ORDER BY e.id, module_number, number")
     List<SubExperimentDetailVO> listAllSubExperimentDetail();
 
     /**
      * 教师获取子实验相关信息（实验-->模块-->子实验）
      */
-    @Select("SELECT se.id AS sub_experiment_id, sub_experiment_name, se.number AS sub_experiment_number, se.module_id, module_name, module_number, e.id AS experiment_id, e.name AS experiment_name " +
+    @Select("SELECT c.id AS course_id, c.course_name, se.id AS sub_experiment_id, sub_experiment_name, se.number AS sub_experiment_number, se.module_id, module_name, module_number, e.id AS experiment_id, e.name AS experiment_name " +
             "FROM sub_experiment se, module m, experiment e, course_experiment ce, course c " +
             "WHERE c.tea_number=#{teaNumber} AND c.id=ce.course_id AND ce.experiment_id=e.id AND se.module_id=m.module_id AND se.experiment_id=e.id ORDER BY e.id, module_number, number")
     List<SubExperimentDetailVO> listSubExperimentDetailByTeaId(long teaNumber);
