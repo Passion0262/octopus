@@ -64,8 +64,12 @@ public class VideoServiceImpl implements VideoService {
 	}
 
 	@Override
-	public List<VideoManageVO> getAllVideoManageInfo() {
-		return videoMapper.getAllVideoManage();
+	public List<VideoManageVO> getVideoManageInfoByRole(long teaNumber) {
+		long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
+		if (role == 1) {
+			//管理员获取全部
+			return videoMapper.getAllVideoManage();
+		} else return videoMapper.getVideoManageByTeaId(teaNumber);
 	}
 
 	@Override

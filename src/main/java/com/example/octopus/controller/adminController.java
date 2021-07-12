@@ -1,13 +1,9 @@
 package com.example.octopus.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.example.octopus.entity.VOs.SubExperimentOperateTimeVO;
 import com.example.octopus.entity.dataset.Dataset;
-import com.example.octopus.entity.experiment.SubExperimentProgress;
 import com.example.octopus.entity.experiment.SubExperimentReportSubmit;
 import com.example.octopus.entity.experiment.Video;
-import com.example.octopus.entity.project.Project;
-import com.example.octopus.entity.project.SubProject;
 import com.example.octopus.entity.user.*;
 import com.example.octopus.service.*;
 import com.example.octopus.utils.CookieTokenUtils;
@@ -1193,11 +1189,12 @@ public class adminController {
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         try {
-            if (role_id == 1) {
-                model.addAttribute("video", videoService.getAllVideoManageInfo());
-            } else {
-                model.addAttribute("video", videoService.getAllVideoManageInfo());
-            }
+            model.addAttribute("video", videoService.getVideoManageInfoByRole(teaNum));
+//            if (role_id == 1) {
+//                model.addAttribute("video", videoService.getAllVideoManageInfo());
+//            } else {
+//                model.addAttribute("video", videoService.getAllVideoManageInfo());
+//            }
             return "admin_video";
         }
         catch (Exception e){

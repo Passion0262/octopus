@@ -44,10 +44,10 @@ public interface VideoService {
     Video getVideoBySubExperimentId(long subExperimentId);
 
     /**
-     * 视频课程管理，显示所有视频信息，包括对应课程和章节的id和name
+     * 视频课程管理，根据角色，显示相应视频信息，包括对应课程和章节的id和name
      * @return 视频课程管理视图类列表
      */
-    List<VideoManageVO> getAllVideoManageInfo();
+    List<VideoManageVO> getVideoManageInfoByRole(long teaNumber);
 
     /**
      * 添加视频课程 或 在不知道视频id的情况下改视频名称和视频地址
