@@ -1,5 +1,6 @@
 package com.example.octopus.service;
 
+import com.example.octopus.entity.VOs.SubExperimentDetailVO;
 import com.example.octopus.entity.experiment.SubExperiment;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -12,6 +13,11 @@ import java.util.List;
  * @date ：Created in 2021/6/10 4:15 下午
  */
 public interface SubExperimentService {
+
+    /**
+     * 根据管理员与教师角色返回对应所有子实验相关信息
+     */
+    List<SubExperimentDetailVO> listSubExperimentByRole(long teaNumber);
 
     /**
      * 根据实验id获取所有的子实验id
