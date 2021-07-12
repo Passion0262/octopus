@@ -53,7 +53,7 @@
 												<form class="form-horizontal" th:action="@{/login}" method="post">
 													<div class="form-group auth-form-group-custom mb-4">
 														<i class="ri-user-2-line auti-custom-input-icon"></i>
-														<label for="username">用户名</label>
+														<label for="username">账号</label>
 														<input type="text" name="username" class="form-control" id="username" placeholder="请输入用户名">
 													</div>
 													<div class="form-group auth-form-group-custom mb-4">
@@ -65,10 +65,10 @@
 														<img src="getVerifyCode" title="看不清，请点我" onclick="refresh(this)" onmouseover="mouseover(this)" />
 														<input type="text" class="" name="verifyCode" required="required" placeholder="验证码">
 													</div>
-													<div class="custom-control custom-checkbox">
-														<input type="checkbox" class="custom-control-input" id="customControlInline" name="remember-me">
-														<label class="custom-control-label" for="customControlInline">自动登录</label>
-													</div>
+<!--													<div class="custom-control custom-checkbox">-->
+<!--														<input type="checkbox" class="custom-control-input" id="customControlInline" name="remember-me">-->
+<!--														<label class="custom-control-label" for="customControlInline">自动登录</label>-->
+<!--													</div>-->
 													<div class="mt-4 text-center">
 														<button class="btn btn-primary w-md waves-effect waves-light" type="submit">登录</button>
 													</div>

@@ -3,6 +3,7 @@ package com.example.octopus.service.impl;
 import com.example.octopus.dao.SysUserRoleMapper;
 import com.example.octopus.dao.experiment.VideoProgressMapper;
 import com.example.octopus.dao.experiment.VideoMapper;
+import com.example.octopus.entity.VOs.CourseTimeVO;
 import com.example.octopus.entity.VOs.VideoProgressDetailVO;
 import com.example.octopus.entity.VOs.VideoProgressHistoryVO;
 import com.example.octopus.entity.experiment.VideoProgress;
@@ -33,6 +34,11 @@ public class VideoProgressServiceImpl implements VideoProgressService {
 	@Override
 	public List<VideoProgress> listByStuNumber(long stuNumber) {
 		return videoProgressMapper.listByStuNumber(stuNumber);
+	}
+
+	@Override
+	public List<CourseTimeVO> countStudyTimeByStuNumberGroupByCourseId(long stuNumber) {
+		return videoProgressMapper.countStudyTimeByStuNumberGroupByCourseId(stuNumber);
 	}
 
 	@Override

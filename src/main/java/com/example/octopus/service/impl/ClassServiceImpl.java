@@ -31,7 +31,11 @@ public class ClassServiceImpl implements ClassService {
 
 	@Override
 	public boolean insertClass(Class_ class_){
-		return classMapper.insertClass(class_);
+		if (classMapper.isExist(class_.getClassName(),class_.getSchool())){
+			return false;
+		} else {
+			return classMapper.insertClass(class_);
+		}
 	}
 
 	@Override

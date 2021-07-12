@@ -1,8 +1,10 @@
 package com.example.octopus.service;
 
+import com.example.octopus.entity.VOs.CourseTimeVO;
 import com.example.octopus.entity.VOs.VideoProgressDetailVO;
 import com.example.octopus.entity.VOs.VideoProgressHistoryVO;
 import com.example.octopus.entity.experiment.VideoProgress;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -16,6 +18,12 @@ public interface VideoProgressService {
      *  根据学生学号查询所有的videoProgress
      */
     List<VideoProgress> listByStuNumber(long stuNumber);
+
+    /**
+     *  根据学生ID,返回每门课的视频学习时长
+     *  @return 返回列表 单位秒
+     */
+    List<CourseTimeVO> countStudyTimeByStuNumberGroupByCourseId(long stuNumber);
 
     /**
      *  查询该学生在该课程所有学习记录

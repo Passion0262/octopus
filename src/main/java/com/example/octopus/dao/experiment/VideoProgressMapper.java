@@ -1,5 +1,6 @@
 package com.example.octopus.dao.experiment;
 
+import com.example.octopus.entity.VOs.CourseTimeVO;
 import com.example.octopus.entity.VOs.VideoProgressDetailVO;
 import com.example.octopus.entity.VOs.VideoProgressHistoryVO;
 import com.example.octopus.entity.experiment.VideoProgress;
@@ -27,6 +28,13 @@ public interface VideoProgressMapper {
     List<VideoProgress> listByStuNumber(long stuNumber);
 
     /**
+     *  根据学生ID,返回每门课的视频学习时长
+     *  @return 返回列表 单位秒
+     */
+    @Select("SELECT v.course_id,count(vp.study_time) as time FROM video v,video_progress vp WHERE vp.stu_number=2 AND v.id = vp.video_id")
+    List<CourseTimeVO> countStudyTimeByStuNumberGroupByCourseId(long stuNumber);
+
+    /**
      *  根据学生学号和videoId查询所有的videoProgress
      */
     @Select("SELECT * FROM video_progress WHERE stu_number = #{stuNumber} AND video_id = #{videoId} order by end_time desc")
@@ -46,7 +54,7 @@ public interface VideoProgressMapper {
     VideoProgress getLatestByVideoIdAndStuNumber(long videoId, long stuNumber);
 
     /**
-     *  计算该学生在该课程学习时间总长度
+     *  计算该学生在该视频学习时间总长度
      */
     @Select("SELECT SUM(study_time) FROM video_progress WHERE video_id=#{videoId} AND stu_number=#{stuNumber}")
     Integer countStudyTime(long videoId, long stuNumber);
