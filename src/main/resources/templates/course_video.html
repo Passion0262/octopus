@@ -114,7 +114,7 @@
                   </div>
                   <div class="col-md-3 "  style="">
                     <button id="machinebutton" type="button"  class="btn btn-outline-dark waves-effect waves-light"
-                            th:onclick="location.href ='/experiment_machine/1'">进入实验机</button>
+                            onclick="location.href =''">进入实验机</button>
                   </div>
 
                 </div>
@@ -156,7 +156,7 @@
 <!--                          </a></li>-->
 
                           <li th:each="video:${videos[chapterStat.index]}">
-                            <a href="#" th:onclick="showvideo([[${video}]],[[${videopros[chapterStat.index][videoStat.index]}]])">
+                            <a href="#" th:onclick="showvideo([[${video}]],[[${chapterStat.index}]],[[${videopros[chapterStat.index][videoStat.index]}]])">
 
                               <i class="mdi mdi-circle-medium mr-1"></i>
                               <span th:text="${video.number}"></span>:&nbsp;&nbsp;&nbsp;<span th:text="${video.name}"></span>
@@ -273,7 +273,7 @@
 
 
   $(document).ready(function() {
-    showvideo([[${startvideo}]],[[${startvideopro}]]);
+    showvideo([[${startvideo}]],0,[[${startvideopro}]]);
     var id =[[${startvideo.chapterId}]];
     $("#aa"+id).removeClass("collapsed");
     $("#aa"+id).attr("aria-expanded","true");
@@ -340,6 +340,8 @@
     videoplay.addEventListener(
             "ended",
             function() {
+              acurrentTime = 0;
+              this.currentTime = acurrentTime;
 
               endtime = new Date();
               sendvideoinfo();
@@ -413,7 +415,7 @@
 
 
 
-  function showvideo(video,videopro) {
+  function showvideo(video,chapterno,videopro) {
     // console.log('video',video);
     // console.log('videopro',videopro);
     // alert(video);
@@ -423,10 +425,10 @@
 
 
     var tosubexperiments = [[${tosubexperiments}]];
-     if(tosubexperiments[video.chapterId-1][video.number-1]!=null){
+     if(tosubexperiments[chapterno][video.number-1]!=null){
        $("#machinebutton").attr("disabled",false);
        $("#machinebutton").click(function(){
-         window.location.href ='/experiment_machine/'+tosubexperiments[video.chapterId-1][video.number-1];
+         window.location.href ='/experiment_machine/'+tosubexperiments[chapterno][video.number-1];
        });
      }else{
        $("#machinebutton").attr("disabled",true);
@@ -437,8 +439,8 @@
        sendvideoinfo();
        window.clearInterval(time1);
        learntime = 0
-       console.log('qoeh视频id',currentvideoid);
-       console.log('qiehun时间',endtime);
+       console.log('切换视频id',currentvideoid);
+       console.log('切换时间',endtime);
      }
 
      if(videopro==null){

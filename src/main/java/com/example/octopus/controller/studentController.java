@@ -2,6 +2,7 @@ package com.example.octopus.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.example.octopus.entity.VOs.CourseTimeVO;
 import com.example.octopus.entity.dataset.Dataset;
 import com.example.octopus.entity.experiment.*;
 import com.example.octopus.entity.experiment.Module;
@@ -140,9 +141,17 @@ public class studentController {
     @RequestMapping("/index")
     public String index(Model model, HttpServletRequest request) {
         String stuNumber = SecurityContextHolder.getContext().getAuthentication().getName();
+        Long stuName = Long.parseLong(stuNumber);
         if (!stuNumber.equals(cookieThings.getCookieUserNum(request, COOKIE_NAME))) return "redirect:/";
 
         if (!cookieCheck(model, request)) return "redirect:/login";
+
+
+        List<CourseTimeVO> videopros = videoProgressService.countStudyTimeByStuNumberGroupByCourseId(stuName);
+        logger.info("videopros:" + videopros);
+        model.addAttribute("videopros",videopros);
+
+
 
         // String stuNumber = SecurityContextHolder.getContext().getAuthentication().getName();
         // Student stu = userService.findStudentByStuNumber(Long.parseLong(tokenCheck.getUserNum()));
@@ -197,6 +206,8 @@ public class studentController {
         List<Course> allcourses = courseService.listCourses();
 //        logger.info("allcourses:" + allcourses);
         model.addAttribute("allcourses", allcourses);
+
+
 
 
         return "applycourse";
@@ -858,10 +869,13 @@ public class studentController {
             Long c = courseService.getCourseIdByExperimentId(w.getExperimentId());
             courseids.add(c);
         }
+        int experprostudynum = subExperimentProgressService.countValidStudyTimeOnExperiment(stuNum,experid);
         logger.info("subexpers:" + subexpers);
         model.addAttribute("subexpers", subexpers);
         logger.info("courseids:" + courseids);
         model.addAttribute("courseids", courseids);
+        model.addAttribute("experprostudynum",  experprostudynum);
+        logger.info("experprostudynum:" +experprostudynum);
 
 
 

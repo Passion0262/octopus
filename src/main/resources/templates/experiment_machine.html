@@ -79,7 +79,7 @@
                 </div><!-- end row -->
 
 
-        <div id='top' class="row" style="overflow: auto; position：absolute;flex-wrap: inherit;height:100%;">
+        <div id='top' class="row" style="overflow: auto; position：absolute; flex-wrap: inherit;height:100%;">
 
             <div class="card top-left-style " id="top-left" >
 <!--                <div class="card"  >-->
@@ -90,12 +90,12 @@
                                             <span class="d-none d-sm-block">实验要求</span>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link " data-toggle="tab" href="#txt_core" role="tab" aria-selected="false">
-                                            <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
-                                            <span class="d-none d-sm-block">核心知识</span>
-                                        </a>
-                                    </li>
+<!--                                    <li class="nav-item">-->
+<!--                                        <a class="nav-link " data-toggle="tab" href="#txt_core" role="tab" aria-selected="false">-->
+<!--                                            <span class="d-block d-sm-none"><i class="far fa-user"></i></span>-->
+<!--                                            <span class="d-none d-sm-block">核心知识</span>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
                                     <li class="nav-item">
                                         <a class="nav-link " data-toggle="tab" href="#txt_profile" role="tab" aria-selected="false">
                                             <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
@@ -116,14 +116,14 @@
                                         </span>
                                 </div>
 
-                                    <div class="tab-pane " id="txt_core" role="tabpanel">
-                                        <span th:if="${subExperiment.copyable}==true">
-                                            <iframe th:src="'../../static/js/pdf/web/viewer-machine-enable-copy.html?file='+${subExperiment.requirementPath}" width="100%" height="100%" ></iframe>
-                                        </span>
-                                        <span th:if="${subExperiment.copyable}==false">
-                                            <iframe th:src="'../../static/js/pdf/web/viewer-machine.html?file='+${subExperiment.requirementPath}" width="100%" height="100%" ></iframe>
-                                        </span>
-                                    </div>
+<!--                                    <div class="tab-pane " id="txt_core" role="tabpanel">-->
+<!--                                        <span th:if="${subExperiment.copyable}==true">-->
+<!--                                            <iframe th:src="'../../static/js/pdf/web/viewer-machine-enable-copy.html?file='+${subExperiment.requirementPath}" width="100%" height="100%" ></iframe>-->
+<!--                                        </span>-->
+<!--                                        <span th:if="${subExperiment.copyable}==false">-->
+<!--                                            <iframe th:src="'../../static/js/pdf/web/viewer-machine.html?file='+${subExperiment.knowledgePath}" width="100%" height="100%" ></iframe>-->
+<!--                                        </span>-->
+<!--                                    </div>-->
 
                                     <div class="tab-pane " id="txt_profile" role="tabpanel"  style="margin-left: 5px;margin-right: 5px;background-color: #fff;">
                                                 <div  id="editor"></div>
@@ -132,8 +132,7 @@
                     </div>
 <!--                    </div>-->
             </div>
-                    <div id="top-spr" r-Type="width" div1="#top-left" div2="#top-right" class="h-bar"></div>
-
+            <div id="top-spr" r-Type="width" div1="#top-left" div2="#top-right" class="h-bar"></div>
             <div class="card top-right-style" id="top-right" >
 <!--                <div class="card"  >-->
 <!--                                    <p class="card-title-desc">实验机</p>-->
@@ -154,7 +153,7 @@
 <!--                </div>-->
                                 </div>
 
-                        </div><!-- end div top -->
+        </div><!-- end div top -->
 
 
 
@@ -166,7 +165,6 @@
 
 <!-- JAVASCRIPT -->
 <script th:src="@{../../static/js/libs/jquery/jquery.min.js}"></script>
-<script th:src="@{../../static/js/libs/jquery/divresizer.js}"></script>
 <script th:src="@{../../static/js/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
 <script th:src="@{../../static/js/libs/metismenu/metisMenu.min.js}"></script>
 <script th:src="@{../../static/js/libs/simplebar/simplebar.min.js}"></script>
@@ -176,12 +174,17 @@
 <script th:src="@{../../static/js/libs/htmlToPdf/html2canvas.min.js}"></script>
 <script th:src="@{../../static/js/libs/htmlToPdf/jspdf.min.js}"></script>
 <script th:src="@{../../static/js/pdf/build/pdf.js}"></script>
+<script th:src="@{../../static/js/libs/jquery/divresizer.js}"></script>
 
 <script th:inline="javascript" type="text/javascript">
 
     $(document).ready(function(){
         $("#layout-wrapper").css("height",$(document).height());
         $(".tab-pane").css("height",$("#top").height()-$("#card-ul").height());
+
+        $.divResizer({
+            select: '#top-spr',
+        });
 
 
         window.onbeforeunload = function () {
@@ -310,24 +313,40 @@
 
     }
 
+    // function showpdf(){
+    //     $("#top-left").removeClass("top-left-style");
+    //     $("#top-right").removeClass("top-right-style");
+    //     $("#top-left").addClass("allshow");
+    //     $("#top-right").addClass("noneshow");
+    //     $("#showpdfbtn").addClass("active");
+    //     $("#showmachinebtn").removeClass("active");
+    // }
+    // function showm1(){
+    //     $("#top-left").removeClass("allshow");
+    //     $("#top-left").addClass("top-left-style");
+    //     $("#top-right").removeClass("noneshow");
+    //     $("#top-right").addClass("top-right-style");
+    //
+    //     $("#showmachinebtn").addClass("active");
+    //     $("#showpdfbtn").removeClass("active");
+    // }
     function showpdf(){
         $("#top-left").removeClass("top-left-style");
         $("#top-right").removeClass("top-right-style");
-        $("#top-left").addClass("allshow");
-        $("#top-right").addClass("noneshow");
+        $("#top-left").attr("style","width:100%;");
+        $("#top-right").attr("style","width:0%;");
         $("#showpdfbtn").addClass("active");
         $("#showmachinebtn").removeClass("active");
     }
     function showm1(){
-        $("#top-left").removeClass("allshow");
+        $("#top-left").attr("style","");
         $("#top-left").addClass("top-left-style");
-        $("#top-right").removeClass("noneshow");
+        $("#top-right").attr("style","");
         $("#top-right").addClass("top-right-style");
 
         $("#showmachinebtn").addClass("active");
         $("#showpdfbtn").removeClass("active");
     }
-
 
     // function convertpdf(){
     //
