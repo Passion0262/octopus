@@ -1,5 +1,6 @@
 package com.example.octopus.service;
 
+import com.example.octopus.entity.VOs.SubProjectDetailVO;
 import com.example.octopus.entity.project.SubProject;
 
 import java.util.List;
@@ -9,6 +10,11 @@ import java.util.List;
  * @date ：Created in 2021/7/4 2:17 下午
  */
 public interface SubProjectService {
+
+    /**
+     * 管理员项目详情界面使用，返回所有子项目相关信息
+     */
+    List<SubProjectDetailVO> listSubProjectDetail();
 
     /**
      * 根据 projectModuleId 查询子项目
