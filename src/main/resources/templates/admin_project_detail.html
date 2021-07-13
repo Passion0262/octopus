@@ -61,10 +61,12 @@
                                                 <tr>
     <!--                                                <th class="sorting_disabled" th:if="${role} eq 'admin'">操作</th>-->
                                                     <th>编号</th>
-                                                    <th>项目ID</th>
+<!--                                                    <th>项目ID</th>-->
                                                     <th>项目名称</th>
-                                                    <th>模块ID</th>
+<!--                                                    <th>模块ID</th>-->
+                                                    <th>模块号</th>
                                                     <th>模块名称</th>
+                                                    <th>子项目号</th>
                                                     <th>子项目名称</th>
                                                 </tr>
                                             </thead>
@@ -83,10 +85,12 @@
     <!--                                                    </a>-->
     <!--                                                </td>-->
                                                     <td th:text="${subprojectStat.index+1}"></td>
-                                                    <td th:text="${subproject.projectId}"></td>
+<!--                                                    <td th:text="${subproject.projectId}"></td>-->
                                                     <td th:text="${subproject.projectName}"></td>
-                                                    <td th:text="${subproject.projectModuleId}"></td>
-                                                    <td th:text="${subproject.projectModuleName}"></td>
+<!--                                                    <td th:text="${subproject.ModuleId}"></td>-->
+                                                    <td th:text="${subproject.ModuleNumber}"></td>
+                                                    <td th:text="${subproject.ModuleName}"></td>
+                                                    <td th:text="${subproject.subProjectNumber}"></td>
                                                     <td th:text="${subproject.subProjectName}"></td>
                                                 </tr>
                                             </tbody>

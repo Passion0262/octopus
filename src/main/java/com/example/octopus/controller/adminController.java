@@ -1204,11 +1204,7 @@ public class adminController {
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
         try {
-            if (role_id == 1) {
-                model.addAttribute("video", videoService.getAllVideoManageInfo());
-            } else {
-                model.addAttribute("video", videoService.getAllVideoManageInfo());
-            }
+            model.addAttribute("video", videoService.getVideoManageInfoByRole(teaNum));
             return "admin_video";
         }
         catch (Exception e){

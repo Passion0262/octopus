@@ -62,11 +62,11 @@
                                                 <tr>
                                                     <th class="sorting_disabled" th:if="${role} eq 'admin'">操作</th>
                                                     <th id="sort">编号</th>
-                                                    <th>所属课程ID</th>
+<!--                                                    <th>所属课程ID</th>-->
                                                     <th>所属课程名称</th>
-                                                    <th>所属章节ID</th>
+<!--                                                    <th>所属章节ID</th>-->
+                                                    <th>所属章节号</th>
                                                     <th>所属章节名称</th>
-                                                    <th>所属小节ID</th>
                                                     <th>视频名称</th>
                                                     <th>视频地址</th>
                                                 </tr>
@@ -75,22 +75,22 @@
                                                 <tr th:each="video:${video}">
                                                     <td th:if="${role} eq 'admin'">
                                                         <div style="width:30px;"></div>
-                                                        <a th:href="@{admin_video_add}" class="add" style="color:#ff3d60" data-original-title="Add">
+                                                        <a th:href="@{admin_video_add}" th:title="'增加'" class="add" style="color:#ff3d60" data-original-title="Add">
                                                             <i class="mdi mdi-text-box-plus font-size-18"></i>
                                                         </a>
-                                                        <a th:href="@{admin_video_edit(id=${video.id})}" class="edit" style="color:#1cbb8c" data-original-title="Edit">
+                                                        <a th:href="@{admin_video_edit(id=${video.id})}" th:title="'修改'" class="edit" style="color:#1cbb8c" data-original-title="Edit">
                                                             <i class="mdi mdi-pencil font-size-18"></i>
                                                         </a>
-                                                        <a th:href="@{admin_video_delete(id=${video.id})}" class="delete" style="color:#505d69" data-original-title="Delete">
+                                                        <a th:href="@{admin_video_delete(id=${video.id})}" th:title="'删除'" class="delete" style="color:#505d69" data-original-title="Delete">
                                                             <i class="mdi mdi-trash-can font-size-18"></i>
                                                         </a>
                                                     </td>
                                                     <td th:text="${videoStat.index+1}"></td>
-                                                    <td th:text="${video.courseId}"></td>
+<!--                                                    <td th:text="${video.courseId}"></td>-->
                                                     <td th:text="${video.courseName}"></td>
-                                                    <td th:text="${video.chapterId}"></td>
+                                                    <td th:text="${video.chapterNumber}"></td>
                                                     <td th:text="${video.chapterName}"></td>
-                                                    <td th:text="${video.number}"></td>
+<!--                                                    <td th:text="${video.number}"></td>-->
                                                     <td th:text="${video.name}"></td>
                                                     <td><a th:href="${video.path}" style="color:#5664d2" target="_blank">查看视频</a></td>
                                                 </tr>

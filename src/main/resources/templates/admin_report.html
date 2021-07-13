@@ -76,10 +76,10 @@
 
                                                     <td>
                                                         <div style="width:30px;"></div>
-                                                        <a th:href="@{admin_report_detail(id=${report.id})}" class="" style="color:#4aa3ff;" >
+                                                        <a th:href="@{admin_report_detail(id=${report.id})}" th:title="'批阅'" class="" style="color:#4aa3ff;" >
                                                             <i class="mdi mdi-login font-size-18"></i>
                                                         </a>
-                                                        <a th:href="@{admin_report_delete(id=${report.id})}" class="delete" style="color:#505d69">
+                                                        <a th:href="@{admin_report_delete(id=${report.id})}" th:title="'删除'" class="delete" style="color:#505d69">
                                                             <i class="mdi mdi-trash-can font-size-18"></i>
                                                         </a>
                                                     </td>

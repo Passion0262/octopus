@@ -5,6 +5,7 @@ import com.example.octopus.utils.PropertiesUtil;
 import com.example.octopus.utils.UploadFileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+@Controller
 public class uploadFileController {
 
     private Logger logger = LoggerFactory.getLogger(uploadFileController.class);
@@ -103,6 +105,7 @@ public class uploadFileController {
             String fileName = file.getOriginalFilename();
             //获取文件后缀名
             String suffixName = fileName.substring(fileName.lastIndexOf("."));
+            fileName = UUID.randomUUID() + suffixName;
             String result = UploadFileUtils.upload(file, localPath, fileName, false);
             while (result.equals("exists")){
                 //重新生成文件名

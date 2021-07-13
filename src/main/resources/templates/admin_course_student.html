@@ -76,13 +76,13 @@
                                         <tr th:each="course_student:${course_students}">
                                             <td>
                                                 <div style="width:30px;"></div>
-                                                <a th:href="@{admin_course_student_add}" class="add" style="color:#ff3d60" data-original-title="Add">
+                                                <a th:href="@{admin_course_student_add}" th:title="'增加'" class="add" style="color:#ff3d60" data-original-title="Add">
                                                     <i class="mdi mdi-text-box-plus font-size-18"></i>
                                                 </a>
-                                                <a th:href="@{admin_course_student_edit(id=${course_student.id})}" class="edit" style="color:#1cbb8c" data-original-title="Edit">
+                                                <a th:href="@{admin_course_student_edit(id=${course_student.id})}" th:title="'修改'" class="edit" style="color:#1cbb8c" data-original-title="Edit">
                                                     <i class="mdi mdi-pencil font-size-18"></i>
                                                 </a>
-                                                <a th:href="@{admin_course_student_delete(id=${course_student.id})}" class="delete" style="color:#505d69" data-original-title="Delete">
+                                                <a th:href="@{admin_course_student_delete(id=${course_student.id})}" th:title="'删除'" class="delete" style="color:#505d69" data-original-title="Delete">
                                                     <i class="mdi mdi-trash-can font-size-18"></i>
                                                 </a>
                                             </td>

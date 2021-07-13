@@ -73,13 +73,13 @@
                                             <tr th:each="dataset:${datasets}">
                                                 <td>
                                                     <div style="width:30px;"></div>
-                                                    <a th:href="@{admin_dataset_add}" class="add" style="color:#ff3d60">
+                                                    <a th:href="@{admin_dataset_add}" th:title="'增加'" class="add" style="color:#ff3d60">
                                                         <i class="mdi mdi-text-box-plus font-size-18"></i>
                                                     </a>
-                                                    <a th:if="${role} eq 'admin'" th:href="@{admin_dataset_edit(id=${dataset.id})}" class="edit" style="color:#1cbb8c">
+                                                    <a th:if="${role} eq 'admin'" th:href="@{admin_dataset_edit(id=${dataset.id})}" th:title="'修改'" class="edit" style="color:#1cbb8c">
                                                         <i class="mdi mdi-pencil font-size-18"></i>
                                                     </a>
-                                                    <a th:if="${role} eq 'admin'" th:href="@{admin_dataset_delete(id=${dataset.id})}" class="delete" style="color:#505d69">
+                                                    <a th:if="${role} eq 'admin'" th:href="@{admin_dataset_delete(id=${dataset.id})}" th:title="'删除'" class="delete" style="color:#505d69">
                                                         <i class="mdi mdi-trash-can font-size-18"></i>
                                                     </a>
                                                 </td>

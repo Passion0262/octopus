@@ -52,7 +52,7 @@
                                 <div class="card-body">
                                     <form id="form" action="/edit_course_student" method="post" class="needs-validation" th:object="${coursestudentmodel.course_student}" novalidate="" style="pediting-left: 20px;">
                                         <div class="form-group row">
-                                            <label for="edit_courseId" class="col-md-2 col-form-label">开课计划：</label>
+                                            <label for="edit_courseId" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>开课计划：</label>
                                             <div class="col-md-10">
 <!--                                                <input name="courseId" th:value="*{courseId}" id="edit_courseId" class="form-control" type="text">-->
                                                 <select name="courseId" th:value="*{courseId}" class="form-control" id="edit_courseId">
@@ -61,7 +61,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="edit_stuNumber" class="col-md-2 col-form-label">学生学号：</label>
+                                            <label for="edit_stuNumber" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>学生学号：</label>
                                             <div class="col-md-10">
                                                 <input name="stuNumber" th:value="*{stuNumber}" id="edit_stuNumber" class="form-control" type="text">
                                             </div>
@@ -74,6 +74,7 @@
                                                 <i class="ri-check-line align-middle mr-2"></i>提交
                                             </button>
                                         </div>
+                                        <p style="margin-left: 10px;">注：带<span style="color: #ff3d60;">*</span>号为必填项</p>
                                     </form>
                                 </div>
                             </div>

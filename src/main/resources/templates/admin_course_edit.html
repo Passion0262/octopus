@@ -54,14 +54,14 @@
                                         <form id="form" action="/edit_course" method="post" th:object="${coursemodel.course}" novalidate="" style="pediting-left: 20px;">
 
                                             <div class="form-group row">
-                                                <label for="edit_id" class="col-md-2 col-form-label">课程编号：</label>
+                                                <label for="edit_id" class="col-md-2 col-form-label"><span style="color: #ff3d60;">&#8194;</span>课程编号：</label>
                                                 <div class="col-md-10">
                                                     <input name="id" th:value="*{id}" class="form-control" type="text"  id="edit_id" readonly style="border: none">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="edit_courseName" th:if="${coursemodel.role=='admin'}" class="col-md-2 col-form-label">课程名称：</label>
-                                                <label for="select_courseName" th:if="${coursemodel.role=='teacher'}" class="col-md-2 col-form-label">课程名称：</label>
+                                                <label for="edit_courseName" th:if="${coursemodel.role=='admin'}" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>课程名称：</label>
+                                                <label for="select_courseName" th:if="${coursemodel.role=='teacher'}" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>课程名称：</label>
                                                 <div class="col-md-10">
                                                     <input name="courseName" th:value="*{courseName}" th:if="${coursemodel.role=='admin'}" class="form-control" type="text"  id="edit_courseName">
                                                     <select name="courseName" th:value="*{courseName}" th:if="${coursemodel.role=='teacher'}" class="form-control" id="select_courseName">
@@ -77,19 +77,19 @@
 <!--                                                </div>-->
 <!--                                            </div>-->
                                             <div class="form-group row">
-                                                <label for="edit_teacher" class="col-md-2 col-form-label">授课老师账号：</label>
+                                                <label for="edit_teacher" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>授课老师账号：</label>
                                                 <div class="col-md-10">
                                                     <input name="teaNumber" th:value="*{teaNumber}"  class="form-control" id="edit_teacher" type="text" readonly style="border: none;">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="edit_description" class="col-md-2 col-form-label">课程简介：</label>
+                                                <label for="edit_description" class="col-md-2 col-form-label"><span style="color: #ff3d60;">&#8194;</span>课程简介：</label>
                                                 <div class="col-md-10">
                                                     <input name="description" th:value="*{description}" id="edit_description" class="form-control" type="text">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="edit_imagePath" class="col-md-2 col-form-label">课程图标：</label>
+                                                <label for="edit_imagePath" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>课程图标：</label>
                                                 <div class="col-md-10">
                                                     <input type="file" class="form-control custom-file-input" id="edit_imagePath" onchange="checkImg()" accept="image/png, image/jpeg, image/jpg">
                                                     <label id="for_imagePath" class="form-control custom-file-label" th:text="*{imagePath}" for="edit_imagePath" style="width: 97%;margin-left: 10px;"></label>
@@ -97,31 +97,31 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="edit_startTime" class="col-md-2 col-form-label">授课开始日期：</label>
+                                                <label for="edit_startTime" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>授课开始日期：</label>
                                                 <div class="col-md-10">
                                                     <input name="startTime" th:value="*{startTime}" id="edit_startTime" class="form-control" type="date">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="edit_endTime" class="col-md-2 col-form-label">授课结束日期：</label>
+                                                <label for="edit_endTime" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>授课结束日期：</label>
                                                 <div class="col-md-10">
                                                     <input name="endTime"  th:value="*{endTime}" id="edit_endTime" class="form-control" type="date">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="edit_applyTime" class="col-md-2 col-form-label">开通申请日期：</label>
+                                                <label for="edit_applyTime" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>开通申请日期：</label>
                                                 <div class="col-md-10">
                                                     <input name="applyTime" th:value="*{applyTime}" id="edit_applyTime" class="form-control" type="date">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="edit_numAllowed" class="col-md-2 col-form-label">允许参加人数：</label>
+                                                <label for="edit_numAllowed" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>允许参加人数：</label>
                                                 <div class="col-md-10">
                                                     <input name="numAllowed" th:value="*{numAllowed}" id="edit_numAllowed" class="form-control" type="text">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-md-2 col-form-label">状态：</label>
+                                                <label class="col-md-2 col-form-label"><span style="color: #ff3d60;">&#8194;</span>状态：</label>
                                                 <div class="col-md-10">
                                                     <select class="form-control" name="status">
                                                         <option value="有效">有效</option>
@@ -145,6 +145,7 @@
                                                     <i class="ri-check-line align-middle mr-2"></i>提交
                                                 </button>
                                             </div>
+                                            <p style="margin-left: 10px;">注：带<span style="color: #ff3d60;">*</span>号为必填项</p>
                                         </form>
                                     </div>
                                 </div>

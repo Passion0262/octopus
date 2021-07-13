@@ -49,20 +49,20 @@
                                         <form id="form" action="/add_dataset" method="post" th:object="${datasetmodel.dataset}" novalidate="" style="padding-left: 20px;">
 
                                             <div class="form-group row">
-                                              <label for="add_name" class="col-md-2 col-form-label">数据集名称：</label>
+                                              <label for="add_name" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>数据集名称：</label>
                                               <div class="col-md-10">
                                                 <input name="name" th:value="*{name}" class="form-control" type="text"  id="add_name">
                                               </div>
                                             </div>
                                             <div class="form-group row">
-                                              <label for="add_description" class="col-md-2 col-form-label">描述：</label>
+                                              <label for="add_description" class="col-md-2 col-form-label"><span style="color: #ff3d60;">&#8194;</span>描述：</label>
                                               <div class="col-md-10">
                                             <!--                                <input name="teacher" th:value="*{teacher}" class="form-control" id="add_teacher" type="text">-->
                                                   <textarea id="add_description" name="description" class="form-control">[[*{description}]]</textarea>
                                               </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="add_datasetPath" class="col-md-2 col-form-label">数据集文件：</label>
+                                                <label for="add_datasetPath" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>数据集文件：</label>
                                                 <div class="col-md-10">
                                                     <input type="file" class="form-control custom-file-input" id="add_datasetPath" onchange="setDatasetName()">
                                                     <label id="for_datasetPath" class="form-control custom-file-label" for="add_datasetPath" style="width: 97%;margin-left: 10px;">选择文件</label>
@@ -83,7 +83,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="add_imagePath" class="col-md-2 col-form-label">数据集图标：</label>
+                                                <label for="add_imagePath" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>数据集图标：</label>
                                                 <div class="col-md-10">
                                                     <input type="file" class="form-control custom-file-input" id="add_imagePath" onchange="setImgName()" accept="image/png, image/jpeg, image/jpg">
                                                     <label id="for_imagePath" class="form-control custom-file-label" for="add_imagePath" style="width: 97%;margin-left: 10px;">选择文件</label>
@@ -92,7 +92,7 @@
                                             </div>
 
                                             <div class="form-group row">
-                                                <label for="add_uploader" class="col-md-2 col-form-label">上传人员：</label>
+                                                <label for="add_uploader" class="col-md-2 col-form-label"><span style="color: #ff3d60;">&#8194;</span>上传人员：</label>
                                                 <div class="col-md-10">
                                                     <input name="uploader" th:value="${datasetmodel.username}" id="add_uploader" class="form-control" type="text" readonly style="border:none;">
                                                 </div>
@@ -113,6 +113,7 @@
                                                     <i class="ri-check-line align-middle mr-2"></i>提交
                                                 </button>
                                             </div>
+                                            <p style="margin-left: 10px;">注：带<span style="color: #ff3d60;">*</span>号为必填项</p>
                                         </form>
                                     </div>
                                 </div>

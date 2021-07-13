@@ -44,13 +44,13 @@
                                 <div class="card-body">
                                     <form id="form" method="post" action="/edit_userinfo" class="needs-validation" novalidate="" th:object="${userinfo}" >
                                         <div class="form-group row">
-                                            <label for="teaNumber" class="col-md-2 col-form-label">账号：</label>
+                                            <label for="teaNumber" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>账号：</label>
                                             <div class="col-md-10">
                                                 <input name="teaNumber" class="form-control" type="text" th:value="*{teaNumber}" id="teaNumber" readonly style="border: none;">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="name" class="col-md-2 col-form-label">姓名：</label>
+                                            <label for="name" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>姓名：</label>
                                             <div class="col-md-10">
                                                 <input name="teaName" class="form-control" type="text" th:value="*{teaName}" id="name" readonly style="border: none;">
                                             </div>
@@ -62,31 +62,23 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="phone" class="col-md-2 col-form-label">手机号码：</label>
+                                            <label for="phone" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>手机号码：</label>
                                             <div class="col-md-10">
                                                 <input name="phone" class="form-control" th:value="*{phone}" type="tel" id="phone">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="school" class="col-md-2 col-form-label">学校：</label>
+                                            <label for="school" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>学校：</label>
                                             <div class="col-md-10">
                                                 <input name="school" class="form-control" type="text" th:value="*{school}" id="school">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="major" class="col-md-2 col-form-label">教授专业：</label>
+                                            <label for="major" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>教授专业：</label>
                                             <div class="col-md-10">
                                                 <select name="majorId" th:value="*{majorId}" class="form-control" id="major">
                                                     <option th:value="*{majorId}" style="display: none;" th:text="*{majorName}"></option>
                                                 </select>
-                                                <div id="alert" class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none;margin-top: 5px;padding: 5px;padding-left: 20px;">
-                                                    <i class="mdi mdi-block-helper mr-2">
-                                                        <span id="result_msg" style="padding-left: 10px;"></span>
-                                                    </i>
-                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="padding: 5px;">
-                                                        <span aria-hidden="true">×</span>
-                                                    </button>
-                                                </div>
                                             </div>
                                         </div>
                                         <div id="alert" class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none;margin-top: 5px;padding: 5px;padding-left: 20px;">

@@ -51,25 +51,25 @@
                                     <div class="card-body">
                                         <form id="form" class="needs-validation" action="/add_teacher" method="post" th:object="${teamodel.teacher}" onsubmit="checkMajor()" novalidate="" style="padding-left: 20px;">
                                             <div class="form-group row">
-                                                <label for="add_teaNumber" class="col-md-2 col-form-label">账号：</label>
+                                                <label for="add_teaNumber" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>账号：</label>
                                                 <div class="col-md-10">
                                                     <input name="teaNumber" th:value="*{teaNumber}" class="form-control" type="text"  id="add_teaNumber">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="add_teaName" class="col-md-2 col-form-label">姓名：</label>
+                                                <label for="add_teaName" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>姓名：</label>
                                                 <div class="col-md-10">
                                                     <input name="teaName" th:value="*{teaName}" class="form-control" type="text" id="add_teaName">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="add_school" class="col-md-2 col-form-label">学校：</label>
+                                                <label for="add_school" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>学校：</label>
                                                 <div class="col-md-10">
                                                     <input name="school" th:value="*{school}" class="form-control" type="text" id="add_school">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="add_major" class="col-md-2 col-form-label">教授专业：</label>
+                                                <label for="add_major" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>教授专业：</label>
                                                 <div class="col-md-10">
                                                     <select name="majorId" th:value="*{majorId}" class="form-control" id="add_major">
                                                         <option value="" style="display: none;">请选择专业</option>
@@ -77,13 +77,13 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="add_phone" class="col-md-2 col-form-label">联系手机：</label>
+                                                <label for="add_phone" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>联系手机：</label>
                                                 <div class="col-md-10">
                                                     <input name="phone" th:value="*{phone}" id="add_phone" class="form-control" type="text">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-md-2 col-form-label">管理员权限：</label>
+                                                <label class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>管理员权限：</label>
                                                 <div class="col-md-10 custom-switch " style="display: flex; align-items: center; padding-top: 10px; padding-left: 10px;">
                                                     <input type="checkbox" id="switch" switch="success"  class="form-control">
                                                     <label for="switch" data-on-label="Yes" data-off-label="No"></label>
@@ -106,6 +106,7 @@
                                                     <i class="ri-check-line align-middle mr-2"></i>提交
                                                 </button>
                                             </div>
+                                            <p style="margin-left: 10px;">注：带<span style="color: #ff3d60;">*</span>号为必填项</p>
                                         </form>
                                     </div>
                                 </div>

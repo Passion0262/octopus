@@ -52,31 +52,31 @@
                                         <div class="card-body">
                                             <form id="form" class="needs-validation" action="/edit_student" method="post" th:object="${stumodel.student}" novalidate="" style="padding-left: 20px;">
                                                 <div class="form-group row">
-                                                    <label for="edit_stuNumber" class="col-md-2 col-form-label">学号：</label>
+                                                    <label for="edit_stuNumber" class="col-md-2 col-form-label"><span style="color: #ff3d60;">&#8194;</span>学号：</label>
                                                     <div class="col-md-10">
                                                         <input name="stuNumber" th:value="*{stuNumber}" class="form-control" type="text"  id="edit_stuNumber" readonly style="border: none;">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label for="edit_stuName" class="col-md-2 col-form-label">姓名：</label>
+                                                    <label for="edit_stuName" class="col-md-2 col-form-label"><span style="color: #ff3d60;">&#8194;</span>姓名：</label>
                                                     <div class="col-md-10">
                                                         <input name="name" th:value="*{name}" class="form-control" type="text" id="edit_stuName">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row" style="display: none">
-                                                    <label for="edit_password" class="col-md-2 col-form-label">密码：</label>
+                                                    <label for="edit_password" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>密码：</label>
                                                     <div class="col-md-10">
                                                         <input name="password" th:value="*{password}" class="form-control" type="password" id="edit_password">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row" th:if="${stumodel.role eq 'admin'}">
-                                                    <label for="edit_school" class="col-md-2 col-form-label">学校：</label>
+                                                    <label for="edit_school" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>学校：</label>
                                                     <div class="col-md-10">
                                                         <input name="school" th:value="*{school}" id="edit_school" class="form-control" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label for="edit_major" class="col-md-2 col-form-label">所属专业：</label>
+                                                    <label for="edit_major" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>所属专业：</label>
                                                     <div class="col-md-10">
                                                         <select name="majorId" th:value="*{majorId}" class="form-control" id="edit_major" onchange="getClass()">
                                                             <option th:value="*{majorId}" style="display: none;" th:text="*{majorName}"></option>
@@ -84,7 +84,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label for="edit_class" class="col-md-2 col-form-label">所属班级：</label>
+                                                    <label for="edit_class" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>所属班级：</label>
                                                     <div class="col-md-10">
                                                         <select id="edit_class" name="classId" th:value="*{classId}" class="form-control">
                                                             <option th:value="*{classId}" style="display: none;" th:text="*{className}"></option>
@@ -92,7 +92,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label for="edit_phoneNumber" class="col-md-2 col-form-label">联系手机：</label>
+                                                    <label for="edit_phoneNumber" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>联系手机：</label>
                                                     <div class="col-md-10">
                                                         <input name="phoneNumber" th:value="*{phoneNumber}" id="edit_phoneNumber" class="form-control" type="text">
                                                     </div>
@@ -113,6 +113,7 @@
                                                         <i class="ri-check-line align-middle mr-2"></i>提交
                                                     </button>
                                                 </div>
+                                                <p style="margin-left: 10px;">注：带<span style="color: #ff3d60;">*</span>号为必填项</p>
                                             </form>
                                         </div>
                                     </div>

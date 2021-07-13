@@ -50,13 +50,13 @@
                                 <div class="card-body">
                                     <form id="form" class="needs-validation" action="/add_class" method="post" th:object="${classmodel.class}" novalidate="" style="padding-left: 20px;">
                                         <div class="form-group row">
-                                            <label for="add_className" class="col-md-2 col-form-label">班级名称：</label>
+                                            <label for="add_className" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>班级名称：</label>
                                             <div class="col-md-10">
                                                 <input name="className" th:value="*{className}" class="form-control" type="text"  id="add_className">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="add_major" class="col-md-2 col-form-label">所属专业：</label>
+                                            <label for="add_major" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>所属专业：</label>
                                             <div class="col-md-10">
                                                 <select name="majorId" th:value="*{majorId}" class="form-control" id="add_major">
                                                     <option value="0" style="display: none;">请选择专业</option>
@@ -64,7 +64,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="add_creator" class="col-md-2 col-form-label">创建人员：</label>
+                                            <label for="add_creator" class="col-md-2 col-form-label"><span style="color: #ff3d60;">&#8194;</span>创建人员：</label>
                                             <div class="col-md-10">
                                                 <input name="creator" th:value="${classmodel.username}" id="add_creator" class="form-control" type="text" style="border:none;" readonly>
                                             </div>
@@ -85,6 +85,7 @@
                                                 <i class="ri-check-line align-middle mr-2"></i>提交
                                             </button>
                                         </div>
+                                        <p style="margin-left: 10px;">注：带<span style="color: #ff3d60;">*</span>号为必填项</p>
                                     </form>
                                 </div>
                             </div>

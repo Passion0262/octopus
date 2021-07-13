@@ -61,15 +61,15 @@
                                                 <tr>
     <!--                                                <th class="sorting_disabled" th:if="${role} eq 'admin'">操作</th>-->
                                                     <th>编号</th>
-                                                    <th>课程ID</th>
+<!--                                                    <th>课程ID</th>-->
                                                     <th>课程名称</th>
-                                                    <th>实验ID</th>
+<!--                                                    <th>实验ID</th>-->
                                                     <th>实验名称</th>
-                                                    <th>模块ID</th>
-                                                    <th>模块名称</th>
+<!--                                                    <th>模块ID</th>-->
                                                     <th>模块号</th>
+                                                    <th>模块名称</th>
+                                                    <th>子实验号</th>
                                                     <th>子实验名称</th>
-                                                    <th>子实验小节号</th>
                                                 </tr>
                                             </thead>
                                             <tbody style="text-align: center;">
@@ -87,15 +87,15 @@
     <!--                                                    </a>-->
     <!--                                                </td>-->
                                                     <td th:text="${subExpStat.index+1}"></td>
-                                                    <td th:text="${subExp.courseId}"></td>
+<!--                                                    <td th:text="${subExp.courseId}"></td>-->
                                                     <td th:text="${subExp.courseName}"></td>
-                                                    <td th:text="${subExp.experimentId}"></td>
+<!--                                                    <td th:text="${subExp.experimentId}"></td>-->
                                                     <td th:text="${subExp.experimentName}"></td>
-                                                    <td th:text="${subExp.moduleId}"></td>
-                                                    <td th:text="${subExp.moduleName}"></td>
+<!--                                                    <td th:text="${subExp.moduleId}"></td>-->
                                                     <td th:text="${subExp.moduleNumber}"></td>
-                                                    <td th:text="${subExp.subExperimentName}"></td>
+                                                    <td th:text="${subExp.moduleName}"></td>
                                                     <td th:text="${subExp.subExperimentNumber}"></td>
+                                                    <td th:text="${subExp.subExperimentName}"></td>
                                                 </tr>
                                             </tbody>
                                         </table>

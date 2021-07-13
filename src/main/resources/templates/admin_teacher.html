@@ -75,10 +75,10 @@
                                                     <tr th:each="teachers:${teachers}">
                                                         <td>
                                                             <div style="width:30px;"></div>
-                                                            <a th:href="@{admin_teacher_add}" class="add" style="color:#ff3d60" data-original-title="Add">
+                                                            <a th:href="@{admin_teacher_add}" th:title="'增加'" class="add" style="color:#ff3d60" data-original-title="Add">
                                                                 <i class="mdi mdi-text-box-plus font-size-18"></i>
                                                             </a>
-                                                            <a th:href="@{admin_teacher_edit(teaNumber=${teachers.teaNumber})}" class="edit" style="color:#1cbb8c" data-original-title="Edit">
+                                                            <a th:href="@{admin_teacher_edit(teaNumber=${teachers.teaNumber})}" th:title="'修改'" class="edit" style="color:#1cbb8c" data-original-title="Edit">
                                                                 <i class="mdi mdi-pencil font-size-18"></i>
                                                             </a>
     <!--                                                        <a th:href="@{admin_teacher_delete(teaNumber=${teachers.teaNumber})}" class="delete" style="color:#505d69" data-original-title="Delete">-->

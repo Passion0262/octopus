@@ -52,31 +52,31 @@
                                 <div class="card-body">
                                     <form id="form" class="needs-validation" action="/edit_major" method="post" th:object="${majormodel.major}" novalidate="" style="padding-left: 20px;">
                                         <div class="form-group row">
-                                            <label for="edit_major_id" class="col-md-2 col-form-label">专业编号：</label>
+                                            <label for="edit_major_id" class="col-md-2 col-form-label"><span style="color: #ff3d60;">&#8194;</span>专业编号：</label>
                                             <div class="col-md-10">
                                                 <input name="id" th:value="*{id}" class="form-control" type="text" id="edit_major_id" readonly style="border:none;">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="edit_majorCode" class="col-md-2 col-form-label">专业代码：</label>
+                                            <label for="edit_majorCode" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>专业代码：</label>
                                             <div class="col-md-10">
                                                 <input name="majorCode" th:value="*{majorCode}" class="form-control" type="text" value="" id="edit_majorCode">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="edit_major_name" class="col-md-2 col-form-label">专业名称：</label>
+                                            <label for="edit_major_name" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>专业名称：</label>
                                             <div class="col-md-10">
                                                 <input name="majorName" th:value="*{majorName}" class="form-control" type="text" value=" " id="edit_major_name">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="edit_create_user" class="col-md-2 col-form-label">创建人员：</label>
+                                            <label for="edit_create_user" class="col-md-2 col-form-label"><span style="color: #ff3d60;">&#8194;</span>创建人员：</label>
                                             <div class="col-md-10">
                                                 <input name="creator" th:value="*{creator}" id="edit_create_user" class="form-control" type="text" readonly style="border:none;">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="edit_create_time" class="col-md-2 col-form-label">创建时间：</label>
+                                            <label for="edit_create_time" class="col-md-2 col-form-label"><span style="color: #ff3d60;">&#8194;</span>创建时间：</label>
                                             <div class="col-md-10">
                                                 <input name="createTime" th:value="*{createTime}" id="edit_create_time" class="form-control" type="text" readonly style="border:none;">
                                             </div>
@@ -98,6 +98,7 @@
                                             </button>
                                         </div>
                                     </form>
+                                    <p style="margin-left: 10px;">注：带<span style="color: #ff3d60;">*</span>号为必填项</p>
                                 </div>
                             </div>
                         </div>
