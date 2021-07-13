@@ -48,10 +48,17 @@ public interface VideoMapper {
     @Select("SELECT * FROM video WHERE id = #{id}")
     Video getById(long id);
 
-    @Select("SELECT v.*, c.course_name, cha.chapter_name " +
+    @Select("SELECT v.*, c.course_name, cha.chapter_name, cha.chapter_number " +
             "FROM video v, course c, chapter cha " +
-            "WHERE v.chapter_id=cha.chapter_id and v.course_id=c.id")
+            "WHERE v.chapter_id=cha.chapter_id and v.course_id=c.id " +
+            "ORDER BY v.course_id, cha.chapter_number, v.number")
     List<VideoManageVO> getAllVideoManage();
+
+    @Select("SELECT v.*, c.course_name, cha.chapter_name, cha.chapter_number " +
+            "FROM video v, course c, chapter cha " +
+            "WHERE c.tea_number=#{teaNumber} and v.chapter_id=cha.chapter_id and v.course_id=c.id " +
+            "ORDER BY v.course_id, cha.chapter_number, v.number")
+    List<VideoManageVO> getVideoManageByTeaId(long teaNumber);
 
     @Insert("INSERT INTO video (name, number, path, chapter_id, course_id) " +
             "VALUES (#{name}, #{number}, #{path}, #{chapterId}, #{courseId})")
