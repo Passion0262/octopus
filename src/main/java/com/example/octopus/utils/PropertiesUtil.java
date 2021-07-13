@@ -7,6 +7,8 @@ public class PropertiesUtil {
 
     private static String  PdfSubmitPath= "/Users/wangxiang/Desktop/temp/";
 
+    private static String  FileSavePath= "D:/platform/temp/";
+
 
     public String getExpImageSavePath() {
         return this.ExpImageSavePath;
@@ -16,4 +18,5 @@ public class PropertiesUtil {
 
     public String getPdfSubmitPath() { return this.PdfSubmitPath; }
 
+    public String getFileSavePath() { return this.FileSavePath; }
 }
