@@ -68,8 +68,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean insertStudent(Student student, long teaNumber) {
-		student.setSchool(teacherMapper.getSchoolByTeaNumber(teaNumber));
+	public boolean insertStudent(Student student) {
 		if (student.getPassword() == null)
 			student.setPassword("123");
 		SysUserRole sysUserRole = new SysUserRole(student.getStuNumber(), 2, student.getPassword());
@@ -108,14 +107,12 @@ public class UserServiceImpl implements UserService {
 	/////////////批量操作
 	@Override
     @Transactional  //数据库事务注释，用于回滚
-	public boolean batchInsertStudent(List<Student> students, long teaNumber) {
-		String school = teacherMapper.getSchoolByTeaNumber(teaNumber);
+	public boolean batchInsertStudent(List<Student> students) {
 		List<SysUserRole> users = new ArrayList<>();
 		String password = "123";
 		int length = students.size();
 		try{
 			for (int i = 0; i < length; ++i) {
-				students.get(i).setSchool(school);
 				if (students.get(i).getPassword() != null)
 					password = students.get(i).getPassword();
 				SysUserRole u = new SysUserRole(students.get(i).getStuNumber(), 2, password);

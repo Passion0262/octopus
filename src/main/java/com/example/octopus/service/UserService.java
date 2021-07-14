@@ -40,7 +40,7 @@ public interface UserService {
      * @param student 学生实体
      * @return 成功为true，失败为false
      */
-    boolean insertStudent(Student student, long teaNumber);
+    boolean insertStudent(Student student);
 
     /**
      * 更新学生信息，不更新密码和登录信息
@@ -73,6 +73,6 @@ public interface UserService {
     /**
      * 批量添加学生
      */
-    boolean batchInsertStudent(List<Student> students, long teaNumber);
+    boolean batchInsertStudent(List<Student> students);
 
 }

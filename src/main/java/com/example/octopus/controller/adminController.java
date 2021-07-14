@@ -494,7 +494,7 @@ public class adminController {
         student.setPassword("123");
         logger.info("提交新增的student: [{}]", student);
         try {
-            userService.insertStudent(student, teaNum);
+            userService.insertStudent(student);
             return new ModelAndView("redirect:/admin_student");
         }
         catch (Exception e){
@@ -540,7 +540,7 @@ public class adminController {
 //                    for (int i=0; i<stu_list.size(); i++){
 //                        userService.insertStudent(stu_list.get(i), teaNum);
 //                    }
-                    userService.batchInsertStudent(stu_list, teaNum);
+                    userService.batchInsertStudent(stu_list);
                     result_msg = "上传成功";
                 }catch(Exception e){
                     result_msg = "上传失败";
