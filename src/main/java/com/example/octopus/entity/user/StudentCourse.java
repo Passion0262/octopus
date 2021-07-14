@@ -36,6 +36,8 @@ public class StudentCourse {
 
     private Timestamp applyTime;
 
+    private boolean completed;  //这门课程是否完成
+
     public StudentCourse(long id, long stuNumber, long courseId, String courseName, String stuName, String stuMajor, String stuClass, Timestamp applyTime) {
         this.id = id;
         this.stuNumber = stuNumber;

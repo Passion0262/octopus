@@ -1,6 +1,9 @@
 package com.example.octopus.service;
 
+import com.example.octopus.entity.VOs.ExperimentTimeHistoryVO;
+import com.example.octopus.entity.VOs.ExperimentTimeVO;
 import com.example.octopus.entity.experiment.Experiment;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -36,5 +39,16 @@ public interface ExperimentService {
      * @return experiment list
      */
     List<Experiment> listExperimentsByStuNumber(long stuNumber);
+
+    /**
+     *  根据学生ID返回每门课的实验学习时长
+     */
+    List<ExperimentTimeVO> countExperimentTime(long stuNumber);
+
+    /**
+     * 获取学生过去7天的实验时间
+     */
+    List<ExperimentTimeHistoryVO> getHistory7DaysExperimentTime(long stuNumber);
+
 
 }

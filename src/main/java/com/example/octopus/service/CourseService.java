@@ -3,6 +3,7 @@ package com.example.octopus.service;
 import com.example.octopus.entity.user.Course;
 import com.example.octopus.entity.user.Student;
 import com.example.octopus.entity.user.StudentCourse;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -40,6 +41,16 @@ public interface CourseService {
 	 * @return 课程list
 	 */
 	List<Course> listCoursesByStuNumber(long stuNumber);
+
+	/**
+	 *  根据学生id查询已选课程数
+	 */
+	int countCourseChosen(long stuNumber);
+
+	/**
+	 *  获取学生完成的课程的名字
+	 */
+	List<String> listCompletedCourses(long stuNumber);
 
 	/**
 	 * 根据教师编号查询该教师教授的课程list

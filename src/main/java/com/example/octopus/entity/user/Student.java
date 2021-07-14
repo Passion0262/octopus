@@ -4,9 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
 import java.sql.Time;
-import java.util.Set;
+import java.sql.Timestamp;
 
 /**
  * @author ：shadow
@@ -40,7 +39,7 @@ public class Student {
 
 	private int loginNumber;
 
-	private Date lastLoginTime;
+	private Timestamp lastLoginTime;
 
 	private Time studyTime;
 

@@ -58,6 +58,16 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    public int countCourseChosen(long stuNumber) {
+        return courseMapper.countCourseChosen(stuNumber);
+    }
+
+    @Override
+    public List<String> listCompletedCourses(long stuNumber) {
+        return courseMapper.listCompletedCourses(stuNumber);
+    }
+
+    @Override
     public List<Course> listCoursesByTeaNumber(long teaNumber) {
 //        List<Course> courseList = new ArrayList<>();
 //        List<Long> courseIdList = teacherCourseMapper.listCourseIdsByTeaNumber(teaNumber);

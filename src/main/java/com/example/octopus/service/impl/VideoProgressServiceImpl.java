@@ -1,11 +1,13 @@
 package com.example.octopus.service.impl;
 
+import com.example.octopus.dao.CourseMapper;
 import com.example.octopus.dao.SysUserRoleMapper;
 import com.example.octopus.dao.experiment.VideoProgressMapper;
 import com.example.octopus.dao.experiment.VideoMapper;
 import com.example.octopus.entity.VOs.CourseTimeVO;
 import com.example.octopus.entity.VOs.VideoProgressDetailVO;
 import com.example.octopus.entity.VOs.VideoProgressHistoryVO;
+import com.example.octopus.entity.VOs.VideoTimeHistoryVO;
 import com.example.octopus.entity.experiment.VideoProgress;
 import com.example.octopus.service.VideoProgressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ public class VideoProgressServiceImpl implements VideoProgressService {
 
 	@Autowired
 	VideoMapper videoMapper;
+
+	@Autowired
+	CourseMapper courseMapper;
 
 	@Autowired
 	SysUserRoleMapper sysUserRoleMapper;
@@ -59,6 +64,11 @@ public class VideoProgressServiceImpl implements VideoProgressService {
 			videoProgressList.add(videoProgressMapper.getLatestByVideoIdAndStuNumber(videoId, stuNumber));
 		}
 		return videoProgressList;
+	}
+
+	@Override
+	public List<VideoTimeHistoryVO> getHistory7DaysStudyTime(long stuNumber) {
+		return videoProgressMapper.getHistory7DaysStudyTime(stuNumber);
 	}
 
 	@Override
@@ -118,6 +128,9 @@ public class VideoProgressServiceImpl implements VideoProgressService {
 			}
 		}
 		double result = stu_progress / course_progress;
+		if (result>0.99){
+			courseMapper.updateCompleted(courseId,stuNumber);
+		}
 		BigDecimal b = new BigDecimal(result);
 		return b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();    //保留2位小数
 	}

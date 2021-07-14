@@ -2,6 +2,8 @@ package com.example.octopus.service.impl;
 
 import com.example.octopus.dao.CourseExperimentMapper;
 import com.example.octopus.dao.experiment.ExperimentMapper;
+import com.example.octopus.entity.VOs.ExperimentTimeHistoryVO;
+import com.example.octopus.entity.VOs.ExperimentTimeVO;
 import com.example.octopus.entity.experiment.Experiment;
 import com.example.octopus.service.ExperimentService;
 import com.example.octopus.service.StudentCourseService;
@@ -59,5 +61,15 @@ public class ExperimentServiceImpl implements ExperimentService {
             }
         }
         return exp_list;
+    }
+
+    @Override
+    public List<ExperimentTimeVO> countExperimentTime(long stuNumber) {
+        return experimentMapper.countExperimentTimeByStuNumberGroupByCourseId(stuNumber);
+    }
+
+    @Override
+    public List<ExperimentTimeHistoryVO> getHistory7DaysExperimentTime(long stuNumber) {
+        return experimentMapper.getHistory7DaysExperimentTime(stuNumber);
     }
 }

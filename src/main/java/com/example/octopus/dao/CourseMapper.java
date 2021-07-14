@@ -37,6 +37,17 @@ public interface CourseMapper {
     @Select(("SELECT * FROM course where id = #{id}"))
     Course getCourseById(long id);
 
+    /**
+     *  根据学生id查询已选课程数
+     */
+    @Select("SELECT count(*) FROM student_course WHERE stu_number=#{stu_number}")
+    int countCourseChosen(long stuNumber);
+
+    /**
+     *  获取学生完成的课程的名字
+     */
+    @Select("SELECT course_name FROM course WHERE stu_name=#{stuNumber} AND completed=1")
+    List<String> listCompletedCourses(long stuNumber);
 
     /**
      * 增加课程实体
@@ -45,6 +56,12 @@ public interface CourseMapper {
      */
     @Insert("INSERT INTO course (course_name,tea_number,tea_name,description,image_path,start_time,end_time,apply_time,num_allowed,num_participated,status) VALUES (#{courseName},#{teaNumber},#{teaName},#{description},#{imagePath},#{startTime},#{endTime},#{applyTime},#{numAllowed},#{numParticipated},#{status})")
     boolean insertCourse(Course course);
+
+    /**
+     *  将课程状态更新为已完成
+     */
+    @Update("UPDATE course SET completed = 1 WHERE course_id=#{courseId} AND stu_number = #{stuNumber}")
+    boolean updateCompleted(long courseId, long stuNumber);
 
     /**
      * 修改课程

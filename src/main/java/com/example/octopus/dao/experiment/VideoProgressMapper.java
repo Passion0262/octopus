@@ -3,6 +3,7 @@ package com.example.octopus.dao.experiment;
 import com.example.octopus.entity.VOs.CourseTimeVO;
 import com.example.octopus.entity.VOs.VideoProgressDetailVO;
 import com.example.octopus.entity.VOs.VideoProgressHistoryVO;
+import com.example.octopus.entity.VOs.VideoTimeHistoryVO;
 import com.example.octopus.entity.experiment.VideoProgress;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -31,7 +32,7 @@ public interface VideoProgressMapper {
      *  根据学生ID,返回每门课的视频学习时长
      *  @return 返回列表 单位秒
      */
-    @Select("SELECT v.course_id,count(vp.study_time) as time FROM video v,video_progress vp WHERE vp.stu_number=2 AND v.id = vp.video_id")
+    @Select("SELECT v.course_id,count(vp.study_time) as time FROM video v,video_progress vp WHERE vp.stu_number=#{stuNumber} AND v.id = vp.video_id")
     List<CourseTimeVO> countStudyTimeByStuNumberGroupByCourseId(long stuNumber);
 
     /**
@@ -58,6 +59,14 @@ public interface VideoProgressMapper {
      */
     @Select("SELECT SUM(study_time) FROM video_progress WHERE video_id=#{videoId} AND stu_number=#{stuNumber}")
     Integer countStudyTime(long videoId, long stuNumber);
+
+    /**
+     *  获取学生过去7天的学习时间
+     */
+    @Select("SELECT DATE_FORMAT( end_time, '%Y-%m-%d' ) date, SUM(study_time) time " +
+            "FROM ( SELECT * FROM video_progress WHERE DATE_SUB( CURDATE( ), INTERVAL 7 DAY ) <= date(end_time)) as day " +
+            "GROUP BY date")
+    List<VideoTimeHistoryVO> getHistory7DaysStudyTime(long stuNumber);
 
     /**
      *  更新videoProgress

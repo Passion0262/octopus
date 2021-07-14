@@ -3,6 +3,7 @@ package com.example.octopus.service;
 import com.example.octopus.entity.VOs.CourseTimeVO;
 import com.example.octopus.entity.VOs.VideoProgressDetailVO;
 import com.example.octopus.entity.VOs.VideoProgressHistoryVO;
+import com.example.octopus.entity.VOs.VideoTimeHistoryVO;
 import com.example.octopus.entity.experiment.VideoProgress;
 import org.apache.ibatis.annotations.Select;
 
@@ -35,6 +36,10 @@ public interface VideoProgressService {
      */
     List<VideoProgress> listLatestByCourseIdAndStuNumber(long courseId, long stuNumber);
 
+    /**
+     *  获取学生过去7天的学习时间
+     */
+    List<VideoTimeHistoryVO> getHistory7DaysStudyTime(long stuNumber);
 
     /**
      * 计算学生该课程一共的视频学习时间
@@ -79,7 +84,7 @@ public interface VideoProgressService {
     double getCourseProgress(long courseId, long stuNumber);
 
     /**
-     * 视频学习详情，每个学生和每个视频对应一条数据。根据教师不同权限
+     * 视频学习详情，每个学生和每个视频对应一条数据。根据教师不同权x限
      * @param teaNumber 教师号
      * @return 获取所有学生在视频中的学习信息
      */
