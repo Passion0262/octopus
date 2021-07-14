@@ -533,20 +533,24 @@ public class adminController {
             }
             if (result.equals("true")) {
                 String relativePath = WEB_HOST + "dataset/" + fileName;
-                root.put("relativePath", relativePath);//前端根据是否存在该字段来判断上传是否成功
-                result_msg = "文件上传成功";
-
+                root.put("success", "success"); //前端根据是否存在该字段来判断上传是否成功
                 List<Student> stu_list = parseExcelUtils.parseExcel(localPath+fileName);
                 logger.info("解析文件，获得学生列表：{}", stu_list);
-                for (int i=0; i<stu_list.size(); i++){
-                    userService.insertStudent(stu_list.get(i), teaNum);
+                try{
+//                    for (int i=0; i<stu_list.size(); i++){
+//                        userService.insertStudent(stu_list.get(i), teaNum);
+//                    }
+                    userService.batchInsertStudent(stu_list, teaNum);
+                    result_msg = "上传成功";
+                }catch(Exception e){
+                    result_msg = "上传失败";
                 }
 
             } else {
-                result_msg = "文件上传失败";
+                result_msg = "上传失败";
             }
         } else {
-            result_msg = "文件格式不正确";
+            result_msg = "格式不正确";
         }
         root.put("result_msg", result_msg);
 

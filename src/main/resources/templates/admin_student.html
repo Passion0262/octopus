@@ -220,10 +220,9 @@
                     contentType:false,
                     processData:false,
                     success: function (data) {
-                        if(data.hasOwnProperty("relativePath")){
+                        if(data.hasOwnProperty("success")){
                             document.getElementById("success").style.display="";
-                            document.getElementById("success_msg").innerHTML = "上传文件成功！";
-                            console.log("上传文件成功");
+                            document.getElementById("success_msg").innerHTML = data.result_msg;
                         }
                         else {
                             document.getElementById("alert").style.display="";
