@@ -56,6 +56,9 @@ public interface UserService {
      */
     void updateLoginInfo(long stuNumber);
 
+    /**
+     * 重置密码为123
+     */
     void resetPassword(long stuNumber);
 
     /**
@@ -64,5 +67,12 @@ public interface UserService {
      * @param phoneNumber 手机号
      */
     boolean updatePhoneNumber(long stuNumber, String phoneNumber);
+
+
+    ////////////////批量操作接口
+    /**
+     * 批量添加学生
+     */
+    boolean batchInsertStudent(List<Student> students, long teaNumber);
 
 }

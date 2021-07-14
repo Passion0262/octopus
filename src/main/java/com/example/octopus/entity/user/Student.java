@@ -44,6 +44,12 @@ public class Student {
 
 	private Time studyTime;
 
+	public Student(long stuNumber, String name, String phoneNumber) {
+		this.stuNumber = stuNumber;
+		this.name = name;
+		this.phoneNumber = phoneNumber;
+	}
+
 	public Student(long stuNumber, String name, String password, long majorId, long classId, String phoneNumber) {
 		this.stuNumber = stuNumber;
 		this.name = name;
