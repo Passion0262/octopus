@@ -112,6 +112,7 @@
                                         <div>
                                             <p>&#8194;用于批量增加学生，上传Excel文件，需包括<span style="color: red;">学号、姓名、学校、专业、班级、联系手机</span>几项信息</p>
                                             <p>&#8194;其中，专业信息请填写专业代码，可从”专业管理“中查询，班级信息请填写班级ID，可从”班级管理“中查询</p>
+                                            <a href="static/files/batch_add.xlsx">&#8194;下载批量增加模板文件</a>
                                         </div>
 <!--                                        <div>-->
                                         <form id="form" action="/add_student_batch" method="post" novalidate="" style="padding-left: 10px; padding-top: 10px">
@@ -134,7 +135,7 @@
                                                 </button>
                                             </div>
                                             <div id="success" class="alert alert-success alert-dismissible fade show" role="alert" style="display:none;margin-top: 5px;padding: 5px;padding-left: 20px;">
-                                                <i class="mdi mdi-block-helper mr-2">
+                                                <i class="mdi mdi-check-all mr-2">
                                                     <span id="success_msg" style="padding-left: 10px;"></span>
                                                 </i>
                                                 <button type="button" class="close" data-dismiss="success" aria-label="Close" style="padding: 5px;">
