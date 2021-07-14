@@ -4,17 +4,15 @@ import com.alibaba.fastjson.JSON;
 import com.example.octopus.entity.VOs.SubExperimentOperateTimeVO;
 import com.example.octopus.entity.VOs.SubProjectDetailVO;
 import com.example.octopus.entity.dataset.Dataset;
-import com.example.octopus.entity.experiment.SubExperimentProgress;
 import com.example.octopus.entity.experiment.SubExperimentReportSubmit;
 import com.example.octopus.entity.experiment.Video;
-import com.example.octopus.entity.project.Project;
-import com.example.octopus.entity.project.SubProject;
 import com.example.octopus.entity.user.*;
 import com.example.octopus.service.*;
 import com.example.octopus.utils.CookieTokenUtils;
 import com.example.octopus.utils.PropertiesUtil;
 import com.example.octopus.utils.TokenCheckUtils;
 import com.example.octopus.utils.UploadFileUtils;
+import com.example.octopus.utils.parseExcelUtils;
 //import com.example.octopus.utils.TimeTransUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -502,6 +500,59 @@ public class adminController {
         catch (Exception e){
             return new ModelAndView("redirect:/admin_error");
         }
+    }
+
+    //批量增加学生
+    //上传数据集
+    @ResponseBody
+    @RequestMapping("/add_student_batch")
+    public Map add_student_batch(MultipartFile file, HttpServletRequest request) {
+
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+
+        String result_msg = "";  //上传结果信息
+        Map<String, Object> root = new HashMap<String, Object>();
+
+        //判断上传文件格式
+        String fileType = file.getContentType();
+        //System.out.println(fileType);
+        if (fileType.equals("application/vnd.ms-excel") ||
+                fileType.equals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")) {
+            // 要上传的目标文件存放的绝对路径
+            final String localPath = WEB_BASE_PATH + "student_batch/";
+            //获取文件名
+            String fileName = file.getOriginalFilename();
+            //获取文件后缀名
+            String suffixName = fileName.substring(fileName.lastIndexOf("."));
+            fileName = UUID.randomUUID() + suffixName;
+            String result = UploadFileUtils.upload(file, localPath, fileName, false);
+            while (result.equals("exists")){
+                //重新生成文件名
+                fileName = UUID.randomUUID() + suffixName;
+                result = UploadFileUtils.upload(file, localPath, fileName, false);
+            }
+            if (result.equals("true")) {
+                String relativePath = WEB_HOST + "dataset/" + fileName;
+                root.put("relativePath", relativePath);//前端根据是否存在该字段来判断上传是否成功
+                result_msg = "文件上传成功";
+
+                List<Student> stu_list = parseExcelUtils.parseExcel(localPath+fileName);
+                logger.info("解析文件，获得学生列表：{}", stu_list);
+                for (int i=0; i<stu_list.size(); i++){
+                    userService.insertStudent(stu_list.get(i), teaNum);
+                }
+
+            } else {
+                result_msg = "文件上传失败";
+            }
+        } else {
+            result_msg = "文件格式不正确";
+        }
+        root.put("result_msg", result_msg);
+
+        String root_json = JSON.toJSONString(root);
+        logger.info(root_json);
+        return root;
     }
 
     //修改学生
