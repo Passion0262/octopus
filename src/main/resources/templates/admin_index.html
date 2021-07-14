@@ -258,7 +258,7 @@
                         <div class="col-xl-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <p class="text-truncate font-size-14 mb-2">最近登录时间</p>
+                                    <p class="text-truncate font-size-14 mb-2">上次登录时间</p>
                                     <h4 class="mb-0" th:text="${#dates.format(lastLoginTime,'yyyy-MM-dd HH:mm:ss')}"></h4>
                                 </div>
                             </div>
@@ -408,7 +408,7 @@
         function getday() {
             let days = [];
             var date = new Date();
-            for(let i=168; i>=0;i-=24){		//144是前六天的小时数
+            for(let i=144; i>=0;i-=24){		//144是前六天的小时数
                 let dateItem=new Date(date.getTime() - i * 60 * 60 * 1000);	//使用当天时间戳减去以前的时间毫秒（小时*分*秒*毫秒）
                 let y = dateItem.getFullYear();	//获取年份
                 let m = dateItem.getMonth() + 1;	//获取月份js月份从0开始，需要+1
@@ -435,7 +435,7 @@
             var experimentTimes = [[${sumExperimentTime}]];
             //console.log(experimentTimes);
             var times = [];
-            for (var i=0; i<=6;i++){
+            for (var i=1; i<=7;i++){
                 times.push(experimentTimes[i]/3600);
             }
             //console.log(times);
@@ -446,7 +446,7 @@
             var videoTimes = [[${sumVideoTime}]];
             //console.log(videoTimes);
             var times = [];
-            for (var i=0; i<=6;i++){
+            for (var i=1; i<=7;i++){
                 times.push(videoTimes[i]/3600);
             }
             return times;
