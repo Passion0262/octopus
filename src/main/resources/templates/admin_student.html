@@ -223,6 +223,7 @@
                         if(data.hasOwnProperty("success")){
                             document.getElementById("success").style.display="";
                             document.getElementById("success_msg").innerHTML = data.result_msg;
+                            setTimeout(function(){window.location.reload();},2000);
                         }
                         else {
                             document.getElementById("alert").style.display="";
