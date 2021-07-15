@@ -107,7 +107,7 @@
                         <div class="card">
                             <div class="card-body" style=" height: 100px;">
                                 <p class="text-truncate font-size-14 mb-2">已选课程数</p>
-                                <h4 class="mb-0">14</h4>
+                                <span  th:text = "${chosenCourse}"></span>
                             </div>
                         </div>
                     </div>
@@ -115,7 +115,7 @@
                         <div class="card">
                             <div class="card-body" style=" height: 100px;">
                                 <p class="text-truncate font-size-14 mb-2">未完成课程数</p>
-                                <h4 class="mb-0">9</h4>
+                                <span  th:text = "${noFinished}"></span>
                             </div>
                         </div>
                     </div>
@@ -123,7 +123,7 @@
                         <div class="card">
                             <div class="card-body" style=" height: 100px;">
                                 <p class="text-truncate font-size-14 mb-2">上一次学习时间</p>
-                                <h4 class="mb-0">16：34：08</h4>
+                                <span  th:text = "${lastlogintime}"></span>
                             </div>
                         </div>
                         </div>
@@ -181,7 +181,17 @@
 <script src="static/js/app.js"></script>
 <script src="static/js/libs/chart.js/echarts.min.js"></script>
 <script th:inline="javascript" type="text/javascript">
+    var videopros = [[${videopros}]];
+    var experpros = [[${experpros}]];
+    var lastExper = [[${lastExper}]];
+    var lastvideo = [[${lastvideo}]];
+    var videoCoursenames = [[${videoCoursenames}]];
+    var experCoursenames = [[${experCoursenames}]];
+
     $(document).ready(function() {
+        console.log(lastExper);
+        console.log(lastvideo);
+        console.log(videopros);
         var option1 = {
             title : {
                 text: '最近七天学习时长',
@@ -189,20 +199,20 @@
 
             },
             tooltip : {
-                trigger: 'item'
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c}"
             },
             legend: {
                 orient : 'vertical',
                 x : 'right',
-                data:['A','B']
+                data:['课程视频','课程实验']
             },
 
-            calculable : true,
             xAxis : [
                 {
                     type : 'category',
                     boundaryGap : false,
-                    data : ['1','2','3','4','5','6','7']
+                    data : [lastvideo[0].date,lastvideo[1].date,lastvideo[2].date,lastvideo[3].date,lastvideo[4].date]
                 }
             ],
             yAxis : [
@@ -212,16 +222,16 @@
             ],
             series : [
                 {
-                    name:'A',
+                    name:'课程视频',
                     type:'line',
-                    stack: '总量',
-                    data:[120, 132, 101, 134, 90, 230, 210]
+
+                    data:[lastvideo[0].time,lastvideo[1].time,lastvideo[2].time,lastvideo[3].time,lastvideo[4].time]
                 },
                 {
-                    name:'B',
+                    name:'课程实验',
                     type:'line',
-                    stack: '总量',
-                    data:[220, 182, 191, 234, 290, 330, 310]
+
+                    data:[lastvideo[0].time,lastvideo[1].time,lastvideo[2].time,lastvideo[3].time,lastvideo[4].time]
                 }
             ]
         };
@@ -236,11 +246,7 @@
                 trigger: 'item',
                 formatter: "{a} <br/>{b} : {c} ({d}%)"
             },
-            legend: {
-                orient : 'vertical',
-                x : 'left',
-                data:['A','B','C','D','E']
-            },
+
             calculable : true,
             series : [
                 {
@@ -248,13 +254,7 @@
                     type:'pie',
                     radius : '55%',
                     center: ['50%', '60%'],
-                    data:[
-                        {value:335, name:'A'},
-                        {value:310, name:'B'},
-                        {value:234, name:'C'},
-                        {value:135, name:'D'},
-                        {value:1548, name:'E'}
-                    ]
+                    data:videopros
                 }
             ]
         };
@@ -267,11 +267,7 @@
                 trigger: 'item',
                 formatter: "{a} <br/>{b} : {c} ({d}%)"
             },
-            legend: {
-                orient : 'vertical',
-                x : 'left',
-                data:['A','B','C','D','E']
-            },
+
             calculable : true,
             series : [
                 {
@@ -279,13 +275,7 @@
                     type:'pie',
                     radius : '55%',
                     center: ['50%', '60%'],
-                    data:[
-                        {value:335, name:'A'},
-                        {value:310, name:'B'},
-                        {value:234, name:'C'},
-                        {value:135, name:'D'},
-                        {value:1548, name:'E'}
-                    ]
+                    data:experpros
                 }
             ]
         };

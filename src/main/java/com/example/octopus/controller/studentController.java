@@ -3,6 +3,9 @@ package com.example.octopus.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.octopus.entity.VOs.CourseTimeVO;
+import com.example.octopus.entity.VOs.ExperimentTimeHistoryVO;
+import com.example.octopus.entity.VOs.ExperimentTimeVO;
+import com.example.octopus.entity.VOs.VideoTimeHistoryVO;
 import com.example.octopus.entity.dataset.Dataset;
 import com.example.octopus.entity.experiment.*;
 import com.example.octopus.entity.experiment.Module;
@@ -147,9 +150,69 @@ public class studentController {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
 
-        List<CourseTimeVO> videopros = videoProgressService.countStudyTimeByStuNumberGroupByCourseId(stuName);
+        int chosenCourse = courseService.countCourseChosen(stuName);
+        logger.info("chosenCourse:" + chosenCourse);
+        model.addAttribute("chosenCourse",chosenCourse);
+
+        int noFinished = chosenCourse - courseService.listCompletedCourses(stuName).size();
+        logger.info("noFinished:" + noFinished);
+        model.addAttribute("noFinished",noFinished);
+
+        Timestamp lastlogintime = userService.getStudentByStuNumber(stuName).getLastLoginTime();
+        logger.info("lastlogintime:" + lastlogintime);
+        model.addAttribute("lastlogintime",lastlogintime);
+
+
+
+        List<CourseTimeVO> videopro = videoProgressService.countStudyTimeByStuNumberGroupByCourseId(stuName);
+
+
+
+        List<ExperimentTimeVO> experpro = experimentService.countExperimentTime(stuName);
+
+
+        JSONArray videopros = new JSONArray();
+        JSONArray experpros = new JSONArray();
+        List<String> videoCoursenames = new ArrayList<>();
+        List<String> experCoursenames = new ArrayList<>();
+
+        for(int i=0;i<videopro.size();i++){
+            JSONObject ob1 = new JSONObject();
+            JSONObject ob2 = new JSONObject();
+            String s1 = courseService.getCourseById(videopro.get(i).getCourseId()).getCourseName();
+            String s2 = courseService.getCourseById(experpro.get(i).getCourseId()).getCourseName();
+            ob1.put("value",videopro.get(i).getTime());
+            ob1.put("name",s1);
+            videoCoursenames.add(s1);
+            ob2.put("value",experpro.get(i).getTime());
+            ob2.put("name",s2);
+            experCoursenames.add(s2);
+            videopros.add(ob1);
+            experpros.add(ob2);
+        }
+
+        logger.info("videoCoursenames:" + videoCoursenames);
+        model.addAttribute("videoCoursenames",videoCoursenames);
         logger.info("videopros:" + videopros);
         model.addAttribute("videopros",videopros);
+        logger.info("experCoursenames:" + experCoursenames);
+        model.addAttribute("experCoursenames",experCoursenames);
+        logger.info("experpros:" + experpros);
+        model.addAttribute("experpros",experpros);
+
+
+        List<ExperimentTimeHistoryVO> lastExper = experimentService.getHistory7DaysExperimentTime(stuName);
+        logger.info("lastExper:" + lastExper);
+        model.addAttribute("lastExper",lastExper);
+
+        List<VideoTimeHistoryVO> lastvideo = videoProgressService.getHistory7DaysStudyTime(stuName);
+        logger.info("lastvideo:" + lastvideo );
+        model.addAttribute("lastvideo",lastvideo);
+
+
+//        int experpros = subExperimentProgressService.countValidStudyTime(stuName);
+//        logger.info("experpros:" + experpros);
+//        model.addAttribute("experpros",experpros);
 
 
 

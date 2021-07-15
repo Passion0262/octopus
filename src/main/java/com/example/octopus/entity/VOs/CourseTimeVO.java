@@ -13,4 +13,11 @@ public class CourseTimeVO {
 
     private int time;   //单位：秒
 
+    public int getTime() {
+        return time;
+    }
+
+    public long getCourseId() {
+        return courseId;
+    }
 }

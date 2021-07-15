@@ -46,7 +46,7 @@ public interface CourseMapper {
     /**
      *  获取学生完成的课程的名字
      */
-    @Select("SELECT course_name FROM course WHERE stu_name=#{stuNumber} AND completed=1")
+    @Select("SELECT course_name FROM student_course WHERE stu_name=#{stuNumber} AND completed=1")
     List<String> listCompletedCourses(long stuNumber);
 
     /**
