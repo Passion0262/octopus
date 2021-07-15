@@ -185,6 +185,7 @@
     var experpros = [[${experpros}]];
     var lastExper = [[${lastExper}]];
     var lastvideo = [[${lastvideo}]];
+    var pastDaysList = [[${pastDaysList}]];
     var videoCoursenames = [[${videoCoursenames}]];
     var experCoursenames = [[${experCoursenames}]];
 
@@ -212,7 +213,7 @@
                 {
                     type : 'category',
                     boundaryGap : false,
-                    data : [lastvideo[0].date,lastvideo[1].date,lastvideo[2].date,lastvideo[3].date,lastvideo[4].date]
+                    data :pastDaysList
                 }
             ],
             yAxis : [
@@ -225,13 +226,13 @@
                     name:'课程视频',
                     type:'line',
 
-                    data:[lastvideo[0].time,lastvideo[1].time,lastvideo[2].time,lastvideo[3].time,lastvideo[4].time]
+                    data:lastvideo
                 },
                 {
                     name:'课程实验',
                     type:'line',
 
-                    data:[lastvideo[0].time,lastvideo[1].time,lastvideo[2].time,lastvideo[3].time,lastvideo[4].time]
+                    data:lastExper
                 }
             ]
         };

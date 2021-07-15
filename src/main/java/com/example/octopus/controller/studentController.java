@@ -43,6 +43,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -141,6 +142,16 @@ public class studentController {
         }
     }
 
+
+    public static String getPastDate(int past) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) - past);
+        Date today = calendar.getTime();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String result = format.format(today);
+        return result;
+    }
+
     @RequestMapping("/index")
     public String index(Model model, HttpServletRequest request) {
         String stuNumber = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -176,6 +187,8 @@ public class studentController {
         List<String> videoCoursenames = new ArrayList<>();
         List<String> experCoursenames = new ArrayList<>();
 
+
+
         for(int i=0;i<videopro.size();i++){
             JSONObject ob1 = new JSONObject();
             JSONObject ob2 = new JSONObject();
@@ -201,13 +214,52 @@ public class studentController {
         model.addAttribute("experpros",experpros);
 
 
-        List<ExperimentTimeHistoryVO> lastExper = experimentService.getHistory7DaysExperimentTime(stuName);
+        List<ExperimentTimeHistoryVO> alastExper = experimentService.getHistory7DaysExperimentTime(stuName);
+
+        List<VideoTimeHistoryVO> alastvideo = videoProgressService.getHistory7DaysStudyTime(stuName);
+
+        logger.info("alastExper:" + alastExper);
+        logger.info("alastvideo:" + alastvideo);
+
+        List<String> pastDaysList = new ArrayList<>();
+        for (int i = 1; i <8; i++) {
+            pastDaysList.add(getPastDate(i));
+        }
+
+        List<Integer> lastExper = new ArrayList<>();
+        List<Integer> lastvideo = new ArrayList<>();
+
+        int a = alastvideo.size()-1,b=alastExper.size()-1;
+        for (int i=0;i<7;i++){
+            if(a>=0){
+                if(alastvideo.get(a).getDate().toString().equals(pastDaysList.get(i))){
+                lastvideo.add(alastvideo.get(a).getTime());
+                a= a-1;
+                }else{
+                lastvideo.add(0);
+                }
+            }else{
+                lastvideo.add(0);
+            }
+            if(b>=0){
+                if(alastExper.get(b).getDate().toString().equals(pastDaysList.get(i))&&b>=0){
+                lastExper.add(alastExper.get(b).getTime());
+                b--; }else{
+                lastExper.add(0);
+                }
+            }else{
+                lastExper.add(0);
+            }
+        }
+
         logger.info("lastExper:" + lastExper);
         model.addAttribute("lastExper",lastExper);
-
-        List<VideoTimeHistoryVO> lastvideo = videoProgressService.getHistory7DaysStudyTime(stuName);
-        logger.info("lastvideo:" + lastvideo );
+        logger.info("lastvideo:" + lastvideo);
         model.addAttribute("lastvideo",lastvideo);
+        logger.info("pastDaysList:" +pastDaysList);
+        model.addAttribute("pastDaysList",pastDaysList);
+
+
 
 
 //        int experpros = subExperimentProgressService.countValidStudyTime(stuName);
