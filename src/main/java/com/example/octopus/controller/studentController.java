@@ -242,7 +242,7 @@ public class studentController {
                 lastvideo.add(0);
             }
             if(b>=0){
-                if(alastExper.get(b).getDate().toString().equals(pastDaysList.get(i))&&b>=0){
+                if(alastExper.get(b).getDate().toString().equals(pastDaysList.get(i))){
                 lastExper.add(alastExper.get(b).getTime());
                 b--; }else{
                 lastExper.add(0);
