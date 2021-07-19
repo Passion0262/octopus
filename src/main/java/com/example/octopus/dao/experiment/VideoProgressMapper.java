@@ -51,7 +51,7 @@ public interface VideoProgressMapper {
      *  根据videoId和学生id查询最新的videoProgress
      */
     @Select("SELECT * FROM video_progress WHERE video_id = #{videoId} AND stu_number = #{stuNumber} AND end_time=" +
-            "(SELECT MAX(end_time) FROM video_progress WHERE video_id=#{videoId} AND stu_number = #{stuNumber})")
+            "(SELECT MAX(end_time) FROM video_progress WHERE video_id=#{videoId} AND stu_number = #{stuNumber}) limit 1")
     VideoProgress getLatestByVideoIdAndStuNumber(long videoId, long stuNumber);
 
     /**

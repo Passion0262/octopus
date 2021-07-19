@@ -63,7 +63,7 @@ public interface SubExperimentProgressService {
     boolean insert(SubExperimentProgress subExperimentProgress);
 
     /**
-     *  更新子实验学习时间记录（前台调用）
+     *  更新子实验学习时间记录（前台调用） 不用了
      */
     boolean update(long stuNumber, long subExperimentId);
 

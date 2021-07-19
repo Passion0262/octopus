@@ -64,13 +64,13 @@
                                 <span>&nbsp;&nbsp;&nbsp;</span>
                                 <button type="button" id="showmachinebtn" class="btn btn-outline-info waves-effect waves-dark active" th:onclick="showm1()">虚拟机模式</button>
                                 <span>&nbsp;&nbsp;&nbsp;</span>
-                                <button type="button" class="btn btn-light waves-effect waves-effect" th:onclick="location.href='/experiment_task_detail/'+[[${subExperiment.experimentId}]]">实验任务</button>
+                                <button type="button" class="btn btn-light waves-effect waves-effect" th:onclick="location.href='/experiment_task_detail/'+[[${subExperiment.experimentId}]]">返回实验任务</button>
                                 <span>&nbsp;&nbsp;&nbsp;</span>
                                 <span th:if="${isvideo}==0">
                                 <button type="button" disabled class="btn btn-light waves-effect " th:onclick="location.href='/course_video/'+[[${videocourse}]]">课程学习</button>
                                 </span>
                                 <span th:if="${isvideo}==1">
-                                <button type="button"  class="btn btn-light waves-effect " th:onclick="location.href='/course_video/'+[[${videocourse}]]+'/'+[[${subExperiment.experimentId}]]">课程学习</button>
+                                <button type="button"  class="btn btn-light waves-effect " th:onclick="location.href='/course_video/'+[[${videocourse}]]+'/'+[[${subvideoid}]]">课程学习</button>
                                 </span>
                             </ol>
                         </div>
@@ -192,11 +192,14 @@
                 type: "POST",
                 url: "/sleepmachine",
                 data:{
-                    experid:[[${subExperiment.id}]]
+                    experid:[[${subExperiment.id}]],
+                    start_time:[[${expstarttime}]]
                 },
                 success: function () {
+
                 },
                 error: function () {
+
                 }
             });
         };

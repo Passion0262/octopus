@@ -252,12 +252,21 @@ public class studentController {
             }
         }
 
-        logger.info("lastExper:" + lastExper);
-        model.addAttribute("lastExper",lastExper);
-        logger.info("lastvideo:" + lastvideo);
-        model.addAttribute("lastvideo",lastvideo);
-        logger.info("pastDaysList:" +pastDaysList);
-        model.addAttribute("pastDaysList",pastDaysList);
+        List<Integer> lastExper0 = new ArrayList<>();
+        List<Integer> lastvideo0 = new ArrayList<>();
+        List<String> pastDaysList0 = new ArrayList<>();
+        for(int i=0;i<7;i++){
+            lastExper0 .add(lastExper.get(6-i));
+            lastvideo0.add(lastvideo.get(6-i));
+            pastDaysList0.add(pastDaysList.get(6-i));
+        }
+
+        logger.info("lastExper:" + lastExper0);
+        model.addAttribute("lastExper",lastExper0);
+        logger.info("lastvideo:" + lastvideo0);
+        model.addAttribute("lastvideo",lastvideo0);
+        logger.info("pastDaysList:" +pastDaysList0);
+        model.addAttribute("pastDaysList",pastDaysList0);
 
 
 
@@ -652,6 +661,7 @@ public class studentController {
             model.addAttribute("isvideo", 1);
 //            logger.info("videocourse:"+video.getCourseId());
             model.addAttribute("videocourse", video.getCourseId());
+            model.addAttribute("subvideoid", video.getId());
         }
 
         SubExperimentReportSubmit issub = subExperimentReportSubmitService.getByStuNumberAndSubExperimentId(sub_id,stuNum);
@@ -668,7 +678,8 @@ public class studentController {
         boolean a =dockerService.updateStatusByStuNum(stuNum, 2, sub_id);
         model.addAttribute("docker_url", docker_url);
 
-        boolean b = subExperimentProgressService.insert(stuNum,sub_id);
+        model.addAttribute("expstarttime", new Date().getTime());
+//        boolean b = subExperimentProgressService.insert(stuNum,sub_id);
 
 
         return "experiment_machine";
@@ -1075,10 +1086,27 @@ public class studentController {
     public void sleepmachine(HttpServletRequest request) {
         logger.info("注销资源");
         Long experid = Long.parseLong(request.getParameter("experid"));
+        Long stime = Long.parseLong(request.getParameter("start_time"));
+        logger.info("stime"+stime);
+        Timestamp start_time = new Timestamp(stime);
+
         Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         boolean a =dockerService.updateStatusByStuNum(stuNum, 0, 0);
 
-        boolean b = subExperimentProgressService.update(stuNum,experid);
+        Long dd = new Date().getTime();
+        Long interval = Math.round((double)(dd-stime)/1000);
+        logger.info("dd"+dd);
+        logger.info("dd"+stime);
+        logger.info("intervaltime"+interval);
+        Timestamp end_time = new Timestamp(dd);
+        SubExperimentProgress sp = new SubExperimentProgress();
+        sp.setSubExperimentId(experid);
+        sp.setStartTime(start_time);
+        sp.setStuNumber(stuNum);
+        sp.setEndTime(end_time);
+        sp.setValidStudyTime(interval.intValue());
+
+        boolean b = subExperimentProgressService.insert(sp);
     }
 
 }
