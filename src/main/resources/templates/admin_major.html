@@ -62,7 +62,8 @@
                                         <thead style="text-align: center;">
                                         <tr>
                                             <th class="sorting_disabled" th:if="${role} eq 'admin'">操作</th>
-                                            <th>专业编号</th>
+                                            <th>编号</th>
+                                            <th>专业ID</th>
                                             <th>专业代码</th>
                                             <th>专业名称</th>
                                             <th>创建人员</th>
@@ -84,6 +85,7 @@
                                                 </a>
                                             </td>
                                             <td th:text="${majorStat.index+1}"></td>
+                                            <td th:text="${major.id}"></td>
                                             <td th:text="${major.majorCode}"></td>
                                             <td th:text="${major.majorName}"></td>
                                             <td th:text="${major.creator}"></td>
