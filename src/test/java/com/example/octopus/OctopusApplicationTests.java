@@ -6,6 +6,7 @@ import com.example.octopus.dao.UserMapper;
 import com.example.octopus.dao.experiment.ChapterMapper;
 import com.example.octopus.dao.experiment.ModuleMapper;
 import com.example.octopus.dao.experiment.SubExperimentMapper;
+import com.example.octopus.dao.experiment.VideoMapper;
 import com.example.octopus.entity.experiment.Video;
 import com.example.octopus.entity.user.Major;
 import com.example.octopus.entity.user.Student;
@@ -20,7 +21,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 @SpringBootTest
@@ -64,11 +67,19 @@ class OctopusApplicationTests {
 	SubExperimentService subExperimentService;
 	@Autowired
 	SubExperimentMapper subExperimentMapper;
+	@Autowired
+	SubProjectService subProjectService;
+	@Autowired
+	VideoMapper videoMapper;
+
 	@Test
 	void interfaceTest() {
-		System.out.println(subExperimentService.listSubExperimentByRole(1));
-		System.out.println();
-		System.out.println(subExperimentMapper.listSubExperimentDetailByTeaId(1));
+		Student a = new Student(334, "lsneg", "1111111111111");
+		Student b = new Student(23333, "l333", "3333333333333");
+		List<Student> s = new ArrayList<>();
+		s.add(a);
+		s.add(b);
+		System.out.println(userService.batchInsertStudent(s));
 	}
 
 

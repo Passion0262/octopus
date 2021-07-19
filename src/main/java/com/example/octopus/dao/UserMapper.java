@@ -43,7 +43,8 @@ public interface UserMapper {
     @Update("UPDATE student SET name=#{name},major_id=#{majorId},class_id=#{classId},school=#{school}, phone_number=#{phoneNumber} WHERE stu_number=#{stuNumber}")
     boolean updateStudent(Student student);
 
-    @Update("UPDATE student SET login_number = login_number+1, last_login_time = CURRENT_TIMESTAMP WHERE stu_number = #{stuNumber}")
+//    @Update("UPDATE student SET login_number = login_number+1, last_login_time = CURRENT_TIMESTAMP WHERE stu_number = #{stuNumber}")
+    @Update("UPDATE student SET login_number = login_number+1, last_login_time = this_login_time, this_login_time = CURRENT_TIMESTAMP WHERE stu_number = #{stuNumber}")
     boolean updateLoginInfoByStuNumber(long stuNumber);
 
     @Update("UPDATE student SET phone_number = #{phoneNumber} WHERE stu_number = #{stuNumber}")
