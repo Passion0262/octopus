@@ -18,7 +18,21 @@ public class VideoStudySummaryVO {
 	private String stuName;
 	private long courseId;
 	private String courseName;
-	private int studyTimeTotal;  //学习总时长
+	private int studyTimeTotal;  //学习总时长，单位为秒
+	private String duration = "";  //学习时长，x小时x分x秒
 	private Timestamp firstStartTime;  //首次开始学习时间
 	private Timestamp lastEndTime;  //末次结束学习时间
+
+	public void sec2time() {
+		int sec, min;
+		int hour = this.studyTimeTotal / 3600;
+
+		if (hour > 0) {
+			min = this.studyTimeTotal % 3600 / 60;
+			this.duration = hour + "小时";
+		} else min = this.studyTimeTotal / 60;
+
+		sec = this.studyTimeTotal % 60;
+		this.duration += min + "分" + sec + "秒";
+	}
 }

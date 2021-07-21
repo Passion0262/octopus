@@ -111,9 +111,17 @@ public class VideoServiceImpl implements VideoService {
 	@Override
 	public List<VideoStudySummaryVO> getVideoStudySummaryByRole(long teaNumber) {
 		long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
+
+		List<VideoStudySummaryVO> result;
 		if (role == 1) {
 			//管理员获取全部
-			return videoMapper.getAllVideoStudySummary();
-		} else return videoMapper.getVideoStudySummaryByTeacherId(teaNumber);
+			result =  videoMapper.getAllVideoStudySummary();
+		} else result = videoMapper.getVideoStudySummaryByTeacherId(teaNumber);
+
+		int len = result.size();
+		for (int i=0; i<len; ++i){
+			result.get(i).sec2time();
+		}
+		return result;
 	}
 }

@@ -4,10 +4,7 @@ import com.example.octopus.dao.CourseMapper;
 import com.example.octopus.dao.SysUserRoleMapper;
 import com.example.octopus.dao.experiment.VideoProgressMapper;
 import com.example.octopus.dao.experiment.VideoMapper;
-import com.example.octopus.entity.VOs.CourseTimeVO;
-import com.example.octopus.entity.VOs.VideoProgressDetailVO;
-import com.example.octopus.entity.VOs.VideoProgressHistoryVO;
-import com.example.octopus.entity.VOs.VideoTimeHistoryVO;
+import com.example.octopus.entity.VOs.*;
 import com.example.octopus.entity.experiment.VideoProgress;
 import com.example.octopus.service.VideoProgressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,9 +135,15 @@ public class VideoProgressServiceImpl implements VideoProgressService {
 	@Override
 	public List<VideoProgressDetailVO> getVideoProgressDetailByRole(long teaNumber) {
 		long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
+		List<VideoProgressDetailVO> result;
 		if (role == 1) {
 			//管理员获取全部
-			return videoProgressMapper.getAllVideoProgressDetail();
-		} else return videoProgressMapper.getVideoProgressDetailByTeacherId(teaNumber);
+			result= videoProgressMapper.getAllVideoProgressDetail();
+		} else result=videoProgressMapper.getVideoProgressDetailByTeacherId(teaNumber);
+		int len = result.size();
+		for (int i=0; i<len; ++i){
+			result.get(i).sec2time();
+		}
+		return result;
 	}
 }

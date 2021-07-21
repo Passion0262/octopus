@@ -3,6 +3,7 @@ package com.example.octopus.service.impl;
 import com.example.octopus.dao.SysUserRoleMapper;
 import com.example.octopus.dao.experiment.SubExperimentProgressMapper;
 import com.example.octopus.entity.VOs.SubExperimentOperateTimeVO;
+import com.example.octopus.entity.VOs.VideoStudySummaryVO;
 import com.example.octopus.entity.experiment.SubExperimentProgress;
 import com.example.octopus.service.SubExperimentProgressService;
 import org.checkerframework.checker.units.qual.A;
@@ -93,8 +94,15 @@ public class SubExperimentProgressServiceImpl implements SubExperimentProgressSe
     @Override
     public List<SubExperimentOperateTimeVO> getOperateTimeByRole(long teaNumber){
         long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
+        List<SubExperimentOperateTimeVO> result;
+
         if (role == 1) {
-            return subExperimentProgressMapper.getAllOperateTimeSummary();
-        } else return subExperimentProgressMapper.getOperateTimeSummaryByTeacherId(teaNumber);
+            result= subExperimentProgressMapper.getAllOperateTimeSummary();
+        } else result= subExperimentProgressMapper.getOperateTimeSummaryByTeacherId(teaNumber);
+        int len = result.size();
+        for (int i=0; i<len; ++i){
+            result.get(i).sec2time();
+        }
+        return result;
     }
 }

@@ -71,7 +71,7 @@ public interface VideoService {
     boolean deleteVideoById(long id);
 
     /**
-     * 视频学习汇总，每个学生和每个课程对应一条数据，这个学生在这门课程里面的视频学习总时长、首次学习时间、末次学习时间
+     * 视频学习汇总，每个学生和每个课程对应一条数据，这个学生在这门课程里面的视频学习总时长(duration)、首次学习时间、末次学习时间
      * @param teaNumber 教师号
      * @return 获取所有学生在课程中的视频学习汇总信息
      */
