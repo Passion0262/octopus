@@ -89,7 +89,7 @@
                                                     <div th:text="${project.status=='1'?'有效':'无效'}" th:class="${project.status=='1'?'badge badge-soft-success':'badge badge-soft-warning'}" style="font-size: 13px"></div>
                                                 </td>
                                                 <td th:text="${project.creator}"></td>
-                                                <td th:text="${project.createTime}"></td>
+                                                <td th:text="${#dates.format(project.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                             </tr>
                                             </tbody>
                                         </table>

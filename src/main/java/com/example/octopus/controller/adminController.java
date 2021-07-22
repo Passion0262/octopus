@@ -1176,15 +1176,8 @@ public class adminController {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
-        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
         try {
-            model.addAttribute(dockerService.getDockerListByRole(teaNum));
-
-//            if (role_id == 1) {
-//            } else {
-//
-//                //model.addAttribute("student_pc", );
-//            }
+            model.addAttribute("dockers", dockerService.getDockerListByRole(teaNum));
             return "admin_student_pc";
         }
         catch (Exception e){

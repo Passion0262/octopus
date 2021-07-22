@@ -90,7 +90,7 @@
                                                         <td th:text="${class.majorName}"></td>
                                                         <td th:text="${class.school}"></td>
                                                         <td th:text="${class.creator}"></td>
-                                                        <td th:text="${class.createTime}"></td>
+                                                        <td th:text="${#dates.format(class.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
