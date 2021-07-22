@@ -16,7 +16,7 @@ $(document).ready(function(){
 			$(".dataTables_paginate > .pagination").addClass("pagination-rounded")
 		},
 		paginate: false,
-		buttons:["copy","excel","pdf","csv","colvis"]
+		buttons:["copy","excel","csv","colvis"]
 	});
 	a.buttons().container().appendTo("#datatable-buttons_wrapper .col-md-6:eq(0)"),
 		$("#selection-datatable").DataTable({
