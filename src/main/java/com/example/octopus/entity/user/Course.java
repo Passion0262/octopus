@@ -17,43 +17,32 @@ import java.sql.Date;
 @NoArgsConstructor
 public class Course {
 
+    //已设置触发器，在创建对象时不需要设置course_name和tea_name
+
     private long id;
 
-//    @Column(nullable = false,columnDefinition = "varchar(20) comment '课程名称'")
+    private long courseStaticId;  //课程静态ID，用于连接course_static表
+
     private String courseName;
 
-//    @Column(nullable = false,columnDefinition = "varchar(30) comment '授课老师'")
     private long teaNumber;
 
     private String teaName;
+//
+//    private String description;
+//
+//    private String imagePath;
 
-//    @Column(nullable = false,columnDefinition = "varchar(30) comment '分类'")
-//    private String classification;
-
-//    @Column(nullable = false,columnDefinition = "varchar(255) comment '课程简介'")
-    private String description;
-
-//    @Column(nullable = false,columnDefinition = "varchar(255) comment '课程标图地址'")
-    private String imagePath;
-
-//    private long experimentMissionId;
-
-//    @Column(nullable = false,columnDefinition = "date comment '开始时间'")
     private Date startTime;
 
-//    @Column(columnDefinition = "date comment '结束时间'")
     private Date endTime;
 
-    //    @Column(nullable = false,columnDefinition = "date comment '开通申请时间'")
     private Date applyTime;
 
-//    @Column(columnDefinition = "int comment '允许参加人数'")
     private int numAllowed;
 
-//    @Column(nullable = false,columnDefinition = "int default 0 comment '已参加人数'")
     private int numParticipated;
 
-//    @Column(nullable = false,columnDefinition = "enum('有效','无效') default '有效'")
     private String status;
 
 }

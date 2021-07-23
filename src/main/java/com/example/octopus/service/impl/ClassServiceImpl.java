@@ -25,7 +25,7 @@ public class ClassServiceImpl implements ClassService {
 	ClassMapper classMapper;
 
 	@Autowired
-	TeacherCourseMapper teacherCourse_mapper;
+	CourseMapper Course_mapper;
 	@Autowired
 	SysUserRoleMapper sysUserRoleMapper;
 

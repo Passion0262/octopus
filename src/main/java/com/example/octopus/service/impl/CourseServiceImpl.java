@@ -29,8 +29,8 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     StudentCourseMapper studentCourseMapper;
 
-    @Autowired
-    TeacherCourseMapper teacherCourseMapper;
+//    @Autowired
+//    TeacherCourseMapper teacherCourseMapper;
 
     @Override
     public Course getCourseById(long id) {

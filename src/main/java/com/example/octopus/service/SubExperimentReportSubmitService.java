@@ -1,5 +1,6 @@
 package com.example.octopus.service;
 
+import com.example.octopus.entity.VOs.SubExperimentReportSummaryVO;
 import com.example.octopus.entity.experiment.SubExperimentReportSubmit;
 
 import java.util.List;
@@ -49,5 +50,10 @@ public interface SubExperimentReportSubmitService {
      *  删除subExperimentReportSave
      */
     boolean deleteById(long id);
+
+    /**
+     * 实验报告汇总，通过身份获取
+     */
+    List<SubExperimentReportSummaryVO> getReportSummaryByRole(long teaNumber);
 
 }

@@ -1,5 +1,6 @@
 package com.example.octopus.dao.experiment;
 
+import com.example.octopus.entity.VOs.SubExperimentReportSummaryVO;
 import com.example.octopus.entity.experiment.SubExperimentReportSubmit;
 import org.apache.ibatis.annotations.*;
 
@@ -71,5 +72,25 @@ public interface SubExperimentReportSubmitMapper{
      */
     @Delete("DELETE FROM sub_experiment_report_submit WHERE id = #{id}")
     boolean deleteById(long id);
+
+
+
+    /////////////////////////////////       实验报告汇总
+    // 联表查询count有问题，故分两步：1从sub_experiment_progress取未提交的数量；2从sub_experiment_report_submit取审核与未审核的数量
+    // 注意1中未提交数量需要在implement中进行计算等
+    @Select("SELECT se.experiment_id, e.name AS experiment_name, se.id AS sub_experiment_id, se.sub_experiment_name, COUNT(DISTINCT sep.stu_number) AS not_submit_num " +
+            "FROM sub_experiment_progress sep, sub_experiment se, experiment e " +
+            "WHERE sep.sub_experiment_id=se.id and se.experiment_id=e.id GROUP BY se.id")
+    List<SubExperimentReportSummaryVO> listAllReportSummary1();
+
+    @Select("SELECT sub_experiment_id, COUNT(examined = true OR NULL) AS examined_num, COUNT(examined = false OR NULL) AS unexamined_num " +
+            "FROM sub_experiment_report_submit GROUP BY sub_experiment_id")
+    List<SubExperimentReportSummaryVO> listAllReportSummary2();
+    //教师
+    //todo 教师课程表？？？？
+    @Select("")
+    List<SubExperimentReportSummaryVO> listReportSummaryByTeaId1(long teaNumber);
+    @Select("")
+    List<SubExperimentReportSummaryVO> listReportSummaryByTeaId2(long teaNumber);
 
 }

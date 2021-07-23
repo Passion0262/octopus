@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
 	private UserMapper userMapper;
 
 	@Autowired
-	TeacherCourseMapper teacherCourseMapper;
+	CourseMapper CourseMapper;
 
 	@Autowired
 	StudentCourseMapper studentCourseMapper;

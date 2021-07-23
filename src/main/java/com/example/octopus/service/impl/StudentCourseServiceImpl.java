@@ -33,8 +33,8 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 	@Autowired
 	StudentCourseMapper studentCourseMapper;
 
-	@Autowired
-	TeacherCourseMapper teacherCourseMapper;
+//	@Autowired
+//	TeacherCourseMapper teacherCourseMapper;
 
 	@Override
 	public List<StudentCourse> listStudentCourses() {

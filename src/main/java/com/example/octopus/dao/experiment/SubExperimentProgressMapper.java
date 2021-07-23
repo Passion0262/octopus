@@ -105,4 +105,7 @@ public interface SubExperimentProgressMapper {
             "WHERE sep.stu_number=s.stu_number and s.major_id=major.id and s.class_id=class_.id and sep.sub_experiment_id=se.id and se.experiment_id=ce.experiment_id and ce.course_id=course.id and course.tea_number=#{teaNumber}")
     List<SubExperimentOperateTimeVO> getOperateTimeSummaryByTeacherId(long teaNumber);
 
+    ///////////实验报告汇总下所属
+
+
 }

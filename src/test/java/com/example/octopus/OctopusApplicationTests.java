@@ -71,15 +71,12 @@ class OctopusApplicationTests {
 	SubProjectService subProjectService;
 	@Autowired
 	VideoMapper videoMapper;
+	@Autowired
+	SubExperimentReportSubmitService subExperimentReportSubmitService;
 
 	@Test
 	void interfaceTest() {
-		Student a = new Student(334, "lsneg", "1111111111111");
-		Student b = new Student(23333, "l333", "3333333333333");
-		List<Student> s = new ArrayList<>();
-		s.add(a);
-		s.add(b);
-		System.out.println(userService.batchInsertStudent(s));
+		System.out.println(subExperimentReportSubmitService.getReportSummaryByRole(1));
 	}
 
 

@@ -50,25 +50,26 @@ public interface CourseMapper {
     List<String> listCompletedCourses(long stuNumber);
 
     /**
-     * 增加课程实体
+     * 增加课程实体  已设置触发器，不需要输入course_name和tea_name
      * @param course  课程实体
      * @return 成功为true，失败为false
      */
-    @Insert("INSERT INTO course (course_name,tea_number,tea_name,description,image_path,start_time,end_time,apply_time,num_allowed,num_participated,status) VALUES (#{courseName},#{teaNumber},#{teaName},#{description},#{imagePath},#{startTime},#{endTime},#{applyTime},#{numAllowed},#{numParticipated},#{status})")
+    @Insert("INSERT INTO course (course_static_id, tea_number,start_time,end_time,apply_time,num_allowed,num_participated,status) " +
+            "VALUES (#{courseStaticId},#{teaNumber},#{startTime},#{endTime},#{applyTime},#{numAllowed},#{numParticipated},#{status})")
     boolean insertCourse(Course course);
 
-    /**
-     *  将课程状态更新为已完成
-     */
-    @Update("UPDATE course SET completed = 1 WHERE course_id=#{courseId} AND stu_number = #{stuNumber}")
-    boolean updateCompleted(long courseId, long stuNumber);
+//    /**
+//     *  将课程状态更新为已完成
+//     */
+//    @Update("UPDATE course SET completed = 1 WHERE course_id=#{courseId} AND stu_number = #{stuNumber}")
+//    boolean updateCompleted(long courseId, long stuNumber);
 
     /**
      * 修改课程
      * @param course  课程实体
      * @return 成功为true，失败为false
      */
-    @Update("Update course SET course_name = #{courseName},tea_number=#{teaNumber},tea_name=#{teaName},description=#{description},image_path=#{imagePath},start_time=#{startTime},end_time=#{endTime},apply_time=#{applyTime},num_allowed=#{numAllowed},num_participated=#{numParticipated},status=#{status} WHERE id = #{id}")
+    @Update("Update course SET course_name = #{courseName},tea_number=#{teaNumber},tea_name=#{teaName},start_time=#{startTime},end_time=#{endTime},apply_time=#{applyTime},num_allowed=#{numAllowed},num_participated=#{numParticipated},status=#{status} WHERE id = #{id}")
     boolean updateCourse(Course course);
 
     /**

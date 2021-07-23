@@ -19,8 +19,8 @@ class TeacherCourse_MapperTest {
     private static final Long TEACHER_ID = 1L;
     private static final Long CLASS_ID = 3L;
 
-    @Autowired
-    TeacherCourseMapper teacherCourse_mapper;
+//    @Autowired
+//    TeacherCourseMapper teacherCourse_mapper;
 
 //    @Test
 //    void listClass_idsByTeaNumber() {
