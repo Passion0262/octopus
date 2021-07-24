@@ -91,7 +91,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-11" style="margin-bottom: 15px;">
+                                        <div class="col-md-12" style="margin-bottom: 15px;">
                                             <div class="form-inline float-md-right">
                                                 <div class="search-box ml-2">
                                                     <div class="position-relative">
@@ -104,18 +104,17 @@
                                     </div>
 
                                     <div class="row" th:each="data:${reports}">
-                                        <div class="col-md-1"></div>
-                                        <div class="col-md-10">
+<!--                                        <div class="col-md-1"></div>-->
+                                        <div class="col-md-12">
                                             <div class="card">
-                                                <div class="card-body" style="display: table">
-                                                    <div style="display: table-cell;vertical-align: top">
+                                                <div class="card-body" style="display: table; background-color: #fcfcff">
+                                                    <div style="display: table-cell;vertical-align: top; width: 500px;">
                                                         <span class="number badge badge-success" th:text="${dataStat.index+1}"></span>
-                                                        <h5 class="title">实验名：子实验名</h5>
+                                                        <h5 class="title" th:text="${data.experimentName}+'--'+${data.subExperimentName}"></h5>
                                                     </div>
                                                     <div style="display: table-cell;vertical-align:middle">
-                                                        <div class="text-center" style="display: inline-block;vertical-align:middle; padding-left: 100px;">
-                                                            <a th:href="@{admin_report_list(id=${data.id})}">
-<!--                                                            <a th:href="@{admin_report_list(sub_exp_id=${report.subExperimentId})}">-->
+                                                        <div class="text-center" style="display: inline-block;vertical-align:middle;">
+                                                            <a th:href="@{admin_report_list(sub_exp_id=${data.subExperimentId})}">
                                                                 <i class="mdi mdi-monitor-eye" style="font-size: 30px;color: #5664d2"></i>
                                                                 <p>报告审阅</p>
                                                             </a>
@@ -131,22 +130,22 @@
                                                     </div>
                                                     <div style="display: table-cell;vertical-align: middle; float: right;">
                                                         <div class="text-center">
-                                                            <span class='circle' style="border-color: #1cbb8c">1</span>
+                                                            <span class='circle' style="border-color: #1cbb8c" th:text="${data.examinedNum}"></span>
                                                             <p>已批</p>
                                                         </div>
                                                         <div class="text-center">
-                                                            <span class='circle' style="border-color: #4aa3ff">1</span>
+                                                            <span class='circle' style="border-color: #4aa3ff" th:text="${data.unexaminedNum}"></span>
                                                             <p>未批</p>
                                                         </div>
                                                         <div class="text-center">
-                                                            <span class='circle' style="border-color: #ff3d60">1</span>
+                                                            <span class='circle' style="border-color: #ff3d60" th:text="${data.notSubmitNum}"></span>
                                                             <p>未交</p>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-1"></div>
+<!--                                        <div class="col-md-1"></div>-->
                                     </div>
                                 </div>
                             </div>

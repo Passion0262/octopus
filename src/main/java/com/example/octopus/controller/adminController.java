@@ -1038,8 +1038,8 @@ public class adminController {
         //System.out.println(subExperimentReportSubmitService.listByTeaNumber(3));
         try {
             if (role_id == 1){
-                model.addAttribute("reports", videoProgressService.getVideoProgressDetailByRole(teaNum));
-//                model.addAttribute("reports", subExperimentReportSubmitService.listAll());
+//                model.addAttribute("reports", videoProgressService.getVideoProgressDetailByRole(teaNum));
+                model.addAttribute("reports", subExperimentReportSubmitService.getReportSummaryByRole(teaNum));
             }
 
             else if (role_id == 3){
@@ -1061,7 +1061,7 @@ public class adminController {
         try {
             long id = Long.parseLong(request.getParameter("id"));
             //todo 根据子实验id和教师账号显示report列表
-//            model.addAttribute("reports", subExperimentReportSubmitService.listAll());
+//            model.addAttribute("reports", subExperimentReportSubmitService.);
             model.addAttribute("sub_exp_name", subExperimentService.getById(id).getSubExperimentName());
             return new ModelAndView("admin_report_list");
         }
