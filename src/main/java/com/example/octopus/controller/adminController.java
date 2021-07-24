@@ -814,7 +814,7 @@ public class adminController {
                 long id = Long.parseLong(course.getCourseName());
                 Course c = courseService.getCourseById(id);
                 course.setCourseName(c.getCourseName());
-                course.setImagePath(c.getImagePath());
+//                course.setImagePath(c.getImagePath());
             }
 
             courseService.insertCourse(course);
