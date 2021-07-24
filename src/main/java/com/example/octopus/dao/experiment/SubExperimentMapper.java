@@ -19,17 +19,21 @@ public interface SubExperimentMapper {
     /**
      * 管理员获取子实验相关信息（实验-->模块-->子实验）
      */
-    @Select("SELECT c.id AS course_id, c.course_name, se.id AS sub_experiment_id, sub_experiment_name, se.number AS sub_experiment_number, se.module_id, module_name, module_number, e.id AS experiment_id, e.name AS experiment_name " +
-            "FROM sub_experiment se, module m, experiment e, course_experiment ce, course c " +
-            "WHERE c.id=ce.course_id AND ce.experiment_id=e.id AND se.module_id=m.module_id AND se.experiment_id=e.id ORDER BY e.id, module_number, number")
+    @Select("SELECT cs.course_static_id AS course_id, cs.course_name, se.id AS sub_experiment_id, sub_experiment_name, se.number AS sub_experiment_number, " +
+            "       se.module_id, module_name, module_number, e.id AS experiment_id, e.name AS experiment_name " +
+            "FROM sub_experiment se, module m, experiment e, course_static cs " +
+            "WHERE cs.experiment_id=e.id AND se.module_id=m.module_id AND se.experiment_id=e.id " +
+            "ORDER BY e.id, module_number, number")
     List<SubExperimentDetailVO> listAllSubExperimentDetail();
 
     /**
      * 教师获取子实验相关信息（实验-->模块-->子实验）
      */
-    @Select("SELECT c.id AS course_id, c.course_name, se.id AS sub_experiment_id, sub_experiment_name, se.number AS sub_experiment_number, se.module_id, module_name, module_number, e.id AS experiment_id, e.name AS experiment_name " +
-            "FROM sub_experiment se, module m, experiment e, course_experiment ce, course c " +
-            "WHERE c.tea_number=#{teaNumber} AND c.id=ce.course_id AND ce.experiment_id=e.id AND se.module_id=m.module_id AND se.experiment_id=e.id ORDER BY e.id, module_number, number")
+    @Select("SELECT c.id AS course_id, c.course_name, se.id AS sub_experiment_id, sub_experiment_name, se.number AS sub_experiment_number, " +
+            "       se.module_id, module_name, module_number, e.id AS experiment_id, e.name AS experiment_name " +
+            "FROM sub_experiment se, module m, experiment e, course c, course_static cs " +
+            "WHERE c.tea_number = 1 AND c.course_static_id = cs.course_static_id AND cs.experiment_id = e.id AND se.module_id = m.module_id AND se.experiment_id = e.id\n" +
+            "ORDER BY e.id, module_number, number")
     List<SubExperimentDetailVO> listSubExperimentDetailByTeaId(long teaNumber);
 
     ///////////////////////////////
@@ -72,7 +76,8 @@ public interface SubExperimentMapper {
     /**
      *  新增sub_experiment
      */
-    @Insert("INSERT INTO sub_experiment (experiment_id,module_id,sub_experiment_name,number,image_path,expect_time,requirement_path,knowledge_path,template_path,copyable,last_update_time) VALUES (#{experimentId},#{moduleId},#{subExperimentName},#{number},#{imagePath},#{expectTime},#{requirementPath},#{knowledgePath},#{templatePath},#{copyable},CURRENT_TIMESTAMP)")
+    @Insert("INSERT INTO sub_experiment (experiment_id, module_id, sub_experiment_name,number,image_path,expect_time,requirement_path,knowledge_path,template_path,copyable,last_update_time) " +
+            "VALUES (#{experimentId},#{moduleId},#{subExperimentName},#{number},#{imagePath},#{expectTime},#{requirementPath},#{knowledgePath},#{templatePath},#{copyable},CURRENT_TIMESTAMP)")
     boolean insert(SubExperiment subExperiment);
 
     /**

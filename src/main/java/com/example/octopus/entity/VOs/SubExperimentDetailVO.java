@@ -23,6 +23,6 @@ public class SubExperimentDetailVO {
 	private long experimentId;  //实验id
 	private String experimentName;  //实验名
 
-	private long courseId;  //课程id
+	private long courseId;  //课程id：注意管理员显示全部，故应为course_static_id；普通教师显示自己的，故应为开课表中的course_id
 	private String courseName;  //课程名
 }

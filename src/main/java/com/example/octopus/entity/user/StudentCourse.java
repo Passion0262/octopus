@@ -20,7 +20,7 @@ public class StudentCourse {
 
     private long stuNumber;
 
-    private long courseId;
+    private long courseId;  //tea_course_id，是开课表course的id，不是course_static_id
 
     private String courseName;
 

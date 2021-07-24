@@ -31,10 +31,10 @@ public interface ExperimentMapper {
     Experiment getExperimentById(long id);
 
     /**
-     *  根据学生id,返回每门课的实验学习时长
-     * @return
+     *  根据学生id,返回每门课(tea_course_id)的实验学习时长
      */
-    @Select("SELECT course_id,count(sep.valid_study_time) as time FROM sub_experiment_progress sep,sub_experiment se,course_experiment ce WHERE stu_number=#{stuNumber} AND sep.sub_experiment_id=se.id AND se.experiment_id=ce.course_id")
+    @Select("SELECT tea_course_id AS course_id, sum(valid_study_time) AS time FROM sub_experiment_progress " +
+            "WHERE stu_number=#{stuNumber} GROUP BY tea_course_id")
     List<ExperimentTimeVO> countExperimentTimeByStuNumberGroupByCourseId(long stuNumber);
 
     /**

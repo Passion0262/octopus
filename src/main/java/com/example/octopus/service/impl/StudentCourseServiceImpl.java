@@ -64,7 +64,7 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 	}
 
 	@Override
-	public List<StudentCourse> listStudentCoursesByStuNumber(long stuNumber){
+	public List<StudentCourse> listStudentCoursesByStuNumber(long stuNumber) {
 		return studentCourseMapper.listByStudentId(stuNumber);
 	}
 
@@ -75,7 +75,9 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 
 	@Override
 	public boolean insertStudentCourse(long stuNumber, long courseId) {
-		if (isChosen(stuNumber, courseId)) {
+		StudentCourse sc = studentCourseMapper.getByStaticId(studentCourseMapper.getStaticId(courseId));
+//		if (isChosen(stuNumber, courseId))
+		if (sc != null) {
 			deleteStudentCourse(stuNumber, courseId);
 		}
 		Student s = userMapper.getStudentByStuNumber(stuNumber);
@@ -95,7 +97,7 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 	}
 
 	@Override
-	public boolean deleteStudentCourse(long studentCourseId){
+	public boolean deleteStudentCourse(long studentCourseId) {
 		return studentCourseMapper.deleteStudentCourse(studentCourseId);
 	}
 

@@ -9,15 +9,8 @@ import lombok.Data;
 @Data
 public class ExperimentTimeVO {
 
-    private long courseId;
+    private long courseId;  //tea_course_id，即开课表course的id，非course_static_id
 
     private int time;   //单位：秒
 
-    public long getCourseId() {
-        return courseId;
-    }
-
-    public int getTime() {
-        return time;
-    }
 }
