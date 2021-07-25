@@ -28,10 +28,10 @@ public class Course {
     private long teaNumber;
 
     private String teaName;
-//
-//    private String description;
-//
-//    private String imagePath;
+
+    private String description;  //不在开课表course中，需要到课程静态表course_static中查
+
+    private String imagePath;  //不在开课表course中，需要到课程静态表course_static中查
 
     private Date startTime;
 

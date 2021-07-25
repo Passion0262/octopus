@@ -70,24 +70,22 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 
 	@Override
 	public boolean isChosen(long stuNumber, long courseId) {
-		return studentCourseMapper.getCourseIsChosen(stuNumber, courseId);
+		return studentCourseMapper.getByStuNumAndCourseId(stuNumber, courseId) != null;
 	}
 
 	@Override
 	public boolean insertStudentCourse(long stuNumber, long courseId) {
-		StudentCourse sc = studentCourseMapper.getByStaticId(studentCourseMapper.getStaticId(courseId));
-//		if (isChosen(stuNumber, courseId))
-		if (sc != null) {
-			deleteStudentCourse(stuNumber, courseId);
-		}
-		Student s = userMapper.getStudentByStuNumber(stuNumber);
-		Course c = courseMapper.getCourseById(courseId);
-		StudentCourse studentCourse = new StudentCourse(1L, stuNumber, courseId, c.getCourseName(), s.getName(), majorMapper.getNameById(s.getMajorId()), classMapper.getNameById(s.getClassId()), null);
+		StudentCourse studentCourse = new StudentCourse(stuNumber, courseId);
 		return insertStudentCourse(studentCourse);
 	}
 
 	@Override
 	public boolean insertStudentCourse(StudentCourse studentCourse) {
+		StudentCourse sc = studentCourseMapper.getByStaticId(studentCourseMapper.getStaticId(studentCourse.getCourseId()));
+//		if (isChosen(stuNumber, courseId))
+		if (sc != null) {
+			deleteStudentCourse(studentCourse.getStuNumber(), studentCourse.getCourseId());
+		}
 		return studentCourseMapper.insertStudentCourse(studentCourse);
 	}
 
@@ -104,9 +102,8 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 	@Override
 	public boolean insertByClass(String className, long course_id) {
 		List<Student> studentList = userMapper.listByClassName(className);
-		String courseName = courseMapper.getCourseById(course_id).getCourseName();
 		for (Student s : studentList) {
-			StudentCourse studentCourse = new StudentCourse(1L, s.getStuNumber(), course_id, courseName, s.getName(), majorMapper.getNameById(s.getMajorId()), className, null);
+			StudentCourse studentCourse = new StudentCourse(s.getStuNumber(), course_id);
 			studentCourseMapper.insertStudentCourse(studentCourse);
 		}
 		return true;

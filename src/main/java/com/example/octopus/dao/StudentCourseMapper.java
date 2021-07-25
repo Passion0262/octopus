@@ -41,7 +41,8 @@ public interface StudentCourseMapper {
 	 * @param studentCourse 学生-课程实体
 	 * @return 成功为true，失败为false
 	 */
-	@Insert("INSERT INTO student_course (id,stu_number,course_id,course_name,stu_name,stu_major,stu_class,apply_time) VALUES (null,#{stuNumber},#{courseId},#{courseName},#{stuName},#{stuMajor},#{stuClass},CURRENT_TIMESTAMP)")
+	@Insert("INSERT INTO student_course (stu_number,course_id,apply_time) " +
+			"VALUES (#{stuNumber},#{courseId},CURRENT_TIMESTAMP)")
 	boolean insertStudentCourse(StudentCourse studentCourse);
 
 	/**
@@ -50,7 +51,8 @@ public interface StudentCourseMapper {
 	 * @param scId student-course表id
 	 * @return student-course实体类
 	 */
-	@Select("SELECT sc.*, c.tea_number, c.tea_name FROM student_course sc, course c WHERE sc.course_id=c.id and sc.id = #{scId}")
+	@Select("SELECT sc.*, c.tea_number, c.tea_name FROM student_course sc, course c " +
+			"WHERE sc.course_id=c.id and sc.id = #{scId}")
 	StudentCourse getById(long scId);
 
 	@Select("SELECT sc.*, c.tea_number, c.tea_name FROM student_course sc, course c " +
@@ -67,10 +69,12 @@ public interface StudentCourseMapper {
 			"WHERE sc.course_id=c.id and sc.course_id = #{courseId}")
 	List<StudentCourse> listByCourseId(long courseId);
 
-	@Select("SELECT sc.*, c.tea_number, c.tea_name FROM student_course sc, course c WHERE c.tea_number=#{teaNumber} and c.id=sc.course_id")
+	@Select("SELECT sc.*, c.tea_number, c.tea_name FROM student_course sc, course c " +
+			"WHERE c.tea_number=#{teaNumber} and c.id=sc.course_id")
 	List<StudentCourse> listByTeacherId(long teaNumber);
 
-	@Select("SELECT sc.*, c.tea_number, c.tea_name FROM student_course sc, course c WHERE sc.stu_number=#{stuNumber} and c.id=sc.course_id")
+	@Select("SELECT sc.*, c.tea_number, c.tea_name FROM student_course sc, course c " +
+			"WHERE sc.stu_number=#{stuNumber} and c.id=sc.course_id")
 	List<StudentCourse> listByStudentId(long stuNumber);
 
 	/**
@@ -88,19 +92,8 @@ public interface StudentCourseMapper {
 	 * @param courseId 课程id
 	 * @return 所有选了该课程的学生的stuNumber list
 	 */
-	@Select("SELECT UNIQUE stu_number FROM student_course WHERE course_id = #{courseId}")
+	@Select("SELECT stu_number FROM student_course WHERE course_id = #{courseId}")
 	List<Long> listStuNumbersByCourseId(long courseId);
-
-
-	/**
-	 * 查询学生是否选某一门课
-	 *
-	 * @param stuNumber 学号
-	 * @param courseId  课程id
-	 * @return 选了这门课为true，没选是false
-	 */
-	@Select("SELECT COUNT(*) FROM student_course WHERE stu_number = #{stuNumber} AND course_id = #{courseId}")
-	boolean getCourseIsChosen(long stuNumber, long courseId);
 
 	/**
 	 * 根据id删除学生-课程记录

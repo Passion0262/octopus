@@ -38,14 +38,8 @@ public class StudentCourse {
 
     private boolean completed;  //这门课程是否完成
 
-    public StudentCourse(long id, long stuNumber, long courseId, String courseName, String stuName, String stuMajor, String stuClass, Timestamp applyTime) {
-        this.id = id;
+    public StudentCourse(long stuNumber, long courseId) {
         this.stuNumber = stuNumber;
         this.courseId = courseId;
-        this.courseName = courseName;
-        this.stuName = stuName;
-        this.stuMajor = stuMajor;
-        this.stuClass = stuClass;
-        this.applyTime = applyTime;
     }
 }
