@@ -36,10 +36,10 @@ public interface SubExperimentReportSubmitService {
      */
     boolean insert(SubExperimentReportSubmit subExperimentReportSubmit);
 
-    /**
-     *  学生提交报告 更新
-     */
-    boolean updateBySubmit(long subExperimentId, long stuNumber, String content);
+//    /**
+//     *  学生提交报告 更新
+//     */
+//    boolean updateBySubmit(long subExperimentId, long stuNumber, String content);
 
     /**
      *  教师审核报告 更新

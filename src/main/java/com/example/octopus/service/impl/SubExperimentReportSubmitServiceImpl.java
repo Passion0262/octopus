@@ -65,10 +65,10 @@ public class SubExperimentReportSubmitServiceImpl implements SubExperimentReport
 		}
 	}
 
-	@Override
-	public boolean updateBySubmit(long subExperimentId, long stuNumber, String content) {
-		return subExperimentReportSubmitMapper.updateBySubmit(subExperimentId, stuNumber, content);
-	}
+//	@Override
+//	public boolean updateBySubmit(long subExperimentId, long stuNumber, String content) {
+//		return subExperimentReportSubmitMapper.updateBySubmit(subExperimentId, stuNumber, content);
+//	}
 
 	@Override
 	public boolean updateByExamine(long subExperimentId, long stuNumber, long teaNumber, int score) {
@@ -83,7 +83,6 @@ public class SubExperimentReportSubmitServiceImpl implements SubExperimentReport
 	@Override
 	public List<SubExperimentReportSummaryVO> getReportSummaryByRole(long teaNumber) {
 		long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
-		//todo 修改mapper，将listAllProcessNum作为主要，向里面添加各种名，listAllReportSummary是次要，只存放examined和unexamined
 		List<SubExperimentReportSummaryVO> result, tem;
 		if (role == 1) {
 			//管理员获取全部
@@ -101,7 +100,7 @@ public class SubExperimentReportSubmitServiceImpl implements SubExperimentReport
                 if(tem.get(j).getSubExperimentId()==result.get(i).getSubExperimentId()){
                     result.get(i).setExaminedNum(tem.get(j).getExaminedNum());
                     result.get(i).setUnexaminedNum(tem.get(j).getUnexaminedNum());
-                    int notSubmitNum = result.get(i).getNotSubmitNum()-tem.get(i).getExaminedNum()-tem.get(i).getUnexaminedNum();
+                    int notSubmitNum = result.get(i).getNotSubmitNum()-tem.get(j).getExaminedNum()-tem.get(j).getUnexaminedNum();
                     result.get(i).setNotSubmitNum(notSubmitNum);
                     break;
                 }

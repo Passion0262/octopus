@@ -33,12 +33,13 @@ public interface SubExperimentReportSaveMapper {
 
     /**
      *  新增subExperimentReportSave
+     *  reportSave表中的开课id即tea_course_id，使用before insert触发器自动查询并填写，不需要手动插入
      */
     @Insert("INSERT INTO sub_experiment_report_save (sub_experiment_id, stu_number, content, last_update_time) VALUES (#{subExperimentId},#{stuNumber},#{content},CURRENT_TIMESTAMP)")
     boolean insert(SubExperimentReportSave subExperimentReportSave);
 
     /**
-     *  更新subExperimentReportSave
+     *  （不推荐使用）更新subExperimentReportSave
      */
     @Update("UPDATE sub_experiment_report_save SET sub_experiment_id=#{subExperimentId},stu_number=#{stuNumber},content=#{content},last_update_time=CURRENT_TIMESTAMP WHERE id = #{id}")
     boolean update(SubExperimentReportSave subExperimentReportSave);

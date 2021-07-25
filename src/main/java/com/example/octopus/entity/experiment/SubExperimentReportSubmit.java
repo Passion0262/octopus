@@ -34,10 +34,18 @@ public class SubExperimentReportSubmit {
 
     private Timestamp examinedTime;  //审核时间
 
-    private long teaNumber;  //审核教师
+    private long teaNumber;  //审核教师，不需要手动输入，使用触发器自动查找填写
 
     private String teaName;     //教师名字，不在sub_experiment_report_submit表中
 
     private int score;  //报告得分
 
+    /**
+     * 使用此构造函数来进行插入操作
+     */
+    public SubExperimentReportSubmit(long subExperimentId, long stuNumber, String content) {
+        this.subExperimentId = subExperimentId;
+        this.stuNumber = stuNumber;
+        this.content = content;
+    }
 }

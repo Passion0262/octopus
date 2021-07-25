@@ -50,21 +50,24 @@ public interface SubExperimentReportSubmitMapper{
 
     /**
      *  新增subExperimentReportSave
+     *  不需要手动输入tea_number和tea_course_id，这两者使用触发器自动填写
      */
-    @Insert("INSERT INTO sub_experiment_report_submit (sub_experiment_id, stu_number, content, submit_time,tea_number) VALUES (#{subExperimentId},#{stuNumber},#{content},CURRENT_TIMESTAMP," +
-            "(SELECT c.tea_number FROM sub_experiment se, course_experiment ce, course c WHERE se.id=#{subExperimentId} AND se.experiment_id = ce.experiment_id AND ce.course_id = c.id ))")
+    @Insert("INSERT INTO sub_experiment_report_submit (sub_experiment_id, stu_number, content, submit_time) " +
+            "VALUES (#{subExperimentId},#{stuNumber},#{content},CURRENT_TIMESTAMP)")
     boolean insert(SubExperimentReportSubmit subExperimentReportSubmit);
 
-    /**
-     *  学生提交报告 更新
-     */
-    @Update("UPDATE sub_experiment_report_submit SET content=#{content},submit_time=CURRENT_TIMESTAMP WHERE sub_experiment_id = #{subExperimentId} AND stu_number = #{stuNumber}")
-    boolean updateBySubmit(long subExperimentId, long stuNumber, String content);
+//    /**
+//     *  学生提交报告 更新   学生一经提交就不能修改
+//     */
+//    @Update("UPDATE sub_experiment_report_submit SET content=#{content},submit_time=CURRENT_TIMESTAMP WHERE sub_experiment_id = #{subExperimentId} AND stu_number = #{stuNumber}")
+//    boolean updateBySubmit(long subExperimentId, long stuNumber, String content);
 
     /**
      *  教师审核报告 更新
+     *  这里其实不需要teaNumber，但为避免上层更多的改动就不管了
      */
-    @Update("UPDATE sub_experiment_report_submit SET score=#{score}, tea_number=#{teaNumber}, examined=1, examined_time=CURRENT_TIMESTAMP WHERE sub_experiment_id=#{subExperimentId} AND stu_number=#{stuNumber}")
+    @Update("UPDATE sub_experiment_report_submit SET score=#{score}, examined=1, examined_time=CURRENT_TIMESTAMP " +
+            "WHERE sub_experiment_id=#{subExperimentId} AND stu_number=#{stuNumber}")
     boolean updateByExamine(long subExperimentId, long stuNumber, long teaNumber, int score);
 
     /**
@@ -76,21 +79,35 @@ public interface SubExperimentReportSubmitMapper{
 
 
     /////////////////////////////////       实验报告汇总
-    // 联表查询count有问题，故分两步：1从sub_experiment_progress取未提交的数量；2从sub_experiment_report_submit取审核与未审核的数量
-    // 注意1中未提交数量需要在implement中进行计算等
+    /**
+     * 联表查询count有问题，故分两步：1从sub_experiment_progress取未提交的数量；
+     *                          2从sub_experiment_report_submit取审核与未审核的数量
+     * 注意1中未提交数量需要在implement中进行计算等
+     */
+    //管理员
     @Select("SELECT se.experiment_id, e.name AS experiment_name, se.id AS sub_experiment_id, se.sub_experiment_name, COUNT(DISTINCT sep.stu_number) AS not_submit_num " +
             "FROM sub_experiment_progress sep, sub_experiment se, experiment e " +
-            "WHERE sep.sub_experiment_id=se.id and se.experiment_id=e.id GROUP BY se.id")
+            "WHERE sep.sub_experiment_id=se.id and se.experiment_id=e.id " +
+            "GROUP BY se.id")
     List<SubExperimentReportSummaryVO> listAllReportSummary1();
 
     @Select("SELECT sub_experiment_id, COUNT(examined = true OR NULL) AS examined_num, COUNT(examined = false OR NULL) AS unexamined_num " +
-            "FROM sub_experiment_report_submit GROUP BY sub_experiment_id")
+            "FROM sub_experiment_report_submit " +
+            "GROUP BY sub_experiment_id")
     List<SubExperimentReportSummaryVO> listAllReportSummary2();
+
     //教师
-    //todo 教师课程表？？？？
-    @Select("")
+    @Select("SELECT se.experiment_id, e.name AS experiment_name, se.id AS sub_experiment_id, se.sub_experiment_name, COUNT(DISTINCT sep.stu_number) AS not_submit_num " +
+            "FROM sub_experiment_progress sep, sub_experiment se, experiment e, course c " +
+            "WHERE sep.tea_course_id=c.id AND c.tea_number=#{teaNumber} AND sep.sub_experiment_id=se.id AND se.experiment_id=e.id " +
+            "GROUP BY se.id")
     List<SubExperimentReportSummaryVO> listReportSummaryByTeaId1(long teaNumber);
-    @Select("")
+    @Select("SELECT sub_experiment_id, COUNT(examined = true OR NULL) AS examined_num, COUNT(examined = false OR NULL) AS unexamined_num " +
+            "FROM sub_experiment_report_submit " +
+            "WHERE tea_number=#{teaNumber} " +
+            "GROUP BY sub_experiment_id")
     List<SubExperimentReportSummaryVO> listReportSummaryByTeaId2(long teaNumber);
+
+    //////////////////////////////////////////////
 
 }
