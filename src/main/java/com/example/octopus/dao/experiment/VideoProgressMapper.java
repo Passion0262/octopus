@@ -32,7 +32,7 @@ public interface VideoProgressMapper {
      *  根据学生ID,返回每门课的视频学习时长
      *  @return 返回列表 单位秒
      */
-    @Select("SELECT v.course_id,sum(vp.study_time) as time FROM video v,video_progress vp WHERE vp.stu_number=#{stuNumber} AND v.id = vp.video_id")
+    @Select("SELECT vp.tea_course_id,sum(vp.study_time) as time FROM video_progress vp WHERE vp.stu_number=#{stuNumber} GROUP BY tea_course_id")
     List<CourseTimeVO> countStudyTimeByStuNumberGroupByCourseId(long stuNumber);
 
     /**

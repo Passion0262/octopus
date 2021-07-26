@@ -61,7 +61,7 @@ public interface CourseMapper {
     /**
      *  将课程状态更新为已完成
      */
-    @Update("UPDATE course SET completed = 1 WHERE course_id=#{courseId} AND stu_number = #{stuNumber}")
+    @Update("UPDATE student_course SET completed = 1 WHERE course_id=#{courseId} AND stu_number = #{stuNumber}")
     boolean updateCompleted(long courseId, long stuNumber);
 
     /**

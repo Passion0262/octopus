@@ -81,7 +81,7 @@ public interface VideoProgressService {
      * 计算学生在课程的进度
      * 该课程下学生的进度总和除以总进度总和
      */
-    double getCourseProgress(long courseId, long stuNumber);
+    double getCourseProgress(long courseStaticId, long stuNumber);
 
     /**
      * 视频学习详情，每个学生和每个视频对应一条数据。根据教师不同权x限

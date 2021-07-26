@@ -45,7 +45,7 @@ public class VideoProgressServiceImpl implements VideoProgressService {
 
 	@Override
 	public List<VideoProgress> listByCourseIdAndStuNumber(long courseId, long stuNumber) {
-		List<Long> videoIdList = videoMapper.listVideoIdsByCourseId(courseId);
+		List<Long> videoIdList = videoMapper.listVideoIdsByCourseStaticId(courseId);
 		List<VideoProgress> videoProgressList = new ArrayList<>();
 		for (long videoId : videoIdList) {
 			videoProgressList.addAll(videoProgressMapper.listByVideoIdAndStuNumber(videoId, stuNumber));
@@ -55,7 +55,7 @@ public class VideoProgressServiceImpl implements VideoProgressService {
 
 	@Override
 	public List<VideoProgress> listLatestByCourseIdAndStuNumber(long courseId, long stuNumber) {
-		List<Long> videoIdList = videoMapper.listVideoIdsByCourseId(courseId);
+		List<Long> videoIdList = videoMapper.listVideoIdsByCourseStaticId(courseId);
 		List<VideoProgress> videoProgressList = new ArrayList<>();
 		for (long videoId : videoIdList) {
 			videoProgressList.add(videoProgressMapper.getLatestByVideoIdAndStuNumber(videoId, stuNumber));
@@ -70,7 +70,7 @@ public class VideoProgressServiceImpl implements VideoProgressService {
 
 	@Override
 	public int getStudyTimeByCourseIdAndStuNumber(long courseId, long stuNumber) {
-		List<Long> videoIdList = videoMapper.listVideoIdsByCourseId(courseId);
+		List<Long> videoIdList = videoMapper.listVideoIdsByCourseStaticId(courseId);
 		int total_time = 0;
 		for (long videoId : videoIdList) {
 			Integer cur_time = videoProgressMapper.countStudyTime(videoId, stuNumber);
@@ -112,7 +112,8 @@ public class VideoProgressServiceImpl implements VideoProgressService {
 
 	@Override
 	public double getCourseProgress(long courseId, long stuNumber) {
-		List<Long> videoIdList = videoMapper.listVideoIdsByCourseId(courseId);
+		long courseStaticId = courseMapper.getCourseById(courseId).getCourseStaticId();
+		List<Long> videoIdList = videoMapper.listVideoIdsByCourseStaticId(courseStaticId);
 		if (videoIdList.size() == 0) {
 			return 0.0;
 		}
@@ -121,6 +122,7 @@ public class VideoProgressServiceImpl implements VideoProgressService {
 		for (long videoId : videoIdList) {
 			VideoProgress vp = videoProgressMapper.getLatestByVideoIdAndStuNumber(videoId, stuNumber);
 			if (vp != null) {
+				System.out.println(vp.getVideoId() + "" + vp.getProgress());
 				stu_progress += vp.getProgress();
 			}
 		}

@@ -176,10 +176,11 @@ public class studentController {
 
 
         List<CourseTimeVO> videopro = videoProgressService.countStudyTimeByStuNumberGroupByCourseId(stuName);
-
+        logger.info("videopro " + videopro);
 
 
         List<ExperimentTimeVO> experpro = experimentService.countExperimentTime(stuName);
+        logger.info("experpro " + experpro);
 
 
         JSONArray videopros = new JSONArray();
@@ -192,8 +193,9 @@ public class studentController {
         for(int i=0;i<videopro.size();i++){
             JSONObject ob1 = new JSONObject();
             JSONObject ob2 = new JSONObject();
-            String s1 = courseService.getCourseById(videopro.get(i).getCourseId()).getCourseName();
-            String s2 = courseService.getCourseById(experpro.get(i).getCourseId()).getCourseName();
+//            String s1 = courseService.getCourseById(videopro.get(i).getCourseId()).getCourseName();
+            String s1 = courseService.getCourseById(videopro.get(i).getTeaCourseId()).getCourseName();
+            String s2 = courseService.getCourseById(experpro.get(i).getTeaCourseId()).getCourseName();
             ob1.put("value",videopro.get(i).getTime());
             ob1.put("name",s1);
             videoCoursenames.add(s1);
@@ -420,6 +422,7 @@ public class studentController {
 
         List<Integer> pros = new ArrayList<>();
         for (int i=0;i<mycourses.size();i++) {
+            logger.info("mycourse: " + mycourses.get(i).getCourseStaticId());
             double pro =  videoProgressService.getCourseProgress(mycourses.get(i).getId(),stuNum);
             pros.add((int)(pro*100));
         }

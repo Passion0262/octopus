@@ -30,8 +30,8 @@ public interface VideoMapper {
     /**
      * 根据courseId返回对应的videoId list
      */
-    @Select("SELECT id FROM video WHERE course_id = #{courseId}")
-    List<Long> listVideoIdsByCourseId(long courseId);
+    @Select("SELECT id FROM video WHERE course_id = #{courseStaticId}")
+    List<Long> listVideoIdsByCourseStaticId(long courseStaticId);
 
     /**
      * 根据chapterId返回对应的video list
@@ -48,15 +48,21 @@ public interface VideoMapper {
     @Select("SELECT * FROM video WHERE id = #{id}")
     Video getById(long id);
 
+    /**
+     *  这里是管理员查找所有已有的课程，所以查找course_static表
+     */
     @Select("SELECT v.*, c.course_name, cha.chapter_name, cha.chapter_number " +
-            "FROM video v, course c, chapter cha " +
-            "WHERE v.chapter_id=cha.chapter_id and v.course_id=c.id " +
+            "FROM video v, course_static c, chapter cha " +
+            "WHERE v.chapter_id=cha.chapter_id and v.course_id=c.course_static_id " +
             "ORDER BY v.course_id, cha.chapter_number, v.number")
     List<VideoManageVO> getAllVideoManage();
 
+    /**
+     *  这里是查找teacher开的课，所以查找course表
+     */
     @Select("SELECT v.*, c.course_name, cha.chapter_name, cha.chapter_number " +
             "FROM video v, course c, chapter cha " +
-            "WHERE c.tea_number=#{teaNumber} and v.chapter_id=cha.chapter_id and v.course_id=c.id " +
+            "WHERE c.tea_number=#{teaNumber} and v.chapter_id=cha.chapter_id and v.course_id=c.course_static_id " +
             "ORDER BY v.course_id, cha.chapter_number, v.number")
     List<VideoManageVO> getVideoManageByTeaId(long teaNumber);
 
@@ -84,7 +90,7 @@ public interface VideoMapper {
     List<VideoStudySummaryVO> getAllVideoStudySummary();
 
     @Select("select stu_number, name as stu_name, course_id, vpd.course_name, sum(study_time_sum)  as study_time_total, min(very_start_time) as first_start_time, max(very_last_time)  as last_end_time " +
-            "from video_process_detail vpd, course where course.id=course_id and course.tea_number=#{teaNumber} " +
+            "from video_process_detail vpd, course where course.course_static_id=vpd.course_id and course.tea_number=#{teaNumber} " +
             "group by stu_number and course_id")
     List<VideoStudySummaryVO> getVideoStudySummaryByTeacherId(long teaNumber);
 }

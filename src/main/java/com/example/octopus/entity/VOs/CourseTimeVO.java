@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class CourseTimeVO {
 
-    private long courseId;
+    private long teaCourseId;
 
     private int time;   //单位：秒
 
@@ -18,6 +18,6 @@ public class CourseTimeVO {
     }
 
     public long getCourseId() {
-        return courseId;
+        return teaCourseId;
     }
 }

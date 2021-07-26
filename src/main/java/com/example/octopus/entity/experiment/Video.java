@@ -1,5 +1,7 @@
 package com.example.octopus.entity.experiment;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 
@@ -7,17 +9,17 @@ import java.sql.Date;
 public class Video {
     //course-->chapter-->number
 
-    private long id;
+    public long id;
 
-    private String name;
+    public String name;
 
-    private int number;
+    public int number;
 
-    private String path;
+    public String path;
 
-    private long chapterId;
+    public long chapterId;
 
-    private long courseId;
+    public long courseId;
 
     public Video() {
     }
