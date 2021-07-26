@@ -17,7 +17,7 @@ public interface StudentCourseMapper {
 	 * 通过tea_course_id获取对应的course_static_id
 	 * 用于后面检查学生是否只选了一类课程下的一门课，即只能选同一course_static_id下的一门course_id
 	 */
-	@Select("SELECT c.course_static_id FROM student_course sc, course c WHERE c.id=#{teaCourseId}")
+	@Select("SELECT c.course_static_id FROM course c WHERE c.id=#{teaCourseId}")
 	long getStaticId(long teaCourseId);
 
 	/**
