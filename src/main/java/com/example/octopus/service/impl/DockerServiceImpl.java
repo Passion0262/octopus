@@ -51,7 +51,7 @@ public class DockerServiceImpl implements DockerService {
 
 		//当前没有可用虚拟机，需要稍后刷新
 		if (available.isEmpty()){
-			System.out.println("no available pod, please wait a sec to refresh....");
+			System.out.println("========================= no available pod, please wait a sec to refresh....===========================");
 			return null;
 		}
 
@@ -61,8 +61,11 @@ public class DockerServiceImpl implements DockerService {
 			processingId = 0;
 		} else if (statusCode == 1) dockerStatus = "project";
 		else if (statusCode == 2) dockerStatus = "experiment";
+		available.get(0).setProcessingId(processingId);
+		available.get(0).setStuNumber(stuNumber);
+		available.get(0).setStatus(dockerStatus);
 
-		dockerMapper.updateStatusByStuNum(available.get(0).getId(), stuNumber, dockerStatus, processingId);
+		dockerMapper.updateStatusByStuNum(available.get(0));
 		return available.get(0).getAddress();
 	}
 
@@ -75,6 +78,7 @@ public class DockerServiceImpl implements DockerService {
 
 			//该docker版本需要更新
 			String latestVersionInDB = dockerMapper.checkDBLatestVersion();
+			System.out.println(latestVersionInDB);
 			if(!docker.getVersion().equals(latestVersionInDB))
 				docker.upgrade(latestVersionInDB);
 

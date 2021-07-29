@@ -44,15 +44,15 @@ public interface DockerMapper {
             "VALUES (#{id}, #{name}, #{version}, #{port}, #{address})")
     boolean createDocker(Docker docker);
 
-    @Update("UPDATE docker SET status=false, stu_number=#{stuNumber}, start_time=CURRENT_TIMESTAMP, status = #{status}, processing_id=#{processingId} " +
+    @Update("UPDATE docker SET create_time=#{createTime}, available=false, stu_number=#{stuNumber}, start_time=CURRENT_TIMESTAMP, status = #{status}, processing_id=#{processingId}, " +
             "       stu_name=(SELECT name FROM student WHERE stu_number=#{stuNumber}) " +
             "WHERE id=#{id}")
-    boolean updateStatusByStuNum(int id, long stuNumber, String status, long processingId);
+    boolean updateStatusByStuNum(Docker docker);
 
     /**
      * 此项用于检查当前数据库中的pod最新版本
      */
-    @Select("SELECT MAX(version) FROM docker")
+    @Select("SELECT version FROM docker ORDER BY version DESC LIMIT 1")
     String checkDBLatestVersion();
 
     @Update("DELETE FROM docker WHERE id=#{id}")
@@ -124,7 +124,7 @@ public interface DockerMapper {
 
 
     ///////////////////
-    @Select("SELECT * FROM docker WHERE available=true ORDER BY create_time")
+    @Select("SELECT * FROM docker WHERE available=true ORDER BY version DESC, create_time")
     List<Docker> listAvailableDocker();
 
 }

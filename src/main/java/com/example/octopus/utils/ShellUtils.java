@@ -104,6 +104,7 @@ public class ShellUtils {
 		if (session != null) {
 			// 如果session不为空,调用session的关闭连接的方法
 			session.disconnect();
+			logined = false;
 		}
 		log.info("SSH close success ...");
 	}
@@ -196,6 +197,12 @@ public class ShellUtils {
 		return ls;
 	}
 
+
+	////////////////////////   pod  operations
+
+	/**
+	 * 学生退出时，重置pod（删除+新建）
+	 */
 	public void resetPod(int id, int port, String version) {
 		sshRemoteCallLogin();
 		executeCommand("./k8s-install/exp-machine-delete.sh -n exp-machine-" + id);
@@ -206,11 +213,15 @@ public class ShellUtils {
 	public String latestVersion() {
 		String latestVersion = "v1";
 		sshRemoteCallLogin();
+		//todo 获取最新pod版本的命令
 		executeCommand("");
 		closeSession();
 		return latestVersion;
 	}
 
+	/**
+	 * 批量更新pod到最新version
+	 */
 	public void upgradePods(List<Docker> ds, String version) {
 		int len = ds.size();
 		sshRemoteCallLogin();
