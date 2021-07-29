@@ -57,6 +57,6 @@ public class Docker {
     public void generate(String ip){
         this.name="exp-machine-"+id;
         this.port=32003+id;
-        this.address=ip+":"+port+"/vnc.html?password=123456";
+        this.address="http://"+ip+":"+port+"/vnc.html?password=123456";
     }
 }

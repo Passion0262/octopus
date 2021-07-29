@@ -10,9 +10,6 @@ import java.sql.Date;
  */
 @Data
 public class ExperimentTimeHistoryVO {
-
-    Date date;  //日期
-
-    Integer time;   //学习时长
-
+    private Date date;  //日期
+    private Integer time;   //学习时长
 }

@@ -155,25 +155,18 @@ public class studentController {
 
 
         int chosenCourse = courseService.countCourseChosen(stuName);
-        logger.info("chosenCourse:" + chosenCourse);
         model.addAttribute("chosenCourse",chosenCourse);
 
         int noFinished = chosenCourse - courseService.listCompletedCourses(stuName).size();
-        logger.info("noFinished:" + noFinished);
         model.addAttribute("noFinished",noFinished);
 
         Timestamp lastlogintime = userService.getStudentByStuNumber(stuName).getLastLoginTime();
-        logger.info("lastlogintime:" + lastlogintime);
         model.addAttribute("lastlogintime",lastlogintime);
 
 
-
         List<CourseTimeVO> videopro = videoProgressService.countStudyTimeByStuNumberGroupByCourseId(stuName);
-        logger.info("videopro " + videopro);
-
 
         List<ExperimentTimeVO> experpro = experimentService.countExperimentTime(stuName);
-        logger.info("experpro " + experpro);
 
 
         JSONArray videopros = new JSONArray();
@@ -199,50 +192,44 @@ public class studentController {
             experpros.add(ob2);
         }
 
-        logger.info("videoCoursenames:" + videoCoursenames);
         model.addAttribute("videoCoursenames",videoCoursenames);
-        logger.info("videopros:" + videopros);
         model.addAttribute("videopros",videopros);
-        logger.info("experCoursenames:" + experCoursenames);
         model.addAttribute("experCoursenames",experCoursenames);
-        logger.info("experpros:" + experpros);
         model.addAttribute("experpros",experpros);
 
 
         List<ExperimentTimeHistoryVO> alastExper = experimentService.getHistory7DaysExperimentTime(stuName);
 
-        List<VideoTimeHistoryVO> alastvideo = videoProgressService.getHistory7DaysStudyTime(stuName);
-
-        logger.info("alastExper:" + alastExper);
-        logger.info("alastvideo:" + alastvideo);
+        List<VideoTimeHistoryVO> alastVideo = videoProgressService.getHistory7DaysStudyTime(stuName);
 
         List<String> pastDaysList = new ArrayList<>();
-        for (int i = 1; i <8; i++) {
+        for (int i = 0; i <7; i++) {
             pastDaysList.add(getPastDate(i));
         }
 
         List<Integer> lastExper = new ArrayList<>();
         List<Integer> lastvideo = new ArrayList<>();
 
-        int a = alastvideo.size()-1,b=alastExper.size()-1;
-        for (int i=0;i<7;i++){
-            if(a>=0){
-                if(alastvideo.get(a).getDate().toString().equals(pastDaysList.get(i))){
-                lastvideo.add(alastvideo.get(a).getTime());
-                a= a-1;
-                }else{
-                lastvideo.add(0);
+        int a = alastVideo.size() - 1, b = alastExper.size() - 1;
+        for (int i = 0; i < 7; i++) {
+            if (a >= 0) {
+                if (alastVideo.get(a).getDate().toString().equals(pastDaysList.get(i))) {
+                    lastvideo.add(alastVideo.get(a).getTime());
+                    a = a - 1;
+                } else {
+                    lastvideo.add(0);
                 }
-            }else{
+            } else {
                 lastvideo.add(0);
             }
-            if(b>=0){
-                if(alastExper.get(b).getDate().toString().equals(pastDaysList.get(i))){
-                lastExper.add(alastExper.get(b).getTime());
-                b--; }else{
-                lastExper.add(0);
+            if (b >= 0) {
+                if (alastExper.get(b).getDate().toString().equals(pastDaysList.get(i))) {
+                    lastExper.add(alastExper.get(b).getTime());
+                    b--;
+                } else {
+                    lastExper.add(0);
                 }
-            }else{
+            } else {
                 lastExper.add(0);
             }
         }
@@ -256,28 +243,13 @@ public class studentController {
             pastDaysList0.add(pastDaysList.get(6-i));
         }
 
-        logger.info("lastExper:" + lastExper0);
         model.addAttribute("lastExper",lastExper0);
-        logger.info("lastvideo:" + lastvideo0);
         model.addAttribute("lastvideo",lastvideo0);
-        logger.info("pastDaysList:" +pastDaysList0);
         model.addAttribute("pastDaysList",pastDaysList0);
 
 
-
-
 //        int experpros = subExperimentProgressService.countValidStudyTime(stuName);
-//        logger.info("experpros:" + experpros);
 //        model.addAttribute("experpros",experpros);
-
-
-
-        // String stuNumber = SecurityContextHolder.getContext().getAuthentication().getName();
-        // Student stu = userService.findStudentByStuNumber(Long.parseLong(tokenCheck.getUserNum()));
-        // session.setAttribute("stuname",stu.getName());
-
-        // String stuname = (String)session.getAttribute("stuname");
-        // model.addAttribute("stuname", stuname);
         return "index";
     }
 
@@ -289,12 +261,6 @@ public class studentController {
         String stuName = cookieThings.getCookieUserName(request, COOKIE_NAME);
         String stuNum = cookieThings.getCookieUserNum(request, COOKIE_NAME);
 
-
-//        String stuname = (String) session.getAttribute("stuname");
-//        model.addAttribute("stuname", stuname);
-//
-//        String stuNumber = SecurityContextHolder.getContext().getAuthentication().getName();
-//        Student stu = userService.findStudentByStuNumber(Long.parseLong(stuNumber));
         Student stu = userService.getStudentByStuNumber(Long.parseLong(stuNum));
         model.addAttribute("stu", stu);
 
@@ -319,15 +285,8 @@ public class studentController {
     public String applycourse(Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
-//        String stuname = (String) session.getAttribute("stuname");
-//        model.addAttribute("stuname", stuname);
-
         List<Course> allcourses = courseService.listCourses();
-//        logger.info("allcourses:" + allcourses);
         model.addAttribute("allcourses", allcourses);
-
-
-
 
         return "applycourse";
     }
@@ -337,15 +296,10 @@ public class studentController {
     public String apply_detail(@PathVariable(value = "id") String id, Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
-//        String stuname = (String) session.getAttribute("stuname");
-//        model.addAttribute("stuname", stuname);
-
         logger.info("coursedetail_id:" + id);
 
 
         Course course = courseService.getCourseById(Long.parseLong(id));
-
-        logger.info("course——detail:" + course);
         model.addAttribute("course", course);
 
 
@@ -363,9 +317,6 @@ public class studentController {
     public String sure_apply(String id, Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
-//        String stuname = (String) session.getAttribute("stuname");
-
-
         String stuNum = cookieThings.getCookieUserNum(request, COOKIE_NAME);
         logger.info("确认课程_id:" + id);
         logger.info("确认学生_id:" + stuNum);
@@ -380,8 +331,6 @@ public class studentController {
     @RequestMapping("/apply_detail/cancel_apply")
     public String cancel_apply(String id, Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-
-//        String stuname = (String) session.getAttribute("stuname");
 
         logger.info("取消申请_id:" + id);
 
@@ -402,9 +351,6 @@ public class studentController {
     public String mycourse(Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
-//        String stuname = (String) session.getAttribute("stuname");
-//        model.addAttribute("stuname", stuname);
-
         Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
 
         List<Course> mycourses = courseService.listCoursesByStuNumber(stuNum);
@@ -415,7 +361,7 @@ public class studentController {
 
         List<Integer> pros = new ArrayList<>();
         for (int i=0;i<mycourses.size();i++) {
-            logger.info("mycourse: " + mycourses.get(i).getCourseStaticId());
+//            logger.info("mycourse: " + mycourses.get(i).getCourseStaticId());
             double pro =  videoProgressService.getCourseProgress(mycourses.get(i).getId(),stuNum);
             pros.add((int)(pro*100));
         }
@@ -434,23 +380,18 @@ public class studentController {
 
         model.addAttribute("id", id);
 
-//        logger.info("courseid_id:" + id);
         Long courseid_id = Long.parseLong(id);
         Long currvideo_id = Long.parseLong(videoid);
 
         Course course = courseService.getCourseById(courseid_id);
 
-//        logger.info("course——detail:" + course);
         model.addAttribute("course", course);
 
         List<Chapter> chapters = chapterService.listChaptersByCourseId(courseid_id);
-        logger.info("chapters:" + chapters);
         if(chapters.size() == 0){
             return "redirect:/mycourse";
         }
 
-//        logger.info("chapters:" + chapters);
-//        logger.info("chapters:" + chapters.size());
         model.addAttribute("chapters", chapters);
         model.addAttribute("chaptersnum", chapters.size());
 
@@ -460,7 +401,6 @@ public class studentController {
         Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
 
         for (int i=0;i<chapters.size();i++){
-//            logger.info("chaptersid:" + chapters.get(i).getId());
             List<Video> video = videoService.listVideosByChapterId(chapters.get(i).getChapterId());
             videos.add(video);
 
@@ -477,13 +417,8 @@ public class studentController {
             videopros.add(videopro);
         }
 
-//        logger.info("videos:" + videos);
         model.addAttribute("videos", videos);
-
         model.addAttribute("videopros", videopros);
-//        logger.info("videopros:" + videopros);
-
-//        logger.info("startvideo:" + videos.get(0).get(0));
 
         if(currvideo_id==0||currvideo_id==null){
             model.addAttribute("startvideo", videos.get(0).get(0));
@@ -492,16 +427,10 @@ public class studentController {
             Video startvideo = videoService.getById(currvideo_id);
             VideoProgress startvideopro = videoProgressService.getByVideoIdAndStuNumber(currvideo_id,stuNum);
             model.addAttribute("startvideo", startvideo);
-            logger.info("startvideo:" + startvideo);
             model.addAttribute("startvideopro", startvideopro);
-            logger.info("startvideopro:" + startvideopro);
         }
 
-
-
-//        logger.info("tosubexperiments:" + tosubexperiments);
         model.addAttribute("tosubexperiments", tosubexperiments);
-
 
 
         Experiment experiment = experimentService.getExperimentByCourseId(courseid_id);
@@ -540,8 +469,6 @@ public class studentController {
         Date enddate = new Date(endtime);
         Timestamp startst = new Timestamp(startdate.getTime());
         Timestamp endst = new Timestamp(enddate.getTime());
-//        logger.info("startdate:" + startdate);
-//        logger.info("enddate:" + startdate);
 
         VideoProgress videoProgress = new VideoProgress();
         videoProgress.setVideoId(videoid);
@@ -553,14 +480,6 @@ public class studentController {
         videoProgress.setStudyTime(learntime);
         boolean issuccess = videoProgressService.insertVideoProgress(videoProgress);
 
-//        logger.info("videoid:" + videoid);
-//        logger.info("stuNum:" + stuNum);
-//        logger.info("starttime:" + starttime);
-//        logger.info("endtime:" + endtime);
-//        logger.info("currenttime:" + currenttime);
-//        logger.info("jindu:" + jindu);
-//        logger.info("learntime:" + learntime);
-
         return "redirect:/course_video/"+id+"/"+videoid;
     }
 
@@ -571,12 +490,8 @@ public class studentController {
     public String experiment_task(Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
-//        String stuname = (String) session.getAttribute("stuname");
-//        model.addAttribute("stuname", stuname);
-
         Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         List<Experiment> allexperiments = experimentService.listExperimentsByStuNumber(stuNum);
-        logger.info("allExperiment:" + allexperiments);
         model.addAttribute("allexperiments", allexperiments);
 
         return "experiment_task";
@@ -587,32 +502,23 @@ public class studentController {
     public String experiment_task_detail(@PathVariable(value = "id") String id, Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
-//        String stuname = (String) session.getAttribute("stuname");
-//        model.addAttribute("stuname", stuname);
-
-        logger.info("experiment_id:" + id);
         Long experiment_id = Long.parseLong(id);
 
         Experiment experiment = experimentService.getExperimentById(experiment_id);
 
-        logger.info("experiment——detail:" + experiment);
         model.addAttribute("experiment", experiment);
 
         List<Module> modules = moduleService.listModulesByExperimentId(experiment_id);
-        logger.info("experiment——module:" + modules);
-        logger.info("experiment——module-size:" + modules.size());
+
         model.addAttribute("modules", modules);
         model.addAttribute("modulesnum", modules.size());
 
         List<List<SubExperiment>> subExperiments = new ArrayList<>();
         for (int i = 0; i < modules.size(); i++) {
-            logger.info("experiment——module-sub:" + modules.get(i).getModuleId());
             List<SubExperiment> subExperiment = subExperimentService.listSubExperimentsByModuleId(modules.get(i).getModuleId());
             subExperiments.add(subExperiment);
         }
-        logger.info("subExperiments:" + subExperiments);
         model.addAttribute("subExperiments", subExperiments);
-
 
         return "experiment_task_detail";
     }
@@ -623,23 +529,18 @@ public class studentController {
     public String experiment_machine(@PathVariable("id")String id,Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
         Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
-//        String stuname = (String) session.getAttribute("stuname");
-//        model.addAttribute("stuname", stuname);
 
         logger.info("实验机id:"+id);
         Long sub_id = Long.parseLong(id);
-//        logger.info("sub_id:"+sub_id);
 
         SubExperiment subExperiment = subExperimentService.getById(sub_id);
         logger.info("subExperiment:"+subExperiment);
         model.addAttribute("subExperiment", subExperiment );
 
         Experiment experiment = experimentService.getExperimentById(subExperiment.getExperimentId());
-//        logger.info("experiment:"+experiment);
         model.addAttribute("experiment", experiment );
 
         SubExperimentReportSave subsave = subExperimentReportSaveService.getLatest(sub_id,stuNum);
-//        logger.info("subsave:"+subsave);
         String subcontent = "";
         if(subsave != null){
             subcontent = subsave.getContent();
@@ -649,7 +550,6 @@ public class studentController {
 
         // 这里要调整
         Video video = videoService.getVideoBySubExperimentId(sub_id);
-//        logger.info("video:"+video);
         if(video==null){
             model.addAttribute("isvideo", 0);
             model.addAttribute("videocourse", 0);
@@ -777,8 +677,7 @@ public class studentController {
         Long experid = Long.parseLong(request.getParameter("experid"));
         Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         String text = request.getParameter("text");
-//        logger.info("experid:" + experid);
-//        logger.info("text:" + text);
+
         SubExperimentReportSave sub = new SubExperimentReportSave();
         sub.setSubExperimentId(experid);
         sub.setStuNumber(stuNum);
@@ -830,11 +729,7 @@ public class studentController {
     public String projects(Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
-//        String stuname = (String) session.getAttribute("stuname");
-//        model.addAttribute("stuname", stuname);
-
         List<Project> allprojects = projectService.listProjects();
-//        logger.info("allProject:" + allprojects);
         model.addAttribute("allprojects", allprojects);
 
         return "projects";
@@ -844,29 +739,22 @@ public class studentController {
     public String project_detail(@PathVariable(value = "id") String id, Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
-
         long project_id = Long.parseLong(id);
 
         logger.info("project_id:" + project_id);
 
-
         Project project = projectService.getProjectById(project_id);
-        logger.info("project——detail:" + project);
         model.addAttribute("project", project);
 
         List<ProjectModule> modules = projectModuleService.listByProjectId(project_id);
-        logger.info("project——module:" + modules);
-        logger.info("project——module-size:" + modules.size());
         model.addAttribute("modules", modules);
         model.addAttribute("modulesnum", modules.size());
 
         List<List<SubProject>> subprojects = new ArrayList<>();
         for (int i = 0; i < modules.size(); i++) {
-            logger.info("subprojects——module-sub:" + modules.get(i).getModuleId());
             List<SubProject> subproject = subProjectService.listSubProjectsByModuleId(modules.get(i).getModuleId());
             subprojects.add(subproject);
         }
-        logger.info("subprojects:" + subprojects);
         model.addAttribute("subprojects", subprojects);
 
         return "project_detail";
@@ -876,24 +764,19 @@ public class studentController {
     public String project_machine(@PathVariable("id")String id,Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
         Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
-//        String stuname = (String) session.getAttribute("stuname");
-//        model.addAttribute("stuname", stuname);
 
         logger.info("project实验机id:"+id);
         Long sub_id = Long.parseLong(id);
-//        logger.info("sub_id:"+sub_id);
 
         SubProject subProject = subProjectService.getById(sub_id);
         logger.info("subProject:"+subProject);
         model.addAttribute("subProject", subProject);
 
         Project project = projectService.getProjectById(subProject.getProjectId());
-//        logger.info("experiment:"+experiment);
         model.addAttribute("project", project );
 
 //申请虚拟机资源
         String docker_url = dockerService.getPodForStu(stuNum, 1,sub_id);
-//        boolean a =dockerService.updateDockerStatusByStuNum(stuNum, 1, sub_id);
         model.addAttribute("docker_url", docker_url);
         //实验学习记录
 //        SubExperimentProgress subexppro = new SubExperimentProgress();
@@ -903,9 +786,6 @@ public class studentController {
         return "project_machine";
 
     }
-
-
-
 
 
 
@@ -922,12 +802,9 @@ public class studentController {
             Video v = videoService.getById(videopros.get(i).getVideoId());
             videos.add(v);
         }
-        logger.info("videos:" + videos);
         model.addAttribute("videos", videos);
 
-
         List<SubExperimentProgress>  experpros = subExperimentProgressService.listByStuNumber(stuNum);
-        logger.info("experpros:" + experpros);
         model.addAttribute("experpros", experpros);
 
         List<SubExperiment> subexpers = new ArrayList<>();
@@ -938,9 +815,7 @@ public class studentController {
             Long c = courseService.getCourseIdByExperimentId(w.getExperimentId());
             courseids.add(c);
         }
-        logger.info("subexpers:" + subexpers);
         model.addAttribute("subexpers", subexpers);
-        logger.info("courseids:" + courseids);
         model.addAttribute("courseids", courseids);
 
         return "studylog";
@@ -957,30 +832,22 @@ public class studentController {
         model.addAttribute("course",  course);
         logger.info("course:" + course );
 
-
         List<VideoProgress> videopros = videoProgressService.listByCourseIdAndStuNumber(cour_id,stuNum);
         Integer videoprosnum = videopros.size();
         int videoprostudynum = videoProgressService.getStudyTimeByCourseIdAndStuNumber(cour_id,stuNum);
         model.addAttribute("videopros",  videopros);
-        logger.info("videopros:" + videopros );
         model.addAttribute("videoprosnum",  videoprosnum);
-        logger.info("videoprosnum:" + videoprosnum );
         model.addAttribute("videoprostudynum",  videoprostudynum);
-        logger.info("videoprostudynum:" +videoprostudynum );
 
         List<Video> videos = new ArrayList<>();
         for (int i = 0; i < videopros.size(); i++) {
             Video v = videoService.getById(videopros.get(i).getVideoId());
             videos.add(v);
         }
-        logger.info("videos:" + videos);
         model.addAttribute("videos", videos);
-
-
 
         Long experid = experimentService.getExperimentByCourseId(cour_id).getId();
         List<SubExperimentProgress>  experpros = subExperimentProgressService.listByStuNumberAndExperimentId(stuNum,experid);
-        logger.info("experpros:" + experpros);
         model.addAttribute("experpros", experpros);
 
         List<SubExperiment> subexpers = new ArrayList<>();
@@ -992,16 +859,9 @@ public class studentController {
             courseids.add(c);
         }
         int experprostudynum = subExperimentProgressService.countValidStudyTimeOnExperiment(stuNum,experid);
-        logger.info("subexpers:" + subexpers);
         model.addAttribute("subexpers", subexpers);
-        logger.info("courseids:" + courseids);
         model.addAttribute("courseids", courseids);
         model.addAttribute("experprostudynum",  experprostudynum);
-        logger.info("experprostudynum:" +experprostudynum);
-
-
-
-
 
         return "studylog_detail";
     }
@@ -1010,9 +870,6 @@ public class studentController {
     @RequestMapping("/datasets")
     public String datasets(Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
-
-//        String stuname = (String) session.getAttribute("stuname");
-//        model.addAttribute("stuname", stuname);
 
         List<Dataset> alldatasets = datasetService.listDatasets();
         logger.info("alldatasets" + alldatasets);
@@ -1025,16 +882,12 @@ public class studentController {
     public String dataset_detail(@PathVariable(value = "id") String id, Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
-//        String stuname = (String) session.getAttribute("stuname");
-//        model.addAttribute("stuname", stuname);
-
         long dataset_id = Long.parseLong(id);
         logger.info("dataset_id:" + dataset_id);
 
         //        这里需要一个根据数据集的id 返回dataset操作
 //        Dataset dataset = datasetService.listDatasets().get(0);
         Dataset dataset = datasetService.getDatasetById(dataset_id);
-        logger.info("dataset——detail:" + dataset);
         model.addAttribute("dataset", dataset);
 
         return "dataset_detail";
@@ -1045,14 +898,11 @@ public class studentController {
     @ResponseBody
     public String datasetdownload(HttpServletRequest request) {
         Long datasetid = Long.parseLong(request.getParameter("datasetid"));
-        logger.info("datasetid:" + datasetid);
         datasetService.increaseDownloadNum(datasetid);
         Dataset d = datasetService.getDatasetById(datasetid);
         Map<String,Object> params = new HashMap<>();
-        logger.info("datasetnum:" + d.getDownloadNum());
         params.put("num",d.getDownloadNum());
         return JSONArray.toJSON(params).toString();
-
     }
 
 
@@ -1091,9 +941,7 @@ public class studentController {
 
         Long dd = new Date().getTime();
         Long interval = Math.round((double)(dd-stime)/1000);
-        logger.info("dd"+dd);
-        logger.info("dd"+stime);
-        logger.info("intervaltime"+interval);
+
         Timestamp end_time = new Timestamp(dd);
         SubExperimentProgress sp = new SubExperimentProgress();
         sp.setSubExperimentId(experid);

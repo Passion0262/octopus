@@ -128,7 +128,7 @@ public class ShellUtils {
 				channel.connect();  // channel进行连接
 				in = channel.getInputStream();  // 获取到输入流
 				String processDataStream = processDataStream(in);  // 执行相关的命令
-				log.info("command executed");
+				log.info("command: " + command + " executed");
 				return processDataStream;
 			}
 		} catch (Exception e) {
@@ -160,9 +160,10 @@ public class ShellUtils {
 		String result = "";
 		try {
 			while ((result = br.readLine()) != null) {
-				sb.append(result + "\n");
-				System.out.println(sb);  //显示终端输出
+				sb.append(result).append("\n");
 			}
+			//System.out.println(sb);  //显示终端输出
+
 		} catch (Exception e) {
 			log.error("Failed to get BufferedReader: ", e);
 		} finally {

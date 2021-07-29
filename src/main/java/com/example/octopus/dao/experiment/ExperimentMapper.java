@@ -40,7 +40,7 @@ public interface ExperimentMapper {
     /**
      * 获取学生过去7天的实验时间
      */
-    @Select("SELECT DATE_FORMAT( end_time, '%Y-%m-%d' ) date, SUM(valid_study_time) time " +
+    @Select("SELECT DATE_FORMAT( end_time, '%Y-%m-%d' ) AS date, SUM(valid_study_time) AS time " +
             "FROM ( SELECT * FROM sub_experiment_progress WHERE DATE_SUB( CURDATE( ), INTERVAL 7 DAY ) <= date(end_time)) as day " +
             "GROUP BY date")
     List<ExperimentTimeHistoryVO> getHistory7DaysExperimentTime(long stuNumber);
