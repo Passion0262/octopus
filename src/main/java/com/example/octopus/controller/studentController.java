@@ -22,13 +22,6 @@ import java.io.*;
 import java.sql.Timestamp;
 import java.text.ParseException;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.html.simpleparser.HTMLWorker;
-import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.PageSize;
-
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -677,8 +670,8 @@ public class studentController {
         }
 
 
-        String docker_url = dockerService.getAddressByStuNumber(stuNum);
-        boolean a =dockerService.updateStatusByStuNum(stuNum, 2, sub_id);
+        String docker_url = dockerService.getPodForStu(stuNum, 2, sub_id);
+//        boolean a =dockerService.updateDockerStatusByStuNum(stuNum, 2, sub_id);
         model.addAttribute("docker_url", docker_url);
 
         model.addAttribute("expstarttime", new Date().getTime());
@@ -899,8 +892,8 @@ public class studentController {
         model.addAttribute("project", project );
 
 //申请虚拟机资源
-        String docker_url = dockerService.getAddressByStuNumber(stuNum);
-        boolean a =dockerService.updateStatusByStuNum(stuNum, 1, sub_id);
+        String docker_url = dockerService.getPodForStu(stuNum, 1,sub_id);
+//        boolean a =dockerService.updateDockerStatusByStuNum(stuNum, 1, sub_id);
         model.addAttribute("docker_url", docker_url);
         //实验学习记录
 //        SubExperimentProgress subexppro = new SubExperimentProgress();
@@ -1073,9 +1066,9 @@ public class studentController {
 //        Long id = Long.parseLong(sid);
 //        String docker_url = dockerService.getAddressByStuNumber(stuNum);
 //        if(type=="experiment"){
-//            boolean a =dockerService.updateStatusByStuNum(stuNum, 2, id);
+//            boolean a =dockerService.updateDockerStatusByStuNum(stuNum, 2, id);
 //        }else{
-//            boolean b =dockerService.updateStatusByStuNum(stuNum, 1, id);
+//            boolean b =dockerService.updateDockerStatusByStuNum(stuNum, 1, id);
 //        }
 //        Map<String,Object> params = new HashMap<>();
 //
@@ -1094,7 +1087,7 @@ public class studentController {
         Timestamp start_time = new Timestamp(stime);
 
         Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
-        boolean a =dockerService.updateStatusByStuNum(stuNum, 0, 0);
+        boolean a =dockerService.resetPod(stuNum);
 
         Long dd = new Date().getTime();
         Long interval = Math.round((double)(dd-stime)/1000);

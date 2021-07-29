@@ -7,10 +7,6 @@ import com.example.octopus.dao.experiment.ChapterMapper;
 import com.example.octopus.dao.experiment.ModuleMapper;
 import com.example.octopus.dao.experiment.SubExperimentMapper;
 import com.example.octopus.dao.experiment.VideoMapper;
-import com.example.octopus.entity.experiment.Video;
-import com.example.octopus.entity.user.Major;
-import com.example.octopus.entity.user.Student;
-import com.example.octopus.entity.user.Teacher;
 import com.example.octopus.service.*;
 import com.example.octopus.utils.ShellUtils;
 import com.jcraft.jsch.JSchException;
@@ -19,12 +15,6 @@ import com.jcraft.jsch.SftpException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 
 @SpringBootTest
 class OctopusApplicationTests {
@@ -76,18 +66,6 @@ class OctopusApplicationTests {
 
 	@Test
 	void interfaceTest() {
-		System.out.println(subExperimentReportSubmitService.getReportSummaryByRole(1));
-	}
-
-
-	@Test
-	void dockerTest() throws JSchException, SftpException {
-		dockerService.createNewDocker(2);
-		ShellUtils shellUtils = new ShellUtils();
-
-		shellUtils.sshRemoteCallLogin();
-		shellUtils.execCommand("ls");
-		shellUtils.closeSession();
 
 	}
 

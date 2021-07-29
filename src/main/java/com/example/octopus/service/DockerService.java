@@ -1,9 +1,8 @@
 package com.example.octopus.service;
 
-import com.example.octopus.entity.Docker;
+import com.example.octopus.entity.user.Docker;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author: Hao
@@ -12,82 +11,66 @@ import java.util.Map;
  */
 
 public interface DockerService {
-	/**
-	 * 查库前必调，查看该学生是否有虚拟机
-	 *
-	 * @param stuNumber 学生号
-	 * @return 返回true则有，可以进行后续的查库操作；返回false则不能继续进行，否则查库会报错
-	 */
-	boolean existsStuNumDocker(long stuNumber);
-
-	/**
-	 * 通过学生号获取docker状态，包含sleeping、project、experiment三种情况及相对应的processingId
-	 *
-	 * @param stuNumber 学生号
-	 * @return String[0]为状态status，String[1]为processingId，注意需要转换为long型
-	 */
-	String[] getStatusByStuNum(long stuNumber);
-
-	/**
-	 * 通过学生号更新docker状态，包含sleeping、project、experiment三种情况
-	 *
-	 * @param stuNumber    学生号
-	 * @param statusCode   sleeping:0、project:1、experiment:2
-	 * @param processingId 正在进行的project或experiment的id；如为sleeping，则设置为0
-	 * @return 更新成功与否
-	 */
-	boolean updateStatusByStuNum(long stuNumber, int statusCode, long processingId);
 
 	/**
 	 * 根据角色获取全部或自己学生的docker信息
 	 */
-	List<Docker> getDockerListByRole(long teaNumber);
+	List<Docker> listDockerByRole(long teaNumber);
 
 
 	/**
-	 * 通过docker id获取docker信息
-	 *
-	 * @param id docker的id
-	 * @return 该docker信息
-	 */
-	Docker findDockerById(long id);
-
-	/**
-	 * 通过学生号检索docker信息
+	 * 通过学生号检索docker信息，可能为空！！！
 	 *
 	 * @param stuNumber 学生id
 	 * @return 该docker信息
 	 */
-	Docker findDockerByStuNumber(long stuNumber);
+	Docker getDockerByStuNumber(long stuNumber);
 
 
 	/**
-	 * 通过学生号获取docker的完整ip地址
+	 * 前台使用
+	 * 学生申请pod，为其分配一个，返回此pod地址；如无没有可用pod，则返回string提示要求等待
 	 *
 	 * @param stuNumber 学生号
-	 * @return 完整ip地址，如 http://172.18.146.123:6081/#/
+	 * @param statusCode   sleeping:0、project:1、experiment:2
+	 * @param processingId 正在进行的project或experiment的id；如为sleeping，则设置为0
+	 * @return 完整ip地址  如暂时没有，则返回null
 	 */
-	String getAddressByStuNumber(long stuNumber);
+	String getPodForStu(long stuNumber, int statusCode, long processingId);
+
+	/**
+	 * 前台使用
+	 * 学生离开页面后释放pod
+	 */
+	boolean resetPod(long stuNumber);
+
+	/**
+	 * 后台使用 仅限管理员
+	 * 检查pod是否有版本更新
+	 * @return 如有更新，则返回最新版本号（如v1）；如无则返回null
+	 */
+	String checkUpgrade();
+
+	/**
+	 * 后台使用 仅限管理员
+	 * 如通过上条方法检索到新版本，则对空闲pod进行释放与更新
+	 * @return
+	 */
+	boolean upgradePods(String latestVersion);
+
 
 
 	/**
-	 * 创建新的docker
-	 *
-	 * @param stuNumber 学生号
-	 * @return 成功则返回true
-	 */
-	boolean createNewDocker(long stuNumber);
-
-	/**
+	 * 后台使用
 	 * 通过教师身份查询运行中或睡眠中的docker
 	 *
 	 * @param teaNumber 教师号
-	 * @param awaken    true则查询运行中docker
-	 *                  false则查询睡眠中docker
+	 * @param awaken    true则查询运行中docker，false则查询睡眠中docker
 	 */
-	List<Docker> getDockerListByRoleAndAwake(long teaNumber, boolean awaken);
+	List<Docker> listDockerByRoleAndAwake(long teaNumber, boolean awaken);
 
 	/**
+	 * 后台使用
 	 * 教师管理员登录首页，实验机状态比例显示
 	 * @return sleeping:0、project:1、experiment:2
 	 */

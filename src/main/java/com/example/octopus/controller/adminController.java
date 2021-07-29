@@ -1,8 +1,6 @@
 package com.example.octopus.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.example.octopus.entity.VOs.SubExperimentOperateTimeVO;
-import com.example.octopus.entity.VOs.SubProjectDetailVO;
 import com.example.octopus.entity.dataset.Dataset;
 import com.example.octopus.entity.experiment.SubExperimentReportSubmit;
 import com.example.octopus.entity.experiment.Video;
@@ -190,8 +188,8 @@ public class adminController {
            // model.addAttribute("sizeof_schools", );
             model.addAttribute("sizeof_teachers", teacherService.getAllTeachers().size());
             model.addAttribute("sizeof_students", userService.listStudents().size());
-            model.addAttribute("sizeof_dockers", dockerService.getDockerListByRole(teaNum).size());
-            model.addAttribute("sizeof_active_dockers", dockerService.getDockerListByRoleAndAwake(teaNum, true).size());
+            model.addAttribute("sizeof_dockers", dockerService.listDockerByRole(teaNum).size());
+            model.addAttribute("sizeof_active_dockers", dockerService.listDockerByRoleAndAwake(teaNum, true).size());
             model.addAttribute("lastLoginTime", teacherService.getTeacherByTeaNumber(teaNum).getLastLoginTime());
             model.addAttribute("sumExperimentTime", teacherService.getSumExperimentTimeByRole(teaNum));
             model.addAttribute("sumVideoTime", teacherService.getSumVideoTimeByRole(teaNum));
@@ -1198,7 +1196,7 @@ public class adminController {
 
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         try {
-            model.addAttribute("dockers", dockerService.getDockerListByRole(teaNum));
+            model.addAttribute("dockers", dockerService.listDockerByRole(teaNum));
             return "admin_student_pc";
         }
         catch (Exception e){
