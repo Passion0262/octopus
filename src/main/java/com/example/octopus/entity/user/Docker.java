@@ -49,11 +49,6 @@ public class Docker {
 
     private long processingId;  //正在进行的项目或实验id
 
-
-    public void upgrade(String version){
-        this.version=version;
-    }
-
     public void generate(String ip){
         this.name="exp-machine-"+id;
         this.port=32003+id;

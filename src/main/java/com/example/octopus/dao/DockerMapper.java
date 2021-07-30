@@ -4,6 +4,7 @@ import com.example.octopus.entity.user.Docker;
 import com.example.octopus.entity.user.Student;
 import org.apache.ibatis.annotations.*;
 
+import java.sql.Timestamp;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +40,14 @@ public interface DockerMapper {
     List<String> getAllNames();
 
 
+    ///////////////////
+    @Select("SELECT * FROM docker WHERE available=true ORDER BY version DESC, create_time")
+    List<Docker> listAvailableDocker();
+
+    @Select("SELECT * FROM docker WHERE available=false AND TIMESTAMPDIFF(MINUTE, last_time, CURRENT_TIMESTAMP)>30")
+    List<Docker> listResetNeedingDocker();
+
+
     /////////////
     @Update("INSERT INTO docker (id, name, version, port, address) " +
             "VALUES (#{id}, #{name}, #{version}, #{port}, #{address})")
@@ -48,6 +57,9 @@ public interface DockerMapper {
             "       stu_name=(SELECT name FROM student WHERE stu_number=#{stuNumber}) " +
             "WHERE id=#{id}")
     boolean updateStatusByStuNum(Docker docker);
+
+    @Update("UPDATE docker SET last_time=CURRENT_TIMESTAMP WHERE stu_number=#{stuNumber}")
+    boolean updateLastTimeByStuNum(long stuNumber);
 
     /**
      * 此项用于检查当前数据库中的pod最新版本
@@ -121,10 +133,5 @@ public interface DockerMapper {
     @Select("SELECT d.* FROM docker d, student_course sc, course c " +
             "WHERE status='sleeping' and c.tea_number=#{teaNumber} and d.stu_number=sc.stu_number and sc.course_id=c.id")
     List<Docker> listSleepDockerByTeaID(long teaNumber);
-
-
-    ///////////////////
-    @Select("SELECT * FROM docker WHERE available=true ORDER BY version DESC, create_time")
-    List<Docker> listAvailableDocker();
 
 }

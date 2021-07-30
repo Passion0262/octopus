@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Locale;
 
@@ -19,8 +20,6 @@ import java.util.Locale;
 
 @Service
 public class DockerServiceImpl implements DockerService {
-
-	private static final int[] FORBIDDEN_PORTS = {8080, 3306};
 
 	private static final ShellUtils SHELL_UTILS = new ShellUtils();
 
@@ -47,128 +46,140 @@ public class DockerServiceImpl implements DockerService {
 
 	@Override
 	public String getPodForStu(long stuNumber, int statusCode, long processingId) {
-		List<Docker> available = dockerMapper.listAvailableDocker();
+//		List<Docker> available = dockerMapper.listAvailableDocker();
+//
+//		//当前没有可用虚拟机，需要稍后刷新
+//		if (available.isEmpty()){
+//			System.out.println("========================= no available pod, please wait a sec to refresh....===========================");
+//			return null;
+//		}
+//
+//		String dockerStatus = null;
+//		if (statusCode == 0) {
+//			dockerStatus = "sleeping";
+//			processingId = 0;
+//		} else if (statusCode == 1) dockerStatus = "project";
+//		else if (statusCode == 2) dockerStatus = "experiment";
+//		available.get(0).setProcessingId(processingId);
+//		available.get(0).setStuNumber(stuNumber);
+//		available.get(0).setStatus(dockerStatus);
+//
+//		dockerMapper.updateStatusByStuNum(available.get(0));
+//		return available.get(0).getAddress();
 
-		//当前没有可用虚拟机，需要稍后刷新
-		if (available.isEmpty()){
-			System.out.println("========================= no available pod, please wait a sec to refresh....===========================");
-			return null;
+		Docker docker = dockerMapper.getDockerByStuNum(stuNumber);
+		String address = null;
+
+		if (docker == null) {
+			// 该学生没有被分配pod，需要对其进行新的分配
+
+			checkTimeReset();  //在分配前，需要进行check
+
+			List<Docker> available = dockerMapper.listAvailableDocker();
+
+			// 当前没有可用pod，需要稍后刷新
+			if (available.isEmpty()) System.out.println(" no available pod, please wait a sec to refresh....");
+			// 为学生分配新的pod
+			else docker = available.get(0);
 		}
 
-		String dockerStatus = null;
-		if (statusCode == 0) {
-			dockerStatus = "sleeping";
-			processingId = 0;
-		} else if (statusCode == 1) dockerStatus = "project";
-		else if (statusCode == 2) dockerStatus = "experiment";
-		available.get(0).setProcessingId(processingId);
-		available.get(0).setStuNumber(stuNumber);
-		available.get(0).setStatus(dockerStatus);
+		if (docker != null) {
+			String dockerStatus = null;
+			if (statusCode == 0) {
+				dockerStatus = "sleeping";
+				processingId = 0;
+			} else if (statusCode == 1) dockerStatus = "project";
+			else if (statusCode == 2) dockerStatus = "experiment";
+			docker.setProcessingId(processingId);
+			docker.setStuNumber(stuNumber);
+			docker.setStatus(dockerStatus);
 
-		dockerMapper.updateStatusByStuNum(available.get(0));
-		return available.get(0).getAddress();
+			dockerMapper.updateStatusByStuNum(docker);
+			address = docker.getAddress();
+		}
+		return address;
 	}
 
 	@Override
 	@Transactional
-	public boolean resetPod(long stuNumber){
-		try{
+	public boolean resetPod(long stuNumber) {
+		try {
 			Docker docker = dockerMapper.getDockerByStuNum(stuNumber);
 			dockerMapper.deleteDocker(docker.getId());
 
 			//该docker版本需要更新
 			String latestVersionInDB = dockerMapper.checkDBLatestVersion();
 			System.out.println(latestVersionInDB);
-			if(!docker.getVersion().equals(latestVersionInDB))
-				docker.upgrade(latestVersionInDB);
+			if (!docker.getVersion().equals(latestVersionInDB))
+				docker.setVersion(latestVersionInDB);
 
 			docker.generate(SHELL_UTILS.getAddress());
 			SHELL_UTILS.resetPod(docker.getId(), docker.getPort(), docker.getVersion());
 			dockerMapper.createDocker(docker);
 			return true;
-		}catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
-	}
-
-	@Override
-	public String checkUpgrade(){
-		String dbLatestVersion = dockerMapper.checkDBLatestVersion().toLowerCase(Locale.ROOT);
-		String latestVersion = SHELL_UTILS.latestVersion().toLowerCase(Locale.ROOT);
-
-		if(latestVersion.equals(dbLatestVersion)){
-			System.out.print("using the latest version, no need to upgrade\n");
-			return null;
-		}
-		else return latestVersion;
 	}
 
 	@Override
 	@Transactional
-	public boolean upgradePods(String latestVersion){
-		try{
-			List<Docker> ds = dockerMapper.listDockerNeededUpgrade();
-			dockerMapper.batchDelete(ds);
-			SHELL_UTILS.upgradePods(ds, latestVersion);
-			dockerMapper.batchInsert(ds);
+	public boolean checkTimeReset() {
+		try {
+			List<Docker> dockers = dockerMapper.listResetNeedingDocker();  // 获取超时无操作的docker
+			dockerMapper.batchDelete(dockers);  // 从数据库中批量删除
+
+			// 检查是否需要更新
+			String latestVersionInDB = dockerMapper.checkDBLatestVersion();  // 获取数据库中最新版本docker
+			for (int i = 0; i < dockers.size(); ++i) {
+				if (!dockers.get(i).getVersion().equals(latestVersionInDB))
+					dockers.get(i).setVersion(latestVersionInDB);
+				dockers.get(i).generate(SHELL_UTILS.getAddress());
+			}
+
+			SHELL_UTILS.upgradePods(dockers, latestVersionInDB);
+			dockerMapper.batchInsert(dockers);
 			return true;
-		}catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
 
 	}
 
-//	@Override
-//	public boolean updateDockerStatusByStuNum(long stuNumber) {
-//		String status = null;
-//		if (statusCode == 0) {
-//			status = "sleeping";
-//			processingId = 0;
-//		} else if (statusCode == 1) status = "project";
-//		else if (statusCode == 2) status = "experiment";
-//		else return false;
-//		return dockerMapper.updateStatusByStuNum(stuNumber, status, processingId);
-//	}
+	@Override
+	public boolean updateLastTimeByStuNum(long stuNumber){
+		return dockerMapper.updateLastTimeByStuNum(stuNumber);
+	}
 
+	@Override
+	public String checkUpgrade() {
+		String dbLatestVersion = dockerMapper.checkDBLatestVersion().toLowerCase(Locale.ROOT);
+		String latestVersion = SHELL_UTILS.latestVersion().toLowerCase(Locale.ROOT);
 
-//	@Override
-//	public boolean createNewDocker(long stuNumber) {
-//
-//		if (existsStuNumDocker(stuNumber)) {
-//			System.out.println("该学生已有docker容器了，不需要再创建");
-//			return false;
-//		}
-//
-//		List<String> ports = dockerMapper.getAllPorts();  //获取所有端口
-//
-//		String stuName = userService.getStudentByStuNumber(stuNumber).getName();
-//		String dockerName = String.valueOf(stuNumber);
-//		int dockerPort = Integer.parseInt(Collections.max(ports)) + 1;
-//		for (int i = 0; i < FORBIDDEN_PORTS.length; i++) {
-//			if (dockerPort == FORBIDDEN_PORTS[i]) {
-//				dockerPort++;
-//				i--;
-//			}
-//		}
-//
-//		String dockerCommand = "docker run -idt -p " + dockerPort + "-e USER=test -e PASSWORD=123 --name "
-//				+ dockerName + "  centminmod/docker-ubuntu-vnc-desktop";
-//		SHELL_UTILS.sshRemoteCallLogin();
-//		SHELL_UTILS.executeCommand(dockerCommand);
-//		SHELL_UTILS.closeSession();
-//
-//
-//		String address = "http://172.18.146.123:" + String.valueOf(dockerPort) + "/#/";
-//		try {
-//			dockerMapper.createDocker(dockerName, dockerPort, stuNumber, stuName, address);
-//			return true;
-//		} catch (Exception e) {
-//			throw e;
-//		}
-//
-//	}
+		if (latestVersion.equals(dbLatestVersion)) {
+			System.out.print("using the latest version, no need to upgrade\n");
+			return null;
+		} else return latestVersion;
+	}
+
+	@Override
+	@Transactional
+	public boolean upgradePods(String latestVersion) {
+		try {
+			List<Docker> ds = dockerMapper.listDockerNeededUpgrade();
+			dockerMapper.batchDelete(ds);
+			SHELL_UTILS.upgradePods(ds, latestVersion);
+			for (int i = 0; i < ds.size(); ++i) ds.get(i).setVersion(latestVersion);
+			dockerMapper.batchInsert(ds);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 
 	@Override
 	public List<Docker> listDockerByRoleAndAwake(long teaNumber, boolean awaken) {
