@@ -982,12 +982,12 @@ public class studentController {
     }
 
 
-    @PostMapping(value = "/sleepmachine2")
-    @ResponseBody
-    public void sleepmachine2(HttpServletRequest request) {
-        logger.info("注销资源");
-        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
-        boolean a =dockerService.resetPod(stuNum);
-    }
+//    @PostMapping(value = "/sleepmachine2")
+//    @ResponseBody
+//    public void sleepmachine2(HttpServletRequest request) {
+//        logger.info("注销资源");
+//        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+//        boolean a =dockerService.resetPod(stuNum);
+//    }
 
 }
