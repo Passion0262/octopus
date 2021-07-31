@@ -49,11 +49,11 @@ public interface DockerMapper {
 
 
     /////////////
-    @Update("INSERT INTO docker (id, name, version, port, address) " +
-            "VALUES (#{id}, #{name}, #{version}, #{port}, #{address})")
+    @Update("INSERT INTO docker (id, name, version, port, address, create_time) " +
+            "VALUES (#{id}, #{name}, #{version}, #{port}, #{address}, CURRENT_TIMESTAMP)")
     boolean createDocker(Docker docker);
 
-    @Update("UPDATE docker SET create_time=#{createTime}, available=false, stu_number=#{stuNumber}, start_time=CURRENT_TIMESTAMP, status = #{status}, processing_id=#{processingId}, " +
+    @Update("UPDATE docker SET available=false, stu_number=#{stuNumber}, start_time=CURRENT_TIMESTAMP, last_time=CURRENT_TIMESTAMP, status = #{status}, processing_id=#{processingId}, " +
             "       stu_name=(SELECT name FROM student WHERE stu_number=#{stuNumber}) " +
             "WHERE id=#{id}")
     boolean updateStatusByStuNum(Docker docker);
@@ -85,9 +85,9 @@ public interface DockerMapper {
         public String batchInsert(Map map) {
             List<Docker> dockers = (List<Docker>) map.get("list");
             StringBuilder sb = new StringBuilder();
-            sb.append("INSERT INTO docker (id, name, version, port, address) VALUES ");
+            sb.append("INSERT INTO docker (id, name, version, port, address, create_time) VALUES ");
             MessageFormat mf = new MessageFormat(
-                    "(#'{'list[{0}].id},#'{'list[{0}].name},#'{'list[{0}].version},#'{'list[{0}].port},#'{'list[{0}].address})"
+                    "(#'{'list[{0}].id},#'{'list[{0}].name},#'{'list[{0}].version},#'{'list[{0}].port},#'{'list[{0}].address}, CURRENT_TIMESTAMP)"
             );
 
             for (int i = 0; i < dockers.size(); i++) {

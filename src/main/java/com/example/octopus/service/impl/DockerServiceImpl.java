@@ -68,10 +68,8 @@ public class DockerServiceImpl implements DockerService {
 
 		Docker docker = dockerMapper.getDockerByStuNum(stuNumber);
 		String address = null;
-
 		if (docker == null) {
 			// 该学生没有被分配pod，需要对其进行新的分配
-
 			checkTimeReset();  //在分配前，需要进行check
 
 			List<Docker> available = dockerMapper.listAvailableDocker();
@@ -93,12 +91,14 @@ public class DockerServiceImpl implements DockerService {
 			dockerMapper.updateStatusByStuNum(docker);
 			address = docker.getAddress();
 		}
+		System.out.println(address);
 		return address;
 	}
 
 	@Override
 	@Transactional
 	public boolean resetPod(long stuNumber) {
+		System.out.println("chongzhi");
 		try {
 			Docker docker = dockerMapper.getDockerByStuNum(stuNumber);
 			dockerMapper.deleteDocker(docker.getId());
@@ -120,29 +120,22 @@ public class DockerServiceImpl implements DockerService {
 
 	@Override
 	@Transactional
-	public boolean checkTimeReset() {
-		try {
-			List<Docker> dockers = dockerMapper.listResetNeedingDocker();  // 获取超时无操作的docker
-			if (!dockers.isEmpty()) {
-				dockerMapper.batchDelete(dockers);  // 从数据库中批量删除
+	public void checkTimeReset() {
+		List<Docker> dockers = dockerMapper.listResetNeedingDocker();  // 获取超时无操作的docker
+		if (!dockers.isEmpty()) {
+			dockerMapper.batchDelete(dockers);  // 从数据库中批量删除
 
-				// 检查是否需要更新
-				String latestVersionInDB = dockerMapper.checkDBLatestVersion();  // 获取数据库中最新版本docker
-				for (int i = 0; i < dockers.size(); ++i) {
-					if (!dockers.get(i).getVersion().equals(latestVersionInDB))
-						dockers.get(i).setVersion(latestVersionInDB);
-					dockers.get(i).generate(SHELL_UTILS.getAddress());
-				}
-
-				SHELL_UTILS.resetPods(dockers);
-				dockerMapper.batchInsert(dockers);
+			// 检查是否需要更新
+			String latestVersionInDB = dockerMapper.checkDBLatestVersion();  // 获取数据库中最新版本docker
+			for (int i = 0; i < dockers.size(); ++i) {
+				if (!dockers.get(i).getVersion().equals(latestVersionInDB))
+					dockers.get(i).setVersion(latestVersionInDB);
+				dockers.get(i).generate(SHELL_UTILS.getAddress());
 			}
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
 
+			SHELL_UTILS.resetPods(dockers);
+			dockerMapper.batchInsert(dockers);
+		}
 	}
 
 	@Override

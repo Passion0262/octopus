@@ -2,7 +2,6 @@ package com.example.octopus.service;
 
 import com.example.octopus.entity.user.Docker;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -49,7 +48,7 @@ public interface DockerService {
 	 * 前台使用
 	 * 通过当前时间与DB中的lastTime做差，对超过半小时则对此pod做reset，更新到数据库中的最新版本
 	 */
-	boolean checkTimeReset();
+	void checkTimeReset();
 
 	/**
 	 * 前台使用

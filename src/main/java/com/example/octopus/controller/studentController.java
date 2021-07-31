@@ -530,7 +530,7 @@ public class studentController {
         if (!cookieCheck(model, request)) return "redirect:/login";
         Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
 
-        logger.info("实验机id:"+id);
+        logger.info("实验id:"+id);
         Long sub_id = Long.parseLong(id);
 
         SubExperiment subExperiment = subExperimentService.getById(sub_id);
@@ -571,13 +571,13 @@ public class studentController {
 
 
         // 这里换成查看是否学生有虚拟机资源
+        dockerService.checkTimeReset();
         String docker_url = dockerService.getPodForStu(stuNum,2,sub_id);
 //        boolean a =dockerService.updateDockerStatusByStuNum(stuNum, 2, sub_id);
         model.addAttribute("docker_url", docker_url);
 
         model.addAttribute("expstarttime", new Date().getTime());
 //        boolean b = subExperimentProgressService.insert(stuNum,sub_id);
-
 
         return "experiment_machine";
 
