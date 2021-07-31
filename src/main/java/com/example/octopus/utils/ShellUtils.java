@@ -200,14 +200,27 @@ public class ShellUtils {
 
 
 	////////////////////////   pod  operations
+	// 只负责执行语句，不负责对参数对象操作
 
 	/**
-	 * 学生退出时，重置pod（删除+新建）
+	 * 重置pod（删除+新建）
 	 */
-	public void resetPod(int id, int port, String version) {
+	public void resetPod(Docker d) {
 		sshRemoteCallLogin();
-		executeCommand("./k8s-install/exp-machine-delete.sh -n exp-machine-" + id);
-		executeCommand("./k8s-install/exp-machine-create.sh -n exp-machine-" + id + " -v " + version + " -p " + port);
+		executeCommand("./k8s-install/exp-machine-delete.sh -n exp-machine-" + d.getId());
+		executeCommand("./k8s-install/exp-machine-create.sh -n exp-machine-" + d.getId() + " -v " + d.getVersion() + " -p " + d.getPort());
+		closeSession();
+	}
+
+	/**
+	 * 批量重置pod
+	 */
+	public void resetPods(List<Docker> ds) {
+		sshRemoteCallLogin();
+		for (int i = 0; i < ds.size(); ++i) {
+			executeCommand("./k8s-install/exp-machine-delete.sh -n exp-machine-" + ds.get(i).getId());
+			executeCommand("./k8s-install/exp-machine-create.sh -n exp-machine-" + ds.get(i).getId() + " -v " + ds.get(i).getVersion() + " -p " + ds.get(i).getPort());
+		}
 		closeSession();
 	}
 
@@ -220,18 +233,5 @@ public class ShellUtils {
 		return latestVersion;
 	}
 
-	/**
-	 * 批量更新pod到最新version
-	 */
-	public void upgradePods(List<Docker> ds, String version) {
-		int len = ds.size();
-		sshRemoteCallLogin();
-		for (int i = 0; i < len; ++i) {
-			ds.get(i).generate(address);
-			executeCommand("./k8s-install/exp-machine-delete.sh -n exp-machine-" + ds.get(i).getId());
-			executeCommand("./k8s-install/exp-machine-create.sh -n exp-machine-" + ds.get(i).getId() + " -v " + version + " -p " + ds.get(i).getPort());
-			ds.get(i).setVersion(version);
-		}
-		closeSession();
-	}
+
 }

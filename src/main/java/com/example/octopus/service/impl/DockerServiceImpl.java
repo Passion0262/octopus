@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Locale;
 
@@ -77,22 +76,19 @@ public class DockerServiceImpl implements DockerService {
 
 			List<Docker> available = dockerMapper.listAvailableDocker();
 
-			// 当前没有可用pod，需要稍后刷新
-			if (available.isEmpty()) System.out.println(" no available pod, please wait a sec to refresh....");
 			// 为学生分配新的pod
-			else docker = available.get(0);
+			if (!available.isEmpty()) docker = available.get(0);
+				// 当前没有可用pod，需要稍后刷新
+			else System.out.println(" no available pod, please wait a sec to refresh....");
 		}
 
 		if (docker != null) {
-			String dockerStatus = null;
-			if (statusCode == 0) {
-				dockerStatus = "sleeping";
-				processingId = 0;
-			} else if (statusCode == 1) dockerStatus = "project";
+			String dockerStatus = "sleeping";  // 默认状态为sleeping
+			if (statusCode == 0) processingId = 0;
+			else if (statusCode == 1) dockerStatus = "project";
 			else if (statusCode == 2) dockerStatus = "experiment";
-			docker.setProcessingId(processingId);
-			docker.setStuNumber(stuNumber);
-			docker.setStatus(dockerStatus);
+
+			docker.allocation(stuNumber, dockerStatus, processingId);
 
 			dockerMapper.updateStatusByStuNum(docker);
 			address = docker.getAddress();
@@ -109,12 +105,11 @@ public class DockerServiceImpl implements DockerService {
 
 			//该docker版本需要更新
 			String latestVersionInDB = dockerMapper.checkDBLatestVersion();
-			System.out.println(latestVersionInDB);
 			if (!docker.getVersion().equals(latestVersionInDB))
 				docker.setVersion(latestVersionInDB);
 
 			docker.generate(SHELL_UTILS.getAddress());
-			SHELL_UTILS.resetPod(docker.getId(), docker.getPort(), docker.getVersion());
+			SHELL_UTILS.resetPod(docker);
 			dockerMapper.createDocker(docker);
 			return true;
 		} catch (Exception e) {
@@ -128,18 +123,20 @@ public class DockerServiceImpl implements DockerService {
 	public boolean checkTimeReset() {
 		try {
 			List<Docker> dockers = dockerMapper.listResetNeedingDocker();  // 获取超时无操作的docker
-			dockerMapper.batchDelete(dockers);  // 从数据库中批量删除
+			if (!dockers.isEmpty()) {
+				dockerMapper.batchDelete(dockers);  // 从数据库中批量删除
 
-			// 检查是否需要更新
-			String latestVersionInDB = dockerMapper.checkDBLatestVersion();  // 获取数据库中最新版本docker
-			for (int i = 0; i < dockers.size(); ++i) {
-				if (!dockers.get(i).getVersion().equals(latestVersionInDB))
-					dockers.get(i).setVersion(latestVersionInDB);
-				dockers.get(i).generate(SHELL_UTILS.getAddress());
+				// 检查是否需要更新
+				String latestVersionInDB = dockerMapper.checkDBLatestVersion();  // 获取数据库中最新版本docker
+				for (int i = 0; i < dockers.size(); ++i) {
+					if (!dockers.get(i).getVersion().equals(latestVersionInDB))
+						dockers.get(i).setVersion(latestVersionInDB);
+					dockers.get(i).generate(SHELL_UTILS.getAddress());
+				}
+
+				SHELL_UTILS.resetPods(dockers);
+				dockerMapper.batchInsert(dockers);
 			}
-
-			SHELL_UTILS.upgradePods(dockers, latestVersionInDB);
-			dockerMapper.batchInsert(dockers);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -149,7 +146,7 @@ public class DockerServiceImpl implements DockerService {
 	}
 
 	@Override
-	public boolean updateLastTimeByStuNum(long stuNumber){
+	public boolean updateLastTimeByStuNum(long stuNumber) {
 		return dockerMapper.updateLastTimeByStuNum(stuNumber);
 	}
 
@@ -170,8 +167,8 @@ public class DockerServiceImpl implements DockerService {
 		try {
 			List<Docker> ds = dockerMapper.listDockerNeededUpgrade();
 			dockerMapper.batchDelete(ds);
-			SHELL_UTILS.upgradePods(ds, latestVersion);
 			for (int i = 0; i < ds.size(); ++i) ds.get(i).setVersion(latestVersion);
+			SHELL_UTILS.resetPods(ds);
 			dockerMapper.batchInsert(ds);
 			return true;
 		} catch (Exception e) {

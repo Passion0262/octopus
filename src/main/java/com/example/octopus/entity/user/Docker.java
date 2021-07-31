@@ -45,13 +45,27 @@ public class Docker {
 
     private Timestamp startTime;  //学生开始使用pod的时间
 
+    private Timestamp lastTime;  //学生活动时间（每x分钟进行检查与更新）
+
     private String status;  //学生正在此pod/docker进行状态（project，experiment，sleeping）
 
     private long processingId;  //正在进行的项目或实验id
 
+    /**
+     * 自动生成name、port、address
+     */
     public void generate(String ip){
         this.name="exp-machine-"+id;
         this.port=32003+id;
         this.address="http://"+ip+":"+port+"/vnc.html?password=123456";
+    }
+
+    /**
+     * 将此pod分配给某学生，填写stuNumber，status，processingId
+     */
+    public void allocation(long stuNumber, String status, long processingId){
+        this.stuNumber=stuNumber;
+        this.status=status;
+        this.processingId=processingId;
     }
 }
