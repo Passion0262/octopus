@@ -548,7 +548,7 @@ public class studentController {
         logger.info("subcontent:"+subcontent);
         model.addAttribute("subcontent", subcontent);
 
-        // 这里要调整
+
         Video video = videoService.getVideoBySubExperimentId(sub_id);
         if(video==null){
             model.addAttribute("isvideo", 0);
@@ -570,7 +570,8 @@ public class studentController {
         }
 
 
-        String docker_url = dockerService.getPodForStu(stuNum, 2, sub_id);
+        // 这里换成查看是否学生有虚拟机资源
+        String docker_url = dockerService.getPodForStu(stuNum,2,sub_id);
 //        boolean a =dockerService.updateDockerStatusByStuNum(stuNum, 2, sub_id);
         model.addAttribute("docker_url", docker_url);
 
@@ -776,6 +777,7 @@ public class studentController {
         model.addAttribute("project", project );
 
 //申请虚拟机资源
+
         String docker_url = dockerService.getPodForStu(stuNum, 1,sub_id);
         model.addAttribute("docker_url", docker_url);
         //实验学习记录
@@ -925,23 +927,49 @@ public class studentController {
 //        params.put("url", docker_url);
 //
 //        return JSONArray.toJSON(params).toString();
-//    }
+//    }`
+
+    @RequestMapping("/applymachine")
+    @ResponseBody
+    public JSONObject applymachine(HttpServletRequest request) {
+        logger.info("申请资源");
+        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+        String status = request.getParameter("status");
+        Long proceid = Long.parseLong(request.getParameter("proceid"));
+        int statusCode = 0;
+        if(status == "exper"){
+            statusCode = 2;
+        }else if(status == "project"){
+            statusCode = 1;
+        }
+
+        String docker_url = dockerService.getPodForStu(stuNum, statusCode, proceid );
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("docker_url",docker_url);
+        return jsonObject;
+    }
+
+    @RequestMapping("/update_vn_time")
+    @ResponseBody
+    public void update_vn_time(HttpServletRequest request) {
+        logger.info("更新虚拟机最近使用时间记录");
+        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+        dockerService.updateLastTimeByStuNum(stuNum);
+    }
+
 
     @PostMapping(value = "/sleepmachine")
     @ResponseBody
     public void sleepmachine(HttpServletRequest request) {
-        logger.info("注销资源");
+        logger.info("提交实验学习时间记录");
         Long experid = Long.parseLong(request.getParameter("experid"));
         Long stime = Long.parseLong(request.getParameter("start_time"));
         logger.info("stime"+stime);
         Timestamp start_time = new Timestamp(stime);
-
         Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
-        boolean a =dockerService.resetPod(stuNum);
-
         Long dd = new Date().getTime();
         Long interval = Math.round((double)(dd-stime)/1000);
-
         Timestamp end_time = new Timestamp(dd);
         SubExperimentProgress sp = new SubExperimentProgress();
         sp.setSubExperimentId(experid);
@@ -949,8 +977,17 @@ public class studentController {
         sp.setStuNumber(stuNum);
         sp.setEndTime(end_time);
         sp.setValidStudyTime(interval.intValue());
-
         boolean b = subExperimentProgressService.insert(sp);
+
+    }
+
+
+    @PostMapping(value = "/sleepmachine2")
+    @ResponseBody
+    public void sleepmachine2(HttpServletRequest request) {
+        logger.info("注销资源");
+        Long stuNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+        boolean a =dockerService.resetPod(stuNum);
     }
 
 }

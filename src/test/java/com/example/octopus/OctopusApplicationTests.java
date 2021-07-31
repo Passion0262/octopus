@@ -75,16 +75,16 @@ class OctopusApplicationTests {
 
 	@Test
 	void interfaceTest() {
-		Docker d = new Docker();
-		d.setId(2);
-		d.setVersion("v1");
-		d.generate(shellUtils.getAddress());
-		List<Docker> ds= new ArrayList<>();
-		ds.add(d);
-//		dockerMapper.createDocker(d);
-		shellUtils.resetPod(1, 32004, "v1");
-		shellUtils.resetPod(d.getId(), d.getPort(), d.getVersion());
-		shellUtils.upgradePods(ds, "v1");
+//		Docker d = new Docker();
+//		d.setId(2);
+//		d.setVersion("v1");
+//		d.generate(shellUtils.getAddress());
+//		List<Docker> ds= new ArrayList<>();
+//		ds.add(d);
+////		dockerMapper.createDocker(d);
+//		shellUtils.resetPod(1, 32004, "v1");
+//		shellUtils.resetPod(d.getId(), d.getPort(), d.getVersion());
+//		shellUtils.upgradePods(ds, "v1");
 	}
 
 }

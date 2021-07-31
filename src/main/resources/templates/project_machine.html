@@ -55,7 +55,7 @@
 
     <div class="row">
 
-      <div class="col-12" style="background-color: #272d3e;margin-left:  5px;margin-right: 5px;">
+      <div class="col-12" id="toptop" style="background-color: #033165; margin-left:5px;margin-right: 5px;height:65px;">
         <div class="page-title-box d-flex align-items-center justify-content-between" style="padding-bottom: 5px; padding-top: 5px;">
           <h2 class="mb-4" style="color: #E5E5E5;font-size: 25px;margin-top: 10px;"><span th:text="${project.name}"></span>:&nbsp;&nbsp;&nbsp;<span th:text="${subProject.subProjectName}"></span></h2>
           <div class="page-title-right">
@@ -122,8 +122,17 @@
         <!--                <div class="card"  >-->
         <!--                                    <p class="card-title-desc">实验机</p>-->
 
-        <div style="height: 100%;width: 100%;">
-          <iframe  th:src="${{docker_url}}" allowfullscreen="true" scrolling="no" frameborder="0" width="100%" height="100%"></iframe>
+        <div style="height: 100%;width: 100%;" id="machineframe">
+                                        <span th:if="${docker_url}==null">
+                                            <div style="margin-top:40%;margin-left: 15%;">
+                                            <span>虚拟机资源已满，请稍等一会重新申请</span>
+                                        <button type="button"  class="btn btn-light waves-effect" onclick="applymachine()">申请虚拟机</button>
+                                            </div>
+                                        </span>
+          <span th:if="${docker_url}!=null">
+                                        <iframe id = "dockerframe" th:src='${docker_url}' allowfullscreen='true' scrolling='yes' frameborder='0' width='100%' height='100%' style="display: block;"></iframe>
+                                        </span>
+
         </div>
 
         <!--                                    <div class="embed-responsive embed-responsive-16by9" >-->
@@ -166,26 +175,60 @@
 
 <script th:inline="javascript" type="text/javascript">
 
-  $(document).ready(function() {
-    $("#layout-wrapper").css("height", $(document).height());
-    $(".tab-pane").css("height", $("#top").height() - $("#card-ul").height());
+  function applymachine(){
+    $.ajax({
+      type: "POST",
+      url: "/applymachine",
+      data: {
+        status: "project",
+        proceid: [[${subProject.id}]],
+      },
+      success: function (data) {
+        console.log(data);
+        var docker_url = data.docker_url;
+        if(docker_url == null){
+          alert("虚拟机资源已满，请稍后再试");
+        }else{
+          var str = "<iframe id = 'dockerframe' src='"+docker_url+"' allowfullscreen='true' scrolling='yes' frameborder='0' width='100%' height='100%' style='display: block;'></iframe>";
+          document.getElementById("machineframe").innerHTML = ""+str+"";
+        }
+      },
+      error: function () {
+        alert("请稍后再试");
+      }
+    });
 
+  }
+
+  function update_vn_time(){
+    $.ajax({
+      type: "POST",
+      url: "/update_vn_time",
+    });
+  }
+
+  $(document).ready(function() {
+    $("#layout-wrapper").css("height",$(document).height());
+    $("#top").css("height",$("#layout-wrapper").height()-$("#toptop").height());
+    $(".tab-pane").css("height",$("#top").height()-$("#card-ul").height());
+
+    var t1 = window.setInterval(update_vn_time,60000);
 
     $.divResizer({
       select: '#top-spr',
     });
   });
 
-  window.onbeforeunload = function () {
-    $.ajax({
-      type: "POST",
-      url: "/sleepmachine",
-      success: function () {
-      },
-      error: function () {
-      }
-    });
-  };
+  // window.onbeforeunload = function () {
+  //   $.ajax({
+  //     type: "POST",
+  //     url: "/sleepmachine2",
+  //     success: function () {
+  //     },
+  //     error: function () {
+  //     }
+  //   });
+  // };
 
 
   function showpdf() {
