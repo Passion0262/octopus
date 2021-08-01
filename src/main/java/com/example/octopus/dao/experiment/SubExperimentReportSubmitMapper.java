@@ -24,8 +24,8 @@ public interface SubExperimentReportSubmitMapper{
      *  查询某子实验下所有学生的提交记录
      */
     @Select("SELECT sers.*,se.sub_experiment_name,s.name as stu_name,t.tea_name FROM sub_experiment_report_submit sers, sub_experiment se, student s, teacher t " +
-            "WHERE sers.sub_experiment_id = #{subExperimentId} AND sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND sers.tea_number = t.tea_number")
-    List<SubExperimentReportSubmit> listBySubExperimentId(long subExperimentId);
+            "WHERE sers.sub_experiment_id = #{subExpId} AND sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND sers.tea_number = t.tea_number")
+    List<SubExperimentReportSubmit> listBySubExperimentId(long subExpId);
 
     /**
      *  查询教师教的课的所有提交记录
@@ -38,8 +38,8 @@ public interface SubExperimentReportSubmitMapper{
      * 查询某学生在某子实验上提交的记录
      */
     @Select("SELECT sers.*,se.sub_experiment_name,s.name as stu_name,t.tea_name FROM sub_experiment_report_submit sers, sub_experiment se, student s, teacher t " +
-            "WHERE sers.sub_experiment_id = #{subExperimentId} AND sers.stu_number = #{stuNumber} AND sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND sers.tea_number = t.tea_number")
-    SubExperimentReportSubmit getByStuNumberAndSubExperimentId(long subExperimentId, long stuNumber);
+            "WHERE sers.sub_experiment_id = #{subExpId} AND sers.stu_number = #{stuNumber} AND sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND sers.tea_number = t.tea_number")
+    SubExperimentReportSubmit getByStuNumberAndSubExperimentId(long subExpId, long stuNumber);
 
     /**
      *  根据id查询
@@ -67,8 +67,8 @@ public interface SubExperimentReportSubmitMapper{
      *  这里其实不需要teaNumber，但为避免上层更多的改动就不管了
      */
     @Update("UPDATE sub_experiment_report_submit SET score=#{score}, examined=1, examined_time=CURRENT_TIMESTAMP " +
-            "WHERE sub_experiment_id=#{subExperimentId} AND stu_number=#{stuNumber}")
-    boolean updateByExamine(long subExperimentId, long stuNumber, long teaNumber, int score);
+            "WHERE sub_experiment_id=#{subExpId} AND stu_number=#{stuNumber}")
+    boolean updateByExamine(long subExpId, long stuNumber, long teaNumber, int score);
 
     /**
      *  删除subExperimentReportSave
@@ -108,6 +108,31 @@ public interface SubExperimentReportSubmitMapper{
             "GROUP BY sub_experiment_id")
     List<SubExperimentReportSummaryVO> listReportSummaryByTeaId2(long teaNumber);
 
-    //////////////////////////////////////////////
+
+    //////////////////////////////////////////////    实验报告成绩（下载）
+    //管理员
+    @Select("SELECT sers.*,se.sub_experiment_name,s.name as stu_name,t.tea_name " +
+            "FROM sub_experiment_report_submit sers, sub_experiment se, student s, teacher t " +
+            "WHERE sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND sers.tea_number = t.tea_number AND sers.sub_experiment_id=#{subExpId} " +
+            "ORDER BY sers.stu_number")
+    List<SubExperimentReportSubmit> listAllScoreBySubExpId(long SubExpId);
+
+    //教师
+    @Select("SELECT sers.*,se.sub_experiment_name,s.name as stu_name,t.tea_name " +
+            "FROM sub_experiment_report_submit sers, sub_experiment se, student s, teacher t " +
+            "WHERE sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND sers.tea_number = t.tea_number " +
+            "       AND sers.sub_experiment_id=#{subExpId} AND sers.tea_number=#{teaNumber} " +
+            "ORDER BY sers.stu_number")
+    List<SubExperimentReportSubmit> listScoreByTeaIdAndSubExpId(long teaNumber, long subExpId);
+
+
+    //////////////////////////////////////////////    实验报告分析，按子实验号获取分数
+    //管理员
+    @Select("SELECT score FROM sub_experiment_report_submit WHERE examined=true AND sub_experiment_id=#{subExpId}")
+    List<Integer> getAllScoreBySubExpId(long subExpId);
+
+    //教师
+    @Select("SELECT score FROM sub_experiment_report_submit WHERE examined=true AND tea_number=#{teaNumber} AND sub_experiment_id=#{subExpId}")
+    List<Integer> getScoreByTeaIdAndSubExpId(long teaNumber, long subExpId);
 
 }
