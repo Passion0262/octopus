@@ -124,14 +124,14 @@ public interface DockerMapper {
     List<Docker> listAllAwakeDocker();
 
     @Select("SELECT d.* FROM docker d, student_course sc, course c " +
-            "WHERE status not like 'sleeping' and c.tea_number=#{teaNumber} and d.stu_number=sc.stu_number and sc.course_id=c.id")
+            "WHERE d.status not like 'sleeping' and c.tea_number=#{teaNumber} and d.stu_number=sc.stu_number and sc.course_id=c.id")
     List<Docker> listAwakeDockerByTeaID(long teaNumber);
 
     @Select("SELECT * FROM docker WHERE status='sleeping'")
     List<Docker> listAllSleepDocker();
 
     @Select("SELECT d.* FROM docker d, student_course sc, course c " +
-            "WHERE status='sleeping' and c.tea_number=#{teaNumber} and d.stu_number=sc.stu_number and sc.course_id=c.id")
+            "WHERE d.status='sleeping' and c.tea_number=#{teaNumber} and d.stu_number=sc.stu_number and sc.course_id=c.id")
     List<Docker> listSleepDockerByTeaID(long teaNumber);
 
 }
