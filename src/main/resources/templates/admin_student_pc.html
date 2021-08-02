@@ -62,12 +62,12 @@
                                                     <th>编号</th>
                                                     <th>姓名</th>
                                                     <th>学号</th>
-                                                    <th>容器名称</th>
-                                                    <th>容器端口</th>
-                                                    <th>容器ID</th>
+                                                    <th>pod名称</th>
+                                                    <th>pod版本</th>
+                                                    <th>pod端口</th>
                                                     <th>访问地址</th>
                                                     <th>运行状态</th>
-                                                    <th>实验操作时长</th>
+<!--                                                    <th>实验操作时长</th>-->
                                                     <th>正在进行的实验/项目</th>
                                                 </tr>
                                             </thead>
@@ -76,16 +76,16 @@
                                                     <td th:text="${dockerStat.index+1}"></td>
                                                     <td th:text="${docker.stuName}"></td>
                                                     <td th:text="${docker.stuNumber}"></td>
-                                                    <td th:text="${docker.dockerName}"></td>
-                                                    <td th:text="${docker.dockerPort}"></td>
-                                                    <td th:text="${docker.dockerId}"></td>
-                                                    <td th:text="${docker.dockerAddress}"></td>
+                                                    <td th:text="${docker.name}"></td>
+                                                    <td th:text="${docker.version}"></td>
+                                                    <td th:text="${docker.port}"></td>
+                                                    <td th:text="${docker.address}"></td>
                                                     <td>
-                                                        <div th:if="${docker.dockerStatus eq 'project'}" class="badge badge-soft-success" style="font-size: 13px">项目实战</div>
-                                                        <div th:if="${docker.dockerStatus eq 'experiment'}"  class="badge badge-soft-info" style="font-size: 13px">课程实验</div>
-                                                        <div th:if="${docker.dockerStatus eq 'sleeping'}" class="badge badge-soft-danger" style="font-size: 13px">挂起/未使用</div>
+                                                        <div th:if="${docker.status eq 'project'}" class="badge badge-soft-success" style="font-size: 13px">项目实战</div>
+                                                        <div th:if="${docker.status eq 'experiment'}"  class="badge badge-soft-info" style="font-size: 13px">课程实验</div>
+                                                        <div th:if="${docker.status eq 'sleeping'}" class="badge badge-soft-danger" style="font-size: 13px">挂起/未使用</div>
                                                     </td>
-                                                    <td th:text="${docker.runningTime}"></td>
+<!--                                                    <td th:text="${docker.runningTime}"></td>-->
                                                     <td th:text="${docker.processingId}"></td>
                                                 </tr>
                                             </tbody>

@@ -111,10 +111,11 @@
                                                     <div style="display: table-cell;vertical-align: top; width: 500px;">
                                                         <span class="number badge badge-success" th:text="${dataStat.index+1}"></span>
                                                         <h5 class="title" th:text="${data.experimentName}+'--'+${data.subExperimentName}"></h5>
+<!--                                                        <span th:text="'授课教师: '+ " style="padding-left: 50px;line-height: 40px;"></span>-->
                                                     </div>
                                                     <div style="display: table-cell;vertical-align:middle">
                                                         <div class="text-center" style="display: inline-block;vertical-align:middle;">
-                                                            <a th:href="@{admin_report_list(sub_exp_id=${data.subExperimentId})}">
+                                                            <a th:href="@{admin_report_list(id=${data.subExperimentId})}">
                                                                 <i class="mdi mdi-monitor-eye" style="font-size: 30px;color: #5664d2"></i>
                                                                 <p>报告审阅</p>
                                                             </a>
@@ -124,8 +125,10 @@
                                                             <p>报告成绩</p>
                                                         </div>
                                                         <div class="text-center">
-                                                            <i class="ri-line-chart-line" style="font-size: 30px;color: #5664d2"></i>
-                                                            <p>报告分析</p>
+                                                            <a th:href="@{admin_report_analysis(id=${data.subExperimentId})}">
+                                                                <i class="ri-line-chart-line" style="font-size: 30px;color: #5664d2"></i>
+                                                                <p>报告分析</p>
+                                                            </a>
                                                         </div>
                                                     </div>
                                                     <div style="display: table-cell;vertical-align: middle; float: right;">

@@ -47,16 +47,18 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <form id="form" action="/add_course" method="post" th:object="${coursemodel.course}" novalidate="" style="padding-left: 20px;">
-
+<!--                                            <div class="form-group row">-->
+<!--                                                <label for="add_courseName" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>开课计划名称：</label>-->
+<!--                                                <div class="col-md-10">-->
+<!--                                                    <input name="courseName" th:value="*{courseName}"  class="form-control" id="add_courseName" type="text">-->
+<!--                                                </div>-->
+<!--                                            </div>-->
                                             <div class="form-group row">
-                                                <label for="add_courseName" th:if="${coursemodel.role=='admin'}" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>课程名称：</label>
-                                                <label for="select_courseName" th:if="${coursemodel.role=='teacher'}" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>课程名称：</label>
+                                                <label for="add_course_static" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>课程名称：</label>
                                                 <div class="col-md-10">
-                                                    <input name="courseName" th:value="*{courseName}" th:if="${coursemodel.role=='admin'}" class="form-control" type="text"  id="add_courseName">
-                                                    <select name="courseName" th:value="*{courseName}" th:if="${coursemodel.role=='teacher'}" class="form-control" id="select_courseName">
+                                                    <select name="courseStaticId" th:value="*{courseStaticId}" class="form-control" id="add_course_static">
                                                         <option value="0" style="display: none;">请选择课程</option>
                                                     </select>
-
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -65,21 +67,21 @@
                                                     <input name="teaNumber" th:value="*{teaNumber}"  class="form-control" id="add_teacher" type="text">
                                                 </div>
                                             </div>
-                                            <div class="form-group row">
-                                                <label for="add_description" class="col-md-2 col-form-label"><span style="color: #ff3d60;">&#8194;</span>课程简介：</label>
-                                                <div class="col-md-10">
-                                                    <input name="description" th:value="*{description}" id="add_description" class="form-control" type="text">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row" th:if="${coursemodel.role=='admin'}">
-                                                <label for="add_imagePath" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>课程图标：</label>
-                                                <div class="col-md-10">
-<!--                                                    <input name="" id="add_imagePath" value="" class="form-control btn" type="file" accept="image/png, image/jpeg, image/jpg" style="background-color: white; border: 1px solid #ced4da;">-->
-                                                    <input type="file" class="form-control custom-file-input" id="add_imagePath" onchange="setImgName()" accept="image/png, image/jpeg, image/jpg">
-                                                    <label id="for_imagePath" class="form-control custom-file-label" for="add_imagePath" style="width: 97%;margin-left: 10px;">选择文件</label>
-                                                    <input name="imagePath" id="imagePath" th:value="*{imagePath}" class="form-control btn" type="text" style="display: none">
-                                                </div>
-                                            </div>
+<!--                                            <div class="form-group row">-->
+<!--                                                <label for="add_description" class="col-md-2 col-form-label"><span style="color: #ff3d60;">&#8194;</span>课程简介：</label>-->
+<!--                                                <div class="col-md-10">-->
+<!--                                                    <input name="description" th:value="*{description}" id="add_description" class="form-control" type="text">-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <div class="form-group row" th:if="${coursemodel.role=='admin'}">-->
+<!--                                                <label for="add_imagePath" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>课程图标：</label>-->
+<!--                                                <div class="col-md-10">-->
+<!--&lt;!&ndash;                                                    <input name="" id="add_imagePath" value="" class="form-control btn" type="file" accept="image/png, image/jpeg, image/jpg" style="background-color: white; border: 1px solid #ced4da;">&ndash;&gt;-->
+<!--                                                    <input type="file" class="form-control custom-file-input" id="add_imagePath" onchange="setImgName()" accept="image/png, image/jpeg, image/jpg">-->
+<!--                                                    <label id="for_imagePath" class="form-control custom-file-label" for="add_imagePath" style="width: 97%;margin-left: 10px;">选择文件</label>-->
+<!--                                                    <input name="imagePath" id="imagePath" th:value="*{imagePath}" class="form-control btn" type="text" style="display: none">-->
+<!--                                                </div>-->
+<!--                                            </div>-->
                                             <div class="form-group row">
                                                 <label for="add_startTime" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>授课开始日期：</label>
                                                 <div class="col-md-10">
@@ -174,80 +176,70 @@
         
         <script type="text/javascript" th:inline="javascript">
 
-            var oCourseName;
-            if([[${coursemodel.role}]] === "admin"){
-                oCourseName = document.getElementById("add_courseName");
-            }
-            else{
-                oCourseName = document.getElementById("select_courseName");
-            }
+            // var oCourseName = document.getElementById("add_courseName");
+            var oCourseStatic = document.getElementById("add_course_static");
             var oTeaNumber = document.getElementById("add_teacher");
             var oStartTime = document.getElementById("add_startTime");
             var oEndTime = document.getElementById("add_endTime");
             var oApplyTime = document.getElementById("add_applyTime");
 
-            function setImgName(){
-                if (document.getElementById('add_imagePath').files.length !== 0){
-                    var name = document.getElementById('add_imagePath').files[0].name;
-                    document.getElementById("for_imagePath").innerText = name;
-                }
-            }
+            // function setImgName(){
+            //     if (document.getElementById('add_imagePath').files.length !== 0){
+            //         var name = document.getElementById('add_imagePath').files[0].name;
+            //         document.getElementById("for_imagePath").innerText = name;
+            //     }
+            // }
 
-            function uploadImg() {
-                var formData = new FormData();
-                if (document.getElementById('add_imagePath').files.length == 0){
-                    document.getElementById("alert").style.display="";
-                    document.getElementById("result_msg").innerHTML = "请上传课程图标！";
-                    return false;
-                }
-                formData.append('img', document.getElementById('add_imagePath').files[0]);
-                $.ajax({
-                    async: false,
-                    type: 'POST',
-                    url: "/upload_img",
-                    dataType: 'json',
-                    data: formData,
-                    contentType:false,//ajax上传图片需要添加
-                    processData:false,//ajax上传图片需要添加
-                    success: function (data) {
-                        if(data.hasOwnProperty("relativePath")){
-                            console.log("上传图像成功！");
-                            // console.log(data.relativePath);
-                            document.getElementById("imagePath").value = data.relativePath;
-                            return true;
-                        }
-                        else {
-                            document.getElementById("alert").style.display="";
-                            document.getElementById("result_msg").innerHTML = data.result_msg;
-                            console.log(data.result_msg);
-                            return false;
-                        }
-                    },
-                    error: function (e) {
-                        document.getElementById("alert").style.display="";
-                        document.getElementById("result_msg").innerHTML = "上传图像失败！";
-                        console.log(data.result_msg);
-                        return false;
-                    }
-                })
-            }
+            // function uploadImg() {
+            //     var formData = new FormData();
+            //     if (document.getElementById('add_imagePath').files.length == 0){
+            //         document.getElementById("alert").style.display="";
+            //         document.getElementById("result_msg").innerHTML = "请上传课程图标！";
+            //         return false;
+            //     }
+            //     formData.append('img', document.getElementById('add_imagePath').files[0]);
+            //     $.ajax({
+            //         async: false,
+            //         type: 'POST',
+            //         url: "/upload_img",
+            //         dataType: 'json',
+            //         data: formData,
+            //         contentType:false,//ajax上传图片需要添加
+            //         processData:false,//ajax上传图片需要添加
+            //         success: function (data) {
+            //             if(data.hasOwnProperty("relativePath")){
+            //                 console.log("上传图像成功！");
+            //                 // console.log(data.relativePath);
+            //                 document.getElementById("imagePath").value = data.relativePath;
+            //                 return true;
+            //             }
+            //             else {
+            //                 document.getElementById("alert").style.display="";
+            //                 document.getElementById("result_msg").innerHTML = data.result_msg;
+            //                 console.log(data.result_msg);
+            //                 return false;
+            //             }
+            //         },
+            //         error: function (e) {
+            //             document.getElementById("alert").style.display="";
+            //             document.getElementById("result_msg").innerHTML = "上传图像失败！";
+            //             console.log(data.result_msg);
+            //             return false;
+            //         }
+            //     })
+            // }
 
             function checkForm(){
-                if([[${coursemodel.role}]] === "admin"){
-                    if (!oCourseName.value){
-                        document.getElementById("alert").style.display="";
-                        document.getElementById("result_msg").innerHTML = "请填写课程名称！";
-                        return false;
-                    }
+                // if (!oCourseName.value){
+                //     document.getElementById("alert").style.display="";
+                //     document.getElementById("result_msg").innerHTML = "请填写课程名称！";
+                //     return false;
+                // }
+                if (oCourseStatic.value == "0"){
+                    document.getElementById("alert").style.display="";
+                    document.getElementById("result_msg").innerHTML = "请选择课程！";
+                    return false;
                 }
-                else{
-                    if (oCourseName.value === "0"){
-                        document.getElementById("alert").style.display="";
-                        document.getElementById("result_msg").innerHTML = "请选择课程！";
-                        return false;
-                    }
-                }
-
                 if (!oTeaNumber.value){
                     document.getElementById("alert").style.display="";
                     document.getElementById("result_msg").innerHTML = "请填写授课教师账号！";
@@ -271,11 +263,11 @@
                     document.getElementById("result_msg").innerHTML = "开通申请日期不能晚于授课结束日期！";
                     return false;
                 }
-                if([[${coursemodel.role}]] === "admin") {
-                    if (uploadImg() == false){
-                        return false;
-                    }
-                }
+                // if([[${coursemodel.role}]] === "admin") {
+                //     if (uploadImg() == false){
+                //         return false;
+                //     }
+                // }
                 console.log("check form finish");
                 return true;
             }
@@ -290,6 +282,10 @@
             }
 
             $(function() {
+
+                // 获取数据库已有的课程
+                getCourse();
+
                 if ([[${coursemodel.role=='teacher'}]]){
                     $("#add_teacher").attr("readonly",true);
                 }
@@ -303,11 +299,6 @@
                 oEndTime.value = today;
                 oApplyTime.value = today;
 
-                // 获取数据库已有的课程
-                if([[${coursemodel.role}]] === "teacher") {
-                    getCourse();
-                }
-
             })
 
             function getCourse(){
@@ -318,8 +309,8 @@
                         //console.log(data);
                         for(var i = 0;i < data.courses.length;i++){
                             var option = $("<option></option>").text(data.courses[i].courseName);
-                            option.attr("value", data.courses[i].id);
-                            $("#select_courseName").append(option);
+                            option.attr("value", data.courses[i].courseStaticId);
+                            $("#add_course_static").append(option);
                         }
                     }
                 })

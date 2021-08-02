@@ -46,50 +46,44 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <form id="form" action="/edit_course" method="post" th:object="${coursemodel.course}" novalidate="" style="pediting-left: 20px;">
-
                                             <div class="form-group row">
-                                                <label for="edit_id" class="col-md-2 col-form-label"><span style="color: #ff3d60;">&#8194;</span>课程编号：</label>
+                                                <label for="edit_id" class="col-md-2 col-form-label"><span style="color: #ff3d60;">&#8194;</span>开课计划编号：</label>
                                                 <div class="col-md-10">
                                                     <input name="id" th:value="*{id}" class="form-control" type="text"  id="edit_id" readonly style="border: none">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="edit_courseName" th:if="${coursemodel.role=='admin'}" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>课程名称：</label>
-                                                <label for="select_courseName" th:if="${coursemodel.role=='teacher'}" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>课程名称：</label>
+                                                <label for="edit_courseName" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>开课计划名称：</label>
                                                 <div class="col-md-10">
-                                                    <input name="courseName" th:value="*{courseName}" th:if="${coursemodel.role=='admin'}" class="form-control" type="text"  id="edit_courseName">
-                                                    <select name="courseName" th:value="*{courseName}" th:if="${coursemodel.role=='teacher'}" class="form-control" id="select_courseName">
-                                                        <option th:value="*{id}" th:text="*{courseName}" style="display: none;"></option>
-                                                    </select>
-
+                                                    <input name="courseName" th:value="*{courseName}"  class="form-control" id="edit_courseName" type="text" readonly style="border: none">
                                                 </div>
                                             </div>
 <!--                                            <div class="form-group row">-->
-<!--                                                <label for="edit_courseName" class="col-md-2 col-form-label">课程名称：</label>-->
+<!--                                                <label for="edit_courseStatic" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>课程名称：</label>-->
 <!--                                                <div class="col-md-10">-->
-<!--                                                    <input name="courseName" th:value="*{courseName}" class="form-control" type="text"  id="edit_courseName">-->
+<!--                                                    <input name="courseStaticId" th:value="*{courseStaticId}"  class="form-control" id="edit_courseStatic" type="text" readonly style="border: none">-->
 <!--                                                </div>-->
 <!--                                            </div>-->
                                             <div class="form-group row">
                                                 <label for="edit_teacher" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>授课老师账号：</label>
                                                 <div class="col-md-10">
-                                                    <input name="teaNumber" th:value="*{teaNumber}"  class="form-control" id="edit_teacher" type="text" readonly style="border: none;">
+                                                    <input name="teaNumber" th:value="*{teaNumber}"  class="form-control" id="edit_teacher" type="text" readonly style="border: none">
                                                 </div>
                                             </div>
-                                            <div class="form-group row">
-                                                <label for="edit_description" class="col-md-2 col-form-label"><span style="color: #ff3d60;">&#8194;</span>课程简介：</label>
-                                                <div class="col-md-10">
-                                                    <input name="description" th:value="*{description}" id="edit_description" class="form-control" type="text">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label for="edit_imagePath" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>课程图标：</label>
-                                                <div class="col-md-10">
-                                                    <input type="file" class="form-control custom-file-input" id="edit_imagePath" onchange="checkImg()" accept="image/png, image/jpeg, image/jpg">
-                                                    <label id="for_imagePath" class="form-control custom-file-label" th:text="*{imagePath}" for="edit_imagePath" style="width: 97%;margin-left: 10px;"></label>
-                                                    <input name="imagePath" id="imagePath" th:value="*{imagePath}" class="form-control btn btn-light" type="text" style="display: none">
-                                                </div>
-                                            </div>
+<!--                                            <div class="form-group row">-->
+<!--                                                <label for="edit_description" class="col-md-2 col-form-label"><span style="color: #ff3d60;">&#8194;</span>课程简介：</label>-->
+<!--                                                <div class="col-md-10">-->
+<!--                                                    <input name="description" th:value="*{description}" id="edit_description" class="form-control" type="text">-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <div class="form-group row">-->
+<!--                                                <label for="edit_imagePath" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>课程图标：</label>-->
+<!--                                                <div class="col-md-10">-->
+<!--                                                    <input type="file" class="form-control custom-file-input" id="edit_imagePath" onchange="checkImg()" accept="image/png, image/jpeg, image/jpg">-->
+<!--                                                    <label id="for_imagePath" class="form-control custom-file-label" th:text="*{imagePath}" for="edit_imagePath" style="width: 97%;margin-left: 10px;"></label>-->
+<!--                                                    <input name="imagePath" id="imagePath" th:value="*{imagePath}" class="form-control btn btn-light" type="text" style="display: none">-->
+<!--                                                </div>-->
+<!--                                            </div>-->
                                             <div class="form-group row">
                                                 <label for="edit_startTime" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>授课开始日期：</label>
                                                 <div class="col-md-10">
@@ -183,87 +177,68 @@
         
         <script type="text/javascript" th:inline="javascript">
 
-            var oCourseName;
-            if([[${coursemodel.role}]] === "admin"){
-                oCourseName = document.getElementById("edit_courseName");
-            }
-            else{
-                oCourseName = document.getElementById("select_courseName");
-            }
+            var oCourseName = document.getElementById("edit_courseName");
+            // var oCourseStatic = document.getElementById("edit_courseStatic");
             var oTeaNumber = document.getElementById("edit_teacher");
             var oStartTime = document.getElementById("edit_startTime");
             var oEndTime = document.getElementById("edit_endTime");
             var oApplyTime = document.getElementById("edit_applyTime");
 
 
-            var changeImg = false;
-            function checkImg(){
-                console.log("更换图片");
-                //检查是否更换图片
-                if(!changeImg){
-                  changeImg = true;
-                }
-                if (document.getElementById('edit_imagePath').files.length !== 0){
-                    var name = document.getElementById('edit_imagePath').files[0].name;
-                    document.getElementById("for_imagePath").innerText = name;
-                }
-
-            }
+            // var changeImg = false;
+            // function checkImg(){
+            //     console.log("更换图片");
+            //     //检查是否更换图片
+            //     if(!changeImg){
+            //       changeImg = true;
+            //     }
+            //     if (document.getElementById('edit_imagePath').files.length !== 0){
+            //         var name = document.getElementById('edit_imagePath').files[0].name;
+            //         document.getElementById("for_imagePath").innerText = name;
+            //     }
+            //
+            // }
     
-            function uploadImg() {
-                //console.log("changeImg="+changeImg);
-                if(changeImg){
-                    var formData = new FormData();
-                    formData.append('img', document.getElementById('edit_imagePath').files[0]);
-                    $.ajax({
-                        async: false,
-                        type: 'POST',
-                        url: "/upload_img",
-                        dataType: 'json',
-                        data: formData,
-                        contentType:false,//ajax上传图片需要添加
-                        processData:false,//ajax上传图片需要添加
-                        success: function (data) {
-                            if(data.hasOwnProperty("relativePath")){
-                                console.log(data.relativePath);
-                                document.getElementById("imagePath").value = data.relativePath;
-                                return true;
-                            }
-                            else {
-                                document.getElementById("alert").style.display="";
-                                document.getElementById("result_msg").innerHTML = data.result_msg;
-                                console.log(data.result_msg);
-                                return false;
-                            }
-                        },
-                        error: function (e) {
-                            document.getElementById("alert").style.display="";
-                            document.getElementById("result_msg").innerHTML = "上传图像失败！";
-                            console.log(data.result_msg);
-                            return false;
-                        }
-                    })
-                }
-                else{
-                    return true;
-                }
-            }
+            // function uploadImg() {
+            //     //console.log("changeImg="+changeImg);
+            //     if(changeImg){
+            //         var formData = new FormData();
+            //         formData.append('img', document.getElementById('edit_imagePath').files[0]);
+            //         $.ajax({
+            //             async: false,
+            //             type: 'POST',
+            //             url: "/upload_img",
+            //             dataType: 'json',
+            //             data: formData,
+            //             contentType:false,//ajax上传图片需要添加
+            //             processData:false,//ajax上传图片需要添加
+            //             success: function (data) {
+            //                 if(data.hasOwnProperty("relativePath")){
+            //                     console.log(data.relativePath);
+            //                     document.getElementById("imagePath").value = data.relativePath;
+            //                     return true;
+            //                 }
+            //                 else {
+            //                     document.getElementById("alert").style.display="";
+            //                     document.getElementById("result_msg").innerHTML = data.result_msg;
+            //                     console.log(data.result_msg);
+            //                     return false;
+            //                 }
+            //             },
+            //             error: function (e) {
+            //                 document.getElementById("alert").style.display="";
+            //                 document.getElementById("result_msg").innerHTML = "上传图像失败！";
+            //                 console.log(data.result_msg);
+            //                 return false;
+            //             }
+            //         })
+            //     }
+            //     else{
+            //         return true;
+            //     }
+            // }
     
             function checkForm(){
-                if([[${coursemodel.role}]] === "admin"){
-                    if (!oCourseName.value){
-                        document.getElementById("alert").style.display="";
-                        document.getElementById("result_msg").innerHTML = "请填写课程名称！";
-                        return false;
-                    }
-                }
-                else{
-                    if (oCourseName.value === "0"){
-                        document.getElementById("alert").style.display="";
-                        document.getElementById("result_msg").innerHTML = "请选择课程！";
-                        return false;
-                    }
-                }
                 if (oTeaNumber.value === "0"){
                     document.getElementById("alert").style.display="";
                     document.getElementById("result_msg").innerHTML = "请填写授课教师账号！";
@@ -287,11 +262,11 @@
                     document.getElementById("result_msg").innerHTML = "开通申请日期不能晚于授课结束日期！";
                     return false;
                 }
-                if (changeImg){
-                    if (uploadImg() === false){
-                        return false;
-                    }
-                }
+                // if (changeImg){
+                //     if (uploadImg() === false){
+                //         return false;
+                //     }
+                // }
                 console.log("check form finish");
                 return true;
             }
@@ -311,26 +286,26 @@
                 }
 
                 // 获取数据库已有的课程
-                if([[${coursemodel.role}]] === "teacher") {
-                    getCourse();
-                }
+                // if([[${coursemodel.role}]] === "teacher") {
+                //     getCourse();
+                // }
                 
             })
 
-            function getCourse(){
-                $.ajax({
-                    type:"GET",
-                    url:"get_course",
-                    success:function (data) {
-                        //console.log(data);
-                        for(var i = 0;i < data.courses.length;i++){
-                            var option = $("<option></option>").text(data.courses[i].courseName);
-                            option.attr("value", data.courses[i].id);
-                            $("#select_courseName").append(option);
-                        }
-                    }
-                })
-            }
+            // function getCourse(){
+            //     $.ajax({
+            //         type:"GET",
+            //         url:"get_course",
+            //         success:function (data) {
+            //             //console.log(data);
+            //             for(var i = 0;i < data.courses.length;i++){
+            //                 var option = $("<option></option>").text(data.courses[i].courseName);
+            //                 option.attr("value", data.courses[i].id);
+            //                 $("#select_courseName").append(option);
+            //             }
+            //         }
+            //     })
+            // }
         
     
     </script>
