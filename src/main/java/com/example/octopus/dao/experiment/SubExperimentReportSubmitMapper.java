@@ -16,28 +16,28 @@ public interface SubExperimentReportSubmitMapper{
     /**
      *  返回所有的提交记录
      */
-    @Select("SELECT sers.*,se.sub_experiment_name,s.name as stu_name,t.tea_name FROM sub_experiment_report_submit sers, sub_experiment se, student s, teacher t " +
+    @Select("SELECT sers.*, se.sub_experiment_name, s.name as stu_name, t.tea_name FROM sub_experiment_report_submit sers, sub_experiment se, student s, teacher t " +
             "WHERE sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND sers.tea_number = t.tea_number")
     List<SubExperimentReportSubmit> listAll();
 
     /**
      *  查询某子实验下所有学生的提交记录
      */
-    @Select("SELECT sers.*,se.sub_experiment_name,s.name as stu_name,t.tea_name FROM sub_experiment_report_submit sers, sub_experiment se, student s, teacher t " +
+    @Select("SELECT sers.*, se.sub_experiment_name, s.name as stu_name, t.tea_name FROM sub_experiment_report_submit sers, sub_experiment se, student s, teacher t " +
             "WHERE sers.sub_experiment_id = #{subExpId} AND sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND sers.tea_number = t.tea_number")
     List<SubExperimentReportSubmit> listBySubExperimentId(long subExpId);
 
     /**
      *  查询教师教的课的所有提交记录
      */
-    @Select("SELECT sers.*,se.sub_experiment_name,s.name as stu_name,t.tea_name FROM sub_experiment_report_submit sers, sub_experiment se, student s, teacher t " +
+    @Select("SELECT sers.*, se.sub_experiment_name, s.name as stu_name, t.tea_name FROM sub_experiment_report_submit sers, sub_experiment se, student s, teacher t " +
             "WHERE sers.tea_number = #{teaNumber} AND sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND sers.tea_number = t.tea_number")
     List<SubExperimentReportSubmit> listByTeaNumber(long teaNumber);
 
     /**
      * 查询某学生在某子实验上提交的记录
      */
-    @Select("SELECT sers.*,se.sub_experiment_name,s.name as stu_name,t.tea_name FROM sub_experiment_report_submit sers, sub_experiment se, student s, teacher t " +
+    @Select("SELECT sers.*, se.sub_experiment_name, s.name as stu_name, t.tea_name FROM sub_experiment_report_submit sers, sub_experiment se, student s, teacher t " +
             "WHERE sers.sub_experiment_id = #{subExpId} AND sers.stu_number = #{stuNumber} AND sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND sers.tea_number = t.tea_number")
     SubExperimentReportSubmit getByStuNumberAndSubExperimentId(long subExpId, long stuNumber);
 
