@@ -1045,10 +1045,28 @@ public class adminController {
 
         try {
             long id = Long.parseLong(request.getParameter("id"));
-            //todo 根据子实验id和教师账号显示report列表
             model.addAttribute("reports", subExperimentReportSubmitService.listReportScoreByRoleAndSubExpId(teaNum, id));
             model.addAttribute("sub_exp_name", subExperimentService.getById(id).getSubExperimentName());
+            model.addAttribute("experimentName", experimentService.getExperimentById(subExperimentService.getById(id).getExperimentId()).getName());
             return new ModelAndView("admin_report_list");
+        }
+        catch (Exception e){
+            return new ModelAndView("redirect:/admin_error");
+        }
+    }
+
+    // 实验报告成绩下载——某一实验
+    @GetMapping("/admin_report_score")
+    public ModelAndView admin_report_score(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+
+        try {
+            long id = Long.parseLong(request.getParameter("id"));
+            model.addAttribute("reports", subExperimentReportSubmitService.listReportScoreByRoleAndSubExpId(teaNum, id));
+            model.addAttribute("sub_exp_name", subExperimentService.getById(id).getSubExperimentName());
+            model.addAttribute("experimentName", experimentService.getExperimentById(subExperimentService.getById(id).getExperimentId()).getName());
+            return new ModelAndView("admin_report_score");
         }
         catch (Exception e){
             return new ModelAndView("redirect:/admin_error");
@@ -1067,6 +1085,7 @@ public class adminController {
             model.addAttribute("analysis", subExperimentReportSubmitService.getReportAnalysisByRoleAndSubExpId(teaNum, id));
 //            model.addAttribute("analysis", new int[]{4,1,2,55,10,1});
             model.addAttribute("sub_exp_name", subExperimentService.getById(id).getSubExperimentName());
+            model.addAttribute("experimentName", experimentService.getExperimentById(subExperimentService.getById(id).getExperimentId()).getName());
             return new ModelAndView("admin_report_analysis");
         }
         catch (Exception e){

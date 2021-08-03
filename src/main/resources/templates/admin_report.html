@@ -121,8 +121,10 @@
                                                             </a>
                                                         </div>
                                                         <div class="text-center" style="display: inline-block;vertical-align:middle">
-                                                            <i class="mdi mdi-file-download-outline" style="font-size: 30px;color: #5664d2"></i>
-                                                            <p>报告成绩</p>
+                                                            <a th:href="@{admin_report_score(id=${data.subExperimentId})}">
+                                                                <i class="mdi mdi-file-download-outline" style="font-size: 30px;color: #5664d2"></i>
+                                                                <p>报告成绩</p>
+                                                            </a>
                                                         </div>
                                                         <div class="text-center">
                                                             <a th:href="@{admin_report_analysis(id=${data.subExperimentId})}">
