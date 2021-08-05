@@ -1,9 +1,9 @@
 package com.example.octopus.dao.experiment;
 
 import com.example.octopus.entity.VOs.CourseTimeVO;
-import com.example.octopus.entity.VOs.VideoProgressDetailVO;
-import com.example.octopus.entity.VOs.VideoProgressHistoryVO;
-import com.example.octopus.entity.VOs.VideoTimeHistoryVO;
+import com.example.octopus.entity.VOs.video.VideoProgressDetailVO;
+import com.example.octopus.entity.VOs.video.VideoProgressHistoryVO;
+import com.example.octopus.entity.VOs.video.VideoTimeHistoryVO;
 import com.example.octopus.entity.experiment.VideoProgress;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;

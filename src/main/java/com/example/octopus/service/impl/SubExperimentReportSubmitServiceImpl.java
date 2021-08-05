@@ -2,8 +2,8 @@ package com.example.octopus.service.impl;
 
 import com.example.octopus.dao.SysUserRoleMapper;
 import com.example.octopus.dao.experiment.SubExperimentReportSubmitMapper;
-import com.example.octopus.entity.VOs.ReportAnalysisVO;
-import com.example.octopus.entity.VOs.SubExperimentReportSummaryVO;
+import com.example.octopus.entity.VOs.experiment.ReportAnalysisVO;
+import com.example.octopus.entity.VOs.experiment.SubExperimentReportSummaryVO;
 import com.example.octopus.entity.experiment.SubExperimentReportSubmit;
 import com.example.octopus.service.CourseService;
 import com.example.octopus.service.ExperimentService;
@@ -83,7 +83,7 @@ public class SubExperimentReportSubmitServiceImpl implements SubExperimentReport
 	}
 
 	@Override
-	public List<SubExperimentReportSummaryVO> getReportSummaryByRole(long teaNumber) {
+	public List<SubExperimentReportSummaryVO> listReportSummaryByRole(long teaNumber) {
 		long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
 		List<SubExperimentReportSummaryVO> result, tem;
 		if (role == 1) {
@@ -96,9 +96,8 @@ public class SubExperimentReportSubmitServiceImpl implements SubExperimentReport
 		}
 
 		// 对list这样使用for循环效率更高（虽然有限）
-		int lenResult = result.size(), lenTem = tem.size();
-		for (int i = 0; i < lenResult; ++i) {
-			for (int j = 0; j < lenTem; ++j)
+		for (int i = 0; i < result.size(); ++i) {
+			for (int j = 0; j < tem.size(); ++j)
 				if (tem.get(j).getSubExperimentId() == result.get(i).getSubExperimentId()) {
 					result.get(i).setExaminedNum(tem.get(j).getExaminedNum());
 					result.get(i).setUnexaminedNum(tem.get(j).getUnexaminedNum());
@@ -112,9 +111,37 @@ public class SubExperimentReportSubmitServiceImpl implements SubExperimentReport
 	}
 
 	@Override
+	public List<SubExperimentReportSummaryVO> listClassReportSummaryByRoleAndSubExpId(long teaNumber, long subExpId){
+		long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
+		List<SubExperimentReportSummaryVO> result, tem;
+		if (role == 1) {
+			//管理员获取全部
+			result = reportSubmitMapper.listClassReportSummaryBySubExpId1(subExpId);
+			tem = reportSubmitMapper.listClassReportSummaryBySubExpId2(subExpId);
+		} else {
+			result = reportSubmitMapper.listClassReportSummaryByTeaIdAndSubExpId1(teaNumber, subExpId);
+			tem = reportSubmitMapper.listClassReportSummaryByTeaIdAndSubExpId2(teaNumber, subExpId);
+		}
+
+		for (int i = 0; i < result.size(); ++i) {
+			for (int j = 0; j < tem.size(); ++j)
+				if (tem.get(j).getClassId() == result.get(i).getClassId()) {
+					result.get(i).setExaminedNum(tem.get(j).getExaminedNum());
+					result.get(i).setUnexaminedNum(tem.get(j).getUnexaminedNum());
+					int notSubmitNum = result.get(i).getNotSubmitNum() - tem.get(j).getExaminedNum() - tem.get(j).getUnexaminedNum();
+					result.get(i).setNotSubmitNum(notSubmitNum);
+					break;
+				}
+		}
+
+		return result;
+	}
+
+	//子实验中，按照班级统计各分数段人数
+	@Override
 	public List<ReportAnalysisVO> listReportAnalysisByRoleAndSubExpId(long teaNumber, long subExpId) {
 		long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
-		List<SubExperimentReportSubmit> classScores = (role == 1) ? reportSubmitMapper.listAllClassScoreBySubExpId(subExpId) : reportSubmitMapper.listClassScoreByTeaIdAndSubExpId(teaNumber, subExpId);
+		List<SubExperimentReportSubmit> classScores = (role == 1) ? reportSubmitMapper.listAllScoreBySubExpId(subExpId) : reportSubmitMapper.listScoreByTeaIdAndSubExpId(teaNumber, subExpId);
 		if(classScores.isEmpty()) return null;  //防止classScores为空报错
 
 		List<ReportAnalysisVO> reportAnalysis = new ArrayList<>();
@@ -149,6 +176,29 @@ public class SubExperimentReportSubmitServiceImpl implements SubExperimentReport
 		temReportAnalysis.setScores(temAnalysis);
 		reportAnalysis.add(temReportAnalysis);
 
+		return reportAnalysis;
+	}
+
+	@Override
+	public ReportAnalysisVO getReportAnalysisByRoleAndSubExpIdAndClassId(long teaNumber, long subExpId, long classId){
+		long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
+		List<SubExperimentReportSubmit> scores = (role==1)?reportSubmitMapper.listAllClassScoreBySubExpId(subExpId, classId):reportSubmitMapper.listClassScoreByTeaIdAndSubExpId(teaNumber, subExpId, classId);
+		if(scores.isEmpty()) return null;  //防止scores为空报错
+
+		ReportAnalysisVO reportAnalysis = new ReportAnalysisVO();
+		int[] temAnalysis = {0, 0, 0, 0, 0, 0};  //0-60，60-70，70-80，80-90，90-95，95-100
+		for(int i=0;i< scores.size();++i){
+			int s = scores.get(i).getScore();
+			if (s < 60) ++temAnalysis[0];
+			else if (s < 70) ++temAnalysis[1];
+			else if (s < 80) ++temAnalysis[2];
+			else if (s < 90) ++temAnalysis[3];
+			else if (s < 95) ++temAnalysis[4];
+			else ++temAnalysis[5];
+		}
+		reportAnalysis.setClassId(scores.get(0).getClassId());
+		reportAnalysis.setClassName(scores.get(0).getClassName());
+		reportAnalysis.setScores(temAnalysis);
 		return reportAnalysis;
 	}
 

@@ -1,4 +1,4 @@
-package com.example.octopus.entity.VOs;
+package com.example.octopus.entity.VOs.video;
 
 import lombok.Data;
 import org.bouncycastle.util.Times;

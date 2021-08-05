@@ -1029,7 +1029,7 @@ public class adminController {
 //        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
         //System.out.println(subExperimentReportSubmitService.listByTeaNumber(3));
         try {
-            model.addAttribute("reports", subExperimentReportSubmitService.getReportSummaryByRole(teaNum));
+            model.addAttribute("reports", subExperimentReportSubmitService.listReportSummaryByRole(teaNum));
             return "admin_report";
         }
         catch (Exception e){

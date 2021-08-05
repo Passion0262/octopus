@@ -1,4 +1,4 @@
-package com.example.octopus.entity.VOs;
+package com.example.octopus.entity.VOs.experiment;
 
 import lombok.Data;
 
@@ -13,6 +13,9 @@ public class SubExperimentReportSummaryVO {
 	private String experimentName;
 	private long subExperimentId;
 	private String subExperimentName;
+
+	private long classId;  //班级号
+	private String className;  //班级名
 
 	private int examinedNum;  //已批阅人数
 	private int unexaminedNum;  //未批阅人数

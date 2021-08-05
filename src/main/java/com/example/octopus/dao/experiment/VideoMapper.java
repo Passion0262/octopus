@@ -1,9 +1,8 @@
 package com.example.octopus.dao.experiment;
 
-import com.example.octopus.entity.VOs.VideoManageVO;
-import com.example.octopus.entity.VOs.VideoStudySummaryVO;
+import com.example.octopus.entity.VOs.video.VideoManageVO;
+import com.example.octopus.entity.VOs.video.VideoStudySummaryVO;
 import com.example.octopus.entity.experiment.Video;
-import lombok.Data;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

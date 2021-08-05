@@ -1,9 +1,8 @@
 package com.example.octopus.service;
 
-import com.example.octopus.entity.VOs.VideoManageVO;
-import com.example.octopus.entity.VOs.VideoStudySummaryVO;
+import com.example.octopus.entity.VOs.video.VideoManageVO;
+import com.example.octopus.entity.VOs.video.VideoStudySummaryVO;
 import com.example.octopus.entity.experiment.Video;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 

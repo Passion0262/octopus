@@ -1,4 +1,4 @@
-package com.example.octopus.entity.VOs;
+package com.example.octopus.entity.VOs.video;
 
 import com.example.octopus.entity.experiment.VideoProgress;
 import lombok.Data;

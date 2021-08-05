@@ -1,7 +1,7 @@
 package com.example.octopus.dao.experiment;
 
-import com.example.octopus.entity.VOs.ExperimentTimeHistoryVO;
-import com.example.octopus.entity.VOs.ExperimentTimeVO;
+import com.example.octopus.entity.VOs.experiment.ExperimentTimeHistoryVO;
+import com.example.octopus.entity.VOs.experiment.ExperimentTimeVO;
 import com.example.octopus.entity.experiment.Experiment;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
