@@ -166,7 +166,7 @@ public interface SubExperimentReportSubmitMapper{
 //            "WHERE sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND sers.tea_number = t.tea_number " +
 //            "       AND sers.sub_experiment_id=#{subExpId} AND s.class_id=c.id " +
 //            "ORDER BY s.class_id, sers.stu_number")
-//    List<SubExperimentReportSubmit> listAllScoreBySubExpId(long SubExpId);
+//    List<SubExperimentReportSubmit> listAllExaminedBySubExpId(long SubExpId);
 //
 //    //教师
 //    @Select("SELECT sers.*,se.sub_experiment_name,s.name as stu_name,s.class_id, c.class_name, t.tea_name " +
@@ -174,7 +174,7 @@ public interface SubExperimentReportSubmitMapper{
 //            "WHERE sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND sers.tea_number = t.tea_number " +
 //            "       AND sers.sub_experiment_id=#{subExpId} AND sers.tea_number=#{teaNumber} AND s.class_id=c.id " +
 //            "ORDER BY s.class_id, sers.stu_number")
-//    List<SubExperimentReportSubmit> listScoreByTeaIdAndSubExpId(long teaNumber, long subExpId);
+//    List<SubExperimentReportSubmit> listExaminedByTeaIdAndSubExpId(long teaNumber, long subExpId);
 
 
     //////////////////////////////////////////////    实验报告管理-->报告分析按钮，按子实验号获取分数
@@ -184,7 +184,7 @@ public interface SubExperimentReportSubmitMapper{
             "WHERE sers.sub_experiment_id = #{subExpId} AND sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number " +
             "       AND s.class_id=c.id AND sers.tea_number = t.tea_number AND examined=true " +
             "ORDER BY s.class_id, sers.stu_number")
-    List<SubExperimentReportSubmit> listAllScoreBySubExpId(long subExpId);
+    List<SubExperimentReportSubmit> listAllExaminedBySubExpId(long subExpId);
 
     //教师
     @Select("SELECT sers.*, se.sub_experiment_name, s.name as stu_name, s.class_id, c.class_name, t.tea_name " +
@@ -192,10 +192,10 @@ public interface SubExperimentReportSubmitMapper{
             "WHERE sers.sub_experiment_id = #{subExpId} AND sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number " +
             "       AND s.class_id=c.id AND sers.tea_number = t.tea_number AND examined=true AND sers.tea_number=#{teaNumber} " +
             "ORDER BY s.class_id, sers.stu_number")
-    List<SubExperimentReportSubmit> listScoreByTeaIdAndSubExpId(long teaNumber, long subExpId);
+    List<SubExperimentReportSubmit> listExaminedByTeaIdAndSubExpId(long teaNumber, long subExpId);
 
 
-    /////////////////////////////////////////////    实验报告管理-->报告审阅-->报告分析按钮，显示该实验下某个特定班级的分数
+    /////////////////////////////////////////////    实验报告管理-->报告审阅-->报告分析按钮(examined=true)  显示该实验下某个特定班级的分数
     //管理员
     @Select("SELECT sers.*, se.sub_experiment_name, s.name as stu_name, s.class_id, c.class_name, t.tea_name " +
             "FROM sub_experiment_report_submit sers, sub_experiment se, student s, class_ c, teacher t " +
@@ -203,14 +203,46 @@ public interface SubExperimentReportSubmitMapper{
             "       AND sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND s.class_id=c.id " +
             "       AND sers.tea_number = t.tea_number AND examined=true " +
             "ORDER BY sers.stu_number")
-    List<SubExperimentReportSubmit> listAllClassScoreBySubExpId(long subExpId, long classId);
+    List<SubExperimentReportSubmit> listAllExaminedBySubExpIdAndClassId(long subExpId, long classId);
 
     //教师
     @Select("SELECT sers.*, se.sub_experiment_name, s.name as stu_name, s.class_id, c.class_name, t.tea_name " +
             "FROM sub_experiment_report_submit sers, sub_experiment se, student s, class_ c, teacher t " +
             "WHERE sers.tea_number=#{teaNumber} AND sers.sub_experiment_id = #{subExpId} AND s.class_id=#{classId} " +
             "       AND sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND s.class_id=c.id " +
-            "       AND sers.tea_number = t.tea_number AND examined=true  " +
+            "       AND sers.tea_number = t.tea_number AND examined=true " +
             "ORDER BY sers.stu_number")
-    List<SubExperimentReportSubmit> listClassScoreByTeaIdAndSubExpId(long teaNumber, long subExpId, long classId);
+    List<SubExperimentReportSubmit> listExaminedByTeaIdAndSubExpIdAndClassId(long teaNumber, long subExpId, long classId);
+
+
+    //////////////////////////////////////////         实验报告管理-->报告审阅-->班级内学生报告列表(所有的，不管examined true和false)
+	//管理员
+	@Select("SELECT sers.*, se.sub_experiment_name, s.name as stu_name, s.class_id, c.class_name, t.tea_name " +
+			"FROM sub_experiment_report_submit sers, sub_experiment se, student s, class_ c, teacher t " +
+			"WHERE sers.sub_experiment_id = #{subExpId} AND s.class_id=#{classId} " +
+			"       AND sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND s.class_id=c.id " +
+			"       AND sers.tea_number = t.tea_number " +
+			"ORDER BY sers.stu_number")
+	List<SubExperimentReportSubmit> listAllBySubExpIdAndClassId(long subExpId, long classId);
+
+	//教师
+	@Select("SELECT sers.*, se.sub_experiment_name, s.name as stu_name, s.class_id, c.class_name, t.tea_name " +
+			"FROM sub_experiment_report_submit sers, sub_experiment se, student s, class_ c, teacher t " +
+			"WHERE sers.tea_number=#{teaNumber} AND sers.sub_experiment_id = #{subExpId} AND s.class_id=#{classId} " +
+			"       AND sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND s.class_id=c.id " +
+			"       AND sers.tea_number = t.tea_number " +
+			"ORDER BY sers.stu_number")
+	List<SubExperimentReportSubmit> listByTeaIdAndSubExpIdAndClassId(long teaNumber, long subExpId, long classId);
+
+
+    //////////////////////////////////////////     获取该子实验该班级的下一个学生的报告，只能批阅自己教授的学生的报告
+	@Select("SELECT rs.*, se.sub_experiment_name, s.name AS stu_name, s.class_id, c.class_name, t.tea_name " +
+			"FROM sub_experiment_report_submit rs, sub_experiment se, student s, class_ c, teacher t " +
+			"WHERE rs.id>#{reportId} AND rs.tea_number=#{teaNumber} AND rs.sub_experiment_id=#{subExpId} AND s.class_id=#{classId} " +
+			"		AND rs.examined=false " +
+			"ORDER BY rs.id LIMIT 1")
+	SubExperimentReportSubmit getNextReportByTeaIdAndSubExpIdAndClassId(long reportId, long teaNumber, long subExpId, long classId);
+
+
+
 }

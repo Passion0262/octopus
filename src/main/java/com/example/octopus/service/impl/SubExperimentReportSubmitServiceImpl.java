@@ -141,7 +141,7 @@ public class SubExperimentReportSubmitServiceImpl implements SubExperimentReport
 	@Override
 	public List<ReportAnalysisVO> listReportAnalysisByRoleAndSubExpId(long teaNumber, long subExpId) {
 		long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
-		List<SubExperimentReportSubmit> classScores = (role == 1) ? reportSubmitMapper.listAllScoreBySubExpId(subExpId) : reportSubmitMapper.listScoreByTeaIdAndSubExpId(teaNumber, subExpId);
+		List<SubExperimentReportSubmit> classScores = (role == 1) ? reportSubmitMapper.listAllExaminedBySubExpId(subExpId) : reportSubmitMapper.listExaminedByTeaIdAndSubExpId(teaNumber, subExpId);
 		if(classScores.isEmpty()) return null;  //防止classScores为空报错
 
 		List<ReportAnalysisVO> reportAnalysis = new ArrayList<>();
@@ -182,7 +182,7 @@ public class SubExperimentReportSubmitServiceImpl implements SubExperimentReport
 	@Override
 	public ReportAnalysisVO getReportAnalysisByRoleAndSubExpIdAndClassId(long teaNumber, long subExpId, long classId){
 		long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
-		List<SubExperimentReportSubmit> scores = (role==1)?reportSubmitMapper.listAllClassScoreBySubExpId(subExpId, classId):reportSubmitMapper.listClassScoreByTeaIdAndSubExpId(teaNumber, subExpId, classId);
+		List<SubExperimentReportSubmit> scores = (role==1)?reportSubmitMapper.listAllExaminedBySubExpIdAndClassId(subExpId, classId):reportSubmitMapper.listExaminedByTeaIdAndSubExpIdAndClassId(teaNumber, subExpId, classId);
 		if(scores.isEmpty()) return null;  //防止scores为空报错
 
 		ReportAnalysisVO reportAnalysis = new ReportAnalysisVO();
@@ -202,10 +202,20 @@ public class SubExperimentReportSubmitServiceImpl implements SubExperimentReport
 		return reportAnalysis;
 	}
 
-	@Override
-	public List<SubExperimentReportSubmit> listReportScoreByRoleAndSubExpId(long teaNumber, long subExpId) {
-		long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
-		return (role == 1) ? reportSubmitMapper.listAllScoreBySubExpId(subExpId) : reportSubmitMapper.listScoreByTeaIdAndSubExpId(teaNumber, subExpId);
+//	@Override
+//	public List<SubExperimentReportSubmit> listReportScoreByRoleAndSubExpId(long teaNumber, long subExpId) {
+//		long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
+//		return (role == 1) ? reportSubmitMapper.listAllExaminedBySubExpId(subExpId) : reportSubmitMapper.listExaminedByTeaIdAndSubExpId(teaNumber, subExpId);
+//	}
 
+	@Override
+	public List<SubExperimentReportSubmit> listClassReportByRoleAndSubExpIdAndClassId(long teaNumber, long subExpId, long classId){
+		long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
+		return (role==1)?reportSubmitMapper.listAllBySubExpIdAndClassId(subExpId, classId):reportSubmitMapper.listByTeaIdAndSubExpIdAndClassId(teaNumber, subExpId, classId);
+	}
+
+	@Override
+	public SubExperimentReportSubmit getNextReportByTeaIdAndSubExpIdAndClassId(long reportId, long teaNumber, long subExpId, long classId){
+		return reportSubmitMapper.getNextReportByTeaIdAndSubExpIdAndClassId(reportId, teaNumber, subExpId, classId);
 	}
 }

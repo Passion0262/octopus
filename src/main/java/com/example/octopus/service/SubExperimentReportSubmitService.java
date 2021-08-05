@@ -53,7 +53,7 @@ public interface SubExperimentReportSubmitService {
     boolean deleteById(long id);
 
     /**
-     * 实验报告管理：已批、未批、未交  通过身份获取
+     * 实验报告管理，已批、未批、未交  通过身份获取
      */
     List<SubExperimentReportSummaryVO> listReportSummaryByRole(long teaNumber);
 
@@ -74,12 +74,22 @@ public interface SubExperimentReportSubmitService {
      */
     ReportAnalysisVO getReportAnalysisByRoleAndSubExpIdAndClassId(long teaNumber, long subExpId, long classId);
 
-
-
+//    /**
+//     * 获取实验报告成绩（所有已提交的，不论是否经过审核）
+//     * 可删
+//     */
+//    List<SubExperimentReportSubmit> listReportScoreByRoleAndSubExpId(long teaNumber, long subExpId);
 
     /**
-     * 获取实验报告成绩（所有已提交的，不论是否经过审核
+     * 实验报告管理-->报告审阅-->班级内学生报告列表，获取报告的相关信息
+     * todo 需要注意管理员只能查看，只有对应的老师才能进行批改
      */
-    List<SubExperimentReportSubmit> listReportScoreByRoleAndSubExpId(long teaNumber, long subExpId);
+    List<SubExperimentReportSubmit> listClassReportByRoleAndSubExpIdAndClassId(long teaNumber, long subExpId, long classId);
+
+    /**
+     * 实验报告管理-->报告审阅-->班级内学生报告列表-->审阅学生报告，获取该子实验该班级的下一个学生的报告
+     * 注意这里的teaNumber是授课教师号，而非后台的登录账号，管理员无法批阅非自己教的学生
+     */
+    SubExperimentReportSubmit getNextReportByTeaIdAndSubExpIdAndClassId(long reportId, long teaNumber, long subExpId, long classId);
 
 }

@@ -1045,7 +1045,7 @@ public class adminController {
 
         try {
             long id = Long.parseLong(request.getParameter("id"));
-            model.addAttribute("reports", subExperimentReportSubmitService.listReportScoreByRoleAndSubExpId(teaNum, id));
+//            model.addAttribute("reports", subExperimentReportSubmitService.listReportScoreByRoleAndSubExpId(teaNum, id));
             model.addAttribute("sub_exp_name", subExperimentService.getById(id).getSubExperimentName());
             model.addAttribute("experimentName", experimentService.getExperimentById(subExperimentService.getById(id).getExperimentId()).getName());
             return new ModelAndView("admin_report_list");
@@ -1063,7 +1063,7 @@ public class adminController {
 
         try {
             long id = Long.parseLong(request.getParameter("id"));
-            model.addAttribute("reports", subExperimentReportSubmitService.listReportScoreByRoleAndSubExpId(teaNum, id));
+//            model.addAttribute("reports", subExperimentReportSubmitService.listReportScoreByRoleAndSubExpId(teaNum, id));
             model.addAttribute("sub_exp_name", subExperimentService.getById(id).getSubExperimentName());
             model.addAttribute("experimentName", experimentService.getExperimentById(subExperimentService.getById(id).getExperimentId()).getName());
             return new ModelAndView("admin_report_score");
