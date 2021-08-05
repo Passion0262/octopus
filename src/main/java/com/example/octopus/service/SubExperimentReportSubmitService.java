@@ -1,5 +1,6 @@
 package com.example.octopus.service;
 
+import com.example.octopus.entity.VOs.ReportAnalysisVO;
 import com.example.octopus.entity.VOs.SubExperimentReportSummaryVO;
 import com.example.octopus.entity.experiment.SubExperimentReportSubmit;
 
@@ -57,9 +58,9 @@ public interface SubExperimentReportSubmitService {
     List<SubExperimentReportSummaryVO> getReportSummaryByRole(long teaNumber);
 
     /**
-     * 获取报告分析，0-60，60-70，70-80，80-90，90-95，95-100
+     * 获取报告分析，按照班级，0-60，60-70，70-80，80-90，90-95，95-100
      */
-    int[] getReportAnalysisByRoleAndSubExpId(long teaNumber, long subExpId);
+    List<ReportAnalysisVO> listReportAnalysisByRoleAndSubExpId(long teaNumber, long subExpId);
 
     /**
      * 获取实验报告成绩（所有已提交的，不论是否经过审核

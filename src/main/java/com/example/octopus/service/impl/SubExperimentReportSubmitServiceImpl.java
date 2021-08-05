@@ -2,6 +2,7 @@ package com.example.octopus.service.impl;
 
 import com.example.octopus.dao.SysUserRoleMapper;
 import com.example.octopus.dao.experiment.SubExperimentReportSubmitMapper;
+import com.example.octopus.entity.VOs.ReportAnalysisVO;
 import com.example.octopus.entity.VOs.SubExperimentReportSummaryVO;
 import com.example.octopus.entity.experiment.SubExperimentReportSubmit;
 import com.example.octopus.service.CourseService;
@@ -11,6 +12,7 @@ import com.example.octopus.service.SubExperimentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -110,27 +112,50 @@ public class SubExperimentReportSubmitServiceImpl implements SubExperimentReport
 	}
 
 	@Override
-	public int[] getReportAnalysisByRoleAndSubExpId(long teaNumber, long subExpId) {
-		int[] analysis = {0, 0, 0, 0, 0, 0};  //0-60，60-70，70-80，80-90，90-95，95-100
-		List<Integer> scores;
+	public List<ReportAnalysisVO> listReportAnalysisByRoleAndSubExpId(long teaNumber, long subExpId) {
 		long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
-		scores = (role == 1) ? reportSubmitMapper.getAllScoreBySubExpId(subExpId) : reportSubmitMapper.getScoreByTeaIdAndSubExpId(teaNumber, subExpId);
-		for(int i=0;i<scores.size();++i){
-			int s = scores.get(i);
-			if (s<60) ++analysis[0];
-			else if (s<70) ++analysis[1];
-			else if(s<80) ++analysis[2];
-			else if (s<90)  ++analysis[3];
-			else if(s<95) ++analysis[4];
-			else ++analysis[5];
+		List<SubExperimentReportSubmit> classScores = (role == 1) ? reportSubmitMapper.listAllClassScoreBySubExpId(subExpId) : reportSubmitMapper.listClassScoreByTeaIdAndSubExpId(teaNumber, subExpId);
+		if(classScores.isEmpty()) return null;  //防止classScores为空报错
+
+		List<ReportAnalysisVO> reportAnalysis = new ArrayList<>();
+		ReportAnalysisVO temReportAnalysis = new ReportAnalysisVO();
+		int[] temAnalysis = {0, 0, 0, 0, 0, 0};  //0-60，60-70，70-80，80-90，90-95，95-100
+
+		temReportAnalysis.setClassId(classScores.get(0).getClassId());
+		temReportAnalysis.setClassName(classScores.get(0).getClassName());
+
+		//classScores已经按照classId排好序
+		for (int i = 0; i < classScores.size(); ++i) {
+			//如果是新班级，则将原本的temReportAnalysis添加到reportAnalysis中
+			if (i != 0 && classScores.get(i).getClassId() != temReportAnalysis.getClassId()) {
+				temReportAnalysis.setScores(temAnalysis);
+				reportAnalysis.add(temReportAnalysis);
+
+				temReportAnalysis = new ReportAnalysisVO();
+				temAnalysis = new int[]{0, 0, 0, 0, 0, 0};
+				temReportAnalysis.setClassId(classScores.get(i).getClassId());
+				temReportAnalysis.setClassName(classScores.get(i).getClassName());
+			}
+
+			//归并分数到相应分数段
+			int s = classScores.get(i).getScore();
+			if (s < 60) ++temAnalysis[0];
+			else if (s < 70) ++temAnalysis[1];
+			else if (s < 80) ++temAnalysis[2];
+			else if (s < 90) ++temAnalysis[3];
+			else if (s < 95) ++temAnalysis[4];
+			else ++temAnalysis[5];
 		}
-		return analysis;
+		temReportAnalysis.setScores(temAnalysis);
+		reportAnalysis.add(temReportAnalysis);
+
+		return reportAnalysis;
 	}
 
 	@Override
-	public List<SubExperimentReportSubmit> listReportScoreByRoleAndSubExpId(long teaNumber, long subExpId){
+	public List<SubExperimentReportSubmit> listReportScoreByRoleAndSubExpId(long teaNumber, long subExpId) {
 		long role = sysUserRoleMapper.getRoleByUserId(teaNumber);
-		return (role==1)?reportSubmitMapper.listAllScoreBySubExpId(subExpId):reportSubmitMapper.listScoreByTeaIdAndSubExpId(teaNumber, subExpId);
+		return (role == 1) ? reportSubmitMapper.listAllScoreBySubExpId(subExpId) : reportSubmitMapper.listScoreByTeaIdAndSubExpId(teaNumber, subExpId);
 
 	}
 }

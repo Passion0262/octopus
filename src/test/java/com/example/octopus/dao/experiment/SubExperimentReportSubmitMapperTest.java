@@ -45,11 +45,11 @@ class SubExperimentReportSubmitMapperTest {
         System.out.println(subExperimentReportSubmitMapper.getById(6));
     }
 
-    @Test
-    void insert() {
-        SubExperimentReportSubmit submit = new SubExperimentReportSubmit(2,1,"expName",5,"stuName","22",null,true,null,1,"teaName",1);
-        subExperimentReportSubmitMapper.insert(submit);
-    }
+//    @Test
+//    void insert() {
+//        SubExperimentReportSubmit submit = new SubExperimentReportSubmit(2,1,"expName",5,"stuName","22",null,true,null,1,"teaName",1);
+//        subExperimentReportSubmitMapper.insert(submit);
+//    }
 
     @Test
     void updateBySubmit() {

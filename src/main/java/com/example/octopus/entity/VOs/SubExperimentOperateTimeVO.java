@@ -4,9 +4,9 @@ import com.example.octopus.entity.experiment.SubExperimentProgress;
 import lombok.Data;
 
 /**
+ * 实验操作时长视图类
  * @author: Hao
  * @date: 2021/6/26 16:11
- * 实验操作时长视图类
  */
 @Data
 public class SubExperimentOperateTimeVO extends SubExperimentProgress {

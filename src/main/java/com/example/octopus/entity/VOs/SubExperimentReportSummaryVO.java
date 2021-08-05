@@ -3,9 +3,9 @@ package com.example.octopus.entity.VOs;
 import lombok.Data;
 
 /**
+ * 实验报告汇总视图类，与SubExperimentReportSubmit相关位置相同
  * @author: Hao
  * @date: 2021/7/22 19:01
- * 实验报告汇总视图类，与SubExperimentReportSubmit相关位置相同
  */
 @Data
 public class SubExperimentReportSummaryVO {

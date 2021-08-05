@@ -3,9 +3,9 @@ package com.example.octopus.entity.VOs;
 import lombok.Data;
 
 /**
+ * 子项目详情视图类，相关操作存放位置与SubProject相同
  * @author: Hao
  * @date: 2021/7/12 18:11
- * 子项目详情视图类，相关操作存放位置与SubProject相同
  */
 
 @Data

@@ -1081,8 +1081,8 @@ public class adminController {
 
         try {
             long id = Long.parseLong(request.getParameter("id"));
-//            logger.info("[{}]", subExperimentReportSubmitService.getReportAnalysisByRoleAndSubExpId(teaNum, id));
-            model.addAttribute("analysis", subExperimentReportSubmitService.getReportAnalysisByRoleAndSubExpId(teaNum, id));
+//            logger.info("[{}]", subExperimentReportSubmitService.listReportAnalysisByRoleAndSubExpId(teaNum, id));
+            model.addAttribute("analysis", subExperimentReportSubmitService.listReportAnalysisByRoleAndSubExpId(teaNum, id));
 //            model.addAttribute("analysis", new int[]{4,1,2,55,10,1});
             model.addAttribute("sub_exp_name", subExperimentService.getById(id).getSubExperimentName());
             model.addAttribute("experimentName", experimentService.getExperimentById(subExperimentService.getById(id).getExperimentId()).getName());

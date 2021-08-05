@@ -20,11 +20,15 @@ public class SubExperimentReportSubmit {
 
     private long subExperimentId;
 
-    private String subExperimentName;   //子实验名字，不在sub_experiment_report_submit表中
+    private String subExperimentName;   //不在sub_experiment_report_submit表中，子实验名字
 
     private long stuNumber;
 
-    private String stuName;     //学生名字，不在sub_experiment_report_submit表中
+    private String stuName;     //不在sub_experiment_report_submit表中，学生名字
+
+    private long classId;  //不在sub_experiment_report_submit表中，学生所在班级号
+
+    private String className;  //不在sub_experiment_report_submit表中，学生所在班级名
 
     private String content; // 报告内容
 
@@ -36,7 +40,7 @@ public class SubExperimentReportSubmit {
 
     private long teaNumber;  //审核教师，不需要手动输入，使用触发器自动查找填写
 
-    private String teaName;     //教师名字，不在sub_experiment_report_submit表中
+    private String teaName;     //不在sub_experiment_report_submit表中，教师名字
 
     private int score;  //报告得分
 

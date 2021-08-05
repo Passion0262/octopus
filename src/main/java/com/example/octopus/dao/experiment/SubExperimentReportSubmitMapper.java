@@ -1,5 +1,6 @@
 package com.example.octopus.dao.experiment;
 
+import com.example.octopus.entity.VOs.ReportAnalysisVO;
 import com.example.octopus.entity.VOs.SubExperimentReportSummaryVO;
 import com.example.octopus.entity.experiment.SubExperimentReportSubmit;
 import org.apache.ibatis.annotations.*;
@@ -16,36 +17,49 @@ public interface SubExperimentReportSubmitMapper{
     /**
      *  返回所有的提交记录
      */
-    @Select("SELECT sers.*, se.sub_experiment_name, s.name as stu_name, t.tea_name FROM sub_experiment_report_submit sers, sub_experiment se, student s, teacher t " +
-            "WHERE sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND sers.tea_number = t.tea_number")
+    @Select("SELECT sers.*, se.sub_experiment_name, s.name as stu_name, s.class_id, c.class_name, t.tea_name " +
+            "FROM sub_experiment_report_submit sers, sub_experiment se, student s, class_ c, teacher t " +
+            "WHERE sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND s.class_id=c.id " +
+            "       AND sers.tea_number = t.tea_number " +
+            "ORDER BY sers.sub_experiment_id, s.class_id")
     List<SubExperimentReportSubmit> listAll();
 
     /**
      *  查询某子实验下所有学生的提交记录
      */
-    @Select("SELECT sers.*, se.sub_experiment_name, s.name as stu_name, t.tea_name FROM sub_experiment_report_submit sers, sub_experiment se, student s, teacher t " +
-            "WHERE sers.sub_experiment_id = #{subExpId} AND sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND sers.tea_number = t.tea_number")
+    @Select("SELECT sers.*, se.sub_experiment_name, s.name as stu_name, s.class_id, c.class_name, t.tea_name " +
+            "FROM sub_experiment_report_submit sers, sub_experiment se, student s, class_ c, teacher t " +
+            "WHERE sers.sub_experiment_id = #{subExpId} AND sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number " +
+            "       AND s.class_id=c.id AND sers.tea_number = t.tea_number " +
+            "ORDER BY s.class_id")
     List<SubExperimentReportSubmit> listBySubExperimentId(long subExpId);
 
     /**
      *  查询教师教的课的所有提交记录
      */
-    @Select("SELECT sers.*, se.sub_experiment_name, s.name as stu_name, t.tea_name FROM sub_experiment_report_submit sers, sub_experiment se, student s, teacher t " +
-            "WHERE sers.tea_number = #{teaNumber} AND sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND sers.tea_number = t.tea_number")
+    @Select("SELECT sers.*, se.sub_experiment_name, s.name as stu_name, s.class_id, c.class_name, t.tea_name " +
+            "FROM sub_experiment_report_submit sers, sub_experiment se, student s, class_ c, teacher t " +
+            "WHERE sers.tea_number = #{teaNumber} AND sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number " +
+            "       AND s.class_id=c.id AND sers.tea_number = t.tea_number " +
+            "ORDER BY sers.sub_experiment_id, s.class_id")
     List<SubExperimentReportSubmit> listByTeaNumber(long teaNumber);
 
     /**
      * 查询某学生在某子实验上提交的记录
      */
-    @Select("SELECT sers.*, se.sub_experiment_name, s.name as stu_name, t.tea_name FROM sub_experiment_report_submit sers, sub_experiment se, student s, teacher t " +
-            "WHERE sers.sub_experiment_id = #{subExpId} AND sers.stu_number = #{stuNumber} AND sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND sers.tea_number = t.tea_number")
+    @Select("SELECT sers.*, se.sub_experiment_name, s.name as stu_name, s.class_id, c.class_name, t.tea_name " +
+            "FROM sub_experiment_report_submit sers, sub_experiment se, student s, class_ c, teacher t " +
+            "WHERE sers.sub_experiment_id = #{subExpId} AND sers.stu_number = #{stuNumber} AND sers.sub_experiment_id = se.id " +
+            "       AND sers.stu_number = s.stu_number AND s.class_id=c.id AND sers.tea_number = t.tea_number")
     SubExperimentReportSubmit getByStuNumberAndSubExperimentId(long subExpId, long stuNumber);
 
     /**
      *  根据id查询
      */
-    @Select("SELECT sers.*,se.sub_experiment_name,s.name as stu_name,t.tea_name FROM sub_experiment_report_submit sers, sub_experiment se, student s, teacher t " +
-            "WHERE sers.id = #{id} AND sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND sers.tea_number = t.tea_number")
+    @Select("SELECT sers.*, se.sub_experiment_name, s.name as stu_name, s.class_id, c.class_name, t.tea_name " +
+            "FROM sub_experiment_report_submit sers, sub_experiment se, student s, class_ c, teacher t " +
+            "WHERE sers.id = #{id} AND sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND s.class_id=c.id " +
+            "       AND sers.tea_number = t.tea_number")
     SubExperimentReportSubmit getById(long id);
 
     /**
@@ -111,28 +125,37 @@ public interface SubExperimentReportSubmitMapper{
 
     //////////////////////////////////////////////    实验报告成绩（下载）
     //管理员
-    @Select("SELECT sers.*,se.sub_experiment_name,s.name as stu_name,t.tea_name " +
-            "FROM sub_experiment_report_submit sers, sub_experiment se, student s, teacher t " +
-            "WHERE sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND sers.tea_number = t.tea_number AND sers.sub_experiment_id=#{subExpId} " +
-            "ORDER BY sers.stu_number")
+    @Select("SELECT sers.*,se.sub_experiment_name,s.name as stu_name, s.class_id, c.class_name, t.tea_name " +
+            "FROM sub_experiment_report_submit sers, sub_experiment se, student s, class_ c, teacher t " +
+            "WHERE sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND sers.tea_number = t.tea_number " +
+            "       AND sers.sub_experiment_id=#{subExpId} AND s.class_id=c.id " +
+            "ORDER BY s.class_id, sers.stu_number")
     List<SubExperimentReportSubmit> listAllScoreBySubExpId(long SubExpId);
 
     //教师
-    @Select("SELECT sers.*,se.sub_experiment_name,s.name as stu_name,t.tea_name " +
-            "FROM sub_experiment_report_submit sers, sub_experiment se, student s, teacher t " +
+    @Select("SELECT sers.*,se.sub_experiment_name,s.name as stu_name,s.class_id, c.class_name, t.tea_name " +
+            "FROM sub_experiment_report_submit sers, sub_experiment se, student s, class_ c, teacher t " +
             "WHERE sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number AND sers.tea_number = t.tea_number " +
-            "       AND sers.sub_experiment_id=#{subExpId} AND sers.tea_number=#{teaNumber} " +
-            "ORDER BY sers.stu_number")
+            "       AND sers.sub_experiment_id=#{subExpId} AND sers.tea_number=#{teaNumber} AND s.class_id=c.id " +
+            "ORDER BY s.class_id, sers.stu_number")
     List<SubExperimentReportSubmit> listScoreByTeaIdAndSubExpId(long teaNumber, long subExpId);
 
 
     //////////////////////////////////////////////    实验报告分析，按子实验号获取分数
     //管理员
-    @Select("SELECT score FROM sub_experiment_report_submit WHERE examined=true AND sub_experiment_id=#{subExpId}")
-    List<Integer> getAllScoreBySubExpId(long subExpId);
+    @Select("SELECT sers.*, se.sub_experiment_name, s.name as stu_name, s.class_id, c.class_name, t.tea_name " +
+            "FROM sub_experiment_report_submit sers, sub_experiment se, student s, class_ c, teacher t " +
+            "WHERE sers.sub_experiment_id = #{subExpId} AND sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number " +
+            "       AND s.class_id=c.id AND sers.tea_number = t.tea_number AND examined=true " +
+            "ORDER BY s.class_id")
+    List<SubExperimentReportSubmit> listAllClassScoreBySubExpId(long subExpId);
 
     //教师
-    @Select("SELECT score FROM sub_experiment_report_submit WHERE examined=true AND tea_number=#{teaNumber} AND sub_experiment_id=#{subExpId}")
-    List<Integer> getScoreByTeaIdAndSubExpId(long teaNumber, long subExpId);
+    @Select("SELECT sers.*, se.sub_experiment_name, s.name as stu_name, s.class_id, c.class_name, t.tea_name " +
+            "FROM sub_experiment_report_submit sers, sub_experiment se, student s, class_ c, teacher t " +
+            "WHERE sers.sub_experiment_id = #{subExpId} AND sers.sub_experiment_id = se.id AND sers.stu_number = s.stu_number " +
+            "       AND s.class_id=c.id AND sers.tea_number = t.tea_number AND examined=true AND sers.tea_number=#{teaNumber} " +
+            "ORDER BY s.class_id")
+    List<SubExperimentReportSubmit> listClassScoreByTeaIdAndSubExpId(long teaNumber, long subExpId);
 
 }

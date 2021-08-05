@@ -4,10 +4,9 @@ import com.example.octopus.entity.experiment.VideoProgress;
 import lombok.Data;
 
 /**
+ * 视频学习历史记录视图类，相关操作在videoProcess的service、impl、mapper中
  * @author: Hao
  * @date: 2021/6/26 11:32
- * 视频学习历史记录视图类
- * 相关操作在videoProcess的service、impl、mapper中
  */
 
 @Data

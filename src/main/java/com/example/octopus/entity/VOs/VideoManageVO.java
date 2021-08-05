@@ -6,9 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
+ * 视频课程管理视图类，相关操作存放位置与Video相同
  * @author: Hao
  * @date: 2021/7/4 20:34
- * 视频课程管理视图类，相关操作存放位置与Video相同
  */
 @Data
 @AllArgsConstructor

@@ -6,10 +6,9 @@ import org.bouncycastle.util.Times;
 import java.sql.Timestamp;
 
 /**
+ * 视频学习详情视图类，相关操作在videoProcess的service、impl、mapper中
  * @author: Hao
  * @date: 2021/7/5 18:54
- * 视频学习详情视图类
- * 相关操作在videoProcess的service、impl、mapper中
  */
 @Data
 public class VideoProgressDetailVO {

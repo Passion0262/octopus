@@ -7,10 +7,9 @@ import java.sql.Time;
 import java.sql.Timestamp;
 
 /**
+ * 视频学习汇总视图类，相关操作在video的service、impl、mapper中
  * @author: Hao
  * @date: 2021/7/5 17:49
- * 视频学习汇总视图类
- * 相关操作在video的service、impl、mapper中
  */
 @Data
 public class VideoStudySummaryVO {
