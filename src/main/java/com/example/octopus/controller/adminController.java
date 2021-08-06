@@ -177,20 +177,20 @@ public class adminController {
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
-//        try {
-        model.addAttribute("sizeof_experiments", experimentService.listExperiments().size());
-        model.addAttribute("sizeof_projects", experimentService.listExperiments().size());
+        try {
+        model.addAttribute("sizeof_experiments", subExperimentService.listSubExperimentByRole(teaNum).size());
+        model.addAttribute("sizeof_projects", projectService.listProjects().size());
         model.addAttribute("sizeof_datasets", datasetService.listDatasets().size());
         model.addAttribute("sizeof_courses_static", courseStaticService.listAllCourseStatic().size());
         if (role_id == 1){
             model.addAttribute("sizeof_courses", courseService.listCourses().size());
+            model.addAttribute("sizeof_students", userService.listStudents().size());
         }
         else{
             model.addAttribute("sizeof_courses", courseService.listCoursesByTeaNumber(teaNum).size());
+            model.addAttribute("sizeof_students", userService.listStudentsByTeaNumber(teaNum));
         }
-
         model.addAttribute("sizeof_videos", videoService.listVideos().size());
-        // model.addAttribute("sizeof_schools", );
         model.addAttribute("sizeof_teachers", teacherService.getAllTeachers().size());
         model.addAttribute("sizeof_students", userService.listStudents().size());
         model.addAttribute("sizeof_dockers", dockerService.listDockerByRole(teaNum).size());
@@ -202,9 +202,9 @@ public class adminController {
 //            logger.info("实验时间：{}", teacherService.getSumExperimentTimeByRole(teaNum));
 //            logger.info("视频时间：{}", teacherService.getSumVideoTimeByRole(teaNum));
         return "admin_index";
-//        } catch (Exception e) {
-//            return "redirect:/admin_error";
-//        }
+        } catch (Exception e) {
+            return "redirect:/admin_error";
+        }
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////
