@@ -19,11 +19,6 @@
 
 
     <style type="text/css">
-        /*iframe {*/
-        /*    height: 600px;*/
-        /*    width: 100%;*/
-        /*    border: none;*/
-        /*}*/
 
     </style>
 </head>
@@ -42,7 +37,16 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-flex align-items-center justify-content-between">
-                                <h4 class="mb-0">报告审阅</h4>
+<!--                                <h4 class="mb-0">报告审阅</h4>-->
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="#">学习记录</a></li>
+                                        <li class="breadcrumb-item"><a href="admin_report">实验报告管理</a></li>
+                                        <li class="breadcrumb-item"><a th:href="@{admin_report_by_class(id=${expSub.subExperimentId})}">[[${experimentName}+'--'+ ${expSub.subExperimentName}]]</a></li>
+                                        <li class="breadcrumb-item"><a th:href="@{admin_report_list(classId=${expSub.classId},subExperimentId=${expSub.subExperimentId})}">[[${expSub.className}]]</a></li>
+                                        <li class="breadcrumb-item active" th:text="' > 报告审阅'"></li>
+                                    </ol>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -58,10 +62,13 @@
                                     </div>
                                     <div class="col-md-3" style="padding-left: 30px;" id="detailshow">
                                         <div class="row">
-                                            <p th:text="'姓名：'+${expSub.stuName}" style="display: flex;align-items: center;margin-bottom: 20px; margin-top: 20px;"></p>
+                                            <p th:text="'班级：'+${expSub.className}" style="display: flex;align-items: center;margin-bottom: 20px; margin-top: 20px;"></p>
                                         </div>
                                         <div class="row">
                                             <p th:text="'学号：'+${expSub.stuNumber}" style="display: flex;align-items: center;margin-bottom: 20px; margin-top: 20px;"></p>
+                                        </div>
+                                        <div class="row">
+                                            <p th:text="'姓名：'+${expSub.stuName}" style="display: flex;align-items: center;margin-bottom: 20px; margin-top: 20px;"></p>
                                         </div>
                                         <div class="row">
                                             <p th:text="'所属任务：'+${expSub.subExperimentName}" style="display: flex;align-items: center;margin-bottom: 20px; margin-top: 20px;"></p>
@@ -83,53 +90,25 @@
                                         <div class="row">
                                             <p th:text="'审核老师：'+${expSub.teaName}" style="display: flex;align-items: center;margin-bottom: 20px; margin-top: 20px;"></p>
                                         </div>
-                                        <form id="form" method="post" action="/report_score" style="display: none" th:object="${expSub}">
-                                            <input name="subExperimentId" th:value="*{subExperimentId}">
-                                            <input name="stuNumber" th:value="*{stuNumber}">
-                                            <input name="teaNumber" th:value="*{teaNumber}">
-                                            <input id="set_score" name="score" th:value="*{score}">
-                                        </form>
                                         <div class="row" style="display: block;text-align: center;margin-top: 30px;">
-                                            <a href="admin_report" class="btn btn-light btn-rounded waves-effect waves-light" style="margin: 10px;">
-                                                <i class="ri-close-line align-middle mr-2"></i>取消
+                                            <a th:href="@{admin_report_list(classId=${expSub.classId}, subExperimentId=${expSub.subExperimentId})}" class="btn btn-light btn-rounded waves-effect waves-light" style="margin: 10px;">
+                                                <i class="ri-close-line align-middle mr-2"></i>返回
                                             </a>
-                                            <button onclick="submitScore()" type="submit" class="btn btn-success btn-rounded waves-effect waves-light" style="margin: 10px;">
+                                            <button onclick="submitScore()" type="button" class="btn btn-success btn-rounded waves-effect waves-light" style="margin: 10px;">
                                                 <i class="ri-check-line align-middle mr-2"></i>提交
                                             </button>
+                                            <a th:if="${next!=null}" th:href="@{admin_report_detail(id=${next})}" class="btn btn-link btn-rounded waves-effect waves-light" style="margin: 10px;">
+                                                下一个<i class="ri-arrow-down-line align-middle mr-2"></i>
+                                            </a>
+                                            <a th:if="${next==null}" href="#" class="btn btn-link btn-rounded waves-effect waves-light" style="margin: 10px;">
+                                                已全部审阅完毕
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
-
-<!--                    <div class="row">-->
-<!--                        <div class="card" style="width:100%;">-->
-<!--                            <div class="card-body" style="padding-top: 5px;">-->
-<!--                                <div class="row" style="width: 100%;text-align: center;display: flex;align-items: center;">-->
-<!--                                    <div class="col-md-3">-->
-<!--                                        <p th:text="'姓名：'+${stuName}" style="display: flex;align-items: center;margin: 0px;margin-left: 30%;"></p>-->
-<!--                                    </div>-->
-<!--                                    <div class="row col-md-6">-->
-<!--                                        <div class="col-md-4" style="width: 100%;text-align: center;display: flex;align-items: center;padding-left: 20px;">-->
-<!--                                            <p style="display: flex;align-items: center;padding: 10px;margin: 0px;">得分：</p>-->
-<!--                                        </div>-->
-<!--                                        <div class="col-md-8">-->
-<!--                                            <input type="text" id="score" name="score">-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                    <div class="col-md-3">-->
-<!--                                        <button onclick="getScore()" type="submit" class="btn btn-success btn-rounded waves-effect waves-light" style="margin: 20px;">-->
-<!--                                            <i class="ri-check-line align-middle mr-2"></i>提交-->
-<!--                                        </button>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <iframe id="previewpdf" th:src="'static/js/pdf/web/viewer.html?file='+${pdf}"></iframe>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
                 </div>
 
                 <div th:replace="commons::footer"></div>
@@ -167,8 +146,36 @@
     <script type="text/javascript" th:inline="javascript">
 
         function submitScore(){
-            document.getElementById("set_score").value = document.getElementById("score").value;
-            document.getElementById("form").submit();
+            // document.getElementById("set_score").value = document.getElementById("score").value;
+            //document.getElementById("form").submit();
+
+            var subExperimentId = [[${expSub.subExperimentId}]];
+            var stuNumber = [[${expSub.stuNumber}]];
+            var score = document.getElementById("score").value;
+
+            $.ajax({
+                type:"POST",
+                url:"report_score",
+                data: {"subExperimentId": subExperimentId,
+                    "stuNumber": stuNumber,
+                    "score": score},
+                success:function (result) {
+                    console.log(result);
+                    if([[${next == null}]]) {
+                        // console.log("已经全部审阅完毕");
+                        // console.log("classId:", result.classId);
+                        // console.log("subExperimentId:", result.subExperimentId);
+                        window.location.href = "admin_report_list?classId=" + [[${expSub.classId}]] + "&subExperimentId=" + subExperimentId;
+                    }
+                    else{
+                        // console.log("跳转到下一个报告：", result.next);
+                        window.location.href="admin_report_detail?id="+[[${next}]];
+                    }
+                },
+                error:function(error){
+                    alert("提交成绩失败，请重试");
+                }
+            })
         }
 
 

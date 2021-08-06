@@ -79,7 +79,8 @@
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item"><a href="#">学习记录</a></li>
-                                        <li class="breadcrumb-item active">实验报告管理</li>
+                                        <li class="breadcrumb-item"><a href="admin_report">实验报告管理</a></li>
+                                        <li class="breadcrumb-item active" th:text="${experimentName}+'--'+ ${sub_exp_name}"></li>
                                     </ol>
                                 </div>
                             </div>
@@ -111,24 +112,23 @@
                                                     <div style="display: table-cell;vertical-align: top; width: 500px;">
                                                         <span class="number badge badge-success" th:text="${dataStat.index+1}"></span>
                                                         <h5 class="title" th:text="${data.experimentName}+'--'+${data.subExperimentName}"></h5>
-<!--                                                        <span th:text="'授课教师: 王老师' " style="padding-left: 50px;line-height: 40px;"></span>-->
+                                                        <span th:text="'班级: '+ ${data.className}" style="padding-left: 50px;line-height: 40px;"></span>
                                                     </div>
                                                     <div style="display: table-cell;vertical-align:middle">
                                                         <div class="text-center" style="display: inline-block;vertical-align:middle;">
-<!--                                                            <a th:href="@{admin_report_list(id=${data.subExperimentId})}">-->
-                                                            <a th:href="@{admin_report_by_class(id=${data.subExperimentId})}">
+                                                            <a th:href="@{admin_report_list(classId=${data.classId},subExperimentId=${data.subExperimentId})}">
                                                                 <i class="mdi mdi-monitor-eye" style="font-size: 30px;color: #5664d2"></i>
                                                                 <p>报告审阅</p>
                                                             </a>
                                                         </div>
-<!--                                                        <div class="text-center" style="display: inline-block;vertical-align:middle">-->
-<!--                                                            <a th:href="@{admin_report_score(id=${data.subExperimentId})}">-->
-<!--                                                                <i class="mdi mdi-file-download-outline" style="font-size: 30px;color: #5664d2"></i>-->
-<!--                                                                <p>报告成绩</p>-->
-<!--                                                            </a>-->
-<!--                                                        </div>-->
+                                                        <div class="text-center" style="display: inline-block;vertical-align:middle">
+                                                            <a th:href="@{admin_report_score(classId=${data.classId},subExperimentId=${data.subExperimentId})}">
+                                                                <i class="mdi mdi-file-download-outline" style="font-size: 30px;color: #5664d2"></i>
+                                                                <p>报告成绩</p>
+                                                            </a>
+                                                        </div>
                                                         <div class="text-center">
-                                                            <a th:href="@{admin_report_analysis(subExperimentId=${data.subExperimentId},classId='none')}">
+                                                            <a th:href="@{admin_report_analysis(classId=${data.classId},subExperimentId=${data.subExperimentId})}">
                                                                 <i class="ri-line-chart-line" style="font-size: 30px;color: #5664d2"></i>
                                                                 <p>报告分析</p>
                                                             </a>

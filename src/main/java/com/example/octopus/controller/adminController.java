@@ -1,6 +1,7 @@
 package com.example.octopus.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.example.octopus.entity.VOs.experiment.ReportAnalysisVO;
 import com.example.octopus.entity.dataset.Dataset;
 import com.example.octopus.entity.experiment.SubExperimentReportSubmit;
 import com.example.octopus.entity.experiment.Video;
@@ -159,7 +160,7 @@ public class adminController {
             teacherService.updateTeacher(teacher);
             return new ModelAndView("redirect:/admin_index");
         }
-            catch (Exception e){
+        catch (Exception e){
             return new ModelAndView("redirect:/admin_error");
         }
     }
@@ -177,30 +178,30 @@ public class adminController {
         int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
 //        try {
-            model.addAttribute("sizeof_experiments", experimentService.listExperiments().size());
-            model.addAttribute("sizeof_projects", experimentService.listExperiments().size());
-            model.addAttribute("sizeof_datasets", datasetService.listDatasets().size());
-            model.addAttribute("sizeof_courses_static", courseStaticService.listAllCourseStatic().size());
-            if (role_id == 1){
-                model.addAttribute("sizeof_courses", courseService.listCourses().size());
-            }
-            else{
-                model.addAttribute("sizeof_courses", courseService.listCoursesByTeaNumber(teaNum).size());
-            }
+        model.addAttribute("sizeof_experiments", experimentService.listExperiments().size());
+        model.addAttribute("sizeof_projects", experimentService.listExperiments().size());
+        model.addAttribute("sizeof_datasets", datasetService.listDatasets().size());
+        model.addAttribute("sizeof_courses_static", courseStaticService.listAllCourseStatic().size());
+        if (role_id == 1){
+            model.addAttribute("sizeof_courses", courseService.listCourses().size());
+        }
+        else{
+            model.addAttribute("sizeof_courses", courseService.listCoursesByTeaNumber(teaNum).size());
+        }
 
-            model.addAttribute("sizeof_videos", videoService.listVideos().size());
-           // model.addAttribute("sizeof_schools", );
-            model.addAttribute("sizeof_teachers", teacherService.getAllTeachers().size());
-            model.addAttribute("sizeof_students", userService.listStudents().size());
-            model.addAttribute("sizeof_dockers", dockerService.listDockerByRole(teaNum).size());
-            model.addAttribute("sizeof_active_dockers", dockerService.listDockerByRoleAndAwake(teaNum, true).size());
-            model.addAttribute("lastLoginTime", teacherService.getTeacherByTeaNumber(teaNum).getLastLoginTime());
-            model.addAttribute("sumExperimentTime", teacherService.getSumExperimentTimeByRole(teaNum));
-            model.addAttribute("sumVideoTime", teacherService.getSumVideoTimeByRole(teaNum));
-            model.addAttribute("docker_status", dockerService.countDockerByStatus(teaNum));
+        model.addAttribute("sizeof_videos", videoService.listVideos().size());
+        // model.addAttribute("sizeof_schools", );
+        model.addAttribute("sizeof_teachers", teacherService.getAllTeachers().size());
+        model.addAttribute("sizeof_students", userService.listStudents().size());
+        model.addAttribute("sizeof_dockers", dockerService.listDockerByRole(teaNum).size());
+        model.addAttribute("sizeof_active_dockers", dockerService.listDockerByRoleAndAwake(teaNum, true).size());
+        model.addAttribute("lastLoginTime", teacherService.getTeacherByTeaNumber(teaNum).getLastLoginTime());
+        model.addAttribute("sumExperimentTime", teacherService.getSumExperimentTimeByRole(teaNum));
+        model.addAttribute("sumVideoTime", teacherService.getSumVideoTimeByRole(teaNum));
+        model.addAttribute("docker_status", dockerService.countDockerByStatus(teaNum));
 //            logger.info("实验时间：{}", teacherService.getSumExperimentTimeByRole(teaNum));
 //            logger.info("视频时间：{}", teacherService.getSumVideoTimeByRole(teaNum));
-            return "admin_index";
+        return "admin_index";
 //        } catch (Exception e) {
 //            return "redirect:/admin_error";
 //        }
@@ -833,12 +834,11 @@ public class adminController {
     public ModelAndView edit_course(Course course, Model model, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
         logger.info("提交修改的course: [{}]", course);
-        // todo 提交修改的开课计划
         try {
-            if (course.getTeaName() == null) {
-                // 如果只有账号没有姓名 则补充姓名
-                course.setTeaName(teacherService.getTeacherByTeaNumber(course.getTeaNumber()).getTeaName());
-            }
+//            if (course.getTeaName() == null) {
+//                // 如果只有账号没有姓名 则补充姓名
+//                course.setTeaName(teacherService.getTeacherByTeaNumber(course.getTeaNumber()).getTeaName());
+//            }
             courseService.updateCourse(course);
             return new ModelAndView("redirect:/admin_course");
         }
@@ -854,7 +854,6 @@ public class adminController {
 
         long courseId = Long.parseLong(request.getParameter("courseId"));
         logger.info("删除 courseId=" + courseId);
-        // todo 删除开课计划
         try {
             courseService.deleteCourseById(courseId);
             return new ModelAndView("redirect:/admin_course");
@@ -976,7 +975,7 @@ public class adminController {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
 
         long id = Long.parseLong(request.getParameter("id"));
-        logger.info("删除 id=[{}]", id);
+        logger.info("删除学生开课计划 id=[{}]", id);
         try {
             studentcourseService.deleteStudentCourse(id);
             return new ModelAndView("redirect:/admin_course_student");
@@ -993,6 +992,7 @@ public class adminController {
     public String admin_video_log(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+        logger.info("进入视频学习汇总");
         try {
             model.addAttribute("video_logs", videoService.getVideoStudySummaryByRole(teaNum));
             return "admin_video_log";
@@ -1010,24 +1010,25 @@ public class adminController {
         if (!cookieCheck(model, request)) return "redirect:/login";
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
         //System.out.println(videoProgressService.getVideoProgressDetailByRole(teaNum));
-//        try {
+        logger.info("进入视频学习详情");
+        try {
             model.addAttribute("video_log_details", videoProgressService.getVideoProgressDetailByRole(teaNum));
             return "admin_video_log_details";
-//        }
-//        catch (Exception e){
-//            return "redirect:/admin_error";
-//        }
+        }
+        catch (Exception e){
+            return "redirect:/admin_error";
+        }
     }
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////
-    // 实验报告管理——汇总
+    // 实验报告管理——汇总（按照 实验）
     @RequestMapping("/admin_report")
     public String admin_report(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
-//        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
-        //System.out.println(subExperimentReportSubmitService.listByTeaNumber(3));
+
+        logger.info("进入实验报告管理--汇总");
         try {
             model.addAttribute("reports", subExperimentReportSubmitService.listReportSummaryByRole(teaNum));
             return "admin_report";
@@ -1037,55 +1038,80 @@ public class adminController {
         }
     }
 
-    // 实验报告管理——某一实验
-    @GetMapping("/admin_report_list")
-    public ModelAndView admin_report_list(HttpServletRequest request, Model model) {
-        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+    // 实验报告管理——汇总(按照 实验-班级)
+    @RequestMapping("/admin_report_by_class")
+    public String admin_report_by_class(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return "redirect:/login";
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
 
+        long id = Long.parseLong(request.getParameter("id"));
+        logger.info("进入实验-班级报告汇总，实验id={}", id);
+
         try {
-            long id = Long.parseLong(request.getParameter("id"));
-//            model.addAttribute("reports", subExperimentReportSubmitService.listReportScoreByRoleAndSubExpId(teaNum, id));
+            model.addAttribute("reports", subExperimentReportSubmitService.listClassReportSummaryByRoleAndSubExpId(teaNum, id));
             model.addAttribute("sub_exp_name", subExperimentService.getById(id).getSubExperimentName());
             model.addAttribute("experimentName", experimentService.getExperimentById(subExperimentService.getById(id).getExperimentId()).getName());
-            return new ModelAndView("admin_report_list");
+
+            return "admin_report_by_class";
         }
         catch (Exception e){
-            return new ModelAndView("redirect:/admin_error");
+            return "redirect:/admin_error";
         }
     }
 
     // 实验报告成绩下载——某一实验
-    @GetMapping("/admin_report_score")
-    public ModelAndView admin_report_score(HttpServletRequest request, Model model) {
-        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
-
-        try {
-            long id = Long.parseLong(request.getParameter("id"));
+//    @GetMapping("/admin_report_score")
+//    public ModelAndView admin_report_score(HttpServletRequest request, Model model) {
+//        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+//        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+//
+//        try {
+//            long id = Long.parseLong(request.getParameter("id"));
 //            model.addAttribute("reports", subExperimentReportSubmitService.listReportScoreByRoleAndSubExpId(teaNum, id));
-            model.addAttribute("sub_exp_name", subExperimentService.getById(id).getSubExperimentName());
-            model.addAttribute("experimentName", experimentService.getExperimentById(subExperimentService.getById(id).getExperimentId()).getName());
-            return new ModelAndView("admin_report_score");
-        }
-        catch (Exception e){
-            return new ModelAndView("redirect:/admin_error");
-        }
-    }
+//            model.addAttribute("sub_exp_name", subExperimentService.getById(id).getSubExperimentName());
+//            model.addAttribute("experimentName", experimentService.getExperimentById(subExperimentService.getById(id).getExperimentId()).getName());
+//            return new ModelAndView("admin_report_score");
+//        }
+//        catch (Exception e){
+//            return new ModelAndView("redirect:/admin_error");
+//        }
+//    }
 
-    // 实验报告分析——某一实验
+    // 实验报告分析——某个实验的成绩分析
     @GetMapping("/admin_report_analysis")
     public ModelAndView admin_report_analysis(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
         long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
 
+        long subExperimentId = Long.parseLong(request.getParameter("subExperimentId"));
+        logger.info("进入实验报告分析，实验id={}", subExperimentId);
+
         try {
-            long id = Long.parseLong(request.getParameter("id"));
-//            logger.info("[{}]", subExperimentReportSubmitService.listReportAnalysisByRoleAndSubExpId(teaNum, id));
-            model.addAttribute("analysis", subExperimentReportSubmitService.listReportAnalysisByRoleAndSubExpId(teaNum, id));
-//            model.addAttribute("analysis", new int[]{4,1,2,55,10,1});
-            model.addAttribute("sub_exp_name", subExperimentService.getById(id).getSubExperimentName());
-            model.addAttribute("experimentName", experimentService.getExperimentById(subExperimentService.getById(id).getExperimentId()).getName());
+            if(request.getParameter("classId").equals("none")){
+                // 该实验的报告成绩分析
+                List<ReportAnalysisVO> reportAnalysis = subExperimentReportSubmitService.listReportAnalysisByRoleAndSubExpId(teaNum, subExperimentId);
+                // 该实验的某个班级各分数段人数统计
+                model.addAttribute("analysis_list", reportAnalysis);
+                model.addAttribute("class", "all");
+                int[] analysis_total = new int[]{0,0,0,0,0,0};
+                for(int i=0; i<reportAnalysis.size(); i++){
+                    for(int j=0; j<=5; j++){
+                        analysis_total[j] += reportAnalysis.get(i).getScores()[j];
+                    }
+                }
+                // 该实验的各分数段所有人数统计
+                model.addAttribute("analysis", analysis_total);
+            }
+            else{
+                // 该实验的某个班级的报告成绩分析
+                Long classId = Long.parseLong(request.getParameter("classId"));
+                model.addAttribute("analysis", subExperimentReportSubmitService.getReportAnalysisByRoleAndSubExpIdAndClassId(teaNum, subExperimentId, classId).getScores());
+                model.addAttribute("class", "class");
+                model.addAttribute("className", classService.getClass_Byid(classId).getClassName());
+                model.addAttribute("sub_exp_id", subExperimentId);
+            }
+            model.addAttribute("sub_exp_name", subExperimentService.getById(subExperimentId).getSubExperimentName());
+            model.addAttribute("experimentName", experimentService.getExperimentById(subExperimentService.getById(subExperimentId).getExperimentId()).getName());
             return new ModelAndView("admin_report_analysis");
         }
         catch (Exception e){
@@ -1093,15 +1119,75 @@ public class adminController {
         }
     }
 
+    // 实验报告管理——某个实验某一班级的报告列表
+    @GetMapping("/admin_report_list")
+    public ModelAndView admin_report_list(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
 
-    //实验报告详情
+        long classId = Long.parseLong(request.getParameter("classId"));
+        long subExperimentId = Long.parseLong(request.getParameter("subExperimentId"));
+        logger.info("进入实验-班级报告列表，实验id=" + subExperimentId + "班级id=" + classId);
+
+        try {
+            model.addAttribute("reports", subExperimentReportSubmitService.listClassReportByRoleAndSubExpIdAndClassId(teaNum, subExperimentId, classId));
+            model.addAttribute("sub_exp_name", subExperimentService.getById(subExperimentId).getSubExperimentName());
+            model.addAttribute("sub_exp_id", subExperimentId);
+            model.addAttribute("experimentName", experimentService.getExperimentById(subExperimentService.getById(subExperimentId).getExperimentId()).getName());
+            model.addAttribute("className", classService.getClass_Byid(classId).getClassName());
+            return new ModelAndView("admin_report_list");
+        }
+        catch (Exception e){
+            return new ModelAndView("redirect:/admin_error");
+        }
+    }
+
+    // 实验报告成绩下载——某一实验、某一班级
+    @GetMapping("/admin_report_score")
+    public ModelAndView admin_report_score(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+
+        long classId = Long.parseLong(request.getParameter("classId"));
+        long subExperimentId = Long.parseLong(request.getParameter("subExperimentId"));
+        logger.info("进入实验-班级报告成绩下载，实验id=" + subExperimentId + "班级id=" + classId);
+
+        try {
+            model.addAttribute("reports", subExperimentReportSubmitService.listClassReportByRoleAndSubExpIdAndClassId(teaNum, subExperimentId, classId));
+            model.addAttribute("sub_exp_name", subExperimentService.getById(subExperimentId).getSubExperimentName());
+            model.addAttribute("sub_exp_id", subExperimentId);
+            model.addAttribute("experimentName", experimentService.getExperimentById(subExperimentService.getById(subExperimentId).getExperimentId()).getName());
+            model.addAttribute("className", classService.getClass_Byid(classId).getClassName());
+            return new ModelAndView("admin_report_score");
+        }
+        catch (Exception e){
+            return new ModelAndView("redirect:/admin_error");
+        }
+    }
+
+    //实验报告详情——具体某个报告批阅
     @RequestMapping("/admin_report_detail")
     public String admin_report_detail(HttpServletRequest request, Model model) {
         if (!cookieCheck(model, request)) return "redirect:/login";
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+
+        long id = Long.parseLong(request.getParameter("id"));
+        logger.info("进入实验报告预览，id="+id);
+
         try {
-            long id = Long.parseLong(request.getParameter("id"));
             SubExperimentReportSubmit expSub = subExperimentReportSubmitService.getById(id);
             model.addAttribute("expSub", expSub);
+            model.addAttribute("experimentName", experimentService.getExperimentById(subExperimentService.getById(expSub.getSubExperimentId()).getExperimentId()).getName());
+
+            // 获取下一个报告的id
+            SubExperimentReportSubmit next = subExperimentReportSubmitService.getNextReportByTeaIdAndSubExpIdAndClassId(
+                    id, teaNum, expSub.getSubExperimentId(),expSub.getClassId());
+            if(next != null){
+                model.addAttribute("next", next.getId());
+            }
+            else{
+                model.addAttribute("next", null);
+            }
             return "admin_report_detail";
         }
         catch (Exception e){
@@ -1109,26 +1195,26 @@ public class adminController {
         }
     }
 
-    //提交实验报告评分
-    @PostMapping ("/report_score")
-    public ModelAndView report_score(Model model, SubExperimentReportSubmit subExperimentReportSubmit,HttpServletRequest request) {
-        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+    // 提交报告分数
+    @ResponseBody
+    @RequestMapping("/report_score")
+    public Map report_score(HttpServletRequest request) {
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+        Map<String, Object> result = new HashMap<String, Object>();
 
-        try {
-            long subExperimentId = subExperimentReportSubmit.getSubExperimentId();
-            long stuNumber = subExperimentReportSubmit.getStuNumber();
-            long teaNumber = subExperimentReportSubmit.getTeaNumber();
-            int score = subExperimentReportSubmit.getScore();
+        long subExperimentId = Long.parseLong(request.getParameter("subExperimentId"));
+        long stuNumber = Long.parseLong(request.getParameter("stuNumber"));
+        int score = Integer.parseInt(request.getParameter("score"));
+        try{
             logger.info("提交报告分数: subExperimentId="+subExperimentId+
                     ", stuNumber:"+stuNumber+
-                    ", teaNumber:"+teaNumber+
+                    ", teaNumber:"+teaNum+
                     ", score:"+score);
-            subExperimentReportSubmitService.updateByExamine(subExperimentId, stuNumber, teaNumber, score);
-            return new ModelAndView("redirect:/admin_report");
+            subExperimentReportSubmitService.updateByExamine(subExperimentId, stuNumber, teaNum, score);
+        }catch (Exception e){
+            result.put("error", "提交报告分数失败！");
         }
-        catch (Exception e){
-            return new ModelAndView("redirect:/admin_error");
-        }
+        return result;
     }
 
 

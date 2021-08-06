@@ -44,7 +44,8 @@
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item"><a href="#">学习记录</a></li>
                                         <li class="breadcrumb-item"><a href="admin_report">实验报告管理</a></li>
-                                        <li class="breadcrumb-item active" th:text="'报告审阅: ' +${experimentName}+'--'+ ${sub_exp_name}"></li>
+                                        <li class="breadcrumb-item"><a th:href="@{admin_report_by_class(id=${sub_exp_id})}">[[${experimentName}+'--'+ ${sub_exp_name}]]</a></li>
+                                        <li class="breadcrumb-item active" th:text="${className}+ ' > 报告审阅'"></li>
                                     </ol>
                                 </div>
                             </div>
@@ -60,10 +61,12 @@
                                         <table id="datatable-buttons" class="table table-striped table-bordered table-centered" style="white-space:nowrap;">
                                             <thead style="text-align: center;">
                                                 <tr>
+<!--                                                    <th th:if="${role} eq 'teacher'">操作</th>-->
                                                     <th>操作</th>
                                                     <th>编号</th>
-                                                    <th>学生</th>
+                                                    <th>班级</th>
                                                     <th>学号</th>
+                                                    <th>学生</th>
                                                     <th>所属任务</th>
                                                     <th>提交时间</th>
                                                     <th>是否审核</th>
@@ -74,8 +77,8 @@
                                             </thead>
                                             <tbody style="text-align: center;" >
                                                 <tr th:each="report:${reports}">
-
                                                     <td>
+<!--                                                    <td th:if="${role} eq 'teacher'">-->
                                                         <div style="width:30px;"></div>
                                                         <a th:href="@{admin_report_detail(id=${report.id})}" th:title="'批阅'" class="" style="color:#4aa3ff;" >
                                                             <i class="mdi mdi-login font-size-18"></i>
@@ -85,8 +88,9 @@
                                                         </a>
                                                     </td>
                                                     <td th:text="${reportStat.index+1}"></td>
-                                                    <td th:text="${report.stuName}"></td>
+                                                    <td th:text="${report.className}"></td>
                                                     <td th:text="${report.stuNumber}"></td>
+                                                    <td th:text="${report.stuName}"></td>
                                                     <td th:text="${report.subExperimentName}"></td>
                                                     <td th:text="${#dates.format(report.submitTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                                     <td>
@@ -161,6 +165,9 @@
     <script src="static/js/pages/datatables.init.js"></script>
     <script src="static/js/pages/dashboard.init.js"></script>
     <script src="static/js/app.js"></script>
+
+
+
 
 
 </body>
