@@ -5,10 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
+ * 专业表
  * @author ：shadow
  * @date ：Created in 2021/5/22 10:27 上午
  * @modified By：Hao
- * 专业表
  */
 @Data
 @AllArgsConstructor

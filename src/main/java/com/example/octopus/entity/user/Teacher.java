@@ -11,9 +11,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 教师及管理员表（通过Boolean adminRights标记）
  * @author: Hao
  * @date: 2021/5/24 19:26
- * 教师及管理员表（通过Boolean adminRights标记）
  */
 @Data
 @NoArgsConstructor

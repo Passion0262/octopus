@@ -4,10 +4,7 @@ import com.example.octopus.dao.ClassMapper;
 import com.example.octopus.dao.DockerMapper;
 import com.example.octopus.dao.TeacherMapper;
 import com.example.octopus.dao.UserMapper;
-import com.example.octopus.dao.experiment.ChapterMapper;
-import com.example.octopus.dao.experiment.ModuleMapper;
-import com.example.octopus.dao.experiment.SubExperimentMapper;
-import com.example.octopus.dao.experiment.VideoMapper;
+import com.example.octopus.dao.experiment.*;
 import com.example.octopus.entity.user.Docker;
 import com.example.octopus.service.*;
 import com.example.octopus.utils.ShellUtils;
@@ -19,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @SpringBootTest
@@ -69,22 +67,28 @@ class OctopusApplicationTests {
 	@Autowired
 	SubExperimentReportSubmitService subExperimentReportSubmitService;
 	@Autowired
+	SubExperimentReportSubmitMapper reportSubmitMapper;
+	@Autowired
 	DockerMapper dockerMapper;
+	@Autowired
+	ExperimentMapper experimentMapper;
 
 	private ShellUtils shellUtils = new ShellUtils();
 
+	@Autowired
+	CourseStaticService staticService;
+
+	@Autowired
+	SubExperimentReportSubmitService reportSubmitService;
+
 	@Test
 	void interfaceTest() {
-//		Docker d = new Docker();
-//		d.setId(2);
-//		d.setVersion("v1");
-//		d.generate(shellUtils.getAddress());
-//		List<Docker> ds= new ArrayList<>();
-//		ds.add(d);
-////		dockerMapper.createDocker(d);
-//		shellUtils.resetPod(1, 32004, "v1");
-//		shellUtils.resetPod(d.getId(), d.getPort(), d.getVersion());
-//		shellUtils.upgradePods(ds, "v1");
+		System.out.println(reportSubmitService.listReportAnalysisByRoleAndSubExpId(1, 1));
+		System.out.println(reportSubmitService.listReportSummaryByRole(1));
+		System.out.println(reportSubmitService.listClassReportSummaryByRoleAndSubExpId(1, 1));
+		System.out.println(reportSubmitService.getReportAnalysisByRoleAndSubExpIdAndClassId(1, 1,2));
+		System.out.println(reportSubmitService.listClassReportByRoleAndSubExpIdAndClassId(1, 1, 2));
+		System.out.println(reportSubmitService.getNextReportByTeaIdAndSubExpIdAndClassId(1, 1,1,2));
 	}
 
 }

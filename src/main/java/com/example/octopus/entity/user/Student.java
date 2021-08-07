@@ -8,10 +8,10 @@ import java.sql.Time;
 import java.sql.Timestamp;
 
 /**
+ * 学生表
  * @author ：shadow
  * @date ：Created in 2021/5/12 2:26 下午
  * @modified By：Hao
- * 学生表
  */
 @Data
 @AllArgsConstructor

@@ -3,9 +3,9 @@ package com.example.octopus.entity.user;
 import lombok.Data;
 
 /**
+ * 课程静态表实体类
  * @author: Hao
  * @date: 2021/8/2 9:38
- * 课程静态表实体类
  */
 
 @Data

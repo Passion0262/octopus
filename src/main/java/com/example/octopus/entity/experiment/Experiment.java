@@ -5,10 +5,10 @@ import lombok.Data;
 import java.sql.Date;
 
 /**
+ * 实验任务 experiment表
  * @author ：shadow
  * @date ：Created in 2021/5/22 12:40 下午
  * @modified By：
- * 实验任务 experiment表
  */
 @Data
 public class Experiment {

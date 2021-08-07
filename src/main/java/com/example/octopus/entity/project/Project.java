@@ -6,10 +6,10 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
+ * 项目表
  * @author ：shadow
  * @date ：Created in 2021/5/22 1:16 下午
  * @modified By：Hao
- * 项目表
  */
 @Data
 public class Project {
