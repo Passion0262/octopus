@@ -17,7 +17,7 @@ public class CourseTimeVO {
         return time;
     }
 
-    public long getCourseId() {
+    public long getTeaCourseId() {
         return teaCourseId;
     }
 }

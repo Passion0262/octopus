@@ -350,6 +350,17 @@
               learntime = 0
               console.log('jis视频id',currentvideoid);
               console.log('jis时间',endtime);
+
+              var r = confirm("是否完成该小节的相关测试？");
+              if (r==true)
+              {
+                window.location.href="/course_video_quiz/"+currentvideoid;
+              }
+              else
+              {
+                alert("no");
+              }
+
             });
 
 

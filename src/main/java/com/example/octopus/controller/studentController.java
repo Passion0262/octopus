@@ -86,6 +86,9 @@ public class studentController {
     @Autowired
     SubExperimentReportSubmitService subExperimentReportSubmitService;
 
+    @Autowired
+    VideoQuestionService videoQuestionService;
+
 
     private final static String COOKIE_NAME = "cookiestu";
 
@@ -174,7 +177,7 @@ public class studentController {
         List<String> videoCoursenames = new ArrayList<>();
         List<String> experCoursenames = new ArrayList<>();
 
-
+logger.info("videopro:"+videopro);
 
         for(int i=0;i<videopro.size();i++){
             JSONObject ob1 = new JSONObject();
@@ -483,6 +486,27 @@ public class studentController {
         return "redirect:/course_video/"+id+"/"+videoid;
     }
 
+
+    @RequestMapping("/course_video_quiz/{id}")
+    public String course_video_quiz(@PathVariable(value = "id") String id, Model model, HttpServletRequest request) {
+        if (!cookieCheck(model, request)) return "redirect:/login";
+        Long video_id = Long.parseLong(id);
+        Video video = videoService.getById(video_id);
+        model.addAttribute("video", video);
+        logger.info("video:"+video);
+
+        List<VideoQuestion> vqs = videoQuestionService.listQuestionsByVideoId(video_id);
+        logger.info("vqs:"+vqs);
+        model.addAttribute("vqs", vqs);
+
+        if(vqs.size()==0){
+            model.addAttribute("isq", 0);
+        }else{
+            model.addAttribute("isq", 1);
+        }
+
+        return "course_video_quiz";
+    }
 
 
 
