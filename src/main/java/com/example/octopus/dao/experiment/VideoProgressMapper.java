@@ -74,7 +74,7 @@ public interface VideoProgressMapper {
     @Update("UPDATE video_progress SET study_time = #{studyTime},progress = #{progress}, last_video_progress=#{lastVideoProgress} WHERE id = #{id}")
     boolean updateById(VideoProgress videoProgress);
 
-    @Insert("INSERT INTO video_progress(video_id,stu_number,start_time,end_time,study_time,progress,last_video_progress) VALUES (#{videoId},#{stuNumber},#{startTime},#{endTime},#{studyTime},#{progress},#{lastVideoProgress})")
+    @Insert("INSERT INTO video_progress(video_id,tea_course_id,stu_number,start_time,end_time,study_time,progress,last_video_progress) VALUES (#{videoId},#{teaCourseId},#{stuNumber},#{startTime},#{endTime},#{studyTime},#{progress},#{lastVideoProgress})")
     boolean insertVideoProgress(VideoProgress videoProgress);
 
     @Select("SELECT vp.*, s.name, class_.class_name, major.major_name, course.course_name  " +

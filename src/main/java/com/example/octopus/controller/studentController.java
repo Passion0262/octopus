@@ -474,6 +474,7 @@ logger.info("videopro:"+videopro);
         Timestamp endst = new Timestamp(enddate.getTime());
 
         VideoProgress videoProgress = new VideoProgress();
+        videoProgress.setTeaCourseId(id);
         videoProgress.setVideoId(videoid);
         videoProgress.setStuNumber(stuNum);
         videoProgress.setStartTime(startst);

@@ -19,6 +19,9 @@ public class VideoProgress {
 
     private long stuNumber;
 
+    private  long teaCourseId;
+
+
     private Timestamp startTime;     //开始学习时间
 
     private Timestamp endTime;       //结束学习时间
