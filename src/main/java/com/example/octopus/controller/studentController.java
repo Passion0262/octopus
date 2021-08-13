@@ -260,7 +260,6 @@ logger.info("videopro:"+videopro);
     public String userinfo(Model model, HttpSession session, HttpServletRequest request) {
         if (!cookieCheck(model, request)) return "redirect:/login";
 
-        // todo 获取用户名及用户id的方法使用如下语句
         String stuName = cookieThings.getCookieUserName(request, COOKIE_NAME);
         String stuNum = cookieThings.getCookieUserNum(request, COOKIE_NAME);
 
