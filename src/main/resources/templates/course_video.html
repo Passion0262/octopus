@@ -347,10 +347,12 @@
               this.currentTime = acurrentTime;
 
               endtime = new Date();
+
+              bcurrentTime = 0;
               sendvideoinfo();
               isplay = false;
               window.clearInterval(time1);
-              learntime = 0
+              learntime = 0;
               console.log('jis视频id',currentvideoid);
               console.log('jis时间',endtime);
 
@@ -361,7 +363,7 @@
               }
               else
               {
-                alert("no");
+                // alert("no");
               }
 
             });
@@ -375,11 +377,12 @@
           sendvideoinfo();
           isplay = false;
           window.clearInterval(time1);
-          learntime = 0
+          learntime = 0;
           console.log('onunload');
           console.log('jisun视频id', currentvideoid);
           console.log('jisun时间', endtime);
         }
+        learntime = 0;
     };
 
 
@@ -452,10 +455,11 @@
        endtime = new Date();
        sendvideoinfo();
        window.clearInterval(time1);
-       learntime = 0
+       learntime = 0;
        console.log('切换视频id',currentvideoid);
        console.log('切换时间',endtime);
      }
+    learntime = 0;
 
      if(videopro==null){
        pro = 0;

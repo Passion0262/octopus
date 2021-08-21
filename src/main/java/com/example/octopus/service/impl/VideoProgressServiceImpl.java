@@ -101,7 +101,33 @@ public class VideoProgressServiceImpl implements VideoProgressService {
 
 	@Override
 	public boolean insertVideoProgress(VideoProgress videoProgress) {
-		return videoProgressMapper.insertVideoProgress(videoProgress);
+		VideoProgress vp1 = videoProgressMapper.getLatestByVideoIdAndStuNumber(videoProgress.getVideoId(),videoProgress.getStuNumber());
+		long a = videoProgress.getStartTime().getTime() - vp1.getEndTime().getTime();
+//		System.out.println(vp1.getEndTime());
+//		System.out.println(vp1.getEndTime().getTime());
+//		System.out.println(videoProgress.getStartTime());
+//		System.out.println(videoProgress.getStartTime().getTime());
+//		System.out.println(a);
+		if (videoProgress.getStartTime().getTime() - vp1.getEndTime().getTime() < 60000 && videoProgress.getStartTime().getTime() - vp1.getEndTime().getTime()>0){
+//			System.out.println("dasdas");
+			VideoProgress vp2 = new VideoProgress();
+			vp2.setId(vp1.getId());
+			vp2.setTeaCourseId(vp1.getTeaCourseId());
+			vp2.setVideoId(vp1.getVideoId());
+			vp2.setStuNumber(vp1.getStuNumber());
+			vp2.setStartTime(vp1.getStartTime());
+			vp2.setEndTime(videoProgress.getEndTime());
+			vp2.setProgress(videoProgress.getProgress());
+			vp2.setLastVideoProgress(videoProgress.getLastVideoProgress());
+//			Long ltime = videoProgress.getEndTime().getTime() - vp1.getStartTime().getTime();
+//			int ltime1 = ltime.intValue();
+			int ltime1 = videoProgress.getStudyTime()+vp1.getStudyTime();
+			vp2.setStudyTime(ltime1);
+			videoProgressMapper.updateById(vp2);
+		}else{
+			return videoProgressMapper.insertVideoProgress(videoProgress);
+		}
+		return false;
 	}
 
 	@Override
