@@ -1400,85 +1400,85 @@ public class adminController {
     }
 
     //视频增加
-    @GetMapping("/admin_video_add")
-    public ModelAndView admin_video_add(HttpServletRequest request, Model model) {
-        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
-        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
-
-        logger.info("管理员/教师{}进入admin_video_add，获取一个新Video()", teaNum);
-        try {
-            if (role_id == 1) {
-                model.addAttribute("video", new Video());
-            } else {
-                return new ModelAndView("redirect:/admin_video");
-            }
-            return new ModelAndView("admin_video_add", "videomodel", model);
-        }
-        catch (Exception e){
-            return new ModelAndView("redirect:/admin_error");
-        }
-    }
-
-    @PostMapping("/add_video")
-    public ModelAndView add_video(Video video, Model model, HttpServletRequest request) {
-        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
-        logger.info("管理员/教师{}提交新增的dataset: [{}]", teaNum, video);
-        try {
-            videoService.addVideo(video);
-            return new ModelAndView("redirect:/admin_video");
-        }
-        catch (Exception e){
-            return new ModelAndView("redirect:/admin_error");
-        }
-    }
-
-    //修改视频
-    @GetMapping("/admin_video_edit")
-    public ModelAndView admin_video_edit(HttpServletRequest request, Model model){
-        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
-        long id = Long.parseLong(request.getParameter("id"));
-        logger.info("管理员/教师{}进入admin_video_edit，获取指定id的Video(),id={}", teaNum, id);
-
-        try {
-            model.addAttribute("video", videoService.getById(id));
-            return new ModelAndView("admin_video_edit", "videomodel", model);
-        }
-        catch (Exception e){
-            return new ModelAndView("redirect:/admin_error");
-        }
-    }
-
-    @PostMapping("/edit_video")
-    public ModelAndView edit_video(Video video, Model model, HttpServletRequest request){
-        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
-        logger.info("管理员/教师{}提交修改的video: [{}]", teaNum, video);
-        try {
-            videoService.updateVideo(video);
-            return new ModelAndView("redirect:/admin_video");
-        }catch (Exception e){
-            return new ModelAndView("redirect:/admin_error");
-        }
-    }
-
-    //删除视频
-    @RequestMapping("/admin_video_delete")
-    public ModelAndView admin_video_delete(HttpServletRequest request, Model model) {
-        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
-        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
-        long id = Long.parseLong(request.getParameter("id"));
-        logger.info("管理员/教师{}删除 video.id={}", teaNum, id);
-        try {
-            videoService.deleteVideoById(id);
-            return new ModelAndView("redirect:/admin_video");
-        }
-        catch (Exception e){
-            return new ModelAndView("redirect:/admin_error");
-        }
-    }
+//    @GetMapping("/admin_video_add")
+//    public ModelAndView admin_video_add(HttpServletRequest request, Model model) {
+//        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+//        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+//        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
+//
+//        logger.info("管理员/教师{}进入admin_video_add，获取一个新Video()", teaNum);
+//        try {
+//            if (role_id == 1) {
+//                model.addAttribute("video", new Video());
+//            } else {
+//                return new ModelAndView("redirect:/admin_video");
+//            }
+//            return new ModelAndView("admin_video_add", "videomodel", model);
+//        }
+//        catch (Exception e){
+//            return new ModelAndView("redirect:/admin_error");
+//        }
+//    }
+//
+//    @PostMapping("/add_video")
+//    public ModelAndView add_video(Video video, Model model, HttpServletRequest request) {
+//        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+//        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+//        logger.info("管理员/教师{}提交新增的dataset: [{}]", teaNum, video);
+//        try {
+//            videoService.addVideo(video);
+//            return new ModelAndView("redirect:/admin_video");
+//        }
+//        catch (Exception e){
+//            return new ModelAndView("redirect:/admin_error");
+//        }
+//    }
+//
+//    //修改视频
+//    @GetMapping("/admin_video_edit")
+//    public ModelAndView admin_video_edit(HttpServletRequest request, Model model){
+//        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+//        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+//        long id = Long.parseLong(request.getParameter("id"));
+//        logger.info("管理员/教师{}进入admin_video_edit，获取指定id的Video(),id={}", teaNum, id);
+//
+//        try {
+//            model.addAttribute("video", videoService.getById(id));
+//            return new ModelAndView("admin_video_edit", "videomodel", model);
+//        }
+//        catch (Exception e){
+//            return new ModelAndView("redirect:/admin_error");
+//        }
+//    }
+//
+//    @PostMapping("/edit_video")
+//    public ModelAndView edit_video(Video video, Model model, HttpServletRequest request){
+//        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+//        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+//        logger.info("管理员/教师{}提交修改的video: [{}]", teaNum, video);
+//        try {
+//            videoService.updateVideo(video);
+//            return new ModelAndView("redirect:/admin_video");
+//        }catch (Exception e){
+//            return new ModelAndView("redirect:/admin_error");
+//        }
+//    }
+//
+//    //删除视频
+//    @RequestMapping("/admin_video_delete")
+//    public ModelAndView admin_video_delete(HttpServletRequest request, Model model) {
+//        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+//        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+//        long id = Long.parseLong(request.getParameter("id"));
+//        logger.info("管理员/教师{}删除 video.id={}", teaNum, id);
+//        try {
+//            videoService.deleteVideoById(id);
+//            return new ModelAndView("redirect:/admin_video");
+//        }
+//        catch (Exception e){
+//            return new ModelAndView("redirect:/admin_error");
+//        }
+//    }
 
     //////////////////////////////////////////////////////////////////////////////////////////////
     // 视频分类管理
