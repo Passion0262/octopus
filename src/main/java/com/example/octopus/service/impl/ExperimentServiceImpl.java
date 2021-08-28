@@ -5,6 +5,7 @@ import com.example.octopus.dao.experiment.ExperimentMapper;
 import com.example.octopus.entity.VOs.experiment.ExperimentTimeHistoryVO;
 import com.example.octopus.entity.VOs.experiment.ExperimentTimeVO;
 import com.example.octopus.entity.experiment.Experiment;
+import com.example.octopus.service.CourseService;
 import com.example.octopus.service.ExperimentService;
 import com.example.octopus.service.StudentCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class ExperimentServiceImpl implements ExperimentService {
     @Autowired
     StudentCourseService studentCourseService;
 
+    @Autowired
+    CourseService courseService;
+
     @Override
     public List<Experiment> listExperiments() {
         return experimentMapper.listExperiments();
@@ -52,7 +56,8 @@ public class ExperimentServiceImpl implements ExperimentService {
         //根据experiment id 遍历获取experiment实体
         List<Experiment> exp_list = new ArrayList<Experiment>();
         for (long courseId:courseIdList) {
-            Long experimentId = courseExperimentMapper.getExperimentIdByCourseId(courseId);
+            Long courseIdstatic = courseService.getCourseById(courseId).getCourseStaticId();
+            Long experimentId = courseExperimentMapper.getExperimentIdByCourseId(courseIdstatic);
             if (experimentId!=null) {
                 Experiment exp = getExperimentById(experimentId);
                 if (exp!=null) {

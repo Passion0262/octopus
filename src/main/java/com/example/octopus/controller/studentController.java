@@ -386,7 +386,7 @@ logger.info("videopro:"+videopro);
         Long currvideo_id = Long.parseLong(videoid);
 
         Course course = courseService.getCourseById(courseid_id);
-
+        courseid_id = course.getCourseStaticId();
         model.addAttribute("course", course);
 
         List<Chapter> chapters = chapterService.listChaptersByCourseId(courseid_id);
