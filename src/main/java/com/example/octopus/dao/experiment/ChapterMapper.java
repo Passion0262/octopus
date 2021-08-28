@@ -12,9 +12,9 @@ public interface ChapterMapper {
 
     /**
      * 根据课程Id查询章节
-     * @param courseId 课程id
+     * @param staticCourseId 课程id
      * @return chapter list
      */
-    @Select("SELECT * FROM chapter where course_id = #{courseId} order by chapter_number")
-    List<Chapter> listChaptersByCourseId(long courseId) ;
+    @Select("SELECT * FROM chapter where course_id = #{staticCourseId} order by chapter_number")
+    List<Chapter> listChaptersByCourseId(long staticCourseId) ;
 }

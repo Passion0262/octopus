@@ -13,7 +13,7 @@ public class ChapterServiceImpl implements ChapterService {
     ChapterMapper chapterMapper;
 
     @Override
-    public List<Chapter> listChaptersByCourseId(long courseId) {
-        return chapterMapper.listChaptersByCourseId(courseId);
+    public List<Chapter> listChaptersByCourseId(long staticCourseId) {
+        return chapterMapper.listChaptersByCourseId(staticCourseId);
     }
 }
