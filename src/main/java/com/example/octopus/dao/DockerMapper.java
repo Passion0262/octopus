@@ -19,7 +19,7 @@ public interface DockerMapper {
     @Select("SELECT * FROM docker")
     List<Docker> listAllDockers();
 
-    @Select("SELECT d.* FROM docker d, student_course sc, course c " +
+    @Select("SELECT DISTINCT d.* FROM docker d, student_course sc, course c " +
             "WHERE c.tea_number=#{teaNumber} and d.stu_number=sc.stu_number and sc.course_id=c.id")
     List<Docker> listDockersByTeaId(long teaNumber);
 
