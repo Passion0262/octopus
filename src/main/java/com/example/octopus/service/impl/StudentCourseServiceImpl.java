@@ -81,7 +81,8 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 
 	@Override
 	public boolean insertStudentCourse(StudentCourse studentCourse) {
-		StudentCourse sc = studentCourseMapper.getByStaticId(studentCourseMapper.getStaticId(studentCourse.getCourseId()));
+		// 一个学生只能选择一门静态课程
+		StudentCourse sc = studentCourseMapper.getByStaticId(studentCourseMapper.getStaticId(studentCourse.getCourseId()), studentCourse.getStuNumber());
 //		if (isChosen(stuNumber, courseId))
 		if (sc != null) {
 			deleteStudentCourse(studentCourse.getStuNumber(), studentCourse.getCourseId());

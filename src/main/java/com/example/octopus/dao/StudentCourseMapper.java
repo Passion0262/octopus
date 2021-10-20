@@ -21,11 +21,12 @@ public interface StudentCourseMapper {
 	long getStaticId(long teaCourseId);
 
 	/**
-	 * 通过course_static_id获取实体
-	 * 与上一条共同使用，确保只能选同一course_static_id下的一门course_id
+	 * 通过course_static_id和stu_id获取实体
+	 * 与上一条共同使用，确保学生只能选同一course_static_id下的一门course_id
 	 */
-	@Select("SELECT sc.* FROM student_course sc, course c WHERE #{courseStaticId}=c.course_static_id and c.id=sc.course_id")
-	StudentCourse getByStaticId(long courseStaticId);
+	@Select("SELECT sc.* FROM student_course sc, course c " +
+			"WHERE #{stuNumber}=stu_number and #{courseStaticId}=c.course_static_id and c.id=sc.course_id")
+	StudentCourse getByStaticId(long courseStaticId, long stuNumber);
 
 	/**
 	 * 返回所有学生-课程信息
