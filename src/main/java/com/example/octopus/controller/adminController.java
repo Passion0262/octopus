@@ -503,7 +503,8 @@ public class adminController {
             return new ModelAndView("redirect:/admin_student");
         }
         catch (Exception e){
-            return new ModelAndView("redirect:/admin_error");
+//            return new ModelAndView("redirect:/admin_error");
+            return new ModelAndView("redirect:/admin_student");
         }
     }
 

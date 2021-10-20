@@ -118,7 +118,7 @@
                 success:function (data) {
                     console.log(data);
                     for(var i = 0;i < data.courses.length;i++){
-                        var option = $("<option></option>").text(data.courses[i].courseName);
+                        var option = $("<option></option>").text(data.courses[i].courseName+"——开课教师："+data.courses[i].teaName);
                         option.attr("value", data.courses[i].id);
                         //将option添加到select标签中
                         $("#edit_courseId").append(option);
