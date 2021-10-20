@@ -37,7 +37,7 @@ public interface UserMapper {
     @Select("SELECT s.*, major_name, class_name FROM student s, major, class_ WHERE name = #{name} and s.major_id=major.id and s.class_id=class_.id")
     Student getStudentByName(String name);
 
-    @Insert("INSERT INTO student (stu_number,name,major_id,class_id,school,phone_number,login_number,last_login_time,study_time) VALUES (#{stuNumber},#{name},#{majorId},#{classId},#{school},#{phoneNumber},0,CURRENT_TIMESTAMP,0)")
+    @Insert("INSERT INTO student (name,major_id,class_id,school,phone_number,login_number,last_login_time,study_time) VALUES (#{name},#{majorId},#{classId},#{school},#{phoneNumber},0,CURRENT_TIMESTAMP,0)")
     boolean insertStudent(Student student);
 
     @Update("UPDATE student SET name=#{name},major_id=#{majorId},class_id=#{classId},school=#{school}, phone_number=#{phoneNumber} WHERE stu_number=#{stuNumber}")
