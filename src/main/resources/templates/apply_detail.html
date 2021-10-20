@@ -134,7 +134,7 @@
                     <th>我的申请状态</th>
                     <td id="isapplybtn">
                       <span th:if="${isapplied}==true">
-                         <button type="button"  class="btn btn-danger btn-rounded waves-effect waves-light" th:onclick="cancel_apply([[${course.id}]])">取消课程课程</button>
+                         <button type="button"  class="btn btn-danger btn-rounded waves-effect waves-light" th:onclick="cancel_apply([[${course.id}]])">取消课程申请</button>
                       </span>
                       <span th:if="${isapplied}==false">
                     <button type="button" class="btn btn-success btn-rounded waves-effect waves-light" th:onclick="sure_apply([[${course.id}]])">申请课程</button>

@@ -50,14 +50,14 @@ public class LoginController {
     @ResponseBody
     @PostMapping("/reset_pwd_confirm")
     public Map reset_pwd_confirm(HttpServletRequest request) {
+        System.out.println("收到");
         long username = Long.parseLong(request.getParameter("username"));
         String phone = request.getParameter("phone");
         String new_pwd = request.getParameter("new_pwd");
-        logger.info("用户名：" + username);
+        logger.info("账号：" + username);
         logger.info("手机号码：" + phone);
         logger.info("新密码：" + new_pwd);
         Map<String, Object> result = new HashMap<String, Object>();
-        //System.out.println(sysUserRoleService.updatePasswordByIdAndPhone(username, phone, new_pwd));
         if(sysUserRoleService.updatePasswordByIdAndPhone(username, phone, new_pwd)){
             result.put("msg", "success");
         }
@@ -66,6 +66,9 @@ public class LoginController {
         }
         return result;
     }
+
+
+
 
 
 
