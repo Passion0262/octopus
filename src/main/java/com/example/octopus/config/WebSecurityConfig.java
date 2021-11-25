@@ -65,6 +65,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.headers().frameOptions().disable();
+
+
+
+
         http.authorizeRequests()
                 // 如果有允许匿名的url，填在下面
 //                .antMatchers().permitAll()
@@ -77,7 +82,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .defaultSuccessUrl("/").permitAll()
                 .successForwardUrl("/").permitAll()
                 //  登陆失败url
-                .failureUrl("/login/error")
+                .failureUrl("/loginerror")
                 .authenticationDetailsSource(authenticationDetailsSource)
 
 

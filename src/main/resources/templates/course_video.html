@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
+
   <title>AI实训研发软件</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta content="AI实训研发软件" name="description" />
@@ -23,9 +24,9 @@
         <!-- LOGO -->
         <div class="navbar-brand-box">
           <a href="index" class="logo">
-            <span class="logo-sm"><img src="http://localhost:8080/static/images/logo-sm-dark.png" alt="" height="22"></span>
+            <span class="logo-sm"><img src="../../static/images/logo-sm-dark.png" alt="" height="22"></span>
             <span class="logo-lg row" >
-        <img class="col-3" src="http://localhost:8080/static/images/favicon.png" alt="" height="30" style="  margin-top: 20px;">
+        <img class="col-3" src="../../static/images/favicon.png" alt="" height="30" style="  margin-top: 20px;">
         <span class="col-9" style="color: #fff;line-height: 15px;margin-top: 20px;padding-left: 0px;">匀熵教育人工智能实训研发系统软件</span>
     </span>
           </a>
@@ -222,6 +223,13 @@
           </div>
 
         </div><!-- end row -->
+
+        <div class="row">
+          <div class="col-12" >
+          <iframe id="quizdiv" src="" width="100%" height="350px" frameborder="0" scrolling="auto"></iframe>
+          </div>
+
+        </div>
 
       </div><!-- container-fluid -->
     </div><!-- End Page-content -->
@@ -438,6 +446,7 @@
     // alert(video);
      $("#videotitle").html(video.name);
      $("#videoplay").attr("src",video.path);
+    $("#quizdiv").attr("src","/course_video_quiz/"+video.id);
 
 
 

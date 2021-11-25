@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
+
   <title>AI实训研发软件</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta content="AI实训研发软件" name="description" />
@@ -17,101 +18,22 @@
 <body data-topbar="dark">
 <!-- Begin page -->
 <div id="layout-wrapper">
-  <header id="page-topbar">
-    <div class="navbar-header">
-      <div class="d-flex">
-        <!-- LOGO -->
-        <div class="navbar-brand-box">
-          <a href="index" class="logo">
-            <span class="logo-sm"><img src="http://localhost:8080/static/images/logo-sm-dark.png" alt="" height="22"></span>
-            <span class="logo-lg row" >
-        <img class="col-3" src="http://localhost:8080/static/images/favicon.png" alt="" height="30" style="  margin-top: 20px;">
-        <span class="col-9" style="color: #fff;line-height: 15px;margin-top: 20px;padding-left: 0px;">匀熵教育人工智能实训研发系统软件</span>
-    </span>
-          </a>
-        </div>
-        <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn"><i class="ri-menu-2-line align-middle"></i></button>
-      </div>
 
 
-      <div class="d-flex">
-
-        <div class="dropdown d-none d-lg-inline-block ml-1"><button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen"><i class="ri-fullscreen-line"></i></button></div>
-
-        <!-- 个人信息展示 退出登录操作 -->
-        <div class="dropdown d-inline-block user-dropdown">
-          <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <!--                        <img class="rounded-circle header-profile-user" src="static/images/users/avatar-2.jpg" alt="Header Avatar">-->
-            <!--                        <span class="d-none d-xl-inline-block ml-1" th:text="${stuname}"></span>-->
-            <span class=" " th:text="${stuname}"></span>
-            <span class=" d-none" ></span>
-            <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
-          </button>
-          <div class="dropdown-menu dropdown-menu-right">
-            <!-- item-->
-            <a class="dropdown-item" href="/userinfo"><i class="ri-user-line align-middle mr-1"></i>个人资料</a>
-            <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="/logout"><i class="ri-shut-down-line align-middle mr-1 text-danger"></i>注销</a>
-          </div>
-        </div>
-        <!-- 个人信息展示 退出登录操作 -->
-
-
-      </div>
-    </div>
-  </header>
-
-  <!-- ========== Left Sidebar Start ========== -->
-  <div class="vertical-menu">
-    <div data-simplebar class="h-100">
-      <!--- Sidemenu -->
-      <div id="sidebar-menu">
-        <!-- Left Menu Start -->
-        <ul class="metismenu list-unstyled" id="side-menu">
-
-
-          <li><a href="/index" class="waves-effect"><i class="ri-dashboard-line"></i><span>首页</span></a></li>
-          <li><a href="/applycourse" class=" waves-effect"><i class="ri-leaf-line"></i><span>申请学习</span></a></li>
-          <li><a href="/mycourse" class=" waves-effect"><i class="ri-plant-line"></i><span>我的课程</span></a></li>
-          <li><a href="/experiment_task" class="waves-effect"><i class="ri-checkbox-multiple-blank-line"></i><span>实验任务</span></a></li>
-          <li><a href="/projects" class=" waves-effect"><i class="ri-reserved-line"></i><span>项目实战</span></a></li>
-          <li><a href="/studylog" class=" waves-effect"><i class="ri-reserved-line"></i><span>学习记录</span></a></li>
-          <li><a href="/datasets" class=" waves-effect"><i class="ri-download-cloud-line"></i><span>数据集</span></a></li>
-
-
-
-        </ul>
-      </div><!-- Sidebar -->
-    </div>
-  </div><!-- Left Sidebar End -->
   <!-- ============================================================== -->
-  <!-- Start right Content here -->
-  <!-- ============================================================== -->
-  <div class="main-content">
-    <div class="page-content">
-      <div class="container-fluid">
+
+
+
         <!-- start page title -->
-        <div class="row">
-          <div class="col-12">
-            <!-- 修改路径 -->
-            <div class="page-title-box d-flex align-items-center justify-content-between">
-              <h4 class="mb-0">课程学习测验</h4>
-              <div class="page-title-right">
-                <ol class="breadcrumb m-0">
-                  <li class="breadcrumb-item"><a href="/index"> 首页</a></li>
-                  <li class="breadcrumb-item"><a href="/mycourse">我的课程</a></li>
-                  <li class="breadcrumb-item active">课程学习测验</li>
-                </ol>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
 
-          <div class="col-md-8">
+
+
+          <div class="col-12" style="padding: 0;">
             <div class="card">
               <div class="card-header bg-transparent border-bottom">
               <h4 class="card-title">
-                <span th:text="${video.name}"></span>
+<!--                <span th:text="${video.name}"></span>-->
+                <span >课程测验</span>
               </h4>
               </div>
               <div class="card-body">
@@ -137,9 +59,17 @@
                       </li>
                     </ul>
                   </form>
+
+                    <button id="submitbutton" type="button"  class="btn btn-outline-dark waves-effect waves-light"
+                            onclick="submit()">提交</button>
+
+                     <div id="quiz_answer" class="" style="margin-top: 20px;"></div>
                     </span>
 
 
+
+
+
                 </div>
               </div>
             </div>
@@ -147,47 +77,12 @@
 
 
 
-          <div class="col-md-4" style="height: 60%;">
-            <div class="card">
-              <div class="card-header bg-transparent border-bottom">
-                <button id="submitbutton" type="button"  class="btn btn-outline-dark waves-effect waves-light"
-                        onclick="submit()">提交</button>
-                <button id="backbutton" type="button"  class="btn btn-outline-dark waves-effect waves-light"
-                        onclick="tovideo()">返回视频</button>
-              </div>
-              <div class="card-body">
-
-
-                <div id="quiz_answer" class="">
-
-
-                </div>
 
 
 
 
 
-              </div>
-            </div>
-          </div>
 
-        </div><!-- end row -->
-
-      </div><!-- container-fluid -->
-    </div><!-- End Page-content -->
-    <footer class="footer">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-sm-6">
-            <!-- <script>document.write(new Date().getFullYear())</script>© AI实训研发软件 -->
-          </div>
-          <div class="col-sm-6">
-            <div class="text-sm-right d-none d-sm-block"><script>document.write(new Date().getFullYear())</script>© AI实训研发软件</div>
-          </div>
-        </div>
-      </div>
-    </footer>
-  </div><!-- end main content-->
 </div><!-- END layout-wrapper -->
 
 
@@ -219,9 +114,7 @@
 
   });
 
-  function tovideo(){
-    location.href='/course_video/'+[[${video.courseId}]]+'/'+[[${video.id}]];
-  }
+
 
   function submit(){
     var r = confirm("是否确认提交？");
@@ -241,12 +134,15 @@
         var Qid = "Q" + vqs[i].id+"";
         var cans = vqs[i].optionAnswer;
         var ans = $("input[name="+Qid+"]:checked").val();
+        console.log("cans"+cans);
+        console.log("ans"+ans);
         if (ans == cans) correctnum++;
         if(ans==null){
           strs += "第"+(i+1)+"题，正确答案是"+cans+",你没有做出选择</br>";
         }else{
           strs += "第"+(i+1)+"题，正确答案是"+cans+",你的选择是"+ans+"</br>";
         }
+        console.log("strs"+strs);
 
       }
       strs = "一共"+allnum+"道题，做对了"+correctnum+"道题</br></br>"+strs;

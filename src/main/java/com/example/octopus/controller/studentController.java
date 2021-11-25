@@ -116,6 +116,14 @@ public class studentController {
 //        return "login";
     }
 
+
+    @RequestMapping("/loginerror")
+    public String loginerror(Model model, HttpServletRequest request, HttpServletResponse response) {
+        logger.info("登录失败");
+
+        return "auth-login-error";
+    }
+
     @RequestMapping("/")
     public String showHome(Model model, HttpServletRequest request, HttpServletResponse response) {
 
