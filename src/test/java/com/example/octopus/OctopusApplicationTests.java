@@ -1,11 +1,11 @@
 package com.example.octopus;
 
-import com.example.octopus.dao.ClassMapper;
-import com.example.octopus.dao.DockerMapper;
-import com.example.octopus.dao.TeacherMapper;
-import com.example.octopus.dao.UserMapper;
+import com.example.octopus.dao.*;
 import com.example.octopus.dao.experiment.*;
 import com.example.octopus.entity.user.Docker;
+import com.example.octopus.entity.user.PersonalUser;
+import com.example.octopus.entity.user.Student;
+import com.example.octopus.entity.user.StudentCourse;
 import com.example.octopus.service.*;
 import com.example.octopus.utils.ShellUtils;
 import com.jcraft.jsch.JSchException;
@@ -39,8 +39,7 @@ class OctopusApplicationTests {
 
 	@Autowired
 	ClassService classService;
-	@Autowired
-	StudentCourseService studentCourseService;
+
 	@Autowired
 	UserService userService;
 	@Autowired
@@ -81,14 +80,20 @@ class OctopusApplicationTests {
 	@Autowired
 	SubExperimentReportSubmitService reportSubmitService;
 
+	@Autowired
+	StudentCourseMapper studentCourseMapper;
+
+	@Autowired
+	StudentCourseService studentCourseService;
+
+	@Autowired
+	PersonalUserService personalUserService;
+
 	@Test
 	void interfaceTest() {
-		System.out.println(reportSubmitService.listReportAnalysisByRoleAndSubExpId(1, 1));
-		System.out.println(reportSubmitService.listReportSummaryByRole(1));
-		System.out.println(reportSubmitService.listClassReportSummaryByRoleAndSubExpId(1, 1));
-		System.out.println(reportSubmitService.getReportAnalysisByRoleAndSubExpIdAndClassId(1, 1,2));
-		System.out.println(reportSubmitService.listClassReportByRoleAndSubExpIdAndClassId(1, 1, 2));
-		System.out.println(reportSubmitService.getNextReportByTeaIdAndSubExpIdAndClassId(1, 1,1,2));
+		PersonalUser p = new PersonalUser();
+		p.setPersonalTel(13115076869L);
+		System.out.println(personalUserService.updateLoginInfo(p.getPersonalTel()));
 	}
 
 }
