@@ -9,7 +9,10 @@ import lombok.Data;
  */
 @Data
 public class CategoryCourse {
+
 	private String categoryName;  //类别名称 主键
+
 	private String brief;  //类别简介
+
 	private String staticCourseIds;  //类别所含的静态课程id，之间用英文分号;隔开
 }

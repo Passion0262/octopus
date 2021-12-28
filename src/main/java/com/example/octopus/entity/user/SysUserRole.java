@@ -15,7 +15,7 @@ public class SysUserRole implements Serializable {
 
     private long userId;
 
-    private long roleId;
+    private long roleId;  //1为管理员，2为学生，3为普通教师，4为个人用户
 
     private String password;
 
