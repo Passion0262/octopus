@@ -1,11 +1,11 @@
-package com.example.octopus.entity.user;
+package com.example.octopus.entity.personal;
 
 import lombok.Data;
 
 import java.sql.Timestamp;
 
 /**
- * 个人用户信息实体类personal_user
+ * 个人用户信息实体类
  * @author: Hao
  * @date: 2021/12/28 19:51
  */
@@ -16,8 +16,6 @@ public class PersonalUser {
 
 	// 数据库personal_user表中不存储password，但为方便，在实体类中保留。对password进行操作时需要在implement中调用sysUserRoleMapper中的方法进行操作
 	private String password;
-
-	private boolean tourist;  //是否为游客（如不是才去检索其购买的课程）
 
 	private int loginNumber;  //登录次数
 

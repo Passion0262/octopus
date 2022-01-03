@@ -1,10 +1,10 @@
-package com.example.octopus.service.impl;
+package com.example.octopus.service.personal.impl;
 
-import com.example.octopus.dao.PersonalUserMapper;
+import com.example.octopus.dao.personal.PersonalUserMapper;
 import com.example.octopus.dao.SysUserRoleMapper;
-import com.example.octopus.entity.user.PersonalUser;
+import com.example.octopus.entity.personal.PersonalUser;
 import com.example.octopus.entity.user.SysUserRole;
-import com.example.octopus.service.PersonalUserService;
+import com.example.octopus.service.personal.PersonalUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

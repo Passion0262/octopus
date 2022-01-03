@@ -1,6 +1,6 @@
-package com.example.octopus.dao;
+package com.example.octopus.dao.personal;
 
-import com.example.octopus.entity.user.PersonalUser;
+import com.example.octopus.entity.personal.PersonalUser;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +24,7 @@ public interface PersonalUserMapper {
 			"WHERE personal_tel = #{personalTel}")
 	boolean updateLoginInfoByTel(long personalTel);
 
+	//todo 无tourist列，如有新的个人用户信息内容，再做更改
 	/**
 	 * 更新除登录信息外的个人用户信息
 	 */

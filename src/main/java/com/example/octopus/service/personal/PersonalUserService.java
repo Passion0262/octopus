@@ -1,6 +1,6 @@
-package com.example.octopus.service;
+package com.example.octopus.service.personal;
 
-import com.example.octopus.entity.user.PersonalUser;
+import com.example.octopus.entity.personal.PersonalUser;
 
 /**
  * @author: Hao
