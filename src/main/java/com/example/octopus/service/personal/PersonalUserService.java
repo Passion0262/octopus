@@ -1,6 +1,7 @@
 package com.example.octopus.service.personal;
 
 import com.example.octopus.entity.personal.PersonalUser;
+import com.example.octopus.entity.personal.PersonalUserManageVO;
 
 import java.util.List;
 
@@ -11,9 +12,9 @@ import java.util.List;
 
 public interface PersonalUserService {
 	/**
-	 * 返回所有个人用户列表
+	 * 用户管理界面，返回所有个人用户信息列表。包含手机号码、登录次数、购买套餐详情、最近登录时间
 	 */
-	List<PersonalUser> listAllPersonalUser();
+	List<PersonalUserManageVO> listAllPersonalUserInfo();
 
 	/**
 	 * 通过个人用户电话号（账号）获取个人用户信息

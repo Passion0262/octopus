@@ -1,6 +1,7 @@
 package com.example.octopus.dao.personal;
 
 import com.example.octopus.entity.personal.PersonalUser;
+import com.example.octopus.entity.personal.PersonalUserManageVO;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
@@ -13,8 +14,12 @@ import java.util.List;
 @Component
 @Mapper
 public interface PersonalUserMapper {
-	@Select("SELECT * FROM personal_user")
-	List<PersonalUser> listAllPersonUser();
+	/**
+	 * 用户管理界面，返回所有个人用户列表。包含手机号码、登录次数、购买套餐详情、最近登录时间
+	 */
+	@Select("SELECT pu.*, p.name AS purchased_plans FROM personal_user pu, plan p, personal_plan pp " +
+			"WHERE pu.personal_tel=pp.personal_tel AND pp.plan_id=p.id")
+	List<PersonalUserManageVO> listAllPersonUser();
 
 	/**
 	 * 根据个人用户电话号（账号）获取个人用户信息对象
