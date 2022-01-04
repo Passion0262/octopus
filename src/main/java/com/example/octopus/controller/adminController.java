@@ -5,8 +5,10 @@ import com.example.octopus.entity.VOs.experiment.ReportAnalysisVO;
 import com.example.octopus.entity.dataset.Dataset;
 import com.example.octopus.entity.experiment.SubExperimentReportSubmit;
 import com.example.octopus.entity.experiment.Video;
+import com.example.octopus.entity.personal.PersonalUser;
 import com.example.octopus.entity.user.*;
 import com.example.octopus.service.*;
+import com.example.octopus.service.personal.*;
 import com.example.octopus.utils.CookieTokenUtils;
 import com.example.octopus.utils.PropertiesUtil;
 import com.example.octopus.utils.TokenCheckUtils;
@@ -92,6 +94,15 @@ public class adminController {
     @Autowired
     DockerService dockerService;
 
+    @Autowired
+    PlanService planService;
+
+    @Autowired
+    CategoryService categoryService;
+
+    @Autowired
+    PersonalUserService personalUserService;
+
     private final static String COOKIE_NAME = "cookietea";
 
     private CookieTokenUtils cookieThings = new CookieTokenUtils();
@@ -165,6 +176,156 @@ public class adminController {
     }
 
 
+    //首页 -- 个人用户
+    @RequestMapping("/admin_index_for_personal")
+    public String admin_personal_index(HttpServletRequest request, Model model) {
+        String teaNumber = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (!teaNumber.equals(cookieThings.getCookieUserNum(request, COOKIE_NAME))) return "redirect:/login";
+
+        if (!cookieCheck(model, request)) return "redirect:/login";
+
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
+
+        try{
+            model.addAttribute("number_of_personal_user", 200);
+            model.addAttribute("number_of_active_user", 200);
+            model.addAttribute("number_of_plan", planService.listAllPlan().size());
+            model.addAttribute("number_of_category", categoryService.listAllCategory().size());
+            return "admin_index_for_personal";
+        }catch (Exception e) {
+            return "redirect:/admin_error";
+        }
+    }
+
+    //用户管理 -- 个人用户
+    @RequestMapping("/admin_personal_info")
+    public String admin_personal_info(HttpServletRequest request, Model model) {
+        String teaNumber = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (!teaNumber.equals(cookieThings.getCookieUserNum(request, COOKIE_NAME))) return "redirect:/login";
+
+        if (!cookieCheck(model, request)) return "redirect:/login";
+
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
+
+        try{
+            return "admin_personal_info";
+        }catch (Exception e) {
+            return "redirect:/admin_error";
+        }
+    }
+
+    // 增加个人用户
+    @GetMapping("/admin_personal_add")
+    public ModelAndView admin_personal_add(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
+        // 只有管理员能够增加用户
+        if (role_id == 1) {
+            logger.info("管理员{}进入admin_personal_add，获取一个新Personal()", teaNum);
+            try {
+                model.addAttribute("personal", new PersonalUser());
+                return new ModelAndView("admin_personal_add", "permodel", model);
+            }
+            catch (Exception e){
+                return new ModelAndView("redirect:/admin_error");
+            }
+        }
+        else{
+            return new ModelAndView("redirect:/login");
+        }
+    }
+
+    @PostMapping("/add_personal")
+    public ModelAndView add_personal(PersonalUser personalUser, HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
+        // 只有管理员能够增加
+        if (role_id == 1) {
+            logger.info("管理员{}提交新增的个人用户: [{}]", teaNum, personalUser);
+            try {
+                personalUserService.insertPersonalUser(personalUser);
+                return new ModelAndView("redirect:/admin_personal_info");
+            }
+            catch (Exception e){
+                return new ModelAndView("redirect:/admin_error");
+            }
+        }
+        else{
+            return new ModelAndView("redirect:/login");
+        }
+    }
+
+    //修改教师
+    @GetMapping("/admin_personal_edit")
+    public ModelAndView admin_personal_edit(HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
+
+        if (role_id == 1) {
+            long personalTel = Long.parseLong(request.getParameter("personalTel"));
+            logger.info("管理员{}进入admin_personal_edit，获取PersonalUser, personalTel={}", teaNum, personalTel);
+            try {
+                PersonalUser personalUser = personalUserService.getPersonalUser(personalTel);
+                model.addAttribute("personalUser", personalUser);
+                return new ModelAndView("admin_personal_edit", "permodel", model);
+            }
+            catch (Exception e){
+                return new ModelAndView("redirect:/admin_error");
+            }
+        }
+        else{
+            return new ModelAndView("redirect:/login");
+        }
+    }
+
+    @PostMapping("/edit_personal")
+    public ModelAndView edit_personal(PersonalUser personalUser, HttpServletRequest request, Model model) {
+        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
+
+        if (role_id == 1) {
+            logger.info("管理员{}提交修改的personal: [{}]", teaNum, personalUser);
+            try {
+                personalUserService.updatePersonalUser(personalUser);
+                return new ModelAndView("redirect:/admin_personal_info");
+            }
+            catch (Exception e){
+                return new ModelAndView("redirect:/admin_error");
+            }
+        }
+        else{
+            return new ModelAndView("redirect:/login");
+        }
+    }
+
+    //套餐管理 -- 个人用户
+    @RequestMapping("/admin_plan_for_personal")
+    public String admin_plan_for_personal(HttpServletRequest request, Model model) {
+        String teaNumber = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (!teaNumber.equals(cookieThings.getCookieUserNum(request, COOKIE_NAME))) return "redirect:/login";
+
+        if (!cookieCheck(model, request)) return "redirect:/login";
+
+        long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
+
+        try{
+            model.addAttribute("plans", planService.listAllPlan());
+            return "admin_plan_for_personal";
+        }catch (Exception e) {
+            return "redirect:/admin_error";
+        }
+    }
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     //首页
     @RequestMapping("/admin_index")
     public String confirmlogin(HttpServletRequest request, Model model) {
@@ -178,30 +339,30 @@ public class adminController {
 
         logger.info("管理员/教师{}进入admin_index", teaNum);
         try {
-        model.addAttribute("sizeof_experiments", subExperimentService.listSubExperimentByRole(teaNum).size());
-        model.addAttribute("sizeof_projects", projectService.listProjects().size());
-        model.addAttribute("sizeof_datasets", datasetService.listDatasets().size());
-        model.addAttribute("sizeof_course_static", courseStaticService.listAllCourseStatic().size());
-        if (role_id == 1){
-            model.addAttribute("sizeof_courses", courseService.listCourses().size());
+            model.addAttribute("sizeof_experiments", subExperimentService.listSubExperimentByRole(teaNum).size());
+            model.addAttribute("sizeof_projects", projectService.listProjects().size());
+            model.addAttribute("sizeof_datasets", datasetService.listDatasets().size());
+            model.addAttribute("sizeof_course_static", courseStaticService.listAllCourseStatic().size());
+            if (role_id == 1){
+                model.addAttribute("sizeof_courses", courseService.listCourses().size());
+                model.addAttribute("sizeof_students", userService.listStudents().size());
+            }
+            else{
+                model.addAttribute("sizeof_courses", courseService.listCoursesByTeaNumber(teaNum).size());
+                model.addAttribute("sizeof_students", userService.listStudentsByTeaNumber(teaNum));
+            }
+            model.addAttribute("sizeof_videos", videoService.listVideos().size());
+            model.addAttribute("sizeof_teachers", teacherService.getAllTeachers().size());
             model.addAttribute("sizeof_students", userService.listStudents().size());
-        }
-        else{
-            model.addAttribute("sizeof_courses", courseService.listCoursesByTeaNumber(teaNum).size());
-            model.addAttribute("sizeof_students", userService.listStudentsByTeaNumber(teaNum));
-        }
-        model.addAttribute("sizeof_videos", videoService.listVideos().size());
-        model.addAttribute("sizeof_teachers", teacherService.getAllTeachers().size());
-        model.addAttribute("sizeof_students", userService.listStudents().size());
-        model.addAttribute("sizeof_dockers", dockerService.listDockerByRole(teaNum).size());
-        model.addAttribute("sizeof_active_dockers", dockerService.listDockerByRoleAndAwake(teaNum, true).size());
-        model.addAttribute("lastLoginTime", teacherService.getTeacherByTeaNumber(teaNum).getLastLoginTime());
-        model.addAttribute("sumExperimentTime", teacherService.getSumExperimentTimeByRole(teaNum));
-        model.addAttribute("sumVideoTime", teacherService.getSumVideoTimeByRole(teaNum));
-        model.addAttribute("docker_status", dockerService.countDockerByStatus(teaNum));
+            model.addAttribute("sizeof_dockers", dockerService.listDockerByRole(teaNum).size());
+            model.addAttribute("sizeof_active_dockers", dockerService.listDockerByRoleAndAwake(teaNum, true).size());
+            model.addAttribute("lastLoginTime", teacherService.getTeacherByTeaNumber(teaNum).getLastLoginTime());
+            model.addAttribute("sumExperimentTime", teacherService.getSumExperimentTimeByRole(teaNum));
+            model.addAttribute("sumVideoTime", teacherService.getSumVideoTimeByRole(teaNum));
+            model.addAttribute("docker_status", dockerService.countDockerByStatus(teaNum));
 //            logger.info("实验时间：{}", teacherService.getSumExperimentTimeByRole(teaNum));
 //            logger.info("视频时间：{}", teacherService.getSumVideoTimeByRole(teaNum));
-        return "admin_index";
+            return "admin_index";
         } catch (Exception e) {
             return "redirect:/admin_error";
         }

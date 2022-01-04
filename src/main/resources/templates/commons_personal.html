@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <style type="text/css">
+    #sidebar-menu ul li a {
+      font-size: 14px;
+    }
+  </style>
+
+  <title th:fragment="title">大数据与人工智能平台|个人用户管理</title>
+</head>
+
+
+<body data-topbar="dark">
+  <!-- ========== Topbar Start ========== -->
+  <header id="page-topbar" th:fragment="topbar(username)">
+    <div class="navbar-header">
+      <div class="d-flex">
+        <!-- LOGO -->
+<!--        <div class="navbar-brand-box">-->
+<!--          <a href="admin_index" class="logo logo-light">-->
+<!--            <span class="logo-sm">-->
+<!--                <img src="static/images/logo-sm-dark.png" alt="" height="22">-->
+<!--            </span>-->
+<!--            <span class="logo-lg">-->
+<!--                <img src="static/images/logo_light.png" alt="" height="30">-->
+<!--            </span>-->
+<!--          </a>-->
+<!--        </div>-->
+        <div class="navbar-brand-box">
+          <a href=" " class="logo">
+            <span class="logo-sm"></span>
+            <span class="logo-lg row" >
+              <span class="col-9" style="font-size:15px;color: #fff;line-height: 15px;margin-top: 30px;padding-left: 0px;padding-right: 0px;">大数据与人工智能平台</span>
+            </span>
+          </a>
+        </div>
+        <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn">
+          <i class="ri-menu-2-line align-middle"></i>
+        </button>
+      </div>
+
+
+      <div class="d-flex">
+        <div class="dropdown d-lg-inline-block ml-1">
+          <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
+            <i class="ri-fullscreen-line"></i>
+          </button>
+        </div>
+
+        <!-- 个人信息展示 退出登录操作 -->
+        <div class="dropdown d-inline-block user-dropdown" id="user-info">
+          <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true">
+  <!--          <img class="rounded-circle header-profile-user" src="static/images/users/avatar-2.jpg" alt="Header Avatar">-->
+            <span class="d-xl-inline-block ml-1" th:text="${username}"></span>
+            <i class="mdi mdi-chevron-down d-xl-inline-block"></i>
+          </button>
+          <div class="dropdown-menu dropdown-menu-right">
+            <!-- item-->
+<!--            <a class="dropdown-item" href="admin_userinfo"><i class="ri-user-line align-middle mr-1"></i>个人资料</a>-->
+<!--            <div class="dropdown-divider"></div>-->
+            <a class="dropdown-item text-danger" href="login"><i class="ri-shut-down-line align-middle mr-1 text-danger"></i>退出</a>
+          </div>
+        </div>
+        <!-- 个人信息展示 退出登录操作 -->
+      </div>
+    </div>
+  </header>
+  <!-- Topbar End -->
+
+  <!-- ========== Left Sidebar Start ========== -->
+  <div class="vertical-menu" th:fragment="leftSidebar(role)">
+    <div data-simplebar class="h-100">
+      <!--- Sidemenu -->
+      <div id="sidebar-menu">
+        <!-- Left Menu Start -->
+        <ul class="metismenu list-unstyled" id="side-menu">
+          <li>
+            <a href="admin_index_for_personal" class="waves-effect">
+              <i class="ri-home-5-line"></i>
+              <span>首页</span>
+            </a>
+          </li>
+          <li>
+            <a href="admin_personal_info" class="waves-effect">
+              <i class="ri-team-line"></i>
+              <span>用户管理</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="admin_plan_for_personal" class="waves-effect">
+              <i class="ri-team-line"></i>
+              <span>套餐管理</span>
+            </a>
+          </li>
+
+<!--          <li>-->
+<!--            <a href="admin_video_for_personal" class="waves-effect ">-->
+<!--              <i class="ri-slideshow-3-line"></i>-->
+<!--              <span>视频课程</span>-->
+<!--            </a>-->
+<!--          </li>-->
+
+
+        </ul>
+      </div>
+      <!-- Sidebar -->
+    </div>
+  </div>
+  <!-- Left Sidebar End -->
+
+  <!-- ========== Footer Start ========== -->
+  <footer class="footer" th:fragment="footer">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-6">
+        </div>
+        <div class="col-sm-6">
+          <div class="text-sm-right  d-sm-block"><script>document.write(new Date().getFullYear())</script>© AI实训研发软件</div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- Footer End -->
+
+</body>
