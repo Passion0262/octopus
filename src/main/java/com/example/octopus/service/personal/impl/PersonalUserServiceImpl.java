@@ -8,6 +8,8 @@ import com.example.octopus.service.personal.PersonalUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author: Hao
  * @date: 2021/12/29 10:34
@@ -20,6 +22,11 @@ public class PersonalUserServiceImpl implements PersonalUserService {
 
 	@Autowired
 	SysUserRoleMapper sysUserRoleMapper;
+
+	@Override
+	public List<PersonalUser> listAllPersonalUser(){
+		return personalUserMapper.listAllPersonUser();
+	}
 
 	@Override
 	public PersonalUser getPersonalUser(long personalTel){

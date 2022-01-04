@@ -4,6 +4,8 @@ import com.example.octopus.entity.personal.PersonalUser;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * @author: Hao
  * @date: 2021/12/29 10:35
@@ -11,6 +13,9 @@ import org.springframework.stereotype.Component;
 @Component
 @Mapper
 public interface PersonalUserMapper {
+	@Select("SELECT * FROM personal_user")
+	List<PersonalUser> listAllPersonUser();
+
 	/**
 	 * 根据个人用户电话号（账号）获取个人用户信息对象
 	 */

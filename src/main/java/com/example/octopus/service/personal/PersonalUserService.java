@@ -2,12 +2,19 @@ package com.example.octopus.service.personal;
 
 import com.example.octopus.entity.personal.PersonalUser;
 
+import java.util.List;
+
 /**
  * @author: Hao
  * @date: 2021/12/29 9:39
  */
 
 public interface PersonalUserService {
+	/**
+	 * 返回所有个人用户列表
+	 */
+	List<PersonalUser> listAllPersonalUser();
+
 	/**
 	 * 通过个人用户电话号（账号）获取个人用户信息
 	 * @param personalTel 个人用户电话号（账号）

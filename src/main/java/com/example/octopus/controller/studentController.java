@@ -9,11 +9,13 @@ import com.example.octopus.entity.VOs.video.VideoTimeHistoryVO;
 import com.example.octopus.entity.dataset.Dataset;
 import com.example.octopus.entity.experiment.*;
 import com.example.octopus.entity.experiment.Module;
+import com.example.octopus.entity.personal.PersonalUser;
 import com.example.octopus.entity.project.Project;
 import com.example.octopus.entity.project.ProjectModule;
 import com.example.octopus.entity.project.SubProject;
 import com.example.octopus.entity.user.Teacher;
 import com.example.octopus.service.*;
+import com.example.octopus.service.personal.PersonalUserService;
 import com.example.octopus.utils.CookieTokenUtils;
 import com.example.octopus.utils.PropertiesUtil;
 import com.example.octopus.utils.TokenCheckUtils;
@@ -89,6 +91,9 @@ public class studentController {
     @Autowired
     VideoQuestionService videoQuestionService;
 
+    @Autowired
+    PersonalUserService personalUserService;
+
 
     private final static String COOKIE_NAME = "cookiestu";
 
@@ -136,6 +141,13 @@ public class studentController {
             cookieThings.setCookie(userNumber, stu.getName(),request, response, COOKIE_NAME);
             userService.updateLoginInfo(Long.parseLong(userNumber));
             return "redirect:/index";
+        } else if(role == 4){
+            //身份为个人用户，进入个人用户系统
+            PersonalUser personal = personalUserService.getPersonalUser(Long.parseLong(userNumber));
+            logger.info("当前登陆身份为：个人用户        欢迎您，" + userNumber);
+            cookieThings.setCookie(userNumber, String.valueOf(personal.getPersonalTel()), request,response, "cookietea");
+            teacherService.updateLoginInfo(Long.parseLong(userNumber));
+            return "redirect:/admin_index_for_personal";
         } else {
             //身份为教师或管理员，进入后台系统
             Teacher tea = teacherService.getTeacherByTeaNumber(Long.parseLong(userNumber));
