@@ -52,7 +52,7 @@
                                 <div class="col-md-3">
                                     <div class="card">
                                         <div class="card-body">
-                                            <a  href="admin_course_static">
+                                            <a  href="#">
                                                 <div class="media">
                                                     <div class="media-body overflow-hidden">
                                                         <p class="text-truncate font-size-14 mb-2"></p>
@@ -72,7 +72,7 @@
                                 <div class="col-md-3">
                                     <div class="card">
                                         <div class="card-body">
-                                            <a  href="admin_course">
+                                            <a  href="admin_personal_info">
                                                 <div class="media">
                                                     <div class="media-body overflow-hidden">
                                                         <p class="text-truncate font-size-14 mb-2"></p>
@@ -92,7 +92,7 @@
                                 <div class="col-md-3">
                                     <div class="card">
                                         <div class="card-body">
-                                            <a href="admin_project">
+                                            <a href="admin_plan">
                                                 <div class="media">
                                                     <div class="media-body overflow-hidden">
                                                         <p class="text-truncate font-size-14 mb-2"></p>
@@ -117,7 +117,7 @@
                                 <div class="col-md-3">
                                     <div class="card">
                                         <div class="card-body">
-                                            <a href="admin_experiment_detail">
+                                            <a href="#">
                                                 <div class="media">
                                                     <div class="media-body overflow-hidden">
                                                         <p class="text-truncate font-size-14 mb-2"></p>
@@ -152,6 +152,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="col-md-4">
                                     <div class="card">
                                         <div class="card-body">
@@ -159,7 +160,24 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="col-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div id="chart3" style="height: 340px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div id="chart4" style=" height: 340px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
                         </div>
                     </div>
 
@@ -242,9 +260,112 @@
                 ]
             };
 
-            option2 = {
+            var option2 = {
                 title : {
-                    text: '套餐购买比例',
+                    text: '用户类别比例',
+                    x:'center'
+                },
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient : 'vertical',
+                    x : 'right',
+                    y: 50,
+                    data:['套餐用户','非套餐用户']
+                },
+                calculable : true,
+                series : [
+                    {
+                        name:'用户',
+                        type:'pie',
+                        radius : '55%',
+                        center: ['50%', '60%'],
+                        data:[
+                            {value:20, name:'套餐用户'},
+                            {value:50, name:'非套餐用户'}
+                        ]
+                    }
+                ]
+            };
+
+            var option3 = {
+                title: {
+                    text: '套餐销售量排名',
+                    x:'center'
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                },
+                // legend: {
+                //     // data: ['2011年', '2012年']
+                // },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    data: ['套餐1', '套餐2', '套餐3', '套餐4', '套餐5']
+                },
+                yAxis: {
+                    type: 'value',
+                    boundaryGap: [0, 0.01]
+                },
+                series: [
+                    {
+                        name: '销售量',
+                        type: 'bar',
+                        barWidth : 40,
+                        data: [100,80,60,10,5],
+                        markPoint: {
+                            itemStyle: {
+                                color: function (params) {
+                                    var colorList = [
+                                        "#5438dc",
+                                        "#1cbb8c",
+                                        "#fcb92c",
+                                        "#ff3d60",
+                                        "#4aa3ff",
+                                        "#788880"
+                                    ];
+                                    return colorList[params.dataIndex % colorList.length];
+                                }
+                            },
+                            data: [
+                                {itemStyle: {color: '#5438dc'}, value:100, name:'套餐1', xAxis: 0, yAxis: 100},
+                                {itemStyle: {color: '#1cbb8c'}, value:80, name:'套餐2', xAxis: 1, yAxis: 80},
+                                {itemStyle: {color: '#fcb92c'}, value:60, name:'套餐3', xAxis: 2, yAxis: 60},
+                                {itemStyle: {color: '#ff3d60'}, value:10, name:'套餐4', xAxis: 3, yAxis: 10},
+                                {itemStyle: {color: '#4aa3ff'}, value:5, name:'套餐5', xAxis: 4, yAxis: 5}
+                            ]
+                        },
+                        itemStyle: {
+                            color:function(params){
+                                var colorList = [
+                                    "#5438dc",
+                                    "#1cbb8c",
+                                    "#fcb92c",
+                                    "#ff3d60",
+                                    "#4aa3ff",
+                                    "#788880"
+                                ];
+                                return colorList[params.dataIndex % colorList.length];
+                            }
+                        }
+                    }
+                ]
+            };
+
+            var option4 = {
+                title : {
+                    text: '套餐销售量比例',
                     x:'center'
                 },
                 tooltip : {
@@ -275,13 +396,18 @@
 
             var myChart1 = echarts.init(document.getElementById('chart1'), 'mytheme');
             var myChart2 = echarts.init(document.getElementById('chart2'), 'mytheme');
+            var myChart3 = echarts.init(document.getElementById('chart3'), 'mytheme');
+            var myChart4 = echarts.init(document.getElementById('chart4'), 'mytheme');
             myChart1.setOption(option1);
             myChart2.setOption(option2);
-
+            myChart3.setOption(option3);
+            myChart4.setOption(option4);
 
             window.addEventListener("resize", function () {
                 myChart1.resize();
                 myChart2.resize();
+                myChart3.resize();
+                myChart4.resize();
             });
         })
 
@@ -331,8 +457,6 @@
             }
             return times;
         }
-
-
 
     </script>
 

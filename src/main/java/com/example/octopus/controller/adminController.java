@@ -102,6 +102,10 @@ public class adminController {
 	@Autowired
 	PersonalUserService personalUserService;
 
+	@Autowired
+	PersonalPlanService personalPlanService;
+
+
 	private final static String COOKIE_NAME = "cookietea";
 
 	private CookieTokenUtils cookieThings = new CookieTokenUtils();
@@ -207,6 +211,7 @@ public class adminController {
 		int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
 		try {
+			model.addAttribute("user", personalUserService.listAllPersonalUserInfo());
 			return "admin_personal_info";
 		} catch (Exception e) {
 			return "redirect:/admin_error";
@@ -252,7 +257,7 @@ public class adminController {
 		}
 	}
 
-	//修改教师
+	// 修改个人用户
 	@GetMapping("/admin_personal_edit")
 	public ModelAndView admin_personal_edit(HttpServletRequest request, Model model) {
 		if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
@@ -293,9 +298,29 @@ public class adminController {
 		}
 	}
 
+	// 个人用户套餐详情
+	@RequestMapping("/admin_plan_for_personal/{personalTel}")
+	public String admin_plan_for_personal(@PathVariable(value = "personalTel") Long personalTel, HttpServletRequest request, Model model) {
+		String teaNumber = SecurityContextHolder.getContext().getAuthentication().getName();
+		if (!teaNumber.equals(cookieThings.getCookieUserNum(request, COOKIE_NAME))) return "redirect:/login";
+
+		if (!cookieCheck(model, request)) return "redirect:/login";
+
+		long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+		int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
+
+		try {
+			model.addAttribute("user", personalUserService.getPersonalUser(personalTel));
+//			model.addAttribute("plans", personalPlanService.getPersonalPlanByPersonal(personalTel));
+			return "admin_plan_for_personal";
+		} catch (Exception e) {
+			return "redirect:/admin_error";
+		}
+	}
+
 	//套餐管理 -- 个人用户
-	@RequestMapping("/admin_plan_for_personal")
-	public String admin_plan_for_personal(HttpServletRequest request, Model model) {
+	@RequestMapping("/admin_plan")
+	public String admin_plan(HttpServletRequest request, Model model) {
 		String teaNumber = SecurityContextHolder.getContext().getAuthentication().getName();
 		if (!teaNumber.equals(cookieThings.getCookieUserNum(request, COOKIE_NAME))) return "redirect:/login";
 
@@ -306,7 +331,7 @@ public class adminController {
 
 		try {
 			model.addAttribute("plans", planService.listAllPlan());
-			return "admin_plan_for_personal";
+			return "admin_plan";
 		} catch (Exception e) {
 			return "redirect:/admin_error";
 		}
