@@ -15,11 +15,17 @@ import java.util.List;
 @Mapper
 public interface PersonalUserMapper {
 	/**
-	 * 用户管理界面，返回所有个人用户列表。包含手机号码、登录次数、购买套餐详情、最近登录时间
+	 * 用户管理界面(1)，返回所有个人用户列表，不论是否购买过
+	 */
+	@Select("SELECT * FROM personal_user ORDER BY personal_tel")
+	List<PersonalUserManageVO> listAllPersonalUser();
+
+	/**
+	 * 用户管理界面(2)，返回所有购买过套餐的个人用户列表。包含手机号码、登录次数、购买套餐详情、最近登录时间
 	 */
 	@Select("SELECT pu.*, p.name AS purchased_plans FROM personal_user pu, plan p, personal_plan pp " +
-			"WHERE pu.personal_tel=pp.personal_tel AND pp.plan_id=p.id")
-	List<PersonalUserManageVO> listAllPersonUser();
+			"WHERE pu.personal_tel=pp.personal_tel AND pp.plan_id=p.id ORDER BY pu.personal_tel")
+	List<PersonalUserManageVO> listAllPersonalUserPurchased();
 
 	/**
 	 * 根据个人用户电话号（账号）获取个人用户信息对象
