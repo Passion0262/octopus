@@ -28,22 +28,25 @@ public class PersonalUserServiceImpl implements PersonalUserService {
 
 	@Override
 	public List<PersonalUserManageVO> listAllPersonalUserInfo() {
-		List<PersonalUserManageVO> tem = personalUserMapper.listAllPersonUser();
-		List<PersonalUserManageVO> res = new ArrayList<>();
-		if (!tem.isEmpty()) {
-			res.add(tem.get(0));
-			for (int i = 1, len_res = 0; i < tem.size(); i++) {
-				PersonalUserManageVO t = tem.get(i);
-				PersonalUserManageVO r = res.get(len_res);
-				if (r.getPersonalTel() == t.getPersonalTel())
-					r.setPurchasedPlans(r.getPurchasedPlans().concat(";").concat(t.getPurchasedPlans()));
-				else {
-					len_res++;
-					res.add(t);
+
+		List<PersonalUserManageVO> allPersonalUser = personalUserMapper.listAllPersonalUser();
+		List<PersonalUserManageVO> purchasedPersonalUser = personalUserMapper.listAllPersonalUserPurchased();
+		if (!allPersonalUser.isEmpty()) {
+			for (int i = 0, j = 0; i < allPersonalUser.size(); j++) {
+				if (j >= purchasedPersonalUser.size()) break;
+
+				PersonalUserManageVO a = allPersonalUser.get(i);
+				PersonalUserManageVO p = purchasedPersonalUser.get(j);
+				if (a.getPersonalTel() == p.getPersonalTel()) {
+					if (a.getPurchasedPlans() == null) a.setPurchasedPlans("");
+					a.setPurchasedPlans(a.getPurchasedPlans().concat(";").concat(p.getPurchasedPlans()));
+				} else {
+					i++;
+					j--;
 				}
 			}
 		}
-		return res;
+		return allPersonalUser;
 	}
 
 	@Override
