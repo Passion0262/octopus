@@ -17,11 +17,13 @@ public class PersonalPlan {
 
 	private long planId;  //套餐id
 
-	private String planName;  //套餐名，不在personal_plan表内
+	private String planName;  //不在personal_plan表内，套餐名
 
 	private float cost;  //订单实付价格
 
 	private Timestamp startTime;  //有效期开始时间
 
 	private Timestamp endTime;  //有效期结束时间
+
+	private boolean unexpired;  //不在personal_plan表内，是否有效/未过期
 }
