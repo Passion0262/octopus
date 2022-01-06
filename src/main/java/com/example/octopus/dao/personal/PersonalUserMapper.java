@@ -17,7 +17,7 @@ public interface PersonalUserMapper {
 	/**
 	 * 用户管理界面(1)，返回所有个人用户列表，不论是否购买过
 	 */
-	@Select("SELECT * FROM personal_user ORDER BY personal_tel")
+	@Select("SELECT *, '' AS purchased_plans FROM personal_user ORDER BY personal_tel")
 	List<PersonalUserManageVO> listAllPersonalUser();
 
 	/**

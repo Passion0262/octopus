@@ -30,12 +30,16 @@ public class PersonalPlanServiceImpl implements PersonalPlanService {
 	}
 
 	@Override
-	public List<PersonalPlan> listPersonalPlan(long personalTel){
-		return personalPlanMapper.listAllPersonalPlanByTel(personalTel);
+	public List<PersonalPlan> listPersonalPlanByTel(long personalTel){
+		Timestamp current = new Timestamp(System.currentTimeMillis());  //获取当前时间
+		List<PersonalPlan> res = personalPlanMapper.listAllPersonalPlanByTel(personalTel);
+		for (int i=0; i<res.size();i++)
+			res.get(i).setUnexpired(res.get(i).getEndTime().getTime() > current.getTime());
+		return res;
 	}
 
 	@Override
-	public List<PersonalPlan> listUnexpiredPersonalPlan(long personalTel){
+	public List<PersonalPlan> listUnexpiredPersonalPlanByTel(long personalTel){
 		Timestamp current = new Timestamp(System.currentTimeMillis());  //获取当前时间
 		List<PersonalPlan> tem = personalPlanMapper.listAllPersonalPlanByTel(personalTel);
 		List<PersonalPlan> res = new ArrayList<>();;
