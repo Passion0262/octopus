@@ -1,9 +1,7 @@
-package com.example.octopus.entity.VOs.video;
+package com.example.octopus.entity.vo.video;
 
 import lombok.Data;
-import org.apache.ibatis.annotations.Delete;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 
 /**

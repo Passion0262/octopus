@@ -1,9 +1,9 @@
 package com.example.octopus.service;
 
-import com.example.octopus.entity.VOs.CourseTimeVO;
-import com.example.octopus.entity.VOs.video.VideoProgressDetailVO;
-import com.example.octopus.entity.VOs.video.VideoProgressHistoryVO;
-import com.example.octopus.entity.VOs.video.VideoTimeHistoryVO;
+import com.example.octopus.entity.vo.CourseTimeVO;
+import com.example.octopus.entity.vo.video.VideoProgressDetailVO;
+import com.example.octopus.entity.vo.video.VideoProgressHistoryVO;
+import com.example.octopus.entity.vo.video.VideoTimeHistoryVO;
 import com.example.octopus.entity.experiment.VideoProgress;
 
 import java.util.List;

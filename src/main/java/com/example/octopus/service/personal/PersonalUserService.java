@@ -1,7 +1,7 @@
 package com.example.octopus.service.personal;
 
 import com.example.octopus.entity.personal.PersonalUser;
-import com.example.octopus.entity.personal.PersonalUserManageVO;
+import com.example.octopus.entity.personal.vo.PersonalUserManageVO;
 
 import java.util.List;
 
@@ -48,4 +48,13 @@ public interface PersonalUserService {
 	 */
 	boolean insertPersonalUser(PersonalUser personalUser);
 
+	/**
+	 * 活跃用户数量（本次登录时间thisLoginTime距今七天内）
+	 */
+	int countActivatePersonalUser();
+
+	/**
+	 * 注册用户数量
+	 */
+	int countAllPersonalUser();
 }

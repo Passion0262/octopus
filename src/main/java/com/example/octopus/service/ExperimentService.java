@@ -1,7 +1,7 @@
 package com.example.octopus.service;
 
-import com.example.octopus.entity.VOs.experiment.ExperimentTimeHistoryVO;
-import com.example.octopus.entity.VOs.experiment.ExperimentTimeVO;
+import com.example.octopus.entity.vo.experiment.ExperimentTimeHistoryVO;
+import com.example.octopus.entity.vo.experiment.ExperimentTimeVO;
 import com.example.octopus.entity.experiment.Experiment;
 
 import java.util.List;

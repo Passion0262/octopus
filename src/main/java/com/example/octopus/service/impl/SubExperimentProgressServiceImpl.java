@@ -2,7 +2,7 @@ package com.example.octopus.service.impl;
 
 import com.example.octopus.dao.SysUserRoleMapper;
 import com.example.octopus.dao.experiment.SubExperimentProgressMapper;
-import com.example.octopus.entity.VOs.experiment.SubExperimentOperateTimeVO;
+import com.example.octopus.entity.vo.experiment.SubExperimentOperateTimeVO;
 import com.example.octopus.entity.experiment.SubExperimentProgress;
 import com.example.octopus.service.SubExperimentProgressService;
 import org.springframework.beans.factory.annotation.Autowired;

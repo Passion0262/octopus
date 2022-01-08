@@ -1,7 +1,7 @@
 package com.example.octopus.service.impl;
 
 import com.example.octopus.dao.project.SubProjectMapper;
-import com.example.octopus.entity.VOs.SubProjectDetailVO;
+import com.example.octopus.entity.vo.SubProjectDetailVO;
 import com.example.octopus.entity.project.SubProject;
 import com.example.octopus.service.SubProjectService;
 import org.springframework.beans.factory.annotation.Autowired;

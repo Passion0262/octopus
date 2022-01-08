@@ -1,4 +1,4 @@
-package com.example.octopus.entity.VOs;
+package com.example.octopus.entity.vo;
 
 import lombok.Data;
 

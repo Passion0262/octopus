@@ -1,5 +1,6 @@
-package com.example.octopus.entity.personal;
+package com.example.octopus.entity.personal.vo;
 
+import com.example.octopus.entity.personal.PersonalUser;
 import lombok.Data;
 
 /**
@@ -8,7 +9,7 @@ import lombok.Data;
  * @date: 2022/1/2 16:18
  */
 @Data
-public class PersonalUserManageVO extends PersonalUser{
+public class PersonalUserManageVO extends PersonalUser {
 
 	private String purchasedPlans;  //已购买套餐，中间用英文分号;隔开
 }

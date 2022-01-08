@@ -3,7 +3,7 @@ package com.example.octopus.service.impl;
 import com.example.octopus.dao.SysUserRoleMapper;
 import com.example.octopus.dao.experiment.SubExperimentMapper;
 import com.example.octopus.dao.experiment.VideoSubExperimentMapper;
-import com.example.octopus.entity.VOs.experiment.SubExperimentDetailVO;
+import com.example.octopus.entity.vo.experiment.SubExperimentDetailVO;
 import com.example.octopus.entity.experiment.SubExperiment;
 import com.example.octopus.service.SubExperimentService;
 import org.springframework.beans.factory.annotation.Autowired;

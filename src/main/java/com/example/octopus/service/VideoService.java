@@ -1,7 +1,7 @@
 package com.example.octopus.service;
 
-import com.example.octopus.entity.VOs.video.VideoManageVO;
-import com.example.octopus.entity.VOs.video.VideoStudySummaryVO;
+import com.example.octopus.entity.vo.video.VideoManageVO;
+import com.example.octopus.entity.vo.video.VideoStudySummaryVO;
 import com.example.octopus.entity.experiment.Video;
 
 import java.util.List;

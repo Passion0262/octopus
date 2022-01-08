@@ -1,6 +1,6 @@
 package com.example.octopus.service;
 
-import com.example.octopus.entity.VOs.experiment.SubExperimentOperateTimeVO;
+import com.example.octopus.entity.vo.experiment.SubExperimentOperateTimeVO;
 import com.example.octopus.entity.experiment.SubExperimentProgress;
 
 import java.util.List;

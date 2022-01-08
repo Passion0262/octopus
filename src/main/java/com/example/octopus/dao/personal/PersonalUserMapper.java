@@ -1,7 +1,7 @@
 package com.example.octopus.dao.personal;
 
 import com.example.octopus.entity.personal.PersonalUser;
-import com.example.octopus.entity.personal.PersonalUserManageVO;
+import com.example.octopus.entity.personal.vo.PersonalUserManageVO;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 

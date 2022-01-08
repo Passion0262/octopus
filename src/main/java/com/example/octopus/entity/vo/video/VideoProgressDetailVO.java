@@ -1,7 +1,6 @@
-package com.example.octopus.entity.VOs.video;
+package com.example.octopus.entity.vo.video;
 
 import lombok.Data;
-import org.bouncycastle.util.Times;
 
 import java.sql.Timestamp;
 

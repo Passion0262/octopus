@@ -1,14 +1,11 @@
 package com.example.octopus.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.example.octopus.entity.VOs.experiment.ReportAnalysisVO;
+import com.example.octopus.entity.vo.experiment.ReportAnalysisVO;
 import com.example.octopus.entity.dataset.Dataset;
 import com.example.octopus.entity.experiment.SubExperimentReportSubmit;
-import com.example.octopus.entity.experiment.Video;
-import com.example.octopus.entity.personal.PersonalUser;
 import com.example.octopus.entity.user.*;
 import com.example.octopus.service.*;
-import com.example.octopus.service.personal.*;
 import com.example.octopus.utils.CookieTokenUtils;
 import com.example.octopus.utils.PropertiesUtil;
 import com.example.octopus.utils.TokenCheckUtils;
@@ -111,9 +108,9 @@ public class adminController {
 			} else if (role_id == 3) {
 				model.addAttribute("role", "teacher");
 				return true;
-			} else if (role_id == 4) {
-				model.addAttribute("role", "personal");
-				return true;
+//			} else if (role_id == 4) {
+//				model.addAttribute("role", "personal");
+//				return true;
 			} else
 				return false;
 		} else {

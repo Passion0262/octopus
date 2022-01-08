@@ -2,15 +2,14 @@ package com.example.octopus.service.personal.impl;
 
 import com.example.octopus.dao.personal.PersonalUserMapper;
 import com.example.octopus.dao.SysUserRoleMapper;
-import com.example.octopus.entity.personal.Category;
 import com.example.octopus.entity.personal.PersonalUser;
-import com.example.octopus.entity.personal.PersonalUserManageVO;
+import com.example.octopus.entity.personal.vo.PersonalUserManageVO;
 import com.example.octopus.entity.user.SysUserRole;
 import com.example.octopus.service.personal.PersonalUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -85,4 +84,23 @@ public class PersonalUserServiceImpl implements PersonalUserService {
 		return add2PUTable && add2SURTable;
 	}
 
+	@Override
+	public int countActivatePersonalUser(){
+		List<PersonalUserManageVO> allPersonalUser = personalUserMapper.listAllPersonalUser();
+		Timestamp current = new Timestamp(System.currentTimeMillis());  //获取当前时间
+
+		int activateNumber= 0 ;
+		long between;
+		for(int i=0;i<allPersonalUser.size();i++){
+			between = current.getTime()-allPersonalUser.get(i).getThisLoginTime().getTime()/1000;
+			if (between/(24*3600)<=7)
+				activateNumber++;
+		}
+		return activateNumber;
+	}
+
+	@Override
+	public int countAllPersonalUser(){
+		return personalUserMapper.listAllPersonalUser().size();
+	}
 }

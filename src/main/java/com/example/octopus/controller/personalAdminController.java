@@ -25,243 +25,229 @@ import java.util.*;
 @Controller
 public class personalAdminController {
 
-    private Logger logger = LoggerFactory.getLogger(adminController.class);
+	private Logger logger = LoggerFactory.getLogger(adminController.class);
 
-    private PropertiesUtil propertiesUtil = new PropertiesUtil();
-    private String WEB_BASE_PATH = propertiesUtil.getFileSavePath();
-    private String WEB_HOST = "/static/";
-
-
-    @Autowired
-    SysUserRoleService sysUserRoleService;
-
-    @Autowired
-    PlanService planService;
-
-    @Autowired
-    CategoryService categoryService;
-
-    @Autowired
-    PersonalUserService personalUserService;
-
-    @Autowired
-    PersonalPlanService personalPlanService;
-
-    private final static String COOKIE_NAME = "cookietea";
-
-    private CookieTokenUtils cookieThings = new CookieTokenUtils();
+	private PropertiesUtil propertiesUtil = new PropertiesUtil();
+	private String WEB_BASE_PATH = propertiesUtil.getFileSavePath();
+	private String WEB_HOST = "/static/";
 
 
-    private boolean cookieCheck(Model model, HttpServletRequest request) {
-        // 检查cookie合法性
-        TokenCheckUtils tokenCheck = cookieThings.validateToken(request, COOKIE_NAME);
-        if (tokenCheck.isSuccess()) {
-            long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
-            int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色，管理员还是教师
-            model.addAttribute("username", tokenCheck.getUserName());
+	@Autowired
+	SysUserRoleService sysUserRoleService;
 
-            if (role_id == 1) {
-                model.addAttribute("role", "admin");
-                return true;
-            } else if (role_id == 3) {
-                model.addAttribute("role", "teacher");
-                return true;
-            } else if (role_id == 4) {
-                model.addAttribute("role", "personal");
-                return true;
-            } else if (role_id == 5) {
-                model.addAttribute("role", "personal_admin");
-                return true;
-            } else
-                return false;
-        } else {
-            logger.info(tokenCheck.getErrorType() + "  需要重新登录!");
-            return false;
-        }
-    }
+	@Autowired
+	PlanService planService;
 
-    //首页 -- 个人用户
-    @RequestMapping("/admin_index_for_personal")
-    public String admin_personal_index(HttpServletRequest request, Model model) {
-        String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
-        if (!user_id.equals(cookieThings.getCookieUserNum(request, COOKIE_NAME))) return "redirect:/login";
+	@Autowired
+	CategoryService categoryService;
 
-        if (!cookieCheck(model, request)) return "redirect:/login";
+	@Autowired
+	PersonalUserService personalUserService;
 
-        long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
-        int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色，管理员还是教师
+	@Autowired
+	PersonalPlanService personalPlanService;
 
-        if (role_id == 5){
-            try {
-                model.addAttribute("number_of_personal_user", 200);
-                model.addAttribute("number_of_active_user", 200);
-                model.addAttribute("number_of_plan", planService.listAllPlan().size());
-                model.addAttribute("number_of_category", categoryService.listAllCategory().size());
-                return "admin_index_for_personal";
-            } catch (Exception e) {
-                return "redirect:/admin_error";
-            }
-        }
-        else {
-            return "admin_login";
-        }
-    }
+	private final static String COOKIE_NAME = "cookiePersonalAdmin";
 
-    //用户管理 -- 个人用户
-    @RequestMapping("/admin_personal_info")
-    public String admin_personal_info(HttpServletRequest request, Model model) {
-        String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
-        if (!user_id.equals(cookieThings.getCookieUserNum(request, COOKIE_NAME))) return "redirect:/login";
+	private CookieTokenUtils cookieThings = new CookieTokenUtils();
 
-        if (!cookieCheck(model, request)) return "redirect:/login";
 
-        long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
-        int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色，管理员还是教师
+	private boolean cookieCheck(Model model, HttpServletRequest request) {
+		// 检查cookie合法性
+		TokenCheckUtils tokenCheck = cookieThings.validateToken(request, COOKIE_NAME);
+		if (tokenCheck.isSuccess()) {
+			long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+			int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色，管理员还是教师
+			model.addAttribute("username", tokenCheck.getUserName());
+			if (role_id == 5) {
+				model.addAttribute("role", "personal_admin");
+				return true;
+			} else
+				return false;
+		} else {
+			logger.info(tokenCheck.getErrorType() + "  需要重新登录!");
+			return false;
+		}
+	}
 
-        if (role_id == 5){
-            try {
-                model.addAttribute("user", personalUserService.listAllPersonalUserInfo());
-                return "admin_personal_info";
-            } catch (Exception e) {
-                return "redirect:/admin_error";
-            }
-        }
-        else {
-            return "admin_login";
-        }
-    }
+	//首页 -- 个人用户
+	@RequestMapping("/admin_index_for_personal")
+	public String admin_personal_index(HttpServletRequest request, Model model) {
+		String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
+		if (!user_id.equals(cookieThings.getCookieUserNum(request, COOKIE_NAME))) return "redirect:/login";
 
-    // 增加个人用户
-    @GetMapping("/admin_personal_add")
-    public ModelAndView admin_personal_add(HttpServletRequest request, Model model) {
-        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+		if (!cookieCheck(model, request)) return "redirect:/login";
 
-        long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
-        int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色
+		long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色，管理员还是教师
 
-        if (role_id == 5){
-            logger.info("管理员{}进入admin_personal_add，获取一个新Personal()", user);
-            try {
-                model.addAttribute("personal", new PersonalUser());
-                return new ModelAndView("admin_personal_add", "permodel", model);
-            } catch (Exception e) {
-                return new ModelAndView("redirect:/admin_error");
-            }
-        } else {
-            return new ModelAndView("redirect:/login");
-        }
-    }
+		if (role_id == 5) {
+			try {
+				model.addAttribute("number_of_personal_user", personalUserService.countAllPersonalUser());
+				model.addAttribute("number_of_active_user", personalUserService.countActivatePersonalUser());
+				model.addAttribute("number_of_plan", planService.listAllPlan().size());
+				model.addAttribute("number_of_category", categoryService.listAllCategory().size());
+				return "admin_index_for_personal";
+			} catch (Exception e) {
+				return "redirect:/admin_error";
+			}
+		} else {
+			return "admin_login";
+		}
+	}
 
-    @PostMapping("/add_personal")
-    public ModelAndView add_personal(PersonalUser personalUser, HttpServletRequest request, Model model) {
-        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+	//用户管理 -- 个人用户
+	@RequestMapping("/admin_personal_info")
+	public String admin_personal_info(HttpServletRequest request, Model model) {
+		String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
+		if (!user_id.equals(cookieThings.getCookieUserNum(request, COOKIE_NAME))) return "redirect:/login";
 
-        long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
-        int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色
+		if (!cookieCheck(model, request)) return "redirect:/login";
 
-        if (role_id == 5){
-            logger.info("管理员{}提交新增的个人用户: [{}]", user, personalUser);
-            try {
-                personalUserService.insertPersonalUser(personalUser);
-                return new ModelAndView("redirect:/admin_personal_info");
-            } catch (Exception e) {
-                return new ModelAndView("redirect:/admin_error");
-            }
-        } else {
-            return new ModelAndView("redirect:/login");
-        }
-    }
+		long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色，管理员还是教师
 
-    // 修改个人用户
-    @GetMapping("/admin_personal_edit")
-    public ModelAndView admin_personal_edit(HttpServletRequest request, Model model) {
-        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+		if (role_id == 5) {
+			try {
+				model.addAttribute("user", personalUserService.listAllPersonalUserInfo());
+				return "admin_personal_info";
+			} catch (Exception e) {
+				return "redirect:/admin_error";
+			}
+		} else {
+			return "admin_login";
+		}
+	}
 
-        long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
-        int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色
+	// 增加个人用户
+	@GetMapping("/admin_personal_add")
+	public ModelAndView admin_personal_add(HttpServletRequest request, Model model) {
+		if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
 
-        if (role_id == 5){
-            long personalTel = Long.parseLong(request.getParameter("personalTel"));
-            logger.info("管理员{}进入admin_personal_edit，获取PersonalUser, personalTel={}", user, personalTel);
-            try {
-                PersonalUser personalUser = personalUserService.getPersonalUser(personalTel);
-                model.addAttribute("personalUser", personalUser);
-                return new ModelAndView("admin_personal_edit", "permodel", model);
-            } catch (Exception e) {
-                return new ModelAndView("redirect:/admin_error");
-            }
-        } else {
-            return new ModelAndView("redirect:/login");
-        }
-    }
+		long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色
 
-    @PostMapping("/edit_personal")
-    public ModelAndView edit_personal(PersonalUser personalUser, HttpServletRequest request, Model model) {
-        if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+		if (role_id == 5) {
+			logger.info("管理员{}进入admin_personal_add，获取一个新Personal()", user);
+			try {
+				model.addAttribute("personal", new PersonalUser());
+				return new ModelAndView("admin_personal_add", "permodel", model);
+			} catch (Exception e) {
+				return new ModelAndView("redirect:/admin_error");
+			}
+		} else {
+			return new ModelAndView("redirect:/login");
+		}
+	}
 
-        long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
-        int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色
+	@PostMapping("/add_personal")
+	public ModelAndView add_personal(PersonalUser personalUser, HttpServletRequest request, Model model) {
+		if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
 
-        if (role_id == 5){
-            logger.info("管理员{}提交修改的personal: [{}]", user, personalUser);
-            try {
-                personalUserService.updatePersonalUser(personalUser);
-                return new ModelAndView("redirect:/admin_personal_info");
-            } catch (Exception e) {
-                return new ModelAndView("redirect:/admin_error");
-            }
-        } else {
-            return new ModelAndView("redirect:/login");
-        }
-    }
+		long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色
 
-    // 个人用户套餐详情
-    @RequestMapping("/admin_plan_for_personal/{personalTel}")
-    public String admin_plan_for_personal(@PathVariable(value = "personalTel") Long personalTel, HttpServletRequest request, Model model) {
-        String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
-        if (!user_id.equals(cookieThings.getCookieUserNum(request, COOKIE_NAME))) return "redirect:/login";
+		if (role_id == 5) {
+			logger.info("管理员{}提交新增的个人用户: [{}]", user, personalUser);
+			try {
+				personalUserService.insertPersonalUser(personalUser);
+				return new ModelAndView("redirect:/admin_personal_info");
+			} catch (Exception e) {
+				return new ModelAndView("redirect:/admin_error");
+			}
+		} else {
+			return new ModelAndView("redirect:/login");
+		}
+	}
 
-        if (!cookieCheck(model, request)) return "redirect:/login";
+	// 修改个人用户
+	@GetMapping("/admin_personal_edit")
+	public ModelAndView admin_personal_edit(HttpServletRequest request, Model model) {
+		if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
 
-        long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
-        int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色，管理员还是教师
+		long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色
 
-        if (role_id == 5){
-            try {
-                model.addAttribute("user", personalUserService.getPersonalUser(personalTel));
-    //			model.addAttribute("plans", personalPlanService.getPersonalPlanByPersonal(personalTel));
-                return "admin_plan_for_personal";
-            } catch (Exception e) {
-                return "redirect:/admin_error";
-            }
-        }
-        else {
-            return "admin_login";
-        }
-    }
+		if (role_id == 5) {
+			long personalTel = Long.parseLong(request.getParameter("personalTel"));
+			logger.info("管理员{}进入admin_personal_edit，获取PersonalUser, personalTel={}", user, personalTel);
+			try {
+				PersonalUser personalUser = personalUserService.getPersonalUser(personalTel);
+				model.addAttribute("personalUser", personalUser);
+				return new ModelAndView("admin_personal_edit", "permodel", model);
+			} catch (Exception e) {
+				return new ModelAndView("redirect:/admin_error");
+			}
+		} else {
+			return new ModelAndView("redirect:/login");
+		}
+	}
 
-    //套餐管理 -- 个人用户
-    @RequestMapping("/admin_plan")
-    public String admin_plan(HttpServletRequest request, Model model) {
-        String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
-        if (!user_id.equals(cookieThings.getCookieUserNum(request, COOKIE_NAME))) return "redirect:/login";
+	@PostMapping("/edit_personal")
+	public ModelAndView edit_personal(PersonalUser personalUser, HttpServletRequest request, Model model) {
+		if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
 
-        if (!cookieCheck(model, request)) return "redirect:/login";
+		long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色
 
-        long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
-        int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色，管理员还是教师
+		if (role_id == 5) {
+			logger.info("管理员{}提交修改的personal: [{}]", user, personalUser);
+			try {
+				personalUserService.updatePersonalUser(personalUser);
+				return new ModelAndView("redirect:/admin_personal_info");
+			} catch (Exception e) {
+				return new ModelAndView("redirect:/admin_error");
+			}
+		} else {
+			return new ModelAndView("redirect:/login");
+		}
+	}
 
-        if (role_id == 5) {
-            try {
-                model.addAttribute("plans", planService.listAllPlan());
-                return "admin_plan";
-            } catch (Exception e) {
-                return "redirect:/admin_error";
-            }
-        }
-        else {
-            return "admin_login";
-        }
-    }
+	// 个人用户套餐详情
+	@RequestMapping("/admin_plan_for_personal/{personalTel}")
+	public String admin_plan_for_personal(@PathVariable(value = "personalTel") Long personalTel, HttpServletRequest request, Model model) {
+		String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
+		if (!user_id.equals(cookieThings.getCookieUserNum(request, COOKIE_NAME))) return "redirect:/login";
+
+		if (!cookieCheck(model, request)) return "redirect:/login";
+
+		long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色，管理员还是教师
+
+		if (role_id == 5) {
+			try {
+				model.addAttribute("user", personalUserService.getPersonalUser(personalTel));
+				//			model.addAttribute("plans", personalPlanService.getPersonalPlanByPersonal(personalTel));
+				return "admin_plan_for_personal";
+			} catch (Exception e) {
+				return "redirect:/admin_error";
+			}
+		} else {
+			return "admin_login";
+		}
+	}
+
+	//套餐管理 -- 个人用户
+	@RequestMapping("/admin_plan")
+	public String admin_plan(HttpServletRequest request, Model model) {
+		String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
+		if (!user_id.equals(cookieThings.getCookieUserNum(request, COOKIE_NAME))) return "redirect:/login";
+
+		if (!cookieCheck(model, request)) return "redirect:/login";
+
+		long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色，管理员还是教师
+
+		if (role_id == 5) {
+			try {
+				model.addAttribute("plans", planService.listAllPlan());
+				return "admin_plan";
+			} catch (Exception e) {
+				return "redirect:/admin_error";
+			}
+		} else {
+			return "admin_login";
+		}
+	}
 
 }

@@ -1,4 +1,4 @@
-package com.example.octopus.entity.VOs.experiment;
+package com.example.octopus.entity.vo.experiment;
 
 import com.example.octopus.entity.experiment.SubExperimentProgress;
 import lombok.Data;

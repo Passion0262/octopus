@@ -1,6 +1,6 @@
 package com.example.octopus.dao;
 
-import com.example.octopus.entity.VOs.AdminStudyTimeInfoVO;
+import com.example.octopus.entity.vo.AdminStudyTimeInfoVO;
 import com.example.octopus.entity.user.Teacher;
 import org.apache.ibatis.annotations.*;
 

@@ -1,6 +1,6 @@
 package com.example.octopus.dao.project;
 
-import com.example.octopus.entity.VOs.SubProjectDetailVO;
+import com.example.octopus.entity.vo.SubProjectDetailVO;
 import com.example.octopus.entity.project.SubProject;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;

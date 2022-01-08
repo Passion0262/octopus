@@ -1,6 +1,6 @@
 package com.example.octopus.dao.experiment;
 
-import com.example.octopus.entity.VOs.experiment.SubExperimentReportSummaryVO;
+import com.example.octopus.entity.vo.experiment.SubExperimentReportSummaryVO;
 import com.example.octopus.entity.experiment.SubExperimentReportSubmit;
 import org.apache.ibatis.annotations.*;
 

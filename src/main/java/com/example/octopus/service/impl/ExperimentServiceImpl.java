@@ -2,8 +2,8 @@ package com.example.octopus.service.impl;
 
 import com.example.octopus.dao.CourseExperimentMapper;
 import com.example.octopus.dao.experiment.ExperimentMapper;
-import com.example.octopus.entity.VOs.experiment.ExperimentTimeHistoryVO;
-import com.example.octopus.entity.VOs.experiment.ExperimentTimeVO;
+import com.example.octopus.entity.vo.experiment.ExperimentTimeHistoryVO;
+import com.example.octopus.entity.vo.experiment.ExperimentTimeVO;
 import com.example.octopus.entity.experiment.Experiment;
 import com.example.octopus.service.CourseService;
 import com.example.octopus.service.ExperimentService;
