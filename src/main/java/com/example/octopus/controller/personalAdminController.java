@@ -79,7 +79,7 @@ public class personalAdminController {
 		if (!cookieCheck(model, request)) return "redirect:/login";
 
 		long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
-		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色，管理员还是教师
+		int role_id = sysUserRoleService.getRoleIdByUserId(user);
 
 		if (role_id == 5) {
 			try {
