@@ -84,7 +84,7 @@
                                                     <td th:text="${userStat.index+1}"></td>
                                                     <td th:text="${user.personalTel}"></td>
                                                     <td th:text="${user.loginNumber}"></td>
-                                                    <td><a th:onclick="PlanDetail([[${user.personalTel}]])" style="color:#5664d2" target="_blank">查看详情</a></td>
+                                                    <td><a th:href="@{admin_plan_for_personal(personalTel=${user.personalTel})}" th:title="'个人购买套餐详情'" style="color:#505d69" target="_blank">查看详情</a></td>
                                                     <td th:text="${user.thisLoginTime}"></td>
                                                 </tr>
                                             </tbody>

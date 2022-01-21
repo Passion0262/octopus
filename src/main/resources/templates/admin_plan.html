@@ -24,6 +24,7 @@
     <link href="static/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
 
     <link href="static/css/scroll.css" id="scroll-style" rel="stylesheet" type="text/css" />
+
 </head>
 
 <body data-topbar="dark">
@@ -87,13 +88,16 @@
                                                     </td>
                                                     <td th:text="${planStat.index+1}"></td>
                                                     <td th:text="${plan.name}"></td>
-                                                    <td th:text="${plan.categoryNames}"></td>
+<!--                                                    <td th:text="${plan.categoryNames.length<9?plan.categoryNames:plan.categoryNames.substring(0,9)+'...'}"></td>-->
+                                                    <td>
+                                                        <a th:href="@{admin_plan_detail(id=${plan.id})}" th:title="'套餐详情'" style="color: #505d69">详情</a>
+                                                    </td>
                                                     <td>
                                                         <div th:text="${plan.selling==true?'上架中':'已下架'}" th:class="${plan.selling==true?'badge badge-soft-success':'badge badge-soft-warning'}" style="font-size: 13px"></div>
                                                     </td>
                                                     <td th:text="${plan.price}"></td>
                                                     <td th:text="${plan.discount}"></td>
-                                                    <td th:text="${plan.validPeriodYear} + ' - ' + ${plan.validPeriodMonth}"></td>
+                                                    <td th:text="${plan.validPeriodMonth} + '个月'"></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -161,6 +165,7 @@
         function load(){
             document.getElementById("sort").click();
         }
+
     </script>
 
 

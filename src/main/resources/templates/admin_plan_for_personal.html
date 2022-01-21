@@ -30,8 +30,8 @@
     <!-- Begin page -->
     <div id="layout-wrapper">
 
-        <div th:replace="commons_personal::topbar(${username})"></div>
-        <div th:replace="commons_personal::leftSidebar(${role})"></div>
+        <div th:replace="commons_personal::topbar(${model.username})"></div>
+        <div th:replace="commons_personal::leftSidebar(${model.role})"></div>
         
         <!-- Start right Content here -->
         <div class="main-content">
@@ -42,7 +42,7 @@
                             <div class="page-title-box d-flex align-items-center justify-content-between" id="page">
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="admin_personal_info.html"></a></li>
+                                        <li class="breadcrumb-item"><a href="admin_personal_info">用户管理</a></li>
                                         <li class="breadcrumb-item active">个人用户购买套餐详情</li>
                                     </ol>
                                 </div>
@@ -55,7 +55,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label" th:text="'账号：'+${user.personalTel}"></label>
+                                        <label class="col-md-2 col-form-label" th:text="'账号：'+${model.user.personalTel}"></label>
                                     </div>
                                 </div>
                             </div>
@@ -83,7 +83,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody style="text-align: center;">
-                                                <tr th:each="plan:${plans}">
+                                                <tr th:each="plan:${model.plans}">
 <!--                                                    <td>-->
 <!--                                                        <div style="width:30px;"></div>-->
 <!--                                                        <a th:href="@{admin_plan_add}" th:title="'增加'" class="add" style="color:#ff3d60">-->
@@ -99,10 +99,11 @@
                                                     <td th:text="${planStat.index+1}"></td>
                                                     <td th:text="${plan.planName}"></td>
                                                     <td th:text="${plan.cost}"></td>
-                                                    <td th:text="${plan.startTime}"></td>
-                                                    <td th:text="${plan.endTime}"></td>
+                                                    <td th:text="${#dates.format(plan.startTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                                    <td th:text="${#dates.format(plan.endTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+
                                                     <td>
-                                                        <div th:text="${plan.cost?'有效':'已过期'}" th:class="${plan.cost?'badge badge-soft-success':'badge badge-soft-warning'}" style="font-size: 13px"></div>
+                                                        <div th:text="${plan.unexpired?'有效':'已过期'}" th:class="${plan.unexpired?'badge badge-soft-success':'badge badge-soft-warning'}" style="font-size: 13px"></div>
                                                     </td>
                                                 </tr>
                                             </tbody>
