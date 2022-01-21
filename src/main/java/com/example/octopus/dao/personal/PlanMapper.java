@@ -14,11 +14,17 @@ import java.util.List;
 @Mapper
 public interface PlanMapper {
 	/**
+	 * 显示所有套餐（只显示plan表中信息）
+	 */
+	@Select("SELECT * FROM plan")
+	List<Plan> listAllPlan();
+
+	/**
 	 * 显示所有套餐，包含套餐所含类别名
 	 */
 	@Select("SELECT p.*, c.name AS category_names FROM plan p, category c, plan_category pc " +
 			"WHERE p.id=pc.plan_id AND pc.category_id=c.id")
-	List<Plan> listAllPlan();
+	List<Plan> listAllPlanWithCategoryName();
 
 	/**
 	 * 显示销售中（未下架）套餐，包含套餐所含类别名
@@ -26,6 +32,12 @@ public interface PlanMapper {
 	@Select("SELECT p.*, c.name AS category_names FROM plan p, category c, plan_category pc " +
 			"WHERE p.selling=true AND p.id=pc.plan_id AND pc.category_id=c.id")
 	List<Plan> listSellingPlan();
+
+	/**
+	 * 通过套餐id查找套餐
+	 */
+	@Select("SELECT * FROM plan WHERE id=#{id}")
+	Plan getPlanById(long planId);
 
 	/**
 	 * 通过套餐名查找套餐，套餐名是唯一的
@@ -51,8 +63,8 @@ public interface PlanMapper {
 	 * 创建新套餐
 	 *   需注意同步在plan_category表中进行添加
 	 */
-	@Insert("INSERT INTO plan (name, price, discount, valid_period_year, valid_period_month) " +
-			"VALUES (#{name}, #{price}, #{discount}, #{validPeriodYear}, #{validPeriodMonth})")
+	@Insert("INSERT INTO plan (name, price, discount, valid_period_month) " +
+			"VALUES (#{name}, #{price}, #{discount}, #{validPeriodMonth})")
 	boolean insertPlan(Plan plan);
 
 	/**
