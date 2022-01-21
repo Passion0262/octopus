@@ -11,9 +11,19 @@ import java.util.List;
 public interface PlanService {
 
 	/**
-	 * 显示所有套餐，包含套餐下含有的类别名
+	 * 显示所有套餐，plan对象下有其所包含的类别category的列表
 	 */
 	List<Plan> listAllPlan();
+
+	/**
+	 * 显示所有套餐，包含套餐下含有的类别名（无category列表）
+	 */
+	List<Plan> listAllPlanWithCategoryName();
+
+	/**
+	 * 根据套餐id获取套餐信息
+	 */
+	Plan getPlanById(long planId);
 
 	/**
 	 * 更新套餐折扣（定价一般不要修改，改折扣力度）
