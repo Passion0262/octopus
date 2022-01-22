@@ -266,9 +266,10 @@ public class personalAdminController {
 			long id = Long.parseLong(request.getParameter("id"));
 			logger.info("管理员{}进入admin_plan_detail，获取Plan, id={}", user, id);
 			try {
-				//Plan plan = planService.getPlanById(id));
-				Plan plan = planService.listAllPlan().get(0);
+				Plan plan = planService.getPlanById(id);
+//				plan.setCategories(categoryService.listAllCategory());
 				model.addAttribute("plan", plan);
+//				System.out.println(plan);
 				return new ModelAndView("admin_plan_detail", "planmodel", model);
 			} catch (Exception e) {
 				return new ModelAndView("redirect:/admin_error");
@@ -333,8 +334,7 @@ public class personalAdminController {
 			long id = Long.parseLong(request.getParameter("id"));
 			logger.info("管理员{}进入admin_plan_edit，获取Plan, id={}", user, id);
 			try {
-				//model.addAttribute("plan", planService.getPlanById(id));
-				model.addAttribute("plan", planService.listAllPlan().get(0));
+				model.addAttribute("plan", planService.getPlanById(id));
 				model.addAttribute("category", categoryService.listAllCategory());
 				return new ModelAndView("admin_plan_edit", "planmodel", model);
 			} catch (Exception e) {

@@ -43,56 +43,59 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <form id="form" class="needs-validation" action="/plan" method="post" th:object="${planmodel.plan}" onsubmit="checkMajor()" novalidate="" style="pediting-left: 20px;">
+                                <form id="form" class="needs-validation" action="/plan" method="post" novalidate="" style="pediting-left: 20px;">
                                     <div class="form-group row">
-                                        <label for="name" class="col-md-2 col-form-label">套餐名称：</label>
-                                        <div class="col-md-10">
-                                            <input name="name" th:value="${name}" class="form-control" type="text"  id="name" readonly style="border: none">
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-8">
+                                            <label for="name">套餐名称：</label>
+                                            <input name="name" th:value="${planmodel.plan.name}"  type="text"  id="name" readonly style="border: none">
                                         </div>
                                     </div>
 
-                                    <div id="category_div" class="form-group row" style="display: none">
-                                        <label class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>所含类别：</label>
-                                        <div class="col-md-10">
-                                            <ul th:each="${category}">
-                                                <li>
-                                                    <span th:value="${category.name}+': '+${category.brief}"></span>
-                                                </li>
+                                    <div class="form-group row" >
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-8">
+                                            <label for="name">所含类别：</label>
+                                            <ul th:each="cat:${planmodel.plan.categories}" style="padding-left: 100px;">
+                                                <li th:text="${cat.name}+'： '+${cat.brief}"></li>
                                             </ul>
                                         </div>
                                     </div>
-
                                     <div class="form-group row">
-                                        <label for="price" class="col-md-2 col-form-label">价格：</label>
-                                        <div class="col-md-10">
-                                            <input name="price" th:value="${price}" class="form-control" type="text"  id="price" readonly style="border: none">
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-8">
+                                            <label for="price">套餐价格：</label>
+                                            <input name="price" th:value="${planmodel.plan.price}"  type="text"  id="price" readonly style="border: none">
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="discount" class="col-md-2 col-form-label">折扣：</label>
-                                        <div class="col-md-10">
-                                            <input name="discount" th:value="${discount}" class="form-control" type="text" id="discount" readonly style="border: none">
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-8">
+                                            <label for="discount">套餐折扣：</label>
+                                            <input name="discount" th:value="${planmodel.plan.discount}"  type="text"  id="discount" readonly style="border: none">
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="validPeriodMonth" class="col-md-2 col-form-label">有效期：</label>
-                                        <div class="col-md-10">
-                                            <input type="text" id="validPeriodMonth" name="selling" th:value="${validPeriodMonth}+'个月'" readonly style="border: none">
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-8">
+                                            <label for="validPeriodMonth">有效期：</label>
+                                            <input name="validPeriodMonth" th:value="${planmodel.plan.validPeriodMonth}+'个月'" type="text"  id="validPeriodMonth" readonly style="border: none">
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="selling" class="col-md-2 col-form-label">是否上架：</label>
-                                        <div class="col-md-10">
-                                            <input type="text" id="selling" name="selling" th:value="${selling?'是':'否'}" readonly style="border: none">
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-8">
+                                            <label for="selling">是否上架：</label>
+                                            <input name="selling" th:value="${planmodel.plan.selling==true?'是':'否'}" type="text"  id="selling" readonly style="border: none">
                                         </div>
                                     </div>
 
                                     <div class="row" style="display: block;text-align: center;">
-                                        <a th:href="@{admin_plan_edit(id=${plan.id})}" th:title="'修改'" class="edit" style="color:#1cbb8c">
-                                            <i class="mdi mdi-pencil font-size-18"></i>
+                                        <a th:href="@{admin_plan_edit(id=${planmodel.plan.id})}" th:title="'修改'" class="edit" style="color:#1cbb8c">
+                                            <i class="mdi mdi-pencil font-size-18"></i>修改
                                         </a>
                                     </div>
 
@@ -121,10 +124,6 @@
 <script src="static/js/libs/jquery/jquery.min.js"></script>
 <!-- bootstrap/js -->
 <script src="static/js/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!--        <script src="static/js/libs/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>-->
-<!--        <script src="static/js/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js"></script>-->
-<!--        <script src="static/js/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>-->
-<!--        <script src="static/js/libs/bootstrap-maxlength/bootstrap-maxlength.min.js">-->
 <!-- metismenu -->
 <script src="static/js/libs/metismenu/metisMenu.min.js"></script>
 <!-- simplebar -->
@@ -137,7 +136,6 @@
 <script src="static/js/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
 <script src="static/js/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-us-merc-en.js"></script>
 <!-- js/pages/ -->
-<script src="static/js/pages/form-advanced.init.js"></script>
 <script src="static/js/app.js"></script>
 
 <script type="text/javascript" th:inline="javascript">
