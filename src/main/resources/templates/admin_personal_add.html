@@ -47,7 +47,7 @@
                                             <div class="form-group row">
                                                 <label for="add_personalTel" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>手机号码：</label>
                                                 <div class="col-md-10">
-                                                    <input name="personalTel" th:value="*{personalTel}" class="form-control" type="text"  id="add_personalTel">
+                                                    <input name="personalTel" oninput="value=value.replace(/[^\d]/g,'')" th:value="*{personalTel}" placeholder="请填写手机号码..." class="form-control" type="text"  id="add_personalTel">
                                                 </div>
                                             </div>
 

@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Array;
 import java.util.*;
 
 
@@ -133,7 +134,9 @@ public class personalAdminController {
 		if (role_id == 5) {
 			logger.info("管理员{}进入admin_personal_add，获取一个新Personal()", user);
 			try {
-				model.addAttribute("personal", new PersonalUser());
+				PersonalUser personalUser = new PersonalUser();
+				//System.out.println(personalUser);
+				model.addAttribute("personal", personalUser);
 				return new ModelAndView("admin_personal_add", "permodel", model);
 			} catch (Exception e) {
 				return new ModelAndView("redirect:/admin_error");
@@ -219,10 +222,10 @@ public class personalAdminController {
 
 		if (role_id == 5) {
 			try {
-					long personalTel = Long.parseLong(request.getParameter("personalTel"));
-					model.addAttribute("user", personalUserService.getPersonalUser(personalTel));
-					model.addAttribute("plans", personalPlanService.listPersonalPlanByTel(personalTel));
-					return new ModelAndView("admin_plan_for_personal", "model", model);
+				long personalTel = Long.parseLong(request.getParameter("personalTel"));
+				model.addAttribute("user", personalUserService.getPersonalUser(personalTel));
+				model.addAttribute("plans", personalPlanService.listPersonalPlanByTel(personalTel));
+				return new ModelAndView("admin_plan_for_personal", "model", model);
 			} catch (Exception e) {
 				return new ModelAndView("redirect:/admin_error");
 			}
@@ -334,8 +337,22 @@ public class personalAdminController {
 			long id = Long.parseLong(request.getParameter("id"));
 			logger.info("管理员{}进入admin_plan_edit，获取Plan, id={}", user, id);
 			try {
-				model.addAttribute("plan", planService.getPlanById(id));
-				model.addAttribute("category", categoryService.listAllCategory());
+				Plan plan = planService.getPlanById(id);
+				List<String> categoryNames = Arrays.asList(plan.getCategoryNames().split(";"));
+//				String[] arr = new String[] {"算法工程师"};
+//				List<String> categoryNames = Arrays.asList(arr);
+				model.addAttribute("plan", plan);
+				List<Category> category_list = categoryService.listAllCategory();
+				for (int i=0; i<category_list.size(); i++){
+					if (categoryNames.contains(category_list.get(i).getName())){
+						category_list.get(i).setBrief("true");
+					}else{
+						category_list.get(i).setBrief("false");
+					}
+					System.out.println(category_list.get(i));
+				}
+				model.addAttribute("category", category_list);
+
 				return new ModelAndView("admin_plan_edit", "planmodel", model);
 			} catch (Exception e) {
 				return new ModelAndView("redirect:/admin_error");

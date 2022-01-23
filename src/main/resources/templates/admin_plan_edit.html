@@ -59,28 +59,15 @@
                                         </div>
                                     </div>
 
-                                    <div id="current_category_div" class="form-group row">
-                                        <label for="categoryNames" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>所含类别：</label>
-                                        <div class="col-md-8">
-                                            <input name="categoryNames" th:value="*{categoryNames}" class="form-control" type="text"  id="categoryNames">
-                                        </div>
-                                        <div class="col-md-2">
-                                            <button type="button" onclick="edit_category()" class="btn" style="background-color: #F5F5F5">修改</button>
-                                        </div>
-                                    </div>
-
-                                    <div id="edit_category_div" class="form-group row" style="display: none">
+                                    <div id="edit_category_div" class="form-group row">
                                         <label class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>所含类别：</label>
                                         <div class="col-md-10">
-                                            <select class="select2 form-control select2-multiple" multiple="multiple" data-placeholder="请选择">
-                                                <optgroup label="Alaskan/Hawaiian Time Zone">
-                                                    <option value="AK">Alaska</option>
-                                                    <option value="HI">Hawaii</option>
-                                                </optgroup>
-                                                <optgroup label="Pacific Time Zone">
-                                                    <option value="CA">California</option>
-                                                    <option value="NV">Nevada</option>
-                                                </optgroup>
+                                            <select name="categoryIds" class="select2 form-control select2-multiple" multiple="multiple" data-placeholder="请选择...">
+                                                <option th:each="category:${planmodel.category}" th:value="${category.id}" th:selected="${category.brief=='true'?true:false}" >[[${category.name}]]</option>
+<!--                                                <optgroup label="Alaskan/Hawaiian Time Zone">-->
+<!--                                                    <option value="AK">Alaska</option>-->
+<!--                                                    <option value="HI">Hawaii</option>-->
+<!--                                                </optgroup>-->
                                             </select>
                                         </div>
                                     </div>
@@ -103,7 +90,7 @@
                                     <div class="form-group row">
                                         <label for="edit_validPeriodMonth" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>有效期：</label>
                                         <div class="col-md-10">
-                                            <input name="validPeriodMonth" oninput="value=value.replace(/[^\d\.]/g,'')" th:value="*{validPeriodMonth}" class="form-control" type="text" id="edit_validPeriodMonth">
+                                            <input name="validPeriodMonth" oninput="value=value.replace(/[^\d]/g,'')" th:value="*{validPeriodMonth}" class="form-control" type="text" id="edit_validPeriodMonth">
                                         </div>
                                     </div>
 
@@ -213,11 +200,6 @@
         }
     }
 
-    function edit_category(){
-        document.getElementById("current_category_div").style.display="none";
-        document.getElementById("edit_category_div").style.display="inline";
-
-    }
 
 </script>
 
