@@ -147,14 +147,14 @@ public class studentController {
 			return "redirect:/index";
 		} else if (role == 4) {
 		    //身份为个人用户，进入个人用户前台系统
-			PersonalUser personalUser = personalUserService.getPersonalUser(Long.parseLong(userNumber));
+			PersonalUser personalUser = personalUserService.getPersonalUser(userNumber);
 			logger.info("当前登陆身份为：个人用户        欢迎您，" + userNumber);
 			cookieThings.setCookie(userNumber, String.valueOf(personalUser.getPersonalTel()), request, response, "cookiePersonalUser");
 			teacherService.updateLoginInfo(Long.parseLong(userNumber));
 			return "redirect:/admin_index_for_personal";			//todo 个人用户前台地址
 		} else if (role == 5) {
 			//身份为个人用户管理员，进入个人用户后台系统
-			PersonalAdmin personalAdmin = personalAdminService.getPersonalAdmin(Long.parseLong(userNumber));
+			PersonalAdmin personalAdmin = personalAdminService.getPersonalAdmin(userNumber);
 			logger.info("当前登陆身份为：个人用户管理员        欢迎您，" + userNumber);
 			System.out.println(personalAdmin);
 			cookieThings.setCookie(userNumber, String.valueOf(personalAdmin.getAdminTel()), request, response, "cookiePersonalAdmin");

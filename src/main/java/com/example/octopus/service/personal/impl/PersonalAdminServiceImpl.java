@@ -19,17 +19,17 @@ public class PersonalAdminServiceImpl implements PersonalAdminService {
 	SysUserRoleMapper sysUserRoleMapper;
 
 	@Override
-	public PersonalAdmin getPersonalAdmin(long adminTel){
+	public PersonalAdmin getPersonalAdmin(String adminTel){
 		return personalAdminMapper.getPersonalAdminByTel(adminTel);
 	}
 
 	@Override
 	public boolean changePassword(PersonalAdmin personalAdmin){
-		return sysUserRoleMapper.updatePassword(personalAdmin.getAdminTel(), personalAdmin.getPassword());
+		return sysUserRoleMapper.updatePassword(Long.parseLong(personalAdmin.getAdminTel()), personalAdmin.getPassword());
 	}
 
 	@Override
-	public boolean updateLoginInfo(long adminTel){
+	public boolean updateLoginInfo(String adminTel){
 		return personalAdminMapper.updateLoginInfoByTel(adminTel);
 	}
 

@@ -22,14 +22,14 @@ public interface PersonalPlanService {
 	 * @param personalTel 个人用户手机号（账号）
 	 * @return 该用户 所有 套餐列表
 	 */
-	List<PersonalPlan> listPersonalPlanByTel(long personalTel);
+	List<PersonalPlan> listPersonalPlanByTel(String personalTel);
 
 	/**
 	 * 列出该个人用户所购 未过期 套餐订单
 	 * @param personalTel 个人用户手机号（账号）
 	 * @return 该用户 未过期 套餐列表
 	 */
-	List<PersonalPlan> listUnexpiredPersonalPlanByTel(long personalTel);
+	List<PersonalPlan> listUnexpiredPersonalPlanByTel(String personalTel);
 
 	/**
 	 * 创建新个人用户购买套餐订单

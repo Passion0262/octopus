@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 @Data
 public class PersonalUser {
 
-	private long personalTel;  //个人电话，即登录账号，11位
+	private String personalTel;  //个人电话，即登录账号，11位
 
 	// 数据库personal_user表中不存储password，但为方便，在实体类中保留。对password进行操作时需要在implement中调用sysUserRoleMapper中的方法进行操作
 	private String password;

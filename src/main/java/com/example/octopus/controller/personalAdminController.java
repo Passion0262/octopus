@@ -175,7 +175,7 @@ public class personalAdminController {
 		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色
 
 		if (role_id == 5) {
-			long personalTel = Long.parseLong(request.getParameter("personalTel"));
+			String personalTel = request.getParameter("personalTel");
 			logger.info("管理员{}进入admin_personal_edit，获取PersonalUser, personalTel={}", user, personalTel);
 			try {
 				PersonalUser personalUser = personalUserService.getPersonalUser(personalTel);
@@ -222,7 +222,7 @@ public class personalAdminController {
 
 		if (role_id == 5) {
 			try {
-				long personalTel = Long.parseLong(request.getParameter("personalTel"));
+				String personalTel = request.getParameter("personalTel");
 				model.addAttribute("user", personalUserService.getPersonalUser(personalTel));
 				model.addAttribute("plans", personalPlanService.listPersonalPlanByTel(personalTel));
 				return new ModelAndView("admin_plan_for_personal", "model", model);

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -30,7 +29,7 @@ public class PersonalPlanServiceImpl implements PersonalPlanService {
 	}
 
 	@Override
-	public List<PersonalPlan> listPersonalPlanByTel(long personalTel){
+	public List<PersonalPlan> listPersonalPlanByTel(String personalTel){
 		Timestamp current = new Timestamp(System.currentTimeMillis());  //获取当前时间
 		List<PersonalPlan> res = personalPlanMapper.listAllPersonalPlanByTel(personalTel);
 		for (int i=0; i<res.size();i++)
@@ -39,7 +38,7 @@ public class PersonalPlanServiceImpl implements PersonalPlanService {
 	}
 
 	@Override
-	public List<PersonalPlan> listUnexpiredPersonalPlanByTel(long personalTel){
+	public List<PersonalPlan> listUnexpiredPersonalPlanByTel(String personalTel){
 		Timestamp current = new Timestamp(System.currentTimeMillis());  //获取当前时间
 		List<PersonalPlan> tem = personalPlanMapper.listAllPersonalPlanByTel(personalTel);
 		List<PersonalPlan> res = new ArrayList<>();;

@@ -21,7 +21,7 @@ public interface PersonalUserService {
 	 * @param personalTel 个人用户电话号（账号）
 	 * @return 个人用户信息实体类
 	 */
-	PersonalUser getPersonalUser(long personalTel);
+	PersonalUser getPersonalUser(String personalTel);
 
 	/**
 	 * 更改密码 实体类中只需有personalTel和password即可
@@ -35,7 +35,7 @@ public interface PersonalUserService {
 	 * @param personalTel 个人用户电话号（账号）
 	 * @return 成功与否
 	 */
-	boolean updateLoginInfo(long personalTel);
+	boolean updateLoginInfo(String personalTel);
 
 	/**
 	 * 更新个人用户信息

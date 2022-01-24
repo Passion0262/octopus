@@ -11,7 +11,7 @@ import java.sql.Timestamp;
  */
 @Data
 public class PersonalAdmin {
-	private long adminTel;  //个人用户管理员电话，登录账号，11位
+	private String adminTel;  //个人用户管理员电话，登录账号，11位
 
 	private String password;  //表中无password，为方便故在实体类中保留
 
