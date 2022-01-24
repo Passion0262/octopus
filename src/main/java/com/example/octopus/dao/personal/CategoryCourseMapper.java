@@ -2,6 +2,7 @@ package com.example.octopus.dao.personal;
 
 import com.example.octopus.entity.personal.CategoryCourse;
 import com.example.octopus.entity.personal.PlanCategory;
+import com.example.octopus.entity.user.CourseStatic;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Mapper;
@@ -32,10 +33,17 @@ public interface CategoryCourseMapper {
 	CategoryCourse getCategoryCourseById(long id);
 
 	/**
+	 * 通过类别id获取类别所包含的所有静态课程信息
+	 */
+	@Select("SELECT cs.* FROM course_static cs, category_course cc " +
+			"WHERE cs.course_static_id=cc.static_course_id AND cc.category_id=#{categoryId}")
+	List<CourseStatic> listStaticCourseByCategoryId(long categoryId);
+
+	/**
 	 * 删除类目时，删除其下的包含课程的所有记录
 	 */
 	@Delete("DELETE FROM category_course WHERE category_id=#{categoryId}")
-	boolean deleteCategoryCourseByCategoryId(CategoryCourse categoryCourse);
+	boolean deleteCategoryCourseByCategoryId(long categoryId);
 
 	///////////////////
 	//批量插入

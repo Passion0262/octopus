@@ -22,8 +22,15 @@ public interface PlanService {
 
 	/**
 	 * 根据套餐id获取套餐信息
+	 * 将有categories属性，无categoryIds和categoryNames（为null）
 	 */
 	Plan getPlanById(long planId);
+
+	/**
+	 * 更新套餐信息，包括selling、price、discount、validPeriodMonth
+	 *  不更新其下所属category
+	 */
+	boolean updatePlan(Plan plan);
 
 	/**
 	 * 更新套餐折扣（定价一般不要修改，改折扣力度）

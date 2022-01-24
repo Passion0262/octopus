@@ -48,6 +48,13 @@ public interface PlanMapper {
 	Plan getPlanByName(String name);
 
 	/**
+	 * 更新套餐信息，包括selling、price、discount、validPeriodMonth
+	 *   不更新所含category
+	 */
+	@Update("UPDATE plan SET selling=#{selling}, price=#{price}, discount=#{discount}, valid_period_month=#{validPeriodMonth}")
+	boolean updatePlan(Plan plan);
+
+	/**
 	 * 通过套餐id更改折扣
 	 */
 	@Update("UPDATE plan SET discount=#{discount} WHERE id=#{id}")

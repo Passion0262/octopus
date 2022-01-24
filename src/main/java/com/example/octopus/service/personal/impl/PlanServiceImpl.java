@@ -64,7 +64,16 @@ public class PlanServiceImpl implements PlanService {
 
 	@Override
 	public Plan getPlanById(long planId){
-		return planMapper.getPlanById(planId);
+		Plan p = planMapper.getPlanById(planId);
+		List<Category> categories = planCategoryMapper.listCategoryByPlanId(p.getId());
+		if (!categories.isEmpty())
+			p.setCategories(categories);
+		return p;
+	}
+
+	@Override
+	public boolean updatePlan(Plan plan){
+		return planMapper.updatePlan(plan);
 	}
 
 	@Override
@@ -104,11 +113,8 @@ public class PlanServiceImpl implements PlanService {
 	@Transactional
 	public boolean deletePlan(Plan plan) {
 		boolean planDeleted = planMapper.deletePlan(plan);
-		if (planDeleted) {
-			PlanCategory pc = new PlanCategory();
-			pc.setPlanId(plan.getId());
-			return planCategoryMapper.deletePlanCategoryByPlanId(pc);
-		}
+		if (planDeleted)
+			return planCategoryMapper.deletePlanCategoryByPlanId(plan.getId());
 		return planDeleted;
 	}
 
