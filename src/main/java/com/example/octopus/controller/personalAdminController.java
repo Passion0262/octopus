@@ -1,6 +1,7 @@
 package com.example.octopus.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.example.octopus.entity.user.*;
 import com.example.octopus.entity.personal.*;
 import com.example.octopus.service.*;
 import com.example.octopus.service.personal.*;
@@ -50,6 +51,9 @@ public class personalAdminController {
 
 	@Autowired
 	PlanCategoryService planCategoryService;
+
+	@Autowired
+	CourseStaticService courseStaticService;
 
 	private final static String COOKIE_NAME = "cookiePersonalAdmin";
 
@@ -404,6 +408,94 @@ public class personalAdminController {
 			return "redirect:/login";
 		}
 	}
+
+	// 增加课程类别
+	@GetMapping("/admin_category_add")
+	public ModelAndView admin_category_add(HttpServletRequest request, Model model) {
+		if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
+		long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色
+
+		if (role_id == 5) {
+			logger.info("管理员{}进入admin_category_add，获取一个新Category()", user);
+			try {
+				model.addAttribute("category", new Category());
+				model.addAttribute("course", courseStaticService.listAllCourseStatic());
+				return new ModelAndView("admin_category_add", "categorymodel", model);
+			} catch (Exception e) {
+				return new ModelAndView("redirect:/admin_error");
+			}
+		} else {
+			return new ModelAndView("redirect:/login");
+		}
+	}
+
+	@PostMapping("/add_category")
+	public ModelAndView add_category(Category category, HttpServletRequest request, Model model) {
+		if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
+		long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色
+
+		if (role_id == 5) {
+			logger.info("管理员{}提交新增的课程类别: [{}]", user, category);
+			try {
+//				System.out.println(category);
+				category.setStaticCourseIds(category.getStaticCourseIds().replace(',', ';'));
+				categoryService.insertCategory(category);
+				return new ModelAndView("redirect:/admin_category");
+			} catch (Exception e) {
+				return new ModelAndView("redirect:/admin_error");
+			}
+		} else {
+			return new ModelAndView("redirect:/login");
+		}
+	}
+
+	// 修改课程类别
+	@GetMapping("/admin_category_edit")
+	public ModelAndView admin_category_edit(HttpServletRequest request, Model model) {
+		if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
+		long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色
+
+		if (role_id == 5) {
+			long id = Long.parseLong(request.getParameter("id"));
+			logger.info("管理员{}进入admin_category_edit，获取category, id={}", user, id);
+			try {
+				Category category = categoryService.getCategoryById(id);
+				model.addAttribute("category", category);
+				return new ModelAndView("admin_category_edit", "categorymodel", model);
+			} catch (Exception e) {
+				return new ModelAndView("redirect:/admin_error");
+			}
+		} else {
+			return new ModelAndView("redirect:/login");
+		}
+	}
+
+	@PostMapping("/edit_category")
+	public ModelAndView edit_category(Category category, HttpServletRequest request, Model model) {
+		if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
+		long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色
+
+		if (role_id == 5) {
+			logger.info("管理员{}提交修改的category: [{}]", user, category);
+			try {
+				categoryService.updateCategory(category);
+				return new ModelAndView("redirect:/admin_category");
+			} catch (Exception e) {
+				return new ModelAndView("redirect:/admin_error");
+			}
+		} else {
+			return new ModelAndView("redirect:/login");
+		}
+	}
+
 
 	//删除课程类别
 	@RequestMapping("/admin_category_delete")
