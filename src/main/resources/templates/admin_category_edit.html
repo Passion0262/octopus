@@ -31,8 +31,8 @@
 <body data-topbar="dark">
 <!-- Begin page -->
 <div id="layout-wrapper">
-    <div th:replace="commons_personal::topbar(${planmodel.username})"></div>
-    <div th:replace="commons_personal::leftSidebar(${planmodel.role})"></div>
+    <div th:replace="commons_personal::topbar(${categorymodel.username})"></div>
+    <div th:replace="commons_personal::leftSidebar(${categorymodel.role})"></div>
 
     <!-- Start right Content here -->
     <div class="main-content">
@@ -42,7 +42,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="page-title-box d-flex align-items-center justify-content-between">
-                            <h4 class="mb-0">修改套餐</h4>
+                            <h4 class="mb-0">修改课程类别</h4>
                         </div>
                     </div>
                 </div>
@@ -51,61 +51,20 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <form id="form" class="needs-validation" action="/edit_plan" method="post" th:object="${planmodel.plan}" novalidate="" style="pediting-left: 20px;">
+                                <form id="form" class="needs-validation" action="/edit_category" method="post" th:object="${categorymodel.category}" novalidate="" style="pediting-left: 20px;">
+                                    <input name="id" th:value="*{id}" class="form-control" type="text" style="display: none">
                                     <div class="form-group row">
-                                        <label for="edit_name" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>套餐名称：</label>
+                                        <label for="edit_name" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>类别名称：</label>
                                         <div class="col-md-10">
                                             <input name="name" th:value="*{name}" class="form-control" type="text"  id="edit_name">
                                         </div>
                                     </div>
-
-                                    <!--/*-->
-                                    <div id="edit_category_div" class="form-group row">
-                                        <label class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>所含类别：</label>
-                                        <div class="col-md-10">
-                                            <select name="categoryIds" class="select2 form-control select2-multiple" multiple="multiple" data-placeholder="请选择...">
-                                                <option th:each="category:${planmodel.category}" th:value="${category.id}" th:selected="${category.brief=='true'?true:false}" >[[${category.name}]]</option>
-<!--                                                <optgroup label="Alaskan/Hawaiian Time Zone">-->
-<!--                                                    <option value="AK">Alaska</option>-->
-<!--                                                    <option value="HI">Hawaii</option>-->
-<!--                                                </optgroup>-->
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <!--*/-->
-
                                     <div class="form-group row">
-                                        <label for="edit_price" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>价格：</label>
+                                        <label for="edit_brief" class="col-md-2 col-form-label">类别简介：</label>
                                         <div class="col-md-10">
-                                            <input name="price" oninput="value=value.replace(/[^\d\.]/g,'')" th:value="*{price}" class="form-control" type="text"  id="edit_price">
+                                            <input name="brief" th:value="*{brief}" class="form-control" type="text"  id="edit_brief">
                                         </div>
                                     </div>
-
-                                    <div class="form-group row">
-                                        <label for="discount" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>折扣：</label>
-                                        <div class="col-md-10">
-                                            <!--                                                    <input name="discount" th:value="*{discount}" class="form-control" type="text">-->
-                                            <input type="text" id="discount" name="discount" th:value="*{discount}">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label for="edit_validPeriodMonth" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>有效期：</label>
-                                        <div class="col-md-10">
-                                            <input name="validPeriodMonth" oninput="value=value.replace(/[^\d]/g,'')" th:value="*{validPeriodMonth}" class="form-control" type="text" id="edit_validPeriodMonth">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>是否上架：</label>
-                                        <div class="col-md-10 custom-switch " style="display: flex; align-items: center; pediting-top: 10px; pediting-left: 10px;">
-                                            <input type="checkbox" id="switch" switch="success"  class="form-control">
-                                            <label for="switch" data-on-label="Yes" data-off-label="No"></label>
-                                            <input name="selling" th:value="*{selling}" id="selling" class="form-control" type="text" style="display: none;">
-                                        </div>
-                                    </div>
-
-
                                     <div id="alert" class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none;margin-top: 5px;pediting: 5px;pediting-left: 20px;">
                                         <i class="mdi mdi-block-helper mr-2">
                                             <span id="result_msg" style="pediting-left: 10px;"></span>
@@ -115,7 +74,7 @@
                                         </button>
                                     </div>
                                     <div class="row" style="display: block;text-align: center;">
-                                        <a href="admin_plan" class="btn btn-light btn-rounded waves-effect waves-light">
+                                        <a href="admin_category" class="btn btn-light btn-rounded waves-effect waves-light">
                                             <i class="ri-close-line align-middle mr-2"></i>取消
                                         </a>
                                         <button type="button" onclick="submitForm()" class="btn btn-success btn-rounded waves-effect waves-light" style="margin: 20px;">
@@ -175,13 +134,12 @@
 <script type="text/javascript" th:inline="javascript">
 
     function checkForm(){
-        var oPlanName = document.getElementById("edit_name");
-        if (!oPlanName.value){
+        var oCategoryName = document.getElementById("edit_name");
+        if (!oCategoryName.value){
             document.getElementById("alert").style.display="";
-            document.getElementById("result_msg").innerHTML = "请填写套餐名称！";
+            document.getElementById("result_msg").innerHTML = "请填写类别名称！";
             return false;
         }
-        getSelling();
         return true;
     }
 
@@ -190,15 +148,6 @@
         if (checkForm()){
             oForm = document.getElementById("form");
             oForm.submit();
-        }
-    }
-
-    function getSelling(){
-        if(document.getElementById("switch").checked){
-            document.getElementById("selling").value = true;
-        }
-        else{
-            document.getElementById("selling").value = false;
         }
     }
 
