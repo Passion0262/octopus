@@ -51,7 +51,8 @@ public interface PlanMapper {
 	 * 更新套餐信息，包括selling、price、discount、validPeriodMonth
 	 *   不更新所含category
 	 */
-	@Update("UPDATE plan SET selling=#{selling}, price=#{price}, discount=#{discount}, valid_period_month=#{validPeriodMonth}")
+	@Update("UPDATE plan SET selling=#{selling}, price=#{price}, discount=#{discount}, valid_period_month=#{validPeriodMonth} " +
+			"WHERE id=#{id}")
 	boolean updatePlan(Plan plan);
 
 	/**
