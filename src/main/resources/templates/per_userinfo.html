@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8" />
+  <title>AI实训研发软件</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta content="AI实训研发软件" name="description" />
+  <link href="static/js/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" /><!-- Responsive datatable examples -->
+  <link href="static/js/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" /><!-- Bootstrap Css -->
+  <link href="static/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" /><!-- Icons Css -->
+  <link href="static/css/icons.min.css" rel="stylesheet" type="text/css" /><!-- App Css-->
+  <link href="static/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+  <link href="static/js/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+</head>
+
+<body data-topbar="dark">
+<!-- Begin page -->
+<div id="layout-wrapper">
+  <header id="page-topbar">
+    <div class="navbar-header">
+      <div class="d-flex">
+        <!-- LOGO -->
+        <div class="navbar-brand-box">
+          <a href="index" class="logo">
+            <span class="logo-sm"></span>
+            <span class="logo-lg row" >
+                            <span class="col-9" style="font-size:15px;color: #fff;line-height: 15px;margin-top: 30px;padding-left: 0px;padding-right: 0px;">大数据与人工智能平台</span>
+                        </span>
+          </a>
+        </div>
+        <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn"><i class="ri-menu-2-line align-middle"></i></button>
+      </div>
+
+
+      <div class="d-flex">
+
+        <div class="dropdown d-none d-lg-inline-block ml-1"><button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen"><i class="ri-fullscreen-line"></i></button></div>
+
+        <!-- 个人信息展示 退出登录操作 -->
+        <div class="dropdown d-inline-block user-dropdown">
+          <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class=" " th:text="${stuname}"></span>
+            <span class=" d-none" ></span>
+            <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+          </button>
+          <div class="dropdown-menu dropdown-menu-right">
+            <!-- item-->
+            <a class="dropdown-item" href="userinfo"><i class="ri-user-line align-middle mr-1"></i>个人资料</a>
+            <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="/logout"><i class="ri-shut-down-line align-middle mr-1 text-danger"></i>注销</a>
+          </div>
+        </div>
+        <!-- 个人信息展示 退出登录操作 -->
+
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== Left Sidebar Start ========== -->
+  <div class="vertical-menu">
+    <div data-simplebar class="h-100">
+      <!--- Sidemenu -->
+      <div id="sidebar-menu">
+        <!-- Left Menu Start -->
+        <ul class="metismenu list-unstyled" id="side-menu">
+
+
+          <li><a href="per_index" class="waves-effect"><i class="ri-dashboard-line"></i><span>首页</span></a></li>
+          <li><a href="per_applycourse" class=" waves-effect"><i class="ri-leaf-line"></i><span>课程套餐</span></a></li>
+          <li><a href="per_mycourse" class=" waves-effect"><i class="ri-plant-line"></i><span>我的课程</span></a></li>
+          <li><a href="per_studylog" class=" waves-effect"><i class="ri-file-list-3-line"></i><span>学习记录</span></a></li>
+
+
+
+        </ul>
+      </div><!-- Sidebar -->
+    </div>
+  </div><!-- Left Sidebar End -->
+  <!-- ============================================================== -->
+  <!-- Start right Content here -->
+  <!-- ============================================================== -->
+  <div class="main-content">
+    <div class="page-content">
+      <div class="container-fluid">
+        <!-- start page title -->
+        <div class="row">
+          <div class="col-12">
+            <!-- 修改路径 -->
+            <div class="page-title-box d-flex align-items-center justify-content-between">
+              <h4 class="mb-0">个人资料</h4>
+              <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                  <li class="breadcrumb-item"><a href="index"> 首页</a></li>
+                  <li class="breadcrumb-item active">个人资料</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+
+
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <table id="datatable-buttons" class="table  table-bordered text-center" style="overflow-x: scroll;">
+
+<!--                  <tr>-->
+<!--                    <th>头像</th><td colspan="3"><img class="img-fluid" src="static/images/users/avatar-2.jpg" alt="Header Avatar"></td>-->
+
+<!--                  </tr>-->
+                  <tr>
+                    <th>学号</th><td><span th:text="${per.personalTel}"></span></td>
+<!--                    <th>姓名</th><td><span th:text="${stu.name}"></span></td>-->
+                  </tr>
+<!--                  <tr>-->
+<!--                    <th>班级</th><td><span th:text="${stu.className}"></span></td>-->
+<!--                    <th>专业</th><td><span th:text="${stu.majorName}"></span></td>-->
+<!--                  </tr>-->
+
+                  <tr >
+<!--                    <th>手机号</th><td><span id="phonespan" th:text="${stu.phoneNumber}"></span></td>-->
+<!--                    <td colspan="2"><button  type="button" class="btn btn-success btn-rounded waves-effect waves-light" onclick="showmodify()">修改手机号</button></td>-->
+                  </tr>
+
+                </table>
+
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+        </div><!-- end row -->
+
+      </div><!-- container-fluid -->
+    </div><!-- End Page-content -->
+    <footer class="footer">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-6">
+            <!-- <script>document.write(new Date().getFullYear())</script>© AI实训研发软件 -->
+          </div>
+          <div class="col-sm-6">
+            <div class="text-sm-right d-none d-sm-block"><script>document.write(new Date().getFullYear())</script>© AI实训研发软件</div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div><!-- end main content-->
+</div><!-- END layout-wrapper -->
+
+
+
+
+
+
+<!-- JAVASCRIPT -->
+
+<script th:src="@{static/js/libs/jquery/jquery.min.js}"></script>
+<script th:src="@{static/js/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{static/js/libs/metismenu/metisMenu.min.js}"></script>
+<script th:src="@{static/js/libs/simplebar/simplebar.min.js}"></script>
+<script th:src="@{static/js/libs/node-waves/waves.min.js}"></script>
+<script th:src="@{static/js/app.js}"></script>
+<script th:src="@{static/js/libs/sweetalert2/sweetalert2.min.js}"></script>
+
+<script th:inline="javascript" type="text/javascript">
+
+
+  function showmodify() {
+    var s = $("#phonespan").text();
+    var phoneNumber = prompt("请输入你的手机号", s); //将输入的内容赋给变量 name ，
+
+    //这里需要注意的是，prompt有两个参数，前面是提示的话，后面是当对话框出来后，在对话框里的默认值
+    if (phoneNumber&&phoneNumber!=s)//如果返回的有内容
+    {
+      $.ajax({
+        url:"/update_phoneNumber",
+        type: 'post',
+        data: {
+          "phoneNumber":phoneNumber,
+        },
+        success: function(){
+          alert("更改成功");
+          $("#phonespan").text(phoneNumber);
+        },
+        error: function(){
+          alert("更改失败，请稍后再试");
+
+        }
+      })
+    }else if(phoneNumber==''){
+      alert("手机号不能为空");
+    }else{
+      alert("更改成功");
+    }
+
+
+  }
+
+</script>
+
+</body>
+
+</html>

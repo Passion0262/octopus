@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <title>AI实训研发软件</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut" href="static/images/favicon.png" />
+        <!-- Bootstrap Css -->
+        <link href="static/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons css -->
+        <link href="static/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="static/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+
+        <link href="static/css/scroll.css" id="scroll-style" rel="stylesheet" type="text/css" />
+        <!-- Twitter-bootstrap-wizard css -->
+        <link href="static/js/libs/twitter-bootstrap-wizard/prettify.css" rel="stylesheet" type="text/css" />
+
+    </head>
+    <body class="" data-sidebar="light">
+        <header id="page-topbar">
+            <div class="navbar-header">
+                <div class="d-flex">
+                    <!-- LOGO -->
+                    <div class="navbar-brand-box">
+                        <a href="index" class="logo">
+                            <span class="logo-sm"></span>
+                            <span class="logo-lg row" >
+                            <span class="col-9" style="font-size:15px;color: #fff;line-height: 15px;margin-top: 30px;padding-left: 0px;padding-right: 0px;">大数据与人工智能平台</span>
+                        </span>
+                        </a>
+                    </div>
+                </div>
+                <div class="d-flex">
+                    <div class="dropdown d-none d-lg-inline-block ml-1">
+                        <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
+                            <i class="ri-fullscreen-line"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div style="padding-top:70px">
+            <div class="container-fluid">
+                <div class="row" style="justify-content: center;align-items: center;padding: 120px;">
+                    <div class="col-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <div id="progrss-wizard" class="twitter-bs-wizard">
+                                    <ul class="twitter-bs-wizard-nav nav-justified">
+                                        <li class="nav-item">
+                                            <a href="#input_username" class="nav-link" data-toggle="tab" style="pointer-events: none;">
+                                                <span class="step-number">01</span><span class="step-title">账号确定</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#identity_user" class="nav-link" data-toggle="tab" style="pointer-events: none;">
+                                                <span class="step-number">02</span>
+                                                <span class="step-title">身份验证</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#reset_pwd" class="nav-link" data-toggle="tab" style="pointer-events: none;">
+                                                <span class="step-number">03</span>
+                                                <span class="step-title">重置密码</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#reset_success" class="nav-link" data-toggle="tab" style="pointer-events: none;">
+                                                <span class="step-number">04</span>
+                                                <span class="step-title">完成</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <div id="bar" class="progress mt-4">
+                                        <div class="progress-bar bg-success progress-bar-striped progress-bar-animated"></div>
+                                    </div>
+                                    <div class="tab-content twitter-bs-wizard-tab-content" style="padding-top: 50px;justify-content: center;align-items: center;min-height: 150px;">
+                                        <div class="tab-pane" id="input_username">
+                                            <form>
+                                                <div class="row" style="justify-content: center;align-items: center;">
+                                                    <div class="col-lg-10">
+                                                        <div class="form-group">
+                                                            <label for="username">账号</label>
+                                                            <input name="username" type="text" class="form-control" id="username">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="tab-pane" id="identity_user">
+                                            <div>
+                                                <form>
+                                                    <div class="row" style="justify-content: center;align-items: center;">
+<!--                                                        <div class="col-lg-10">-->
+<!--                                                            <div class="form-group">-->
+<!--                                                                <label for="email">邮箱</label>-->
+<!--                                                                <input name="email" type="text" class="form-control" id="email">-->
+<!--                                                            </div>-->
+<!--                                                        </div>-->
+                                                        <div class="col-lg-10">
+                                                            <div class="form-group">
+                                                                <label for="phone">手机号</label>
+                                                                <input name="phone" type="text" class="form-control" id="phone">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="reset_pwd">
+                                            <div>
+                                                <form>
+                                                    <div class="row" style="justify-content: center;align-items: center;">
+                                                        <div class="col-lg-10">
+                                                            <div class="form-group">
+                                                                <label for="new_pwd">设置新密码</label>
+                                                                <input name="new_pwd" type="password" class="form-control" id="new_pwd">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-10">
+                                                            <div class="form-group">
+                                                                <label for="new_pwd_check">确认新密码</label>
+                                                                <input name="new_pwd_check" type="password" class="form-control" id="new_pwd_check" onchange="check()">
+                                                            </div>
+                                                        </div>
+                                                        <div id="alert" class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none;margin-top: 5px;padding: 5px;padding-left: 20px;">
+                                                            <i class="mdi mdi-block-helper mr-2">
+                                                                <span id="result_msg" style="padding-left: 10px;"></span>
+                                                            </i>
+                                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="padding: 5px;">
+                                                                <span aria-hidden="true">×</span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="reset_success">
+                                            <div class="row justify-content-center">
+                                                <div class="col-lg-6"><div class="text-center">
+                                                    <div class="mb-4">
+                                                        <i class="mdi mdi-check-circle-outline text-success display-4"></i>
+                                                    </div>
+                                                    <div>
+                                                        <h5>正在重置。。。</h5>
+                                                        <p class="text-muted"><a href="admin_login">跳转到登录页面</a></p>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ul class="pager wizard twitter-bs-wizard-pager-link">
+                                        <li class="previous">
+                                            <a href="#" id="previous">上一步</a>
+                                        </li>
+                                        <li class="next">
+                                            <a href="#" id="next">下一步</a>
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer" style="left:0">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6">
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="text-sm-right d-none d-sm-block"><script>document.write(new Date().getFullYear())</script>© 人工智能实验实训平台</div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- JAVASCRIPT -->
+        <!-- jquery -->
+        <script src="static/js/libs/jquery/jquery.min.js"></script>
+        <!-- bootstrap/js -->
+        <script src="static/js/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- metismenu -->
+        <script src="static/js/libs/metismenu/metisMenu.min.js"></script>
+        <!-- simplebar -->
+        <script src="static/js/libs/simplebar/simplebar.min.js"></script>
+        <!-- node-waves -->
+        <script src="static/js/libs/node-waves/waves.min.js"></script>
+        <!-- twitter-bootstrap-wizard -->
+        <script src="static/js/libs/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+        <script src="static/js/libs/twitter-bootstrap-wizard/prettify.js"></script>
+        <!-- js/pages/ -->
+        <script src="static/js/pages/form-wizard.init.js"></script>
+        <!-- app.js -->
+        <script src="static/js/app.js"></script>
+
+        <script type="text/javascript" th:inline="javascript">
+            var content = {"username":'', "phone":'', "new_pwd":'', "new_pwd_check": ''};
+            var isUsername = false;
+            var isPhone = false;
+            var isNewPwd = false;
+            var isCheck = false;
+
+            function check(){
+                var oNewPwd = document.getElementById("new_pwd");
+                var oNewPwdCheck = document.getElementById("new_pwd_check");
+                if(oNewPwdCheck.value != oNewPwd.value){
+                    document.getElementById("alert").style.display="";
+                    document.getElementById("result_msg").innerHTML = "密码不正确！";
+                }
+                else{
+                    document.getElementById("alert").style.display="none";
+                }
+            }
+
+            document.getElementById("next").onclick = function() {
+                $("#progrss-wizard input").each(function () {
+                    content[this.name] = this.value;
+                    if(content["username"]){
+                        isUsername = true;
+                    }else{
+                        isUsername = false;
+                    }
+                    if(content["phone"]){
+                        isPhone = true;
+                    }else{
+                        isPhone = false;
+                    }
+                    if(content["new_pwd"]){
+                        isNewPwd = true;
+                    }else{
+                        isNewPwd = false;
+                    }
+                    if(content["new_pwd_check"]){
+                        if(isNewPwd){
+                            if(content["new_pwd"] == content["new_pwd_check"])
+                                isCheck = true;
+                        }
+                    }else{
+                        isCheck = false;
+                    }
+                    if(isCheck){
+                        if(!isUsername){
+                            document.getElementById("reset_success").innerHTML="<div class=\"row justify-content-center\">\n" +
+                            "                                                <div class=\"col-lg-6\"><div class=\"text-center\">\n" +
+                            "                                                    <div>\n" +
+                            "                                                        <h3>账号不能为空！</h3>\n" +
+                            "                                                        <p class=\"text-muted\"><a href=\"reset_pwd\">重新设置</a></p>\n" +
+                            "                                                    </div>\n" +
+                            "                                                </div>\n" +
+                            "                                                </div>\n" +
+                            "                                            </div>";
+                        }
+                        else if(!isPhone){
+                            document.getElementById("reset_success").innerHTML="<div class=\"row justify-content-center\">\n" +
+                                "                                                <div class=\"col-lg-6\"><div class=\"text-center\">\n" +
+                                "                                                    <div>\n" +
+                                "                                                        <h3>手机号不能为空！</h3>\n" +
+                                "                                                        <p class=\"text-muted\"><a href=\"reset_pwd\">重新设置</a></p>\n" +
+                                "                                                    </div>\n" +
+                                "                                                </div>\n" +
+                                "                                                </div>\n" +
+                                "                                            </div>";
+                        }
+                        else {
+                            $.ajax({
+                                url: "/reset_pwd_confirm",
+                                type: "post",
+                                data: content,
+                                success: function (data) {
+                                    //alert(data.msg);
+                                    if(data.msg === "success"){
+                                        document.getElementById("reset_success").innerHTML = "<div class=\"row justify-content-center\">\n" +
+                                            "                                                <div class=\"col-lg-6\"><div class=\"text-center\">\n" +
+                                            "                                                    <div class=\"mb-4\">\n" +
+                                            "                                                        <i class=\"mdi mdi-check-circle-outline text-success display-4\"></i>\n" +
+                                            "                                                    </div>\n" +
+                                            "                                                    <div>\n" +
+                                            "                                                        <h5>密码已重置</h5>\n" +
+                                            "                                                        <p class=\"text-muted\"><a href=\"login\">跳转到登录页面</a></p>\n" +
+                                            "                                                    </div>\n" +
+                                            "                                                </div>\n" +
+                                            "                                                </div>\n" +
+                                            "                                            </div>";
+                                    }
+                                    else{
+                                        document.getElementById("reset_success").innerHTML = "<div class=\"row justify-content-center\">\n" +
+                                            "                                                <div class=\"col-lg-6\"><div class=\"text-center\">\n" +
+                                            "                                                    <div>\n" +
+                                            "                                                        <h3>"+data.msg+"</h3>\n" +
+                                            "                                                        <p class=\"text-muted\"><a href=\"reset_pwd\">重新设置</a></p>\n" +
+                                            "                                                    </div>\n" +
+                                            "                                                </div>\n" +
+                                            "                                                </div>\n" +
+                                            "                                            </div>";
+                                    }
+                                },
+                                error: function () {
+                                    document.getElementById("reset_success").innerHTML = "<div class=\"row justify-content-center\">\n" +
+                                        "                                                <div class=\"col-lg-6\"><div class=\"text-center\">\n" +
+                                        "                                                    <div>\n" +
+                                        "                                                        <h3>重置密码失败！</h3>\n" +
+                                        "                                                        <p class=\"text-muted\"><a href=\"reset_pwd\">重新设置</a></p>\n" +
+                                        "                                                    </div>\n" +
+                                        "                                                </div>\n" +
+                                        "                                                </div>\n" +
+                                        "                                            </div>";
+                                    //window.location.href="admin_reset_pwd";
+                                    alert("重置失败");
+                                }
+                            })
+                        }
+                    }
+                    else{
+                        document.getElementById("reset_success").innerHTML="<div class=\"row justify-content-center\">\n" +
+                            "                                                <div class=\"col-lg-6\"><div class=\"text-center\">\n" +
+                            "                                                    <div>\n" +
+                            "                                                        <h3></h3>\n" +
+                            "                                                        <p class=\"text-muted\"><a href=\"reset_pwd\">重新设置</a></p>\n" +
+                            "                                                    </div>\n" +
+                            "                                                </div>\n" +
+                            "                                                </div>\n" +
+                            "                                            </div>";
+                    }
+                })
+            };
+
+        </script>
+</body>
+</html>

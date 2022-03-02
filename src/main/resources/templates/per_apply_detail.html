@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8" />
+  <title>AI实训研发软件</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta content="AI实训研发软件" name="description" />
+<!--  <link th:href="@{../../static/js/libs/admin-resources/jquery.vectormap/static}" rel="stylesheet" type="text/css" />&lt;!&ndash; DataTables &ndash;&gt;-->
+  <link th:href="@{../../static/js/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css}" rel="stylesheet" type="text/css" /><!-- Responsive datatable examples -->
+  <link th:href="@{../../static/js/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css}" rel="stylesheet" type="text/css" /><!-- Bootstrap Css -->
+  <link th:href="@{../../static/css/bootstrap.min.css}" id="bootstrap-style" rel="stylesheet" type="text/css" /><!-- Icons Css -->
+  <link th:href="@{../../static/css/icons.min.css}" rel="stylesheet" type="text/css" /><!-- App Css-->
+  <link th:href="@{../../static/css/app.min.css}" id="app-style" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body  data-topbar="dark">
+<!-- Begin page -->
+<div id="layout-wrapper">
+  <header id="page-topbar">
+    <div class="navbar-header">
+      <div class="d-flex">
+        <!-- LOGO -->
+        <div class="navbar-brand-box">
+          <a href="index" class="logo">
+            <span class="logo-sm"></span>
+            <span class="logo-lg row" >
+                            <span class="col-9" style="font-size:15px;color: #fff;line-height: 15px;margin-top: 30px;padding-left: 0px;padding-right: 0px;">大数据与人工智能平台</span>
+                        </span>
+          </a>
+        </div>
+        <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn"><i class="ri-menu-2-line align-middle"></i></button>
+      </div>
+
+
+      <div class="d-flex">
+
+        <div class="dropdown d-none d-lg-inline-block ml-1"><button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen"><i class="ri-fullscreen-line"></i></button></div>
+
+        <!-- 个人信息展示 退出登录操作 -->
+        <div class="dropdown d-inline-block user-dropdown">
+          <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class=" " th:text="${stuname}"></span>
+            <span class=" d-none" ></span>
+            <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+          </button>
+          <div class="dropdown-menu dropdown-menu-right">
+            <!-- item-->
+            <a class="dropdown-item" href="/per_userinfo"><i class="ri-user-line align-middle mr-1"></i>个人资料</a>
+            <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="./logout"><i class="ri-shut-down-line align-middle mr-1 text-danger"></i>注销</a>
+          </div>
+        </div>
+        <!-- 个人信息展示 退出登录操作 -->
+
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== Left Sidebar Start ========== -->
+  <div class="vertical-menu">
+    <div data-simplebar class="h-100">
+      <!--- Sidemenu -->
+      <div id="sidebar-menu">
+        <!-- Left Menu Start -->
+        <ul class="metismenu list-unstyled" id="side-menu">
+
+
+          <li><a href="/per_index" class="waves-effect"><i class="ri-dashboard-line"></i><span>首页</span></a></li>
+          <li><a href="/per_applycourse" class=" waves-effect"><i class="ri-leaf-line"></i><span>课程套餐</span></a></li>
+          <li><a href="/per_mycourse" class=" waves-effect"><i class="ri-plant-line"></i><span>我的课程</span></a></li>
+          <li><a href="/per_studylog" class=" waves-effect"><i class="ri-file-list-3-line"></i><span>学习记录</span></a></li>
+
+
+
+        </ul>
+      </div><!-- Sidebar -->
+    </div>
+  </div><!-- Left Sidebar End -->
+  <!-- ============================================================== -->
+  <!-- Start right Content here -->
+  <!-- ============================================================== -->
+  <div class="main-content">
+    <div class="page-content">
+      <div class="container-fluid">
+        <!-- start page title -->
+        <div class="row">
+          <div class="col-12">
+            <!-- 修改路径 -->
+            <div class="page-title-box d-flex align-items-center justify-content-between">
+              <h4 class="mb-0">套餐详情</h4>
+              <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                  <li class="breadcrumb-item"><a href="/per_index"> 首页</a></li>
+                  <li class="breadcrumb-item"><a href="/per_applycourse">课程套餐</a></li>
+                  <li class="breadcrumb-item active">套餐详情</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <table id="datatable-buttons" class="table  table-bordered text-center" style="overflow-x: scroll;">
+
+                  <tr>
+                    <th>套餐名称</th><td><span th:text="${plan.name}"></span></td>
+                    <th>开放状态</th><td>
+                    <span th:if="${plan.selling}=='true'">
+                      <span style="color:limegreen">允许购买</span>
+                    </span>
+                    <span th:if="${plan.selling}=='false'">
+                      <span style="color:dimgrey">禁止购买</span>
+                    </span>
+                  </td>
+                  </tr>
+                  <tr>
+                    <th>套餐类别</th><td><span th:text="${plan.categoryNames}"></span></td>
+                    <th>套餐价格</th><td><span th:text="${plan.price}"></span></td>
+                  </tr>
+                  <tr>
+                    <th>套餐有效期</th><td><span th:text="${plan.selling}"></span></td>
+                  </tr>
+                  <tr>
+<!--                    <th>已经购买人数</th><td><span th:text="${course.numParticipated}"></span></td>-->
+                    <th>我的购买状态</th>
+                    <td id="isapplybtn">
+                      <span th:if="${isapplied}==true">
+                         <button type="button"  class="btn btn-danger btn-rounded waves-effect waves-light" disabled="disabled">已购买</button>
+                      </span>
+                      <span th:if="${isapplied}==false">
+                    <button type="button" class="btn btn-success btn-rounded waves-effect waves-light" th:onclick="sure_apply([[${plan.id}]])">点击购买</button>
+                        </span>
+                    </td>
+                  </tr>
+                  <tr>
+<!--                    <th>课程介绍</th><td colspan="3"><span th:text="${course.description}"></span></td>-->
+                  </tr>
+
+
+                </table>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        </div><!-- end row -->
+
+      </div><!-- container-fluid -->
+    </div><!-- End Page-content -->
+    <footer class="footer">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-6">
+            <!-- <script>document.write(new Date().getFullYear())</script>© AI实训研发软件 -->
+          </div>
+          <div class="col-sm-6">
+            <div class="text-sm-right d-none d-sm-block"><script>document.write(new Date().getFullYear())</script>© AI实训研发软件</div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div><!-- end main content-->
+</div><!-- END layout-wrapper -->
+
+
+
+
+<!-- JAVASCRIPT -->
+<script th:src="@{../../static/js/libs/jquery/jquery.min.js}"></script>
+<script th:src="@{../../static/js/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{../../static/js/libs/metismenu/metisMenu.min.js}"></script>
+<script th:src="@{../../static/js/libs/simplebar/simplebar.min.js}"></script>
+<script th:src="@{../../static/js/libs/node-waves/waves.min.js}"></script>
+<script th:src="@{../../static/js/app.js}"></script>
+<script th:src="@{../../static/js/libs/sweetalert2/sweetalert2.min.js}"></script>
+
+
+<script th:inline="javascript" type="text/javascript">
+
+
+  function sure_apply(id) {
+    // var couid = $("#couid").text();
+    // alert(id);
+    // window.location.href="/apply_detail/"+id;
+
+    if (id)//如果返回的有内容
+    {
+        $.ajax({
+            url: "/per_apply_detail/per_sure_apply",
+            type: 'post',
+            data: {
+                "id": id,
+            },
+            success: function () {
+                alert("购买成功");
+
+            },
+            error: function () {
+                alert("购买失败，请稍后再试");
+            }
+        })
+    } else {
+        alert("没有id");
+    }
+    // window.location.replace("/apply_detail/"+id);
+  }
+
+  // function cancel_apply(id) {
+  //   // var couid = $("#couid").text();
+  //   // alert(id);
+  //   // window.location.href="/apply_detail/"+id;
+  //
+  //   if (id)//如果返回的有内容
+  //   {
+  //     $.ajax({
+  //       url: "/apply_detail/cancel_apply",
+  //       type: 'post',
+  //       data: {
+  //         "id": id,
+  //       },
+  //       success: function () {
+  //         alert("取消申请成功");
+  //         var str = "<button type='button' class='btn btn-success btn-rounded waves-effect waves-light' onclick='sure_apply("+id+")'>申请课程</button>";
+  //         document.getElementById("isapplybtn").innerHTML = str ;
+  //         // alert(str);
+  //       },
+  //       error: function () {
+  //         alert("取消申请失败，请稍后再试");
+  //       }
+  //     })
+  //   } else {
+  //     alert("没有id");
+  //   }
+  //   // window.location.replace("/apply_detail/"+id);
+  // }
+
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <title>AI实训研发软件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="AI实训研发软件" name="description" />
+<!--    <link href="static/js/libs/admin-resources/jquery.vectormap/static" rel="stylesheet" type="text/css" />&lt;!&ndash; DataTables &ndash;&gt;-->
+    <link href="static/js/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" /><!-- Responsive datatable examples -->
+    <link href="static/js/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" /><!-- Bootstrap Css -->
+    <link href="static/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" /><!-- Icons Css -->
+    <link href="static/css/icons.min.css" rel="stylesheet" type="text/css" /><!-- App Css-->
+    <link href="static/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+</head>
+
+<body  data-topbar="dark">
+<!-- Begin page -->
+<div id="layout-wrapper">
+    <header id="page-topbar" >
+        <div class="navbar-header">
+            <div class="d-flex">
+                <!-- LOGO -->
+                <div class="navbar-brand-box">
+                    <a href="index" class="logo">
+                        <span class="logo-sm"></span>
+                        <span class="logo-lg row" >
+                            <span class="col-9" style="font-size:15px;color: #fff;line-height: 15px;margin-top: 30px;padding-left: 0px;padding-right: 0px;">大数据与人工智能平台</span>
+                        </span>
+                    </a>
+                </div>
+                <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn"><i class="ri-menu-2-line align-middle"></i></button>
+            </div>
+
+
+            <div class="d-flex">
+
+                <div class="dropdown d-none d-lg-inline-block ml-1"><button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen"><i class="ri-fullscreen-line"></i></button></div>
+
+                <!-- 个人信息展示 退出登录操作 -->
+                <div class="dropdown d-inline-block user-dropdown">
+                    <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class=" " th:text="${stuname}"></span>
+                        <span class=" d-none" ></span>
+                        <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <!-- item-->
+                        <a class="dropdown-item" href="per_userinfo"><i class="ri-user-line align-middle mr-1"></i>个人资料</a>
+                        <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="logout"><i class="ri-shut-down-line align-middle mr-1 text-danger"></i>注销</a>
+                    </div>
+                </div>
+                <!-- 个人信息展示 退出登录操作 -->
+
+
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== Left Sidebar Start ========== -->
+    <div class="vertical-menu">
+        <div data-simplebar class="h-100">
+            <!--- Sidemenu -->
+            <div id="sidebar-menu">
+                <!-- Left Menu Start -->
+                <ul class="metismenu list-unstyled" id="side-menu">
+
+
+                    <li><a href="/per_index" class="waves-effect"><i class="ri-dashboard-line"></i><span>首页</span></a></li>
+                    <li><a href="/per_applycourse" class=" waves-effect"><i class="ri-leaf-line"></i><span>课程套餐</span></a></li>
+                    <li><a href="/per_mycourse" class=" waves-effect"><i class="ri-plant-line"></i><span>我的课程</span></a></li>
+                    <li><a href="/per_studylog" class=" waves-effect"><i class="ri-file-list-3-line"></i><span>学习记录</span></a></li>
+
+
+
+                </ul>
+            </div><!-- Sidebar -->
+        </div>
+    </div><!-- Left Sidebar End -->
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+        <div class="page-content">
+            <div class="container-fluid">
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <!-- 修改路径 -->
+                        <div class="page-title-box d-flex align-items-center justify-content-between">
+                            <h4 class="mb-0">我的课程</h4>
+                            <div class="page-title-right">
+                                <ol class="breadcrumb m-0">
+                                    <li class="breadcrumb-item"><a href="per_index"> 首页</a></li>
+                                    <li class="breadcrumb-item active">我的课程</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title"></h4>
+                                <div >
+                                    <table id="datatable-buttons" class="table table-striped table-bordered" style="overflow-x: scroll;">
+                                        <thead style="text-align: center;">
+                                        <tr>
+
+                                            <th>编号</th>
+                                            <th>课程名称</th>
+                                            <th>授课讲师</th>
+                                            <th>学习进度</th>
+                                            <th>继续学习</th>
+
+                                        </tr>
+                                        </thead>
+                                        <tbody style="text-align: center">
+                                        <tr th:each="course:${mycourses}">
+                                            <td><span th:text="${course.id}"></span></td>
+                                            <td><span th:text="${course.courseName}"></span></td>
+                                            <td><span th:text="${course.teaName}"></span></td>
+                                            <td><span th:text="${pros[courseStat.index]}+'%'"></span></td>
+<!--                                            <td><span th:text="${pros[courseStat.index]}"></span></td>-->
+                                            <td><a th:href="'/per_course_video/'+${course.id}+'/0'">继续学习</a></td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div><!-- end row -->
+
+    </div><!-- container-fluid -->
+</div><!-- End Page-content -->
+<footer class="footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <!-- <script>document.write(new Date().getFullYear())</script>© AI实训研发软件 -->
+            </div>
+            <div class="col-sm-6">
+                <div class="text-sm-right d-none d-sm-block"><script>document.write(new Date().getFullYear())</script>© AI实训研发软件</div>
+            </div>
+        </div>
+    </div>
+</footer>
+</div><!-- end main content-->
+</div><!-- END layout-wrapper -->
+
+
+
+
+<!-- JAVASCRIPT -->
+<script src="static/js/libs/jquery/jquery.min.js"></script>
+<script src="static/js/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="static/js/libs/metismenu/metisMenu.min.js"></script>
+<script src="static/js/libs/simplebar/simplebar.min.js"></script>
+<script src="static/js/libs/node-waves/waves.min.js"></script><!-- apexcharts -->
+<script src="static/js/libs/apexcharts/apexcharts.min.js"></script><!-- jquery.vectormap map -->
+<script src="static/js/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="static/js/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-us-merc-en.js"></script><!-- Required datatable js -->
+<script src="static/js/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="static/js/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script><!-- Responsive examples -->
+<script src="static/js/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="static/js/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+<!--    <script src="static/js/pages/dashboard.init.js"></script>-->
+<script src="static/js/app.js"></script>
+</body>
+
+</html>
