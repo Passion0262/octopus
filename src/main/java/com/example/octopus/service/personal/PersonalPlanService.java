@@ -1,6 +1,7 @@
 package com.example.octopus.service.personal;
 
 import com.example.octopus.entity.personal.PersonalPlan;
+import com.example.octopus.entity.user.CourseStatic;
 
 import java.util.List;
 
@@ -38,5 +39,14 @@ public interface PersonalPlanService {
 	 * @return 成功与否
 	 */
 	boolean createPersonalPlan(PersonalPlan personalPlan);
+
+	/**
+	 * 根据个人用户账号显示所有未过期课程
+	 * @param personalTel 个人用户手机号（账号）
+	 * @return 个人用户所有未过期课程
+	 */
+	List<CourseStatic> listUnexpiredPersonalCourseByTel(String personalTel);
+
+
 
 }
