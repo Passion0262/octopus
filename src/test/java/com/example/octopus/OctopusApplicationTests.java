@@ -3,7 +3,7 @@ package com.example.octopus;
 import com.example.octopus.dao.*;
 import com.example.octopus.dao.experiment.*;
 import com.example.octopus.entity.user.Docker;
-import com.example.octopus.entity.user.PersonalUser;
+//import com.example.octopus.entity.user.PersonalUser;
 import com.example.octopus.entity.user.Student;
 import com.example.octopus.entity.user.StudentCourse;
 import com.example.octopus.service.*;
@@ -87,13 +87,13 @@ class OctopusApplicationTests {
 	StudentCourseService studentCourseService;
 
 	@Autowired
-	PersonalUserService personalUserService;
+//	PersonalUserService personalUserService;
 
 	@Test
 	void interfaceTest() {
-		PersonalUser p = new PersonalUser();
-		p.setPersonalTel(13115076869L);
-		System.out.println(personalUserService.updateLoginInfo(p.getPersonalTel()));
+//		PersonalUser p = new PersonalUser();
+//		p.setPersonalTel(13115076869L);
+//		System.out.println(personalUserService.updateLoginInfo(p.getPersonalTel()));
 	}
 
 }

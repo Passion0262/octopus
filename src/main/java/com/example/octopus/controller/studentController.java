@@ -150,8 +150,8 @@ public class studentController {
 			PersonalUser personalUser = personalUserService.getPersonalUser(Long.parseLong(userNumber));
 			logger.info("当前登陆身份为：个人用户        欢迎您，" + userNumber);
 			cookieThings.setCookie(userNumber, String.valueOf(personalUser.getPersonalTel()), request, response, "cookiePersonalUser");
-			teacherService.updateLoginInfo(Long.parseLong(userNumber));
-			return "redirect:/admin_index_for_personal";			//todo 个人用户前台地址
+			personalUserService.updateLoginInfo(Long.parseLong(userNumber));
+			return "redirect:/per_index";
 		} else if (role == 5) {
 			//身份为个人用户管理员，进入个人用户后台系统
 			PersonalAdmin personalAdmin = personalAdminService.getPersonalAdmin(Long.parseLong(userNumber));
