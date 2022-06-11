@@ -215,6 +215,7 @@ public class studentController {
 			JSONObject ob1 = new JSONObject();
 			JSONObject ob2 = new JSONObject();
 //            String s1 = courseService.getCourseById(videopro.get(i).getCourseId()).getCourseName();
+			logger.info("videoprosssss"+experpro.get(i));
 			String s1 = courseService.getCourseById(videopro.get(i).getTeaCourseId()).getCourseName();
 			String s2 = courseService.getCourseById(experpro.get(i).getTeaCourseId()).getCourseName();
 			ob1.put("value", videopro.get(i).getTime());

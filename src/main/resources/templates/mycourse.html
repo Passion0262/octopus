@@ -103,14 +103,13 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
+                        <div class="card" >
+                            <div class="card-body" >
                                 <h4 class="card-title"></h4>
-                                <div >
-                                    <table id="datatable-buttons" class="table table-striped table-bordered" style="overflow-x: scroll;">
+<div>
+                                    <table id="table" class="table table-striped table-bordered" style="overflow-x: hidden;">
                                         <thead style="text-align: center;">
                                         <tr>
-
                                             <th>编号</th>
                                             <th>课程名称</th>
                                             <th>授课讲师</th>
@@ -131,7 +130,8 @@
 
                                         </tbody>
                                     </table>
-                                </div>
+</div>
+
                             </div>
                         </div>
                     </div>
@@ -171,12 +171,36 @@
 <script src="static/js/libs/apexcharts/apexcharts.min.js"></script><!-- jquery.vectormap map -->
 <script src="static/js/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
 <script src="static/js/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-us-merc-en.js"></script><!-- Required datatable js -->
+<!--    <script src="static/js/pages/dashboard.init.js"></script>-->
+<script src="static/js/app.js"></script>
+
 <script src="static/js/libs/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="static/js/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script><!-- Responsive examples -->
 <script src="static/js/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
 <script src="static/js/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
-<!--    <script src="static/js/pages/dashboard.init.js"></script>-->
-<script src="static/js/app.js"></script>
+
+<script src="static/js/libs/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+<script src="static/js/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="static/js/libs/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+<script src="static/js/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="static/js/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="static/js/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+<script src="static/js/libs/datatables.net-select/js/dataTables.select.min.js"></script>
+<script src="static/js/libs/jszip/jszip.min.js"></script>
+<script src="static/js/pages/datatables.init.js"></script>
+<!--<script src="static/js/pages/dashboard.init.js"></script>-->
+
+<script th:inline="javascript" type="text/javascript">
+
+    $("#table").DataTable({
+        "bLengthChange": false,
+        "bAutoWidth":true,
+
+    });
+
+</script>
+
+
 </body>
 
 </html>
