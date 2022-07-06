@@ -719,7 +719,7 @@ public class adminController {
 		long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
 //        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
 
-		logger.info("管理员/教师{}进入可选课程展示admin_course_static", teaNum);
+		logger.info("管理员/教师{}进入课程展示admin_course_static", teaNum);
 		try {
 			model.addAttribute("courses", courseStaticService.listAllCourseStatic());
 			return "admin_course_static";
@@ -1280,41 +1280,41 @@ public class adminController {
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
 	// 实战项目管理
-	@RequestMapping("/admin_project")
-	public String admin_project(HttpServletRequest request, Model model) {
-		if (!cookieCheck(model, request)) return "redirect:/login";
-
-		long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
-//        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
-
-		logger.info("管理员/教师{}进入实战项目管理admin_project", teaNum);
-
-		try {
-			model.addAttribute("projects", projectService.listProjects());
-			return "admin_project";
-		} catch (Exception e) {
-			return "redirect:/admin_error";
-		}
-	}
+//	@RequestMapping("/admin_project")
+//	public String admin_project(HttpServletRequest request, Model model) {
+//		if (!cookieCheck(model, request)) return "redirect:/login";
+//
+//		long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+////        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);  // 获取角色，管理员还是教师
+//
+//		logger.info("管理员/教师{}进入实战项目管理admin_project", teaNum);
+//
+//		try {
+//			model.addAttribute("projects", projectService.listProjects());
+//			return "admin_project";
+//		} catch (Exception e) {
+//			return "redirect:/admin_error";
+//		}
+//	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
-	// 实战项目详情
-	@RequestMapping("/admin_project_detail")
-	public String admin_project_detail(HttpServletRequest request, Model model) {
-		if (!cookieCheck(model, request)) return "redirect:/login";
-
-		long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
-//        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);
-		logger.info("管理员/教师{}进入实战项目详情admin_project_detail", teaNum);
-
-		try {
-//            System.out.println();
-			model.addAttribute("subprojects", subProjectService.listSubProjectDetail());
-			return "admin_project_detail";
-		} catch (Exception e) {
-			return "redirect:/admin_error";
-		}
-	}
+//	// 实战项目详情
+//	@RequestMapping("/admin_project_detail")
+//	public String admin_project_detail(HttpServletRequest request, Model model) {
+//		if (!cookieCheck(model, request)) return "redirect:/login";
+//
+//		long teaNum = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+////        int role_id = sysUserRoleService.getRoleIdByUserId(teaNum);
+//		logger.info("管理员/教师{}进入实战项目详情admin_project_detail", teaNum);
+//
+//		try {
+////            System.out.println();
+//			model.addAttribute("subprojects", subProjectService.listSubProjectDetail());
+//			return "admin_project_detail";
+//		} catch (Exception e) {
+//			return "redirect:/admin_error";
+//		}
+//	}
 
 
 	//////////////////////////////////////////////////////////////////////////////////////////////

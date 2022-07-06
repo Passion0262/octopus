@@ -8,6 +8,7 @@ import com.example.octopus.utils.CookieTokenUtils;
 import com.example.octopus.utils.PropertiesUtil;
 import com.example.octopus.utils.TokenCheckUtils;
 //import com.example.octopus.utils.TimeTransUtils;
+import org.checkerframework.checker.units.qual.A;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +74,7 @@ public class personalAdminController {
 		}
 	}
 
-	//首页 -- 个人用户
+	// 首页
 	@RequestMapping("/admin_index_for_personal")
 	public String admin_personal_index(HttpServletRequest request, Model model) {
 		String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -99,7 +100,7 @@ public class personalAdminController {
 		}
 	}
 
-	//用户管理 -- 个人用户
+	//用户管理
 	@RequestMapping("/admin_personal_info")
 	public String admin_personal_info(HttpServletRequest request, Model model) {
 		String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -231,7 +232,7 @@ public class personalAdminController {
 		}
 	}
 
-	//套餐管理
+	// 套餐管理
 	@RequestMapping("/admin_plan")
 	public String admin_plan(HttpServletRequest request, Model model) {
 		String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
