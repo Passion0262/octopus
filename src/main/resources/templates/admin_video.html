@@ -157,9 +157,17 @@
     <script src="static/js/app.js"></script>
 
     <script type="text/javascript" th:inline="javascript">
-        function load(){
+        // 监听屏幕缩放
+        $(window).resize(function () {
             document.getElementById("sort").click();
-        }
+            document.getElementById("sort").click();
+        });
+
+        // 初始化
+        $(function () {
+            document.getElementById("sort").click();
+            document.getElementById("sort").click();
+        })
     </script>
 
 

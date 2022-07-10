@@ -60,7 +60,7 @@
                                                 <thead style="text-align: center;white-space:nowrap;">
                                                 <tr>
                                                     <th class="sorting_disabled">操作</th>
-                                                    <th>编号</th>
+                                                    <th id="sort">编号</th>
                                                     <th>学校名称</th>
                                                     <th>创建时间</th>
                                                     <th>班级总数</th>
@@ -152,10 +152,17 @@
         <script src="static/js/app.js"></script>
 
         <script type="text/javascript" th:inline="javascript">
+            // 监听屏幕缩放
+            $(window).resize(function () {
+                document.getElementById("sort").click();
+                document.getElementById("sort").click();
+            });
 
+            // 初始化
+            $(function () {
+                document.getElementById("sort").click();
+            })
         </script>
-
-
     </body>
 
 </html>

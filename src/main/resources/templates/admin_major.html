@@ -62,7 +62,7 @@
                                         <thead style="text-align: center;">
                                         <tr>
                                             <th class="sorting_disabled" th:if="${role} eq 'admin'">操作</th>
-                                            <th>编号</th>
+                                            <th id="sort">编号</th>
                                             <th>专业ID</th>
                                             <th>专业代码</th>
                                             <th>专业名称</th>
@@ -153,12 +153,16 @@
 <script src="static/js/app.js"></script>
 
 <script type="text/javascript" th:inline="javascript">
-    // function click_add_major(){
-    // }
-    // var identity = (String)[[${identity}]];
-    // if(identity.equals("teacher")){
-    //
-    // }
+    // 监听屏幕缩放
+    $(window).resize(function () {
+        document.getElementById("sort").click();
+        document.getElementById("sort").click();
+    });
+
+    // 初始化
+    $(function () {
+        document.getElementById("sort").click();
+    })
 
 </script>
 

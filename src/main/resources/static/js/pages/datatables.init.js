@@ -8,7 +8,9 @@ $(document).ready(function(){
 		select:{
 			style:"multi"
 		},
-		scrollY:"400px",
+		sScrollX: '100%',
+		sScrollXInner: '99%',
+		// scrollY:"400px",
 		scrollCollapse:!0,
 		lengthChange:!1,
 		//pagingType:"full_numbers",

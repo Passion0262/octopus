@@ -60,7 +60,7 @@
                                                 <thead style="text-align: center;white-space:nowrap;">
                                                     <tr>
                                                         <th class="sorting_disabled">操作</th>
-                                                        <th>编号</th>
+                                                        <th id="sort">编号</th>
                                                         <th>学号</th>
                                                         <th>姓名</th>
                                                         <th>所属学校</th>
@@ -199,6 +199,18 @@
         <script src="static/js/app.js"></script>
 
         <script type="text/javascript" th:inline="javascript">
+            // 监听屏幕缩放
+            $(window).resize(function () {
+                document.getElementById("sort").click();
+                document.getElementById("sort").click();
+            });
+
+            // 初始化
+            $(function () {
+                document.getElementById("sort").click();
+            })
+
+
             function setFileName(){
                 if (document.getElementById('add_file').files.length !== 0){
                     document.getElementById("for_file").innerText = document.getElementById('add_file').files[0].name;
