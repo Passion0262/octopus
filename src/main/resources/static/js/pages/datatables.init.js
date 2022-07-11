@@ -9,7 +9,7 @@ $(document).ready(function(){
 			style:"multi"
 		},
 		sScrollX: '100%',
-		sScrollXInner: '99%',
+		sScrollXInner: '98%',
 		// scrollY:"400px",
 		scrollCollapse:!0,
 		lengthChange:!1,
