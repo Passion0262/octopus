@@ -288,7 +288,9 @@ public class personalUserController {
 
 	@RequestMapping("/per_apply_detail/{id}")
 	public String apply_detail(@PathVariable(value = "id") String id, Model model, HttpServletRequest request) {
-		if (!cookieCheck(model, request)) return "redirect:/login";
+		if (!cookieCheck(model, request)) return "redir" +
+				"" +
+				"ect:/login";
 
 		logger.info("plan_id:" + id);
 
