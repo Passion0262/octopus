@@ -519,4 +519,137 @@ public class personalAdminController {
 		}
 	}
 
+//	//课程类别管理
+//	@RequestMapping("/admin_category")
+//	public String admin_category(HttpServletRequest request, Model model) {
+//		String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
+//		if (!user_id.equals(cookieThings.getCookieUserNum(request, COOKIE_NAME))) return "redirect:/login";
+//
+//		if (!cookieCheck(model, request)) return "redirect:/login";
+//
+//		long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+//		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色，管理员还是教师
+//
+//		if (role_id == 5) {
+//			try {
+//				model.addAttribute("categories", categoryService.listAllCategory());
+//				return "admin_category";
+//			} catch (Exception e) {
+//				return "redirect:/admin_error";
+//			}
+//		} else {
+//			return "redirect:/login";
+//		}
+//	}
+//
+//	// 增加课程类别
+//	@GetMapping("/admin_category_add")
+//	public ModelAndView admin_category_add(HttpServletRequest request, Model model) {
+//		if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+//
+//		long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+//		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色
+//
+//		if (role_id == 5) {
+//			logger.info("管理员{}进入admin_category_add，获取一个新Category()", user);
+//			try {
+//				model.addAttribute("category", new Category());
+//				model.addAttribute("course", courseStaticService.listAllCourseStatic());
+//				return new ModelAndView("admin_category_add", "categorymodel", model);
+//			} catch (Exception e) {
+//				return new ModelAndView("redirect:/admin_error");
+//			}
+//		} else {
+//			return new ModelAndView("redirect:/login");
+//		}
+//	}
+//
+//	@PostMapping("/add_category")
+//	public ModelAndView add_category(Category category, HttpServletRequest request, Model model) {
+//		if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+//
+//		long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+//		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色
+//
+//		if (role_id == 5) {
+//			logger.info("管理员{}提交新增的课程类别: [{}]", user, category);
+//			try {
+////				System.out.println(category);
+//				category.setStaticCourseIds(category.getStaticCourseIds().replace(',', ';'));
+//				categoryService.insertCategory(category);
+//				return new ModelAndView("redirect:/admin_category");
+//			} catch (Exception e) {
+//				return new ModelAndView("redirect:/admin_error");
+//			}
+//		} else {
+//			return new ModelAndView("redirect:/login");
+//		}
+//	}
+//
+//	// 修改课程类别
+//	@GetMapping("/admin_category_edit")
+//	public ModelAndView admin_category_edit(HttpServletRequest request, Model model) {
+//		if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+//
+//		long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+//		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色
+//
+//		if (role_id == 5) {
+//			long id = Long.parseLong(request.getParameter("id"));
+//			logger.info("管理员{}进入admin_category_edit，获取category, id={}", user, id);
+//			try {
+//				Category category = categoryService.getCategoryById(id);
+//				model.addAttribute("category", category);
+//				return new ModelAndView("admin_category_edit", "categorymodel", model);
+//			} catch (Exception e) {
+//				return new ModelAndView("redirect:/admin_error");
+//			}
+//		} else {
+//			return new ModelAndView("redirect:/login");
+//		}
+//	}
+//
+//	@PostMapping("/edit_category")
+//	public ModelAndView edit_category(Category category, HttpServletRequest request, Model model) {
+//		if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+//
+//		long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+//		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色
+//
+//		if (role_id == 5) {
+//			logger.info("管理员{}提交修改的category: [{}]", user, category);
+//			try {
+//				categoryService.updateCategory(category);
+//				return new ModelAndView("redirect:/admin_category");
+//			} catch (Exception e) {
+//				return new ModelAndView("redirect:/admin_error");
+//			}
+//		} else {
+//			return new ModelAndView("redirect:/login");
+//		}
+//	}
+//
+//
+//	//删除课程类别
+//	@RequestMapping("/admin_category_delete")
+//	public ModelAndView admin_category_delete(HttpServletRequest request, Model model) {
+//		if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+//
+//		long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+//		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色
+//
+//		if (role_id == 5) {
+//			long id = Long.parseLong(request.getParameter("id"));
+//			logger.info("管理员{}删除课程类别[{}]", user, id);
+//			try {
+//				categoryService.deleteCategoryById(id);
+//				return new ModelAndView("redirect:/admin_category");
+//			} catch (Exception e) {
+//				return new ModelAndView("redirect:/admin_error");
+//			}
+//		} else {
+//			return new ModelAndView("redirect:/login");
+//		}
+//	}
+
 }
