@@ -27,7 +27,7 @@ public interface PersonalPlanMapper {
 	 */
 	@Select("SELECT pp.*, plan.name AS plan_name FROM personal_plan pp, plan " +
 			"WHERE pp.plan_id=plan.id AND personal_tel=#{personal_tel}")
-	List<PersonalPlan> listAllPersonalPlanByTel(long personalTel);
+	List<PersonalPlan> listAllPersonalPlanByTel(String personalTel);
 
 	/**
 	 * 创建新（完成购买）套餐订单

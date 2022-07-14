@@ -264,7 +264,7 @@ public class personalUserController {
 		String perName = cookieThings.getCookieUserName(request, COOKIE_NAME);
 		String perNum = cookieThings.getCookieUserNum(request, COOKIE_NAME);
 
-		PersonalUser per = personalUserService.getPersonalUser(Long.parseLong(perNum));
+		PersonalUser per = personalUserService.getPersonalUser(perNum);
 //		Student stu = userService.getStudentByStuNumber(Long.parseLong(perNum));
 		model.addAttribute("per", per);
 
@@ -292,7 +292,7 @@ public class personalUserController {
 
 		logger.info("plan_id:" + id);
 
-  		Plan plan = planService.listAllPlan().get(0); //TODO: 根据id获取
+		Plan plan = planService.listAllPlan().get(0); //TODO: 根据id获取
 
 //		Course course = courseService.getCourseById(Long.parseLong(id));
 		model.addAttribute("plan", plan);
@@ -480,7 +480,7 @@ public class personalUserController {
 		return "per_course_video_quiz";
 	}
 
-//
+	//
 //	@RequestMapping("/experiment_task")
 //	public String experiment_task(Model model, HttpServletRequest request) {
 //		if (!cookieCheck(model, request)) return "redirect:/login";

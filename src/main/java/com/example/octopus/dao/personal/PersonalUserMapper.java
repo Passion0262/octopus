@@ -31,14 +31,14 @@ public interface PersonalUserMapper {
 	 * 根据个人用户电话号（账号）获取个人用户信息对象
 	 */
 	@Select("SELECT * FROM personal_user WHERE personal_tel=#{personalTel}")
-	PersonalUser getPersonalUserByTel(long personalTel);
+	PersonalUser getPersonalUserByTel(String personalTel);
 
 	/**
 	 * 更新个人用户登录信息
 	 */
 	@Update("UPDATE personal_user SET login_number = login_number+1, last_login_time = this_login_time, this_login_time = CURRENT_TIMESTAMP " +
 			"WHERE personal_tel = #{personalTel}")
-	boolean updateLoginInfoByTel(long personalTel);
+	boolean updateLoginInfoByTel(String personalTel);
 
 	//todo 无tourist列，如有新的个人用户信息内容，再做更改
 	/**
@@ -57,6 +57,6 @@ public interface PersonalUserMapper {
 	 * 按账号删除个人用户
 	 */
 	@Delete("DELETE personal_user WHERE personal_tel=#{personalTel}")
-	boolean deletePersonalUser(long personalTel);
+	boolean deletePersonalUser(String personalTel);
 
 }

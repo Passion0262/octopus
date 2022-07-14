@@ -14,17 +14,29 @@ import java.util.List;
 @Mapper
 public interface CategoryMapper {
 	/**
+	 * 显示所有类别（只显示category表中信息）
+	 */
+	@Select("SELECT * FROM category")
+	List<Category> listAllCategory();
+
+	/**
 	 * 显示所有类别，及其包含课程名（之间用英文分号;隔开）
 	 */
 	@Select("SELECT c.*, cs.course_name AS static_course_names FROM category c, category_course cc, course_static cs " +
 			"WHERE c.id=cc.category_id AND cc.static_course_id=cs.course_static_id")
-	List<Category> listAllCategory();
+	List<Category> listAllCategoryWithStaticName();
 
 	/**
 	 * 更新套餐信息
 	 */
 	@Update("UPDATE category SET name=#{name}, brief=#{brief} WHERE id=#{id}")
 	boolean updateCategory(Category category);
+
+	/**
+	 * 通过类别id获取类别（只显示category表中信息）
+	 */
+	@Select("SELECT * FROM category WHERE id=#{categoryId}")
+	Category getCategoryById(long categoryId);
 
 	/**
 	 * 通过类别名查找类别，类别名是唯一的
@@ -46,6 +58,6 @@ public interface CategoryMapper {
 	 * 需注意同步在category_course表中进行删除
 	 */
 	@Delete("DELETE FROM category WHERE id=#{id}")
-	boolean deleteCategory(Category category);
+	boolean deleteCategoryById(long categoryId);
 
 }

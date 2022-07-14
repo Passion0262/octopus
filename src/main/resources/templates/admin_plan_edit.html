@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <title th:replace="commons_personal::title"></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<meta content="Premium Multipurpose Admin & Dashboard Template" name="description" /> -->
+    <!--<meta content="Themesdesign" name="author" /> -->
+    <link rel="shortcut icon" href="static/images/favicon.png">
+    <!-- jquery.vectormap css -->
+
+    <link href="static/js/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
+    <!-- select2 css -->
+    <link href="static/js/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ion-rangeslider css -->
+    <link href="static/js/libs/ion-rangeslider/css/ion.rangeSlider.min.css" rel="stylesheet" type="text/css" />
+    <!-- Bootstrap Css -->
+    <link href="static/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <!--        <link href="static/js/libs/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">-->
+    <!--        <link href="static/js/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css" rel="stylesheet">-->
+    <!--        <link href="static/js/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />-->
+    <!-- Icons css -->
+    <link href="static/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="static/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+
+    <link href="static/css/scroll.css" id="scroll-style" rel="stylesheet" type="text/css" />
+</head>
+
+<body data-topbar="dark">
+<!-- Begin page -->
+<div id="layout-wrapper">
+    <div th:replace="commons_personal::topbar(${planmodel.username})"></div>
+    <div th:replace="commons_personal::leftSidebar(${planmodel.role})"></div>
+
+    <!-- Start right Content here -->
+    <div class="main-content">
+        <div class="page-content">
+            <div class="container-fluid">
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-flex align-items-center justify-content-between">
+                            <h4 class="mb-0">修改套餐</h4>
+                        </div>
+                    </div>
+                </div>
+                <!-- end page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form id="form" class="needs-validation" action="/edit_plan" method="post" th:object="${planmodel.plan}" novalidate="" style="pediting-left: 20px;">
+                                    <div class="form-group row">
+                                        <label for="edit_name" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>套餐名称：</label>
+                                        <div class="col-md-10">
+                                            <input name="name" th:value="*{name}" class="form-control" type="text"  id="edit_name">
+                                        </div>
+                                    </div>
+
+                                    <!--/*-->
+                                    <div id="edit_category_div" class="form-group row">
+                                        <label class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>所含类别：</label>
+                                        <div class="col-md-10">
+                                            <select name="categoryIds" class="select2 form-control select2-multiple" multiple="multiple" data-placeholder="请选择...">
+                                                <option th:each="category:${planmodel.category}" th:value="${category.id}" th:selected="${category.brief=='true'?true:false}" >[[${category.name}]]</option>
+<!--                                                <optgroup label="Alaskan/Hawaiian Time Zone">-->
+<!--                                                    <option value="AK">Alaska</option>-->
+<!--                                                    <option value="HI">Hawaii</option>-->
+<!--                                                </optgroup>-->
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!--*/-->
+
+                                    <div class="form-group row">
+                                        <label for="edit_price" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>价格：</label>
+                                        <div class="col-md-10">
+                                            <input name="price" oninput="value=value.replace(/[^\d\.]/g,'')" th:value="*{price}" class="form-control" type="text"  id="edit_price">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="discount" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>折扣：</label>
+                                        <div class="col-md-10">
+                                            <!--                                                    <input name="discount" th:value="*{discount}" class="form-control" type="text">-->
+                                            <input type="text" id="discount" name="discount" th:value="*{discount}">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="edit_validPeriodMonth" class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>有效期：</label>
+                                        <div class="col-md-10">
+                                            <input name="validPeriodMonth" oninput="value=value.replace(/[^\d]/g,'')" th:value="*{validPeriodMonth}" class="form-control" type="text" id="edit_validPeriodMonth">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-md-2 col-form-label"><span style="color: #ff3d60;">*</span>是否上架：</label>
+                                        <div class="col-md-10 custom-switch " style="display: flex; align-items: center; pediting-top: 10px; pediting-left: 10px;">
+                                            <input type="checkbox" id="switch" switch="success"  class="form-control">
+                                            <label for="switch" data-on-label="Yes" data-off-label="No"></label>
+                                            <input name="selling" th:value="*{selling}" id="selling" class="form-control" type="text" style="display: none;">
+                                        </div>
+                                    </div>
+
+
+                                    <div id="alert" class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none;margin-top: 5px;pediting: 5px;pediting-left: 20px;">
+                                        <i class="mdi mdi-block-helper mr-2">
+                                            <span id="result_msg" style="pediting-left: 10px;"></span>
+                                        </i>
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="pediting: 5px;">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="row" style="display: block;text-align: center;">
+                                        <a href="admin_plan" class="btn btn-light btn-rounded waves-effect waves-light">
+                                            <i class="ri-close-line align-middle mr-2"></i>取消
+                                        </a>
+                                        <button type="button" onclick="submitForm()" class="btn btn-success btn-rounded waves-effect waves-light" style="margin: 20px;">
+                                            <i class="ri-check-line align-middle mr-2"></i>提交
+                                        </button>
+                                    </div>
+                                    <p style="margin-left: 10px;">注：带<span style="color: #ff3d60;">*</span>号为必填项</p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- container-fluid -->
+
+        <div th:replace="commons_personal::footer"></div>
+    </div>
+    <!-- end main content-->
+
+    <!-- END layout-wrapper -->
+</div>
+
+
+
+<!-- JAVASCRIPT -->
+<!-- jquery -->
+<script src="static/js/libs/jquery/jquery.min.js"></script>
+<!-- bootstrap/js -->
+<script src="static/js/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!--        <script src="static/js/libs/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>-->
+<!--        <script src="static/js/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js"></script>-->
+<!--        <script src="static/js/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>-->
+<!--        <script src="static/js/libs/bootstrap-maxlength/bootstrap-maxlength.min.js">-->
+<!-- metismenu -->
+<script src="static/js/libs/metismenu/metisMenu.min.js"></script>
+<!-- simplebar -->
+<script src="static/js/libs/simplebar/simplebar.min.js"></script>
+<!-- node-waves -->
+<script src="static/js/libs/node-waves/waves.min.js"></script>
+<!-- apexcharts -->
+<script src="static/js/libs/apexcharts/apexcharts.min.js"></script>
+<!-- admin-resources/jquery.vectormap -->
+<script src="static/js/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="static/js/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-us-merc-en.js"></script>
+<!-- select2 -->
+<script src="static/js/libs/select2/js/select2.min.js"></script>
+<!-- ion-rangeslider/js -->
+<script src="static/js/libs/ion-rangeslider/js/ion.rangeSlider.min.js"></script>
+<!-- js/pages/ -->
+<script src="static/js/pages/form-advanced.init.js"></script>
+<script src="static/js/pages/range-sliders.init.js"></script>
+<script src="static/js/app.js"></script>
+
+<script type="text/javascript" th:inline="javascript">
+
+    function checkForm(){
+        var oPlanName = document.getElementById("edit_name");
+        if (!oPlanName.value){
+            document.getElementById("alert").style.display="";
+            document.getElementById("result_msg").innerHTML = "请填写套餐名称！";
+            return false;
+        }
+        getSelling();
+        return true;
+    }
+
+
+    function submitForm(){
+        if (checkForm()){
+            oForm = document.getElementById("form");
+            oForm.submit();
+        }
+    }
+
+    function getSelling(){
+        if(document.getElementById("switch").checked){
+            document.getElementById("selling").value = true;
+        }
+        else{
+            document.getElementById("selling").value = false;
+        }
+    }
+
+
+</script>
+
+
+</body>
+
+</html>

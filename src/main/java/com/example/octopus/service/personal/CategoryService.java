@@ -11,10 +11,19 @@ import java.util.List;
 
 public interface CategoryService {
 	/**
-	 * 显示所有类别信息，其中类别所包含的课程名之间用英文分号;隔开
-	 * @return
+	 * 显示所有类别信息，包含的静态课程信息存放在Category对象的courseStatics属性中
 	 */
 	List<Category> listAllCategory();
+
+	/**
+	 * 显示所有类别信息，其中类别所包含的课程名之间用英文分号;隔开
+	 */
+	List<Category> listAllCategoryWithStaticName();
+
+	/**
+	 * 通过类别id获取类别信息，包含的静态课程信息存放在Category对象的courseStatics属性中
+	 */
+	Category getCategoryById(long categoryId);
 
 	/**
 	 * 更新类别信息
@@ -34,6 +43,12 @@ public interface CategoryService {
 	 * 只要有类别id即可，同步删除category_course中对应条目
 	 */
 	boolean deleteCategory(Category category);
+
+	/**
+	 * 通过类别Id删除类别
+	 * 同步删除category_course和plan_category中对应条目
+	 */
+	boolean deleteCategoryById(long categoryId);
 
 
 }

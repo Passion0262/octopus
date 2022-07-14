@@ -62,14 +62,14 @@
                                             <th class="sorting_disabled">操作</th>
                                             <th id="sort">编号</th>
                                             <th>开课计划名称</th>
-<!--                                            <th>授课老师</th>-->
+                                            <!--                                            <th>授课老师</th>-->
                                             <th>学生学号</th>
                                             <th>学生姓名</th>
                                             <th>学生专业</th>
                                             <th>学生班级</th>
                                             <th>申请时间</th>
-<!--                                            <th>审核人员</th>-->
-<!--                                            <th>审核时间</th>-->
+                                            <!--                                            <th>审核人员</th>-->
+                                            <!--                                            <th>审核时间</th>-->
                                         </tr>
                                         </thead>
                                         <tbody style="text-align: center;white-space:nowrap;">
@@ -88,14 +88,14 @@
                                             </td>
                                             <td th:text="${course_studentStat.index+1}"></td>
                                             <td th:text="${course_student.courseName}"></td>
-<!--                                            <td th:text="${course_student.teacher}"></td>-->
+                                            <!--                                            <td th:text="${course_student.teacher}"></td>-->
                                             <td th:text="${course_student.stuNumber}"></td>
                                             <td th:text="${course_student.stuName}"></td>
                                             <td th:text="${course_student.stuMajor}"></td>
                                             <td th:text="${course_student.stuClass}"></td>
                                             <td th:text="${#dates.format(course_student.applyTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
-<!--                                            <td th:text="${course_student.auditor}"></td>-->
-<!--                                            <td th:text="${course_student.auditTime}"></td>-->
+                                            <!--                                            <td th:text="${course_student.auditor}"></td>-->
+                                            <!--                                            <td th:text="${course_student.auditTime}"></td>-->
                                         </tr>
                                         </tbody>
                                     </table>

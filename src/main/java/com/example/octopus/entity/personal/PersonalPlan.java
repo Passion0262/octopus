@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 public class PersonalPlan {
 	private long id;  //订单号
 
-	private long personalTel;  //个人账号
+	private String personalTel;  //个人账号
 
 	private long planId;  //套餐id
 

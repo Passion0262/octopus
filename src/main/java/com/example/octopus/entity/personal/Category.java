@@ -1,6 +1,9 @@
 package com.example.octopus.entity.personal;
 
+import com.example.octopus.entity.user.CourseStatic;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * 课程类别信息实体类（不包含下属课程）
@@ -18,4 +21,6 @@ public class Category {
 	private String staticCourseIds;  //不在category表中，在创建新类别中使用，静态课程id之间用英文分号;隔开
 
 	private String staticCourseNames;  //不在category表中，在展示类别中使用，名称之间用英文分号;隔开
+
+	private List<CourseStatic> courseStatics;  //不在category表中
 }

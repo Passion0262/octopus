@@ -1,6 +1,7 @@
 package com.example.octopus.service.personal;
 
 import com.example.octopus.entity.personal.PersonalPlan;
+import com.example.octopus.entity.user.CourseStatic;
 
 import java.util.List;
 
@@ -22,14 +23,14 @@ public interface PersonalPlanService {
 	 * @param personalTel 个人用户手机号（账号）
 	 * @return 该用户 所有 套餐列表
 	 */
-	List<PersonalPlan> listPersonalPlanByTel(long personalTel);
+	List<PersonalPlan> listPersonalPlanByTel(String personalTel);
 
 	/**
 	 * 列出该个人用户所购 未过期 套餐订单
 	 * @param personalTel 个人用户手机号（账号）
 	 * @return 该用户 未过期 套餐列表
 	 */
-	List<PersonalPlan> listUnexpiredPersonalPlanByTel(long personalTel);
+	List<PersonalPlan> listUnexpiredPersonalPlanByTel(String personalTel);
 
 	/**
 	 * 创建新个人用户购买套餐订单
@@ -38,5 +39,14 @@ public interface PersonalPlanService {
 	 * @return 成功与否
 	 */
 	boolean createPersonalPlan(PersonalPlan personalPlan);
+
+	/**
+	 * 根据个人用户账号显示所有未过期课程
+	 * @param personalTel 个人用户手机号（账号）
+	 * @return 个人用户所有未过期课程
+	 */
+	List<CourseStatic> listUnexpiredPersonalCourseByTel(String personalTel);
+
+
 
 }

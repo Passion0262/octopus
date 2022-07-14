@@ -2,6 +2,7 @@ package com.example.octopus.service.personal.impl;
 
 import com.example.octopus.dao.personal.PlanCategoryMapper;
 import com.example.octopus.dao.personal.PlanMapper;
+import com.example.octopus.entity.personal.Category;
 import com.example.octopus.entity.personal.Plan;
 import com.example.octopus.entity.personal.PlanCategory;
 import com.example.octopus.service.personal.PlanService;
@@ -26,14 +27,30 @@ public class PlanServiceImpl implements PlanService {
 	PlanCategoryMapper planCategoryMapper;
 
 	@Override
-	public List<Plan> listAllPlan() {
-		List<Plan> tem = planMapper.listAllPlan();
+	public List<Plan> listAllPlan(){
+		List<Plan> res = planMapper.listAllPlan();
+		Plan r;
+		for (int i = 0; i<res.size(); i++){
+			r = res.get(i);
+			List<Category> categories = planCategoryMapper.listCategoryByPlanId(r.getId());
+			if (!categories.isEmpty())
+				r.setCategories(categories);
+		}
+		return res;
+	}
+
+
+	@Override
+	public List<Plan> listAllPlanWithCategoryName() {
+		List<Plan> tem = planMapper.listAllPlanWithCategoryName();
 		List<Plan> res = new LinkedList<>();
 		if (!tem.isEmpty()) {
 			res.add(tem.get(0));
-			for (int i = 1, len_res = 0; i < tem.size(); i++) {
-				Plan t = tem.get(i);
-				Plan r = res.get(len_res);
+			int len_res = 0;
+			Plan r = res.get(len_res);
+			Plan t;
+			for (int i = 1; i < tem.size(); i++) {
+				t = tem.get(i);
 				if (r.getId() == t.getId())
 					r.setCategoryNames(r.getCategoryNames().concat(";").concat(t.getCategoryNames()));
 				else {
@@ -42,8 +59,21 @@ public class PlanServiceImpl implements PlanService {
 				}
 			}
 		}
-
 		return res;
+	}
+
+	@Override
+	public Plan getPlanById(long planId){
+		Plan p = planMapper.getPlanById(planId);
+		List<Category> categories = planCategoryMapper.listCategoryByPlanId(p.getId());
+		if (!categories.isEmpty())
+			p.setCategories(categories);
+		return p;
+	}
+
+	@Override
+	public boolean updatePlan(Plan plan){
+		return planMapper.updatePlan(plan);
 	}
 
 	@Override
@@ -83,11 +113,8 @@ public class PlanServiceImpl implements PlanService {
 	@Transactional
 	public boolean deletePlan(Plan plan) {
 		boolean planDeleted = planMapper.deletePlan(plan);
-		if (planDeleted) {
-			PlanCategory pc = new PlanCategory();
-			pc.setPlanId(plan.getId());
-			return planCategoryMapper.deletePlanCategoryByPlanId(pc);
-		}
+		if (planDeleted)
+			return planCategoryMapper.deletePlanCategoryByPlanId(plan.getId());
 		return planDeleted;
 	}
 

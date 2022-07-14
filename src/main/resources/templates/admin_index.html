@@ -8,13 +8,13 @@
 
     <link rel="shortcut icon" href="static/images/favicon.png" />
     <!-- jquery.vectormap css -->
-<!--    <link href="static/js/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />-->
+    <!--    <link href="static/js/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />-->
     <!-- DataTables -->
-<!--    <link href="static/js/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />-->
+    <!--    <link href="static/js/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />-->
     <!-- Responsive datatable examples -->
-<!--    <link href="static/js/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />-->
+    <!--    <link href="static/js/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />-->
     <!-- Button datatable examples -->
-<!--    <link href="static/js/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />-->
+    <!--    <link href="static/js/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />-->
     <!-- Bootstrap Css -->
     <link href="static/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <!-- Icons css -->
@@ -26,437 +26,437 @@
 </head>
 
 <body data-topbar="dark">
-    <!-- Begin page -->
-    <div id="layout-wrapper">
+<!-- Begin page -->
+<div id="layout-wrapper">
 
-        <div th:replace="commons::topbar(${username})"></div>
-        <div th:replace="commons::leftSidebar(${role})"></div>
+    <div th:replace="commons::topbar(${username})"></div>
+    <div th:replace="commons::leftSidebar(${role})"></div>
 
-        <!-- Start right Content here -->
-        <div class="main-content">
-            <div class="page-content">
-                <div class="container-fluid">
-                    <!-- start page title -->
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="page-title-box d-flex align-items-center justify-content-between" id="page">
-                                <h4 class="mb-0">首页</h4>
-                            </div>
+    <!-- Start right Content here -->
+    <div class="main-content">
+        <div class="page-content">
+            <div class="container-fluid">
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-flex align-items-center justify-content-between" id="page">
+                            <h4 class="mb-0">首页</h4>
                         </div>
                     </div>
-                    <!-- end page title -->
-
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <a  href="admin_course_static">
-                                                <div class="media">
-                                                    <div class="media-body overflow-hidden">
-                                                        <p class="text-truncate font-size-14 mb-2"></p>
-                                                        <h4 class="mb-0">可选课程</h4>
-                                                    </div>
-                                                    <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="card-body border-top py-3">
-                                            <div class="text-truncate">
-                                                <span class="text-muted ml-2" th:text="${sizeof_course_static}"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <a  href="admin_course">
-                                                <div class="media">
-                                                    <div class="media-body overflow-hidden">
-                                                        <p class="text-truncate font-size-14 mb-2"></p>
-                                                        <h4 class="mb-0">开课计划</h4>
-                                                    </div>
-                                                    <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="card-body border-top py-3">
-                                            <div class="text-truncate">
-                                                <span class="text-muted ml-2" th:text="${sizeof_courses}"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-<!--                                <div class="col-md-3">-->
-<!--                                    <div class="card">-->
-<!--                                        <div class="card-body">-->
-<!--                                            <a href="admin_project">-->
-<!--                                                <div class="media">-->
-<!--                                                    <div class="media-body overflow-hidden">-->
-<!--                                                        <p class="text-truncate font-size-14 mb-2"></p>-->
-<!--                                                        <h4 class="mb-0">实战项目</h4>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>-->
-<!--                                                </div>-->
-<!--                                            </a>-->
-<!--                                        </div>-->
-<!--                                        <div class="card-body border-top py-3">-->
-<!--                                            <div class="text-truncate">-->
-<!--                                                &lt;!&ndash;-->
-<!--                                                <span class="badge badge-soft-success font-size-11">-->
-<!--                                                    <i class="mdi mdi-menu-up"></i>2.4%-->
-<!--                                                </span>-->
-<!--                                                &ndash;&gt;-->
-<!--                                                <span class="text-muted ml-2" th:text="${sizeof_projects}"></span>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-                                <div class="col-md-3">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <a href="admin_experiment_detail">
-                                                <div class="media">
-                                                    <div class="media-body overflow-hidden">
-                                                        <p class="text-truncate font-size-14 mb-2"></p>
-                                                        <h4 class="mb-0">实验任务</h4>
-                                                    </div>
-                                                    <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="card-body border-top py-3">
-                                            <div class="text-truncate">
-                                                <span class="text-muted ml-2" th:text="${sizeof_experiments}"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <a href="admin_video">
-                                                <div class="media">
-                                                    <div class="media-body overflow-hidden">
-                                                        <p class="text-truncate font-size-14 mb-2"></p>
-                                                        <h4 class="mb-0">视频课程</h4>
-                                                    </div>
-                                                    <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="card-body border-top py-3">
-                                            <div class="text-truncate">
-                                                <span class="text-muted ml-2" th:text="${sizeof_videos}"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <a href="admin_student_pc">
-                                                <div class="media">
-                                                    <div class="media-body overflow-hidden">
-                                                        <p class="text-truncate font-size-14 mb-2"></p>
-                                                        <h4 class="mb-0">在线机器</h4>
-                                                    </div>
-                                                    <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="card-body border-top py-3">
-                                            <div class="text-truncate">
-                                                <span class="text-muted ml-2" th:text="${sizeof_active_dockers}"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <a href="admin_student_pc">
-                                                <div class="media">
-                                                    <div class="media-body overflow-hidden">
-                                                        <p class="text-truncate font-size-14 mb-2"></p>
-                                                        <h4 class="mb-0">实验镜像</h4>
-                                                    </div>
-                                                    <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="card-body border-top py-3">
-                                            <div class="text-truncate">
-                                                <span class="text-muted ml-2" th:text="${sizeof_dockers}"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <a href="admin_dataset">
-                                                <div class="media">
-                                                    <div class="media-body overflow-hidden">
-                                                        <p class="text-truncate font-size-14 mb-2"></p>
-                                                        <h4 class="mb-0">数据集</h4>
-                                                    </div>
-                                                    <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="card-body border-top py-3">
-                                            <div class="text-truncate">
-                                                <span class="text-muted ml-2" th:text="${sizeof_datasets}"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3" th:if="${role=='admin'}">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <a href="admin_teacher">
-                                                <div class="media">
-                                                    <div class="media-body overflow-hidden">
-                                                        <p class="text-truncate font-size-14 mb-2"></p>
-                                                        <h4 class="mb-0">注册教师</h4>
-                                                    </div>
-                                                    <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="card-body border-top py-3">
-                                            <div class="text-truncate">
-                                                <span class="text-muted ml-2" th:text="${sizeof_teachers}"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3" >
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <a href="admin_student">
-                                                <div class="media">
-                                                    <div class="media-body overflow-hidden">
-                                                        <p class="text-truncate font-size-14 mb-2"></p>
-                                                        <h4 class="mb-0">注册学生</h4>
-                                                    </div>
-                                                    <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="card-body border-top py-3">
-                                            <div class="text-truncate">
-                                                <span class="text-muted ml-2" th:text="${sizeof_students}"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <p class="text-truncate font-size-14 mb-2">上次登录时间</p>
-                                    <h4 class="mb-0" th:text="${#dates.format(lastLoginTime,'yyyy-MM-dd HH:mm:ss')}"></h4>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-12">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div id="chart1" style=" height: 340px;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div id="chart2" style=" height: 340px;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
                 </div>
-                <!-- container-fluid -->
+                <!-- end page title -->
+
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <a  href="admin_course_static">
+                                            <div class="media">
+                                                <div class="media-body overflow-hidden">
+                                                    <p class="text-truncate font-size-14 mb-2"></p>
+                                                    <h4 class="mb-0">可选课程</h4>
+                                                </div>
+                                                <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="card-body border-top py-3">
+                                        <div class="text-truncate">
+                                            <span class="text-muted ml-2" th:text="${sizeof_course_static}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <a  href="admin_course">
+                                            <div class="media">
+                                                <div class="media-body overflow-hidden">
+                                                    <p class="text-truncate font-size-14 mb-2"></p>
+                                                    <h4 class="mb-0">开课计划</h4>
+                                                </div>
+                                                <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="card-body border-top py-3">
+                                        <div class="text-truncate">
+                                            <span class="text-muted ml-2" th:text="${sizeof_courses}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--                                <div class="col-md-3">-->
+                            <!--                                    <div class="card">-->
+                            <!--                                        <div class="card-body">-->
+                            <!--                                            <a href="admin_project">-->
+                            <!--                                                <div class="media">-->
+                            <!--                                                    <div class="media-body overflow-hidden">-->
+                            <!--                                                        <p class="text-truncate font-size-14 mb-2"></p>-->
+                            <!--                                                        <h4 class="mb-0">实战项目</h4>-->
+                            <!--                                                    </div>-->
+                            <!--                                                    <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>-->
+                            <!--                                                </div>-->
+                            <!--                                            </a>-->
+                            <!--                                        </div>-->
+                            <!--                                        <div class="card-body border-top py-3">-->
+                            <!--                                            <div class="text-truncate">-->
+                            <!--                                                &lt;!&ndash;-->
+                            <!--                                                <span class="badge badge-soft-success font-size-11">-->
+                            <!--                                                    <i class="mdi mdi-menu-up"></i>2.4%-->
+                            <!--                                                </span>-->
+                            <!--                                                &ndash;&gt;-->
+                            <!--                                                <span class="text-muted ml-2" th:text="${sizeof_projects}"></span>-->
+                            <!--                                            </div>-->
+                            <!--                                        </div>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <a href="admin_experiment_detail">
+                                            <div class="media">
+                                                <div class="media-body overflow-hidden">
+                                                    <p class="text-truncate font-size-14 mb-2"></p>
+                                                    <h4 class="mb-0">实验任务</h4>
+                                                </div>
+                                                <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="card-body border-top py-3">
+                                        <div class="text-truncate">
+                                            <span class="text-muted ml-2" th:text="${sizeof_experiments}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <a href="admin_video">
+                                            <div class="media">
+                                                <div class="media-body overflow-hidden">
+                                                    <p class="text-truncate font-size-14 mb-2"></p>
+                                                    <h4 class="mb-0">视频课程</h4>
+                                                </div>
+                                                <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="card-body border-top py-3">
+                                        <div class="text-truncate">
+                                            <span class="text-muted ml-2" th:text="${sizeof_videos}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <a href="admin_student_pc">
+                                            <div class="media">
+                                                <div class="media-body overflow-hidden">
+                                                    <p class="text-truncate font-size-14 mb-2"></p>
+                                                    <h4 class="mb-0">在线机器</h4>
+                                                </div>
+                                                <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="card-body border-top py-3">
+                                        <div class="text-truncate">
+                                            <span class="text-muted ml-2" th:text="${sizeof_active_dockers}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <a href="admin_student_pc">
+                                            <div class="media">
+                                                <div class="media-body overflow-hidden">
+                                                    <p class="text-truncate font-size-14 mb-2"></p>
+                                                    <h4 class="mb-0">实验镜像</h4>
+                                                </div>
+                                                <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="card-body border-top py-3">
+                                        <div class="text-truncate">
+                                            <span class="text-muted ml-2" th:text="${sizeof_dockers}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <a href="admin_dataset">
+                                            <div class="media">
+                                                <div class="media-body overflow-hidden">
+                                                    <p class="text-truncate font-size-14 mb-2"></p>
+                                                    <h4 class="mb-0">数据集</h4>
+                                                </div>
+                                                <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="card-body border-top py-3">
+                                        <div class="text-truncate">
+                                            <span class="text-muted ml-2" th:text="${sizeof_datasets}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3" th:if="${role=='admin'}">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <a href="admin_teacher">
+                                            <div class="media">
+                                                <div class="media-body overflow-hidden">
+                                                    <p class="text-truncate font-size-14 mb-2"></p>
+                                                    <h4 class="mb-0">注册教师</h4>
+                                                </div>
+                                                <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="card-body border-top py-3">
+                                        <div class="text-truncate">
+                                            <span class="text-muted ml-2" th:text="${sizeof_teachers}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3" >
+                                <div class="card">
+                                    <div class="card-body">
+                                        <a href="admin_student">
+                                            <div class="media">
+                                                <div class="media-body overflow-hidden">
+                                                    <p class="text-truncate font-size-14 mb-2"></p>
+                                                    <h4 class="mb-0">注册学生</h4>
+                                                </div>
+                                                <div class="text-primary"><i class="ri-stack-line font-size-24"></i></div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="card-body border-top py-3">
+                                        <div class="text-truncate">
+                                            <span class="text-muted ml-2" th:text="${sizeof_students}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="text-truncate font-size-14 mb-2">上次登录时间</p>
+                                <h4 class="mb-0" th:text="${#dates.format(lastLoginTime,'yyyy-MM-dd HH:mm:ss')}"></h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div id="chart1" style=" height: 340px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div id="chart2" style=" height: 340px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
-
-            <!-- End Page-content -->
-
-            <div th:replace="commons::footer"></div>
-
+            <!-- container-fluid -->
         </div>
-        <!-- end main content-->
+
+        <!-- End Page-content -->
+
+        <div th:replace="commons::footer"></div>
+
     </div>
-    <!-- END layout-wrapper -->
+    <!-- end main content-->
+</div>
+<!-- END layout-wrapper -->
 
 
-    <!-- JAVASCRIPT -->
-    <!-- jquery -->
-    <script src="static/js/libs/jquery/jquery.min.js"></script>
-    <!-- bootstrap/js -->
-    <script src="static/js/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- metismenu -->
-    <script src="static/js/libs/metismenu/metisMenu.min.js"></script>
-    <!-- simplebar -->
-    <script src="static/js/libs/simplebar/simplebar.min.js"></script>
-    <!-- node-waves -->
-    <script src="static/js/libs/node-waves/waves.min.js"></script>
-    <!-- app.js -->
-    <script src="static/js/app.js"></script>
-    <script src="static/js/libs/chart.js/echarts.min.js"></script>
-    <script src="static/js/libs/chart.js/mytheme.js"></script>
+<!-- JAVASCRIPT -->
+<!-- jquery -->
+<script src="static/js/libs/jquery/jquery.min.js"></script>
+<!-- bootstrap/js -->
+<script src="static/js/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- metismenu -->
+<script src="static/js/libs/metismenu/metisMenu.min.js"></script>
+<!-- simplebar -->
+<script src="static/js/libs/simplebar/simplebar.min.js"></script>
+<!-- node-waves -->
+<script src="static/js/libs/node-waves/waves.min.js"></script>
+<!-- app.js -->
+<script src="static/js/app.js"></script>
+<script src="static/js/libs/chart.js/echarts.min.js"></script>
+<script src="static/js/libs/chart.js/mytheme.js"></script>
 
-    <script th:inline="javascript" type="text/javascript">
-        $(document).ready(function() {
+<script th:inline="javascript" type="text/javascript">
+    $(document).ready(function() {
 
-            var option1 = {
-                title : {
-                    text: '最近7天学习时长统计（单位：时）',
-                    x:'center'
+        var option1 = {
+            title : {
+                text: '最近7天学习时长统计（单位：时）',
+                x:'center'
 
+            },
+            tooltip : {
+                trigger: 'item'
+            },
+            legend: {
+                orient : 'vertical',
+                x : 'right',
+                data:['视频学习','实验学习']
+            },
+
+            calculable : true,
+            xAxis : [
+                {
+                    type : 'category',
+                    boundaryGap : false,
+                    // data : ['周一','周二','周三','周四','周五','周六','周日']
+                    data: getday()
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : [
+                {
+                    name:'视频学习',
+                    type:'line',
+                    stack: '总量',
+                    data: getVideoValue()
                 },
-                tooltip : {
-                    trigger: 'item'
-                },
-                legend: {
-                    orient : 'vertical',
-                    x : 'right',
-                    data:['视频学习','实验学习']
-                },
+                {
+                    name:'实验学习',
+                    type:'line',
+                    stack: '总量',
+                    data: getExpValue()
+                }
+            ]
+        };
 
-                calculable : true,
-                xAxis : [
-                    {
-                        type : 'category',
-                        boundaryGap : false,
-                        // data : ['周一','周二','周三','周四','周五','周六','周日']
-                        data: getday()
-                    }
-                ],
-                yAxis : [
-                    {
-                        type : 'value'
-                    }
-                ],
-                series : [
-                    {
-                        name:'视频学习',
-                        type:'line',
-                        stack: '总量',
-                        data: getVideoValue()
-                    },
-                    {
-                        name:'实验学习',
-                        type:'line',
-                        stack: '总量',
-                        data: getExpValue()
-                    }
-                ]
-            };
+        option2 = {
+            title : {
+                text: '实验机状态比例',
+                x:'center'
+            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient : 'vertical',
+                x : 'right',
+                y: 50,
+                data:['实验任务','项目实战','挂起/未使用']
+            },
+            calculable : true,
+            series : [
+                {
+                    name:'实验机状态',
+                    type:'pie',
+                    radius : '55%',
+                    center: ['50%', '60%'],
+                    data:[
+                        {value:[[${docker_status[2]}]], name:'实验任务'},
+                        {value:[[${docker_status[1]}]], name:'项目实战'},
+                        {value:[[${docker_status[0]}]], name:'挂起/未使用'}
+                    ]
+                }
+            ]
+        };
 
-            option2 = {
-                title : {
-                    text: '实验机状态比例',
-                    x:'center'
-                },
-                tooltip : {
-                    trigger: 'item',
-                    formatter: "{a} <br/>{b} : {c} ({d}%)"
-                },
-                legend: {
-                    orient : 'vertical',
-                    x : 'right',
-                    y: 50,
-                    data:['实验任务','项目实战','挂起/未使用']
-                },
-                calculable : true,
-                series : [
-                    {
-                        name:'实验机状态',
-                        type:'pie',
-                        radius : '55%',
-                        center: ['50%', '60%'],
-                        data:[
-                            {value:[[${docker_status[2]}]], name:'实验任务'},
-                            {value:[[${docker_status[1]}]], name:'项目实战'},
-                            {value:[[${docker_status[0]}]], name:'挂起/未使用'}
-                        ]
-                    }
-                ]
-            };
-
-            var myChart1 = echarts.init(document.getElementById('chart1'), 'mytheme');
-            var myChart2 = echarts.init(document.getElementById('chart2'), 'mytheme');
-            myChart1.setOption(option1);
-            myChart2.setOption(option2);
+        var myChart1 = echarts.init(document.getElementById('chart1'), 'mytheme');
+        var myChart2 = echarts.init(document.getElementById('chart2'), 'mytheme');
+        myChart1.setOption(option1);
+        myChart2.setOption(option2);
 
 
-            window.addEventListener("resize", function () {
-                myChart1.resize();
-                myChart2.resize();
-            });
-        })
+        window.addEventListener("resize", function () {
+            myChart1.resize();
+            myChart2.resize();
+        });
+    })
 
-        function getday() {
-            let days = [];
-            var date = new Date();
-            for(let i=144; i>=0;i-=24){		//144是前六天的小时数
-                let dateItem=new Date(date.getTime() - i * 60 * 60 * 1000);	//使用当天时间戳减去以前的时间毫秒（小时*分*秒*毫秒）
-                let y = dateItem.getFullYear();	//获取年份
-                let m = dateItem.getMonth() + 1;	//获取月份js月份从0开始，需要+1
-                let d= dateItem.getDate();	//获取日期
-                m = this.addDate0(m);	//给为单数的月份补零
-                d = this.addDate0(d);	//给为单数的日期补零
-                let valueItem= y + '-' + m + '-' + d;	//组合
-                days.push(valueItem);	//添加至数组
-            }
-            //console.log('最近七天日期：',days);
-
-            return days;
+    function getday() {
+        let days = [];
+        var date = new Date();
+        for(let i=144; i>=0;i-=24){		//144是前六天的小时数
+            let dateItem=new Date(date.getTime() - i * 60 * 60 * 1000);	//使用当天时间戳减去以前的时间毫秒（小时*分*秒*毫秒）
+            let y = dateItem.getFullYear();	//获取年份
+            let m = dateItem.getMonth() + 1;	//获取月份js月份从0开始，需要+1
+            let d= dateItem.getDate();	//获取日期
+            m = this.addDate0(m);	//给为单数的月份补零
+            d = this.addDate0(d);	//给为单数的日期补零
+            let valueItem= y + '-' + m + '-' + d;	//组合
+            days.push(valueItem);	//添加至数组
         }
+        //console.log('最近七天日期：',days);
 
-        //给日期加0
-        function addDate0(time) {
-            if (time.toString().length == 1) {
-                time = '0' + time.toString();
-            }
-            return time;
+        return days;
+    }
+
+    //给日期加0
+    function addDate0(time) {
+        if (time.toString().length == 1) {
+            time = '0' + time.toString();
         }
+        return time;
+    }
 
-        function getExpValue(){
-            var experimentTimes = [[${sumExperimentTime}]];
-            //console.log(experimentTimes);
-            var times = [];
-            for (var i=1; i<=7;i++){
-                times.push(experimentTimes[i]/3600);
-            }
-            //console.log(times);
-            return times;
+    function getExpValue(){
+        var experimentTimes = [[${sumExperimentTime}]];
+        //console.log(experimentTimes);
+        var times = [];
+        for (var i=1; i<=7;i++){
+            times.push(experimentTimes[i]/3600);
         }
+        //console.log(times);
+        return times;
+    }
 
-        function getVideoValue(){
-            var videoTimes = [[${sumVideoTime}]];
-            //console.log(videoTimes);
-            var times = [];
-            for (var i=1; i<=7;i++){
-                times.push(videoTimes[i]/3600);
-            }
-            return times;
+    function getVideoValue(){
+        var videoTimes = [[${sumVideoTime}]];
+        //console.log(videoTimes);
+        var times = [];
+        for (var i=1; i<=7;i++){
+            times.push(videoTimes[i]/3600);
         }
+        return times;
+    }
 
 
 
-    </script>
+</script>
 
 </body>
 

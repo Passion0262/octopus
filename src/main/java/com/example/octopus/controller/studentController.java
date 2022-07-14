@@ -147,18 +147,18 @@ public class studentController {
 			return "redirect:/index";
 		} else if (role == 4) {
 		    //身份为个人用户，进入个人用户前台系统
-			PersonalUser personalUser = personalUserService.getPersonalUser(Long.parseLong(userNumber));
+			PersonalUser personalUser = personalUserService.getPersonalUser(userNumber);
 			logger.info("当前登陆身份为：个人用户        欢迎您，" + userNumber);
 			cookieThings.setCookie(userNumber, String.valueOf(personalUser.getPersonalTel()), request, response, "cookiePersonalUser");
-			personalUserService.updateLoginInfo(Long.parseLong(userNumber));
+			personalUserService.updateLoginInfo(userNumber);
 			return "redirect:/per_index";
 		} else if (role == 5) {
 			//身份为个人用户管理员，进入个人用户后台系统
-			PersonalAdmin personalAdmin = personalAdminService.getPersonalAdmin(Long.parseLong(userNumber));
+			PersonalAdmin personalAdmin = personalAdminService.getPersonalAdmin(userNumber);
 			logger.info("当前登陆身份为：个人用户管理员        欢迎您，" + userNumber);
 			System.out.println(personalAdmin);
 			cookieThings.setCookie(userNumber, String.valueOf(personalAdmin.getAdminTel()), request, response, "cookiePersonalAdmin");
-			teacherService.updateLoginInfo(Long.parseLong(userNumber));
+			personalAdminService.updateLoginInfo(userNumber);
 			return "redirect:/admin_index_for_personal";
 		} else {
 			//身份为教师或管理员，进入后台系统
@@ -215,7 +215,6 @@ public class studentController {
 			JSONObject ob1 = new JSONObject();
 			JSONObject ob2 = new JSONObject();
 //            String s1 = courseService.getCourseById(videopro.get(i).getCourseId()).getCourseName();
-			logger.info("videoprosssss"+experpro.get(i));
 			String s1 = courseService.getCourseById(videopro.get(i).getTeaCourseId()).getCourseName();
 			String s2 = courseService.getCourseById(experpro.get(i).getTeaCourseId()).getCourseName();
 			ob1.put("value", videopro.get(i).getTime());

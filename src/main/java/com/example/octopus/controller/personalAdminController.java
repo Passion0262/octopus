@@ -1,6 +1,7 @@
 package com.example.octopus.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.example.octopus.entity.user.*;
 import com.example.octopus.entity.personal.*;
 import com.example.octopus.service.*;
 import com.example.octopus.service.personal.*;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Array;
 import java.util.*;
 
 
@@ -50,6 +52,9 @@ public class personalAdminController {
 
 	@Autowired
 	PlanCategoryService planCategoryService;
+
+	@Autowired
+	CourseStaticService courseStaticService;
 
 	private final static String COOKIE_NAME = "cookiePersonalAdmin";
 
@@ -134,7 +139,9 @@ public class personalAdminController {
 		if (role_id == 5) {
 			logger.info("管理员{}进入admin_personal_add，获取一个新Personal()", user);
 			try {
-				model.addAttribute("personal", new PersonalUser());
+				PersonalUser personalUser = new PersonalUser();
+				//System.out.println(personalUser);
+				model.addAttribute("personal", personalUser);
 				return new ModelAndView("admin_personal_add", "permodel", model);
 			} catch (Exception e) {
 				return new ModelAndView("redirect:/admin_error");
@@ -173,7 +180,7 @@ public class personalAdminController {
 		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色
 
 		if (role_id == 5) {
-			long personalTel = Long.parseLong(request.getParameter("personalTel"));
+			String personalTel = request.getParameter("personalTel");
 			logger.info("管理员{}进入admin_personal_edit，获取PersonalUser, personalTel={}", user, personalTel);
 			try {
 				PersonalUser personalUser = personalUserService.getPersonalUser(personalTel);
@@ -220,10 +227,10 @@ public class personalAdminController {
 
 		if (role_id == 5) {
 			try {
-					long personalTel = Long.parseLong(request.getParameter("personalTel"));
-					model.addAttribute("user", personalUserService.getPersonalUser(personalTel));
-					model.addAttribute("plans", personalPlanService.listPersonalPlanByTel(personalTel));
-					return new ModelAndView("admin_plan_for_personal", "model", model);
+				String personalTel = request.getParameter("personalTel");
+				model.addAttribute("user", personalUserService.getPersonalUser(personalTel));
+				model.addAttribute("plans", personalPlanService.listPersonalPlanByTel(personalTel));
+				return new ModelAndView("admin_plan_for_personal", "model", model);
 			} catch (Exception e) {
 				return new ModelAndView("redirect:/admin_error");
 			}
@@ -267,9 +274,10 @@ public class personalAdminController {
 			long id = Long.parseLong(request.getParameter("id"));
 			logger.info("管理员{}进入admin_plan_detail，获取Plan, id={}", user, id);
 			try {
-				//Plan plan = planService.getPlanById(id));
-				Plan plan = planService.listAllPlan().get(0);
+				Plan plan = planService.getPlanById(id);
+//				plan.setCategories(categoryService.listAllCategory());
 				model.addAttribute("plan", plan);
+//				System.out.println(plan);
 				return new ModelAndView("admin_plan_detail", "planmodel", model);
 			} catch (Exception e) {
 				return new ModelAndView("redirect:/admin_error");
@@ -334,9 +342,22 @@ public class personalAdminController {
 			long id = Long.parseLong(request.getParameter("id"));
 			logger.info("管理员{}进入admin_plan_edit，获取Plan, id={}", user, id);
 			try {
-				//model.addAttribute("plan", planService.getPlanById(id));
-				model.addAttribute("plan", planService.listAllPlan().get(0));
-				model.addAttribute("category", categoryService.listAllCategory());
+				Plan plan = planService.getPlanById(id);
+				//List<String> categoryNames = Arrays.asList(plan.getCategoryNames().split(";"));
+//				String[] arr = new String[] {"算法工程师"};
+//				List<String> categoryNames = Arrays.asList(arr);
+				model.addAttribute("plan", plan);
+				//List<Category> category_list = categoryService.listAllCategory();
+//				for (int i=0; i<category_list.size(); i++){
+//					if (categoryNames.contains(category_list.get(i).getName())){
+//						category_list.get(i).setBrief("true");
+//					}else{
+//						category_list.get(i).setBrief("false");
+//					}
+//					System.out.println(category_list.get(i));
+//				}
+//				model.addAttribute("category", category_list);
+
 				return new ModelAndView("admin_plan_edit", "planmodel", model);
 			} catch (Exception e) {
 				return new ModelAndView("redirect:/admin_error");
@@ -356,7 +377,7 @@ public class personalAdminController {
 		if (role_id == 5) {
 			logger.info("管理员{}提交修改的plan: [{}]", user, plan);
 			try {
-				//planService.
+				planService.updatePlan(plan);
 				return new ModelAndView("redirect:/admin_plan");
 			} catch (Exception e) {
 				return new ModelAndView("redirect:/admin_error");
@@ -365,5 +386,271 @@ public class personalAdminController {
 			return new ModelAndView("redirect:/login");
 		}
 	}
+
+	//课程类别管理
+	@RequestMapping("/admin_category")
+	public String admin_category(HttpServletRequest request, Model model) {
+		String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
+		if (!user_id.equals(cookieThings.getCookieUserNum(request, COOKIE_NAME))) return "redirect:/login";
+
+		if (!cookieCheck(model, request)) return "redirect:/login";
+
+		long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色，管理员还是教师
+
+		if (role_id == 5) {
+			try {
+				model.addAttribute("categories", categoryService.listAllCategory());
+				return "admin_category";
+			} catch (Exception e) {
+				return "redirect:/admin_error";
+			}
+		} else {
+			return "redirect:/login";
+		}
+	}
+
+	// 增加课程类别
+	@GetMapping("/admin_category_add")
+	public ModelAndView admin_category_add(HttpServletRequest request, Model model) {
+		if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
+		long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色
+
+		if (role_id == 5) {
+			logger.info("管理员{}进入admin_category_add，获取一个新Category()", user);
+			try {
+				model.addAttribute("category", new Category());
+				model.addAttribute("course", courseStaticService.listAllCourseStatic());
+				return new ModelAndView("admin_category_add", "categorymodel", model);
+			} catch (Exception e) {
+				return new ModelAndView("redirect:/admin_error");
+			}
+		} else {
+			return new ModelAndView("redirect:/login");
+		}
+	}
+
+	@PostMapping("/add_category")
+	public ModelAndView add_category(Category category, HttpServletRequest request, Model model) {
+		if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
+		long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色
+
+		if (role_id == 5) {
+			logger.info("管理员{}提交新增的课程类别: [{}]", user, category);
+			try {
+//				System.out.println(category);
+				category.setStaticCourseIds(category.getStaticCourseIds().replace(',', ';'));
+				categoryService.insertCategory(category);
+				return new ModelAndView("redirect:/admin_category");
+			} catch (Exception e) {
+				return new ModelAndView("redirect:/admin_error");
+			}
+		} else {
+			return new ModelAndView("redirect:/login");
+		}
+	}
+
+	// 修改课程类别
+	@GetMapping("/admin_category_edit")
+	public ModelAndView admin_category_edit(HttpServletRequest request, Model model) {
+		if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
+		long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色
+
+		if (role_id == 5) {
+			long id = Long.parseLong(request.getParameter("id"));
+			logger.info("管理员{}进入admin_category_edit，获取category, id={}", user, id);
+			try {
+				Category category = categoryService.getCategoryById(id);
+				model.addAttribute("category", category);
+				return new ModelAndView("admin_category_edit", "categorymodel", model);
+			} catch (Exception e) {
+				return new ModelAndView("redirect:/admin_error");
+			}
+		} else {
+			return new ModelAndView("redirect:/login");
+		}
+	}
+
+	@PostMapping("/edit_category")
+	public ModelAndView edit_category(Category category, HttpServletRequest request, Model model) {
+		if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
+		long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色
+
+		if (role_id == 5) {
+			logger.info("管理员{}提交修改的category: [{}]", user, category);
+			try {
+				categoryService.updateCategory(category);
+				return new ModelAndView("redirect:/admin_category");
+			} catch (Exception e) {
+				return new ModelAndView("redirect:/admin_error");
+			}
+		} else {
+			return new ModelAndView("redirect:/login");
+		}
+	}
+
+
+	//删除课程类别
+	@RequestMapping("/admin_category_delete")
+	public ModelAndView admin_category_delete(HttpServletRequest request, Model model) {
+		if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+
+		long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色
+
+		if (role_id == 5) {
+			long id = Long.parseLong(request.getParameter("id"));
+			logger.info("管理员{}删除课程类别[{}]", user, id);
+			try {
+				categoryService.deleteCategoryById(id);
+				return new ModelAndView("redirect:/admin_category");
+			} catch (Exception e) {
+				return new ModelAndView("redirect:/admin_error");
+			}
+		} else {
+			return new ModelAndView("redirect:/login");
+		}
+	}
+
+//	//课程类别管理
+//	@RequestMapping("/admin_category")
+//	public String admin_category(HttpServletRequest request, Model model) {
+//		String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
+//		if (!user_id.equals(cookieThings.getCookieUserNum(request, COOKIE_NAME))) return "redirect:/login";
+//
+//		if (!cookieCheck(model, request)) return "redirect:/login";
+//
+//		long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+//		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色，管理员还是教师
+//
+//		if (role_id == 5) {
+//			try {
+//				model.addAttribute("categories", categoryService.listAllCategory());
+//				return "admin_category";
+//			} catch (Exception e) {
+//				return "redirect:/admin_error";
+//			}
+//		} else {
+//			return "redirect:/login";
+//		}
+//	}
+//
+//	// 增加课程类别
+//	@GetMapping("/admin_category_add")
+//	public ModelAndView admin_category_add(HttpServletRequest request, Model model) {
+//		if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+//
+//		long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+//		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色
+//
+//		if (role_id == 5) {
+//			logger.info("管理员{}进入admin_category_add，获取一个新Category()", user);
+//			try {
+//				model.addAttribute("category", new Category());
+//				model.addAttribute("course", courseStaticService.listAllCourseStatic());
+//				return new ModelAndView("admin_category_add", "categorymodel", model);
+//			} catch (Exception e) {
+//				return new ModelAndView("redirect:/admin_error");
+//			}
+//		} else {
+//			return new ModelAndView("redirect:/login");
+//		}
+//	}
+//
+//	@PostMapping("/add_category")
+//	public ModelAndView add_category(Category category, HttpServletRequest request, Model model) {
+//		if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+//
+//		long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+//		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色
+//
+//		if (role_id == 5) {
+//			logger.info("管理员{}提交新增的课程类别: [{}]", user, category);
+//			try {
+////				System.out.println(category);
+//				category.setStaticCourseIds(category.getStaticCourseIds().replace(',', ';'));
+//				categoryService.insertCategory(category);
+//				return new ModelAndView("redirect:/admin_category");
+//			} catch (Exception e) {
+//				return new ModelAndView("redirect:/admin_error");
+//			}
+//		} else {
+//			return new ModelAndView("redirect:/login");
+//		}
+//	}
+//
+//	// 修改课程类别
+//	@GetMapping("/admin_category_edit")
+//	public ModelAndView admin_category_edit(HttpServletRequest request, Model model) {
+//		if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+//
+//		long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+//		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色
+//
+//		if (role_id == 5) {
+//			long id = Long.parseLong(request.getParameter("id"));
+//			logger.info("管理员{}进入admin_category_edit，获取category, id={}", user, id);
+//			try {
+//				Category category = categoryService.getCategoryById(id);
+//				model.addAttribute("category", category);
+//				return new ModelAndView("admin_category_edit", "categorymodel", model);
+//			} catch (Exception e) {
+//				return new ModelAndView("redirect:/admin_error");
+//			}
+//		} else {
+//			return new ModelAndView("redirect:/login");
+//		}
+//	}
+//
+//	@PostMapping("/edit_category")
+//	public ModelAndView edit_category(Category category, HttpServletRequest request, Model model) {
+//		if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+//
+//		long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+//		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色
+//
+//		if (role_id == 5) {
+//			logger.info("管理员{}提交修改的category: [{}]", user, category);
+//			try {
+//				categoryService.updateCategory(category);
+//				return new ModelAndView("redirect:/admin_category");
+//			} catch (Exception e) {
+//				return new ModelAndView("redirect:/admin_error");
+//			}
+//		} else {
+//			return new ModelAndView("redirect:/login");
+//		}
+//	}
+//
+//
+//	//删除课程类别
+//	@RequestMapping("/admin_category_delete")
+//	public ModelAndView admin_category_delete(HttpServletRequest request, Model model) {
+//		if (!cookieCheck(model, request)) return new ModelAndView("redirect:/login");
+//
+//		long user = Long.parseLong(cookieThings.getCookieUserNum(request, COOKIE_NAME));
+//		int role_id = sysUserRoleService.getRoleIdByUserId(user);  // 获取角色
+//
+//		if (role_id == 5) {
+//			long id = Long.parseLong(request.getParameter("id"));
+//			logger.info("管理员{}删除课程类别[{}]", user, id);
+//			try {
+//				categoryService.deleteCategoryById(id);
+//				return new ModelAndView("redirect:/admin_category");
+//			} catch (Exception e) {
+//				return new ModelAndView("redirect:/admin_error");
+//			}
+//		} else {
+//			return new ModelAndView("redirect:/login");
+//		}
+//	}
 
 }

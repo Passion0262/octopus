@@ -49,17 +49,17 @@ public class PersonalUserServiceImpl implements PersonalUserService {
 	}
 
 	@Override
-	public PersonalUser getPersonalUser(long personalTel) {
+	public PersonalUser getPersonalUser(String personalTel) {
 		return personalUserMapper.getPersonalUserByTel(personalTel);
 	}
 
 	@Override
 	public boolean changePassword(PersonalUser personalUser) {
-		return sysUserRoleMapper.updatePassword(personalUser.getPersonalTel(), personalUser.getPassword());
+		return sysUserRoleMapper.updatePassword(Long.parseLong(personalUser.getPersonalTel()), personalUser.getPassword());
 	}
 
 	@Override
-	public boolean updateLoginInfo(long personalTel) {
+	public boolean updateLoginInfo(String personalTel) {
 		return personalUserMapper.updateLoginInfoByTel(personalTel);
 	}
 
@@ -72,7 +72,7 @@ public class PersonalUserServiceImpl implements PersonalUserService {
 	public boolean insertPersonalUser(PersonalUser personalUser) {
 		if (personalUser.getPassword() == null)
 			personalUser.setPassword("123");
-		SysUserRole sysUserRole = new SysUserRole(personalUser.getPersonalTel(), 4, personalUser.getPassword());
+		SysUserRole sysUserRole = new SysUserRole(Long.parseLong(personalUser.getPersonalTel()), 4, personalUser.getPassword());
 
 		boolean add2PUTable = personalUserMapper.insertPersonalUser(personalUser);
 		boolean add2SURTable = false;

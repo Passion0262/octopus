@@ -37,7 +37,10 @@ public interface PlanCategoryMapper {
 	boolean insertPlanCategory(PlanCategory planCategory);
 
 	@Delete("DELETE FROM plan_category WHERE plan_id=#{planId}")
-	boolean deletePlanCategoryByPlanId(PlanCategory planCategory);
+	boolean deletePlanCategoryByPlanId(long planId);
+
+	@Delete("DELETE FROM plan_category WHERE category_id=#{categoryId}")
+	boolean deletePlanCategoryByCategoryId(long categoryId);
 
 
 	///////////////////
