@@ -85,7 +85,7 @@
                                             </td>
                                             <td th:text="${datasetStat.index+1}"></td>
                                             <td th:text="${dataset.name}"></td>
-                                            <td th:text="${dataset.description}"></td>
+                                            <td th:text="${dataset.description}" style="overflow: hidden; text-overflow: ellipsis; max-width: 350px;" th:title="${dataset.description}"></td>
                                             <td th:text="${dataset.uploader}"></td>
                                             <td th:text="${dataset.size}+'KB'"></td>
                                             <td>
