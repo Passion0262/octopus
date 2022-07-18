@@ -209,22 +209,25 @@ public class studentController {
 		List<String> videoCoursenames = new ArrayList<>();
 		List<String> experCoursenames = new ArrayList<>();
 
-		logger.info("videopro:" + videopro);
-
-		for (int i = 0; i < videopro.size(); i++) {
+		logger.info("videopro:" + videopro + "\texperpro:" + experpro);
+		int maxproSize =  videopro.size()>experpro.size()?videopro.size():experpro.size();
+		for (int i = 0; i < maxproSize; i++) {
 			JSONObject ob1 = new JSONObject();
 			JSONObject ob2 = new JSONObject();
-//            String s1 = courseService.getCourseById(videopro.get(i).getCourseId()).getCourseName();
-			String s1 = courseService.getCourseById(videopro.get(i).getTeaCourseId()).getCourseName();
-			String s2 = courseService.getCourseById(experpro.get(i).getTeaCourseId()).getCourseName();
-			ob1.put("value", videopro.get(i).getTime());
-			ob1.put("name", s1);
-			videoCoursenames.add(s1);
-			ob2.put("value", experpro.get(i).getTime());
-			ob2.put("name", s2);
-			experCoursenames.add(s2);
-			videopros.add(ob1);
-			experpros.add(ob2);
+			if(i < videopro.size()){
+				String s1 = courseService.getCourseById(videopro.get(i).getTeaCourseId()).getCourseName();
+				ob1.put("value", videopro.get(i).getTime());
+				ob1.put("name", s1);
+				videoCoursenames.add(s1);
+				videopros.add(ob1);
+			}
+			if(i < experpro.size()){
+				String s2 = courseService.getCourseById(experpro.get(i).getTeaCourseId()).getCourseName();
+				ob2.put("value", experpro.get(i).getTime());
+				ob2.put("name", s2);
+				experCoursenames.add(s2);
+				experpros.add(ob2);
+			}
 		}
 
 		model.addAttribute("videoCoursenames", videoCoursenames);
